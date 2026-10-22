@@ -1,0 +1,112 @@
+<div
+	class="panel-container"
+	id="settings-container"
+	[class.vertical-layout]="isVerticalLayout()"
+	[class.compact-view]="isCompactView()"
+>
+	<div class="panel-header-container">
+		<h3 class="panel-title">{{ 'PANEL.SETTINGS.TITLE' | translate }}</h3>
+		<button
+			class="panel-close-button jmeet-button jmeet-button--ghost jmeet-button--icon"
+			nz-tooltip
+			nzTooltipTitle="{{ 'PANEL.CLOSE' | translate }}"
+			(click)="close()"
+		>
+			<nz-icon nzType="close" />
+		</button>
+	</div>
+
+	<div class="settings-container" [class.vertical-layout]="isVerticalLayout()">
+		<div class="item-menu" [class.compact]="isCompactView()" [class.icons-only]="shouldHideMenuText()">
+			<div class="options-list" role="listbox" [attr.aria-label]="'PANEL.SETTINGS.TITLE' | translate">
+				<button
+					type="button"
+					class="option"
+					id="general-opt"
+					[attr.aria-selected]="selectedOption() === settingsOptions.GENERAL"
+					[class.selected]="selectedOption() === settingsOptions.GENERAL"
+					(click)="onSelectionChanged(settingsOptions.GENERAL)"
+					nz-tooltip
+					[nzTooltipTitle]="shouldHideMenuText() ? ('PANEL.SETTINGS.GENERAL' | translate) : ''"
+				>
+					<nz-icon nzType="user" />
+					@if (!shouldHideMenuText()) {
+						<div class="option-text">{{ 'PANEL.SETTINGS.GENERAL' | translate }}</div>
+					}
+				</button>
+				@if (showCameraButton()) {
+					<button
+						type="button"
+						class="option"
+						id="video-opt"
+						[attr.aria-selected]="selectedOption() === settingsOptions.VIDEO"
+						[class.selected]="selectedOption() === settingsOptions.VIDEO"
+						(click)="onSelectionChanged(settingsOptions.VIDEO)"
+						nz-tooltip
+						[nzTooltipTitle]="shouldHideMenuText() ? ('PANEL.SETTINGS.VIDEO' | translate) : ''"
+					>
+						<nz-icon nzType="video-camera" />
+						@if (!shouldHideMenuText()) {
+							<div class="option-text">{{ 'PANEL.SETTINGS.VIDEO' | translate }}</div>
+						}
+					</button>
+				}
+				@if (showMicrophoneButton()) {
+					<button
+						type="button"
+						class="option"
+						id="audio-opt"
+						[attr.aria-selected]="selectedOption() === settingsOptions.AUDIO"
+						[class.selected]="selectedOption() === settingsOptions.AUDIO"
+						(click)="onSelectionChanged(settingsOptions.AUDIO)"
+						nz-tooltip
+						[nzTooltipTitle]="shouldHideMenuText() ? ('PANEL.SETTINGS.AUDIO' | translate) : ''"
+					>
+						<nz-icon nzType="audio" />
+						@if (!shouldHideMenuText()) {
+							<div class="option-text">{{ 'PANEL.SETTINGS.AUDIO' | translate }}</div>
+						}
+					</button>
+				}
+			</div>
+		</div>
+
+		<div class="item-content" [class.full-width]="isVerticalLayout()">
+			@if (selectedOption() === settingsOptions.GENERAL) {
+				<div class="general-settings">
+					<div class="nickname-section">
+						<label class="input-label">{{ 'PREJOIN.NICKNAME' | translate }}</label>
+						<div class="nickname-input-container">
+							<ov-participant-name-input />
+						</div>
+					</div>
+					<!-- Additional elements injected via directive -->
+					@if (generalAdditionalElementsTemplate) {
+						<div class="additional-elements-section">
+							<ng-container *ngTemplateOutlet="generalAdditionalElementsTemplate" />
+						</div>
+					}
+				</div>
+			}
+			@if (showCameraButton() && selectedOption() === settingsOptions.VIDEO) {
+				<div class="video-settings">
+					<ov-video-devices-select
+						(onVideoDeviceChanged)="onVideoDeviceChanged.emit($event)"
+						(onVideoEnabledChanged)="onVideoEnabledChanged.emit($event)"
+					/>
+				</div>
+			}
+			@if (showMicrophoneButton() && selectedOption() === settingsOptions.AUDIO) {
+				<div class="audio-settings">
+					<ov-audio-devices-select
+						(onAudioDeviceChanged)="onAudioDeviceChanged.emit($event)"
+						(onAudioEnabledChanged)="onAudioEnabledChanged.emit($event)"
+					/>
+				</div>
+			}
+			<!-- <div *ngIf="selectedOption === settingsOptions.CAPTIONS && showCaptions" class="captions-settings">
+				<ov-captions-settings></ov-captions-settings>
+			</div> -->
+		</div>
+	</div>
+</div>

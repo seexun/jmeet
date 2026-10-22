@@ -1,0 +1,287 @@
+{
+	"ROOM": {
+		"JOINING": "Entrando na sala...",
+		"LANDSCAPE_WARNING": "Por favor, gire seu dispositivo para o modo retrato para uma melhor experiência",
+		"DISCONNECTED": "Você saiu da sala",
+		"DISCONNECTED_SUBTITLE": "A sessão foi encerrada"
+	},
+	"PREJOIN": {
+		"NICKNAME": "Apelido",
+		"NO_VIDEO_DEVICE": "Dispositivo de vídeo não encontrado",
+		"NO_AUDIO_DEVICE": "Dispositivo de áudio não encontrado",
+		"JOIN": "Entrar na reunião",
+		"PREPARING": "Preparando sala...",
+		"BACKGROUND": "Efeitos de fundo"
+	},
+	"TOOLBAR": {
+		"THEME_TOGGLE": "Alternar claro/escuro",
+		"MUTE_AUDIO": "Mute seu áudio",
+		"UNMUTE_AUDIO": "Desmute seu áudio",
+		"STOP_VIDEO": "Pare o seu vídeo",
+		"SELECT_CAMERA": "Selecionar câmera",
+		"SELECT_MIC": "Selecionar microfone",
+		"START_VIDEO": "Inicie o seu vídeo",
+		"ENABLE_SCREEN": "Habilitar compartilhamento de tela",
+		"DISABLE_SCREEN": "Desabilitar compartilhamento de tela",
+		"MORE_OPTIONS": "Mais opções",
+		"FULLSCREEN": "Tela cheia",
+		"EXIT_FULLSCREEN": "Sair da tela cheia",
+		"BACKGROUND": "Efeitos de fundo",
+		"START_RECORDING": "Iniciar gravação",
+		"STOP_RECORDING": "Parar de gravar",
+		"SETTINGS": "Configurações",
+		"LEAVE": "Sair da sala",
+		"PARTICIPANTS": "Participantes",
+		"CHAT": "Chat",
+		"ACTIVITIES": "Atividades",
+		"PANELS": "Painéis",
+		"NO_TRACKS_PUBLISHED": "Compartilhe áudio ou vídeo para começar a gravar.",
+		"VIEW_RECORDINGS": "Ver gravações"
+	},
+	"STREAM": {
+		"MUTE_SOUND": "Mudo",
+		"UNMUTE_SOUND": "Com som",
+		"ZOOM_IN": "Aumentar zoom",
+		"ZOOM_OUT": "Diminuir zoom",
+		"RESET_ZOOM": "Redefinir zoom",
+		"REPLACE_SCREEN": "Trocar tela",
+		"PIN": "Fixar",
+		"UNPIN": "Desafixar",
+		"FLOAT": "Flutuar",
+		"DOCK": "Encaixar",
+		"SCREEN_LABEL": "tela",
+		"YOUR_SCREEN_LABEL": "sua tela"
+	},
+	"PANEL": {
+		"CLOSE": "Fechar",
+		"MEDIA_QUALITY": {
+			"TITLE": "Qualidade de mídia"
+		},
+		"CAPTIONS": {
+			"TITLE": "Legendas ao vivo",
+			"SUBTITLE": "As legendas são geradas em tempo real a partir do áudio da reunião e exibidas apenas para você",
+			"EMPTY": "Ainda sem legendas. Ative as legendas e a fala aparecerá aqui em tempo real.",
+			"INTERIM": "transcrevendo…"
+		},
+		"CHAT": {
+			"TITLE": "Chat",
+			"YOU": "Você",
+			"SUBTITLE": "As mensagens serão removidas no final da reunião",
+			"PLACEHOLDER": "Enviar uma mensagem...",
+			"SEND": "Enviar",
+			"EMOJI": "Emoji",
+			"MESSAGE_SENT_NOTIFICATION": "mensagem enviada",
+			"OPEN_CHAT": "ABRIR",
+			"ENCRYPTION_KEY_MISMATCH": "Existem participantes conectados com uma chave de criptografia diferente. Você não receberá mensagens deles."
+		},
+		"ACTIVITIES": {
+			"TITLE": "Atividades",
+			"COLLABORATION": "Colaboração",
+			"COLLABORATION_ARIA": "Ferramentas de colaboração",
+			"RECORDING": "Gravação",
+			"WHITEBOARD": "Quadro branco",
+			"POLL": "Votação",
+			"MATERIALS": "Materiais",
+			"AGENDA": "Agenda"
+		},
+		"PARTICIPANTS": {
+			"NO_MATCH": "Nenhum membro correspondente",
+			"SEARCH_PLACEHOLDER": "Pesquisar membros",
+			"SECTION_HOSTS": "Anfitriões / Admins",
+			"SECTION_MEMBERS": "Participantes",
+			"INVITE": "Convidar membros",
+			"EMPTY_HINT": "Ainda sem outros membros — convide sua equipe",
+			"INVITE_NOW": "Copiar link do convite",
+			"GUEST": "Convidado",
+			"MUTE_ALL": "Silenciar todos",
+			"MANAGEMENT": "Membros",
+			"TITLE": "Participantes",
+			"CAMERA": "CÂMERA",
+			"MICROPHONE": "MICROFONE",
+			"SCREEN": "TELA",
+			"NO_STREAMS": "NENHUM",
+			"YOU": "Você (eu)",
+			"MUTE": "Silenciar",
+			"UNMUTE": "Ativar som",
+			"CONNECTION_QUALITY": {
+				"LABEL": "Qualidade de conexão",
+				"EXCELLENT": "Excelente",
+				"GOOD": "Boa",
+				"POOR": "Fraca",
+				"LOST": "Perdida"
+			},
+			"SHARING_SCREEN": "Compartilhando tela",
+			"MIC_OFF": "Microfone desligado",
+			"CAM_OFF": "Câmera desligada"
+		},
+		"SETTINGS": {
+			"TITLE": "Configurações",
+			"GENERAL": "Em geral",
+			"VIDEO": "Vídeo",
+			"AUDIO": "Áudio",
+			"LANGUAGE": "Linguagem",
+			"DISABLED_VIDEO": "Vídeo desativado",
+			"THEME": "Tema"
+		},
+		"BACKGROUND": {
+			"TITLE": "Efeitos de fundo",
+			"BLURRED_SECTION": "Sem efeitos e fundo desfocado",
+			"NO_EFFECTS": "Sem efeito de fundo",
+			"BLURRED_EFFECT": "Fundo desfocado",
+			"CATEGORY_PROFESSIONAL": "Profissional",
+			"CATEGORY_HOME_OFFICE": "Escritório em casa",
+			"CATEGORY_CREATIVE": "Criativo",
+			"NOT_SUPPORTED": "Fundos virtuais não são suportados neste navegador",
+			"NOT_SUPPORTED_DESCRIPTION": "Seu navegador não suporta efeitos de fundo. Este recurso requer aceleração de GPU que pode estar desabilitada ou não disponível."
+		},
+		"RECORDING": {
+			"TITLE": "Gravação",
+			"SUBTITLE": "Grave a sua reunião para a posteridade",
+			"CONTENT_TITLE": "Grave a sua videochamada",
+			"CONTENT_SUBTITLE": "Quando a gravação tiver terminado, poderá descarregá-la com facilidade",
+			"STATUS_STOPPED": "Não iniciada",
+			"STATUS_STARTING": "A iniciar",
+			"STATUS_STARTED": "A gravar",
+			"STATUS_STOPPING": "A parar",
+			"STATUS_FAILED": "Falhou",
+			"STATUS_READY": "Pronta",
+			"STARTING": "Começar a gravação",
+			"STOPPING": "Parando a gravação",
+			"DELETE": "Excluir",
+			"CANCEL": "Cancelar",
+			"ACCEPT": "Aceitar",
+			"DELETE_QUESTION": "Tem certeza de que deseja excluir a gravação?",
+			"NO_TRACKS_PUBLISHED": "Compartilhe áudio ou vídeo para começar a gravar.",
+			"ERROR_STARTING": "Erro ao iniciar gravação"
+		}
+	},
+	"ERRORS": {
+		"SESSION": "Houve um erro de ligação à sala",
+		"CONNECTION": "Ligação perdida",
+		"RECONNECT": "A tentar restabelecer a ligação à sala...",
+		"DISCONNECT": "Você foi desconectado",
+		"SIGNAL_CLOSE": "A conexão com o servidor foi encerrada inesperadamente",
+		"SERVER_SHUTDOWN": "O servidor está atualmente fora do ar ou em manutenção",
+		"PARTICIPANT_REMOVED": "Você foi removido desta sala",
+		"ROOM_DELETED": "Esta sala foi excluída",
+		"DUPLICATE_IDENTITY": "Você foi desconectado porque seu apelido foi atribuído a outro participante",
+		"TOGGLE_CAMERA": "Houve um erro ao alternar a câmara",
+		"TOGGLE_MICROPHONE": "Houve um erro ao alternar microphone",
+		"LOAD_RECORDING_TITLE": "Erro ao carregar a gravação",
+		"MEDIA_ERR_GENERIC": "Ocorreu um erro ao carregar o vídeo.",
+		"MEDIA_ERR_NETWORK": "Um erro de rede fez com que o download do vídeo falhasse parcialmente.",
+		"MEDIA_ERR_DECODE": "A reprodução do vídeo foi interrompida devido a um problema de corrupção ou porque o vídeo usou recursos que o seu navegador não suportava.",
+		"MEDIA_ERR_SRC_NOT_SUPPORTED": "Erro ao transmitir a gravação: não foi possível acessar o S3.",
+		"E2EE_ERROR_TITLE": "Erro de senha da sala",
+		"E2EE_ERROR_CONTENT": "Este participante está usando uma chave de criptografia diferente. O vídeo não pode ser exibido.",
+		"GENERIC": "Ocorreu um erro inesperado. Tente novamente."
+	},
+	"LOBBY": {
+		"E2EE_BADGE_TOOLTIP": "Criptografado de ponta a ponta",
+		"E2EE_BADGE_TEXT": "As reuniões nesta sala são criptografadas de ponta a ponta",
+		"JOIN_TITLE": "Entrar na reunião",
+		"ROOM_CLOSED_TITLE": "Sala fechada",
+		"ACCESS_RESTRICTED_TITLE": "Acesso restrito",
+		"JOIN_SUBTITLE": "Entre na reunião e comece a se conectar",
+		"ROOM_CLOSED_SUBTITLE": "Esta sala não está disponível para reuniões",
+		"ACCESS_RESTRICTED_SUBTITLE": "Você não tem permissão para entrar em reuniões nesta sala",
+		"NAME_LABEL": "Seu nome de exibição",
+		"NAME_PLACEHOLDER": "Digite seu nome",
+		"NAME_REQUIRED_PREFIX": "O nome é ",
+		"E2EE_KEY_LABEL": "Chave de criptografia",
+		"E2EE_KEY_PLACEHOLDER": "Digite a chave de criptografia da sala",
+		"E2EE_KEY_REQUIRED_PREFIX": "O campo da chave de criptografia é ",
+		"REQUIRED": "obrigatório",
+		"E2EE_KEY_HINT": "Esta reunião requer uma chave de criptografia",
+		"JOIN_BUTTON": "Entrar na reunião",
+		"ROOM_CLOSED_MESSAGE": "Desculpe, esta sala está fechada. Você não pode entrar na reunião neste momento. Entre em contato com um gerente da sala para mais informações.",
+		"NO_PERMISSION_MESSAGE": "Desculpe, você tem acesso a esta sala, mas não tem permissão para entrar em reuniões. Entre em contato com um gerente da sala para mais informações.",
+		"RECORDINGS_TITLE": "Ver gravações",
+		"RECORDINGS_SUBTITLE": "Navegue e gerencie gravações anteriores",
+		"RECORDINGS_DESCRIPTION": "Acesse reuniões gravadas anteriormente nesta sala. Você pode assistir, baixar ou gerenciar gravações existentes.",
+		"RECORDINGS_BUTTON": "Navegar pelas gravações",
+		"BACK": "Voltar",
+		"BACK_TO_ROOMS": "Voltar para as salas"
+	},
+	"SHARE_ACCESS": {
+		"COPY_TOOLTIP": "Copiar link de acesso à sala",
+		"DEFAULT_TITLE": "Convide outras pessoas com este link de acesso à sala"
+	},
+	"SHARE_OVERLAY": {
+		"TITLE": "Comece a colaborar",
+		"SUBTITLE": "Compartilhe este link para trazer outras pessoas para a reunião"
+	},
+	"WAITING_PANEL": {
+		"TITLE": "Aguardando outras pessoas entrarem",
+		"SUBTITLE": "Os participantes aparecerão aqui assim que entrarem na reunião.",
+		"ALONE_SUBTITLE": "Você é o único aqui no momento."
+	},
+	"DEVICE": {
+		"DEFAULT": "Dispositivo padrão"
+	},
+	"CAPTIONS": {
+		"ARIA_FROM": "Legenda de ",
+		"DISABLED_BY_ADMIN_TEXT": "Legendas ao vivo (desativadas pelo administrador)",
+		"ENABLE": "Ativar legendas ao vivo",
+		"DISABLE": "Desativar legendas ao vivo",
+		"DISABLED_BY_ADMIN_TOOLTIP": "As legendas ao vivo estão desativadas pelo administrador"
+	},
+	"COPY_LINK": {
+		"TOOLTIP": "Copiar o link de acesso à sala",
+		"TEXT": "Copiar link de acesso à sala"
+	},
+	"LEAVE_BUTTON": {
+		"MENU_TOOLTIP": "Opções de saída",
+		"LEAVE_OPTION": "Sair da reunião",
+		"END_OPTION": "Encerrar reunião para todos"
+	},
+	"MORE_OPTIONS": {
+		"DARK_MODE": "Modo escuro",
+		"LAYOUT_TOOLTIP": "Configurar layout da grade",
+		"ADJUST_LAYOUT": "Ajustar layout"
+	},
+	"LAYOUT_SETTINGS": {
+		"TITLE": "Configurações de layout",
+		"MODE_ARIA": "Selecionar modo de layout",
+		"MOSAIC": "Mosaico",
+		"MOSAIC_DESC": "Mostra todos os participantes em uma grade unificada",
+		"SMART_MOSAIC": "Mosaico inteligente",
+		"SMART_MOSAIC_DESC": "Mostra um número limitado de participantes ativos",
+		"COUNT_LABEL": "Número de participantes visíveis",
+		"COUNT_HELPER": "Escolha quantos participantes remotos são exibidos na grade",
+		"COUNT_ARIA": "Número de participantes a exibir"
+	},
+	"PARTICIPANT_ITEM": {
+		"PROMOTE_TOOLTIP": "Promover a moderador",
+		"DOWNGRADE_TOOLTIP": "Rebaixar para as permissões originais",
+		"KICK_TOOLTIP": "Expulsar participante",
+		"BADGE_OWNER": "Proprietário",
+		"BADGE_ADMIN": "Administrador",
+		"BADGE_MODERATOR": "Moderador"
+	},
+	"END_MEETING": {
+		"LEFT_TITLE": "Você saiu da reunião",
+		"LEFT_MESSAGE": "Você saiu da reunião com sucesso",
+		"KICKED_TITLE": "Expulso da reunião",
+		"KICKED_MESSAGE": "Você foi expulso da reunião por um moderador",
+		"ENDED_TITLE": "Reunião encerrada",
+		"ENDED_MESSAGE": "A reunião foi encerrada por um moderador",
+		"ENDED_BY_SELF_MESSAGE": "Você encerrou a reunião com sucesso",
+		"DISCONNECTED_TITLE": "Desconectado da reunião",
+		"NETWORK_MESSAGE": "Conexão perdida devido a problemas de conectividade de rede",
+		"SERVER_SHUTDOWN_MESSAGE": "Conexão perdida devido ao desligamento do servidor",
+		"DUPLICATE_MESSAGE": "Esta sessão foi encerrada porque você entrou na mesma reunião a partir de outra aba ou dispositivo",
+		"UNKNOWN_MESSAGE": "Ocorreu um erro inesperado, tente novamente mais tarde",
+		"FOOTER": "Obrigado por usar o JMeet",
+		"BACK": "Voltar",
+		"BACK_TO_ROOMS": "Voltar para as salas",
+		"ACCEPT": "Aceitar"
+	},
+	"MEETING_PAGE": {
+		"PREPARING": "Preparando sua reunião...",
+		"PREPARE_ERROR": "Não foi possível preparar sua reunião.",
+		"INIT_ERROR_TITLE": "Erro",
+		"INIT_ERROR_MESSAGE": "Ocorreu um erro ao inicializar o lobby da reunião. Tente novamente mais tarde.",
+		"INIT_ERROR_CONFIRM": "OK"
+	}
+}

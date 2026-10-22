@@ -1,0 +1,29 @@
+@if (lkRoom()) {
+	<div class="main-container" [ngClass]="{ 'fit-video': fitVideoToStage() }">
+		<button
+			type="button"
+			class="video-fit-button"
+			(click)="toggleVideoFit()"
+			[attr.aria-label]="fitVideoToStage() ? '切换为填充窗口' : '切换为完整显示'"
+			[attr.title]="fitVideoToStage() ? '填充窗口' : '完整显示'"
+		>
+			<nz-icon [nzType]="(fitVideoToStage() ? 'fullscreen' : 'fit_screen') | nzIconType" />
+		</button>
+		<ov-smart-layout
+			[ovSmartLayoutAllowed]="showLayoutSelector()"
+			[ovShowHiddenParticipantsIndicator]="!shouldShowOverlay()"
+			(hiddenParticipantsIndicatorClicked)="toggleParticipantsPanel()"
+		>
+			<ng-container *ovLayoutAdditionalElements>
+				@if (shouldShowWaitingOverlay()) {
+					<div id="waiting-overlay" class="main-share-room-access-link-container fade-in-delayed OV_big">
+						<ov-meeting-waiting-panel
+							class="main-share-room-access-link"
+							[subtitle]="'WAITING_PANEL.ALONE_SUBTITLE' | translate"
+						/>
+					</div>
+				}
+			</ng-container>
+		</ov-smart-layout>
+	</div>
+}

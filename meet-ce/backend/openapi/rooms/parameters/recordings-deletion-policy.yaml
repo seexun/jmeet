@@ -1,0 +1,16 @@
+name: withRecordings
+in: query
+description: |
+    Policy for room deletion when it has recordings. Options are:
+    - `force`: The room and its recordings will be deleted.
+    - `close`: The room will be closed instead of deleted, maintaining its recordings.
+    - `fail`: The deletion will fail if the room has recordings.
+required: false
+schema:
+    type: string
+    enum:
+        - force
+        - close
+        - fail
+    default: fail
+    example: fail

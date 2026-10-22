@@ -1,0 +1,145 @@
+/auth/login:
+    post:
+        operationId: loginUser
+        summary: Login to JMeet
+        description: >
+            Authenticates a user and returns an access and refresh token.
+        tags:
+            - Internal API - Authentication
+        requestBody:
+            $ref: './requests/login.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/user-login.yaml'
+            '404':
+                $ref: './responses/errors/invalid-credentials.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+/auth/options:
+    get:
+        operationId: getAuthenticationOptions
+        summary: List enabled login methods
+        tags: [Internal API - Authentication]
+        responses:
+            '200':
+                description: Public authentication discovery
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                localLoginEnabled: { type: boolean }
+                                identityProviders:
+                                    type: array
+                                    items:
+                                        type: object
+                                        properties:
+                                            id: { type: string }
+                                            type: { type: string, enum: [ldap, oidc, wecom, dingtalk, feishu, saml, cas] }
+                                            displayName: { type: string }
+/auth/directory/{providerId}/login:
+    post:
+        operationId: loginWithEnterpriseDirectory
+        summary: Login with LDAP or Active Directory credentials
+        tags: [Internal API - Authentication]
+        parameters:
+            - { name: providerId, in: path, required: true, schema: { type: string } }
+        requestBody:
+            $ref: './requests/login.yaml'
+        responses:
+            '200': { $ref: './responses/success/user-login.yaml' }
+            '404': { $ref: './responses/errors/invalid-credentials.yaml' }
+            '429': { $ref: '../shared/responses/errors/too-many-requests.yaml' }
+/auth/sso/{providerId}/start:
+    get:
+        operationId: startEnterpriseSso
+        summary: Start an enterprise OIDC/OAuth login
+        tags: [Internal API - Authentication]
+        parameters:
+            - { name: providerId, in: path, required: true, schema: { type: string } }
+            - { name: redirectTo, in: query, schema: { type: string } }
+        responses:
+            '302': { description: Redirect to the identity provider }
+/auth/sso/{providerId}/callback:
+    get:
+        operationId: completeEnterpriseSso
+        summary: Complete an enterprise OIDC/OAuth login
+        tags: [Internal API - Authentication]
+        parameters:
+            - { name: providerId, in: path, required: true, schema: { type: string } }
+            - { name: code, in: query, required: true, schema: { type: string } }
+            - { name: state, in: query, required: true, schema: { type: string } }
+        responses:
+            '302': { description: Redirect to the application with a one-time exchange ticket }
+/auth/sso/exchange:
+    post:
+        operationId: exchangeEnterpriseSsoTicket
+        summary: Exchange a one-time enterprise login ticket for application tokens
+        tags: [Internal API - Authentication]
+        requestBody:
+            required: true
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        required: [ticket]
+                        properties:
+                            ticket: { type: string, format: uuid }
+        responses:
+            '200': { $ref: './responses/success/user-login.yaml' }
+            '401': { description: Ticket is invalid or expired }
+/auth/trusted-jwt/{providerId}/exchange:
+    post:
+        operationId: exchangeTrustedJwt
+        summary: Exchange a signed, short-lived enterprise JWT for application tokens
+        tags: [Internal API - Authentication]
+        parameters:
+            - { name: providerId, in: path, required: true, schema: { type: string } }
+        requestBody:
+            required: true
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        required: [token]
+                        properties:
+                            token: { type: string, description: 'Asymmetrically signed JWT containing iss, aud, sub, iat, exp and jti' }
+        responses:
+            '200': { $ref: './responses/success/user-login.yaml' }
+            '401': { description: JWT validation or replay protection failed }
+/auth/logout:
+    post:
+        operationId: logoutUser
+        summary: Logout from JMeet
+        description: >
+            Logs out the user.
+        tags:
+            - Internal API - Authentication
+        responses:
+            '200':
+                $ref: './responses/success/user-logout.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+/auth/refresh:
+    post:
+        operationId: refreshAccessToken
+        summary: Refresh access token
+        description: >
+            Refreshes the access token using the refresh token.
+        tags:
+            - Internal API - Authentication
+        security:
+            - refreshTokenHeader: []
+        responses:
+            '200':
+                $ref: './responses/success/refresh-token.yaml'
+            '400':
+                $ref: './responses/errors/invalid-refresh-token.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'

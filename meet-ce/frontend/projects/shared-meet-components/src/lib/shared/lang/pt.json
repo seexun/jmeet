@@ -1,0 +1,72 @@
+{
+  "ERROR": {
+    "DEFAULT_TITLE": "Erro",
+    "BACK": "Voltar",
+    "BACK_TO_CONSOLE": "Voltar para o Console",
+    "ACCEPT": "Aceitar",
+    "OOPS": "Ops!",
+    "SOMETHING_WRONG": "Algo deu errado"
+  },
+  "NAVIGATION_ERROR": {
+    "EMBEDDED_ERROR": {
+      "TITLE": "Não foi possível carregar o JMeet",
+      "MESSAGE": "Não foi possível carregar o JMeet. Verifique a configuração de incorporação."
+    },
+    "CLOSED_ROOM": {
+      "TITLE": "Sala fechada",
+      "MESSAGE": "As reuniões nesta sala não estão disponíveis enquanto ela estiver fechada"
+    },
+    "ANONYMOUS_ACCESS_DISABLED": {
+      "TITLE": "Acesso anônimo desabilitado",
+      "MESSAGE": "O acesso anônimo para sua função foi desabilitado nesta sala (e em suas gravações)"
+    },
+    "ANONYMOUS_RECORDING_ACCESS_DISABLED": {
+      "TITLE": "Acesso anônimo desabilitado",
+      "MESSAGE": "O acesso anônimo para esta gravação foi desabilitado"
+    },
+    "INVALID_ROOM_SECRET": {
+      "TITLE": "Link inválido",
+      "MESSAGE": "O link que você usou para acessar esta sala (ou suas gravações) não é válido. Peça a um moderador para compartilhar o link correto usando os botões de compartilhamento disponíveis"
+    },
+    "INVALID_RECORDING_SECRET": {
+      "TITLE": "Link inválido",
+      "MESSAGE": "O link que você usou para acessar esta gravação não é válido"
+    },
+    "INVALID_ROOM": {
+      "TITLE": "Sala inválida",
+      "MESSAGE": "A sala (ou suas gravações) que você está tentando acessar não existe ou foi excluída"
+    },
+    "INVALID_RECORDING": {
+      "TITLE": "Gravação inválida",
+      "MESSAGE": "A gravação que você está tentando acessar não existe ou foi excluída"
+    },
+    "INVALID_MEMBER": {
+      "TITLE": "Membro inválido",
+      "MESSAGE": "Você não é mais membro desta sala ou as informações do membro estão incorretas"
+    },
+    "FORBIDDEN_ROOM_ACCESS": {
+      "TITLE": "Acesso à sala proibido",
+      "MESSAGE": "Você não está autorizado a acessar esta sala (nem suas gravações)"
+    },
+    "FORBIDDEN_ROOM_RECORDINGS_ACCESS": {
+      "TITLE": "Acesso às gravações proibido",
+      "MESSAGE": "Você não está autorizado a acessar as gravações desta sala"
+    },
+    "FORBIDDEN_RECORDING_ACCESS": {
+      "TITLE": "Acesso à gravação proibido",
+      "MESSAGE": "Você não está autorizado a acessar esta gravação"
+    },
+    "ROOM_ACCESS_REVOKED": {
+      "TITLE": "Acesso à sala revogado",
+      "MESSAGE": "Suas permissões nesta sala foram alteradas, e você não tem mais acesso (nem a suas gravações). Entre em contato com um moderador para obter mais informações"
+    },
+    "TOO_MANY_REQUESTS": {
+      "TITLE": "Muitas solicitações",
+      "MESSAGE": "Você fez muitas solicitações em um curto período de tempo. Aguarde um momento e tente novamente"
+    },
+    "INTERNAL_ERROR": {
+      "TITLE": "Erro interno",
+      "MESSAGE": "Ocorreu um erro inesperado, tente novamente mais tarde"
+    }
+  }
+}

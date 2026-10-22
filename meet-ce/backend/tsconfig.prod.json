@@ -1,0 +1,25 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"rootDir": ".",
+		"noUnusedLocals": true,
+		"skipLibCheck": true,
+		/*
+		 * Pin the Express type declarations to this package's own copy (Express 5). Other workspaces and
+		 * transitive deps hoisted to the repo root (e.g. express-rate-limit) pull in @types/express@4,
+		 * whose `Request` is structurally different from v5 (e.g. it still declares `req.param`). Without
+		 * this, those v4 declarations leak into the build and clash with our v5 `Request`, breaking
+		 * middleware that passes `req` to helpers typed by another copy. These paths force every
+		 * `express`/`express-serve-static-core` import in the program to resolve to the single v5 copy.
+		 *
+		 * This lives here (a tsc-only config) rather than in the base tsconfig.json because tsx (dev
+		 * server) reads the base config and honors `paths` for RUNTIME resolution — pointing `express`
+		 * at a `.d.ts` would crash it. Build and `dev:typecheck` both run against this config.
+		 */
+		"paths": {
+			"express": ["./node_modules/@types/express/index.d.ts"],
+			"express-serve-static-core": ["./node_modules/@types/express-serve-static-core/index.d.ts"]
+		}
+	},
+	"exclude": ["**/*.test.ts", "*.test.tsx"]
+}

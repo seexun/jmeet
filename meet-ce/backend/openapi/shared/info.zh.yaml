@@ -1,0 +1,21 @@
+title: JMeet REST API
+description: |
+    JMeet REST API 用于将实时音视频会议能力集成到外部业务系统。
+
+    ## 身份认证
+
+    在 **管理员端 > 集成管理** 中创建系统唯一的 API Token，并通过 `X-API-Key` 请求头传递。
+    该 Token 可调用本文档中的全部公开接口，无需配置作用域或单独授权。重新生成 Token 后，旧 Token 会立即失效。
+
+    Token 只能保存在服务端，请勿将其写入浏览器代码、移动应用或公开代码仓库。
+
+    ```bash
+    curl --request GET \
+      --url "https://your-meet-host/meet/api/v1/rooms" \
+      --header "X-API-Key: ovmeet-your-token"
+    ```
+license:
+    name: Apache License 2.0
+    identifier: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+version: v1

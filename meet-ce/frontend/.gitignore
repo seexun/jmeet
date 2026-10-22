@@ -1,0 +1,4 @@
+# Generated at build/serve/install time by scripts/copy-livekit-assets.mjs
+# (kept in sync with the installed livekit-client / @mediapipe versions, so not committed).
+/src/assets/livekit/
+/src/assets/mediapipe/wasm/

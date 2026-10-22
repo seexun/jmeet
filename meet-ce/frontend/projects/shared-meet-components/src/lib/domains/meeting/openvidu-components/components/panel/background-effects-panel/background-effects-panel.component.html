@@ -1,0 +1,112 @@
+<div class="panel-container" id="background-effects-container" [class.prejoin-mode]="mode() === 'prejoin'">
+	@if (mode() === 'meeting') {
+		<div class="panel-header-container">
+			<h3 class="panel-title">{{ 'PANEL.BACKGROUND.TITLE' | translate }}</h3>
+
+			<button
+				class="panel-close-button jmeet-button jmeet-button--ghost jmeet-button--icon"
+				nz-tooltip
+				nzTooltipTitle="{{ 'PANEL.CLOSE' | translate }}"
+				(click)="close()"
+			>
+				<nz-icon nzType="close" />
+			</button>
+		</div>
+	} @else {
+		<button
+			class="panel-close-button jmeet-button jmeet-button--ghost jmeet-button--icon"
+			nz-tooltip
+			nzTooltipTitle="{{ 'PANEL.CLOSE' | translate }}"
+			(click)="close()"
+		>
+			<nz-icon nzType="arrow-left" />
+		</button>
+	}
+
+	@if (!isVirtualBackgroundSupported()) {
+		<div class="not-supported-message">
+			<p class="warning-title">{{ 'PANEL.BACKGROUND.NOT_SUPPORTED' | translate }}</p>
+			<p class="warning-description">{{ 'PANEL.BACKGROUND.NOT_SUPPORTED_DESCRIPTION' | translate }}</p>
+		</div>
+	}
+
+	<div class="effects-container" fxFlex="100%" fxLayoutAlign="space-evenly none">
+		<div>
+			<h4 class="background-title">{{ 'PANEL.BACKGROUND.BLURRED_SECTION' | translate }}</h4>
+			<div>
+				@for (effect of noEffectAndBlurredBackground; track effect.id) {
+				<button
+					class="effect-button"
+					[class.active-effect-btn]="backgroundSelectedId() === effect.id"
+					(click)="applyBackground(effect)"
+					[attr.id]="effect.id + '-btn'"
+					[disabled]="!isVirtualBackgroundSupported()"
+					nz-tooltip
+					[nzTooltipTitle]="
+						effect.type === effectType.NONE
+							? ('PANEL.BACKGROUND.NO_EFFECTS' | translate)
+							: ('PANEL.BACKGROUND.BLURRED_EFFECT' | translate)
+					"
+				>
+					<nz-icon [nzType]="(effect.thumbnail) | nzIconType" />
+				</button>
+				}
+			</div>
+		</div>
+	<!-- 自定义背景:本地上传,不上传服务器 -->
+	<div>
+		<h4 class="background-title">{{ 'PANEL.BACKGROUND.CATEGORY_CUSTOM' | translate }}</h4>
+		<div class="grid">
+			<label
+				class="effect-button custom-upload"
+				[class.disabled]="!isVirtualBackgroundSupported() || uploadPending()"
+				nz-tooltip
+				[nzTooltipTitle]="'PANEL.BACKGROUND.UPLOAD_CUSTOM' | translate"
+			>
+				<input type="file" accept="image/*" hidden (change)="onCustomBackgroundSelected($event)" />
+				<nz-icon [nzType]="(uploadPending() ? 'loading' : 'plus') | nzIconType" />
+			</label>
+			@for (effect of customBackgrounds(); track effect.id) {
+				<div
+					class="effect-button custom-effect"
+					[id]="'effect-' + effect.id"
+					[class.active-effect-btn]="backgroundSelectedId() === effect.id"
+					[class.disabled]="!isVirtualBackgroundSupported()"
+					(click)="isVirtualBackgroundSupported() && applyBackground(effect)"
+				>
+					<img [src]="effect.thumbnail" [alt]="'PANEL.BACKGROUND.CATEGORY_CUSTOM' | translate" />
+					<button
+						type="button"
+						class="custom-remove"
+						nz-tooltip
+						[nzTooltipTitle]="'PANEL.BACKGROUND.REMOVE_CUSTOM' | translate"
+						(click)="removeCustomBackground($event, effect.id)"
+						[attr.aria-label]="'PANEL.BACKGROUND.REMOVE_CUSTOM' | translate"
+					>
+						<nz-icon nzType="close" />
+					</button>
+				</div>
+			}
+		</div>
+	</div>
+		@for (group of imageCategories; track group.category) {
+		<div>
+			<h4 class="background-title">{{ group.titleKey | translate }}</h4>
+
+			<div class="grid">
+				@for (effect of group.images; track effect.id) {
+				<div
+					class="effect-button"
+					[id]="'effect-' + effect.id"
+					[class.active-effect-btn]="backgroundSelectedId() === effect.id"
+					[class.disabled]="!isVirtualBackgroundSupported()"
+					(click)="isVirtualBackgroundSupported() && applyBackground(effect)"
+				>
+					<img [src]="effect.thumbnail" />
+				</div>
+				}
+			</div>
+		</div>
+		}
+	</div>
+</div>

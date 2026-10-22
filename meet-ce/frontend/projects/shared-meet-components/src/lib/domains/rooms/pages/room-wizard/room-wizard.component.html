@@ -1,0 +1,96 @@
+<div class="jmeet-stack-sections room-wizard-page wizard-container" [class.basic-creation-mode]="isBasicCreation()">
+	@if (initialized()) {
+		@if (!isBasicCreation()) {
+			<jmeet-page-header>
+				<span page-title>{{ pageTitle() }}</span>
+				<span page-description class="wizard-page-subtitle">{{ 'ROOMS.WIZARD.SUBTITLE' | translate }}</span>
+				<div page-actions>
+					<button
+						type="button"
+						class="jmeet-button jmeet-button--outline"
+						(click)="onBack()"
+						id="switch-simple-mode-btn"
+					>
+						<nz-icon nzType="swap" />
+						{{ 'ROOMS.WIZARD.SWITCH_SIMPLE_MODE' | translate }}
+					</button>
+				</div>
+			</jmeet-page-header>
+		}
+
+		<div class="wizard-body">
+			@if (!isBasicCreation()) {
+				<aside class="wizard-rail">
+					<section class="wizard-step-card jmeet-card">
+						<ov-step-indicator
+							class="wizard-step-bar"
+							[steps]="steps()"
+							[currentStepIndex]="currentStepIndex()"
+							[allowNavigation]="true"
+							[editMode]="editMode()"
+							(stepClick)="onStepClick($event)"
+						/>
+					</section>
+				</aside>
+			}
+
+			<main class="wizard-content">
+				<section class="step-content jmeet-card">
+					@if (!isBasicCreation() && !isCreatingRoom()) {
+						@if (currentStep(); as step) {
+							<h2 class="jmeet-text--section-title wizard-step-heading">{{ step.label | translate }}</h2>
+						}
+					}
+
+					@if (isCreatingRoom()) {
+						<jmeet-loading-skeleton variant="card" [rows]="4" />
+					} @else {
+						@if (isBasicCreation()) {
+							<ov-room-basic-creation
+								(createRoom)="createRoomBasic($event)"
+								(openAdvancedMode)="onOpenAdvancedMode()"
+								(cancel)="onCancel()"
+							/>
+						} @else {
+							@switch (currentStep()?.id) {
+								@case (WizardStepId.ROOM_DETAILS) {
+									<ov-room-details />
+								}
+								@case (WizardStepId.ROOM_CONFIG) {
+									<ov-room-config />
+								}
+								@case (WizardStepId.ROOM_ACCESS) {
+									<ov-room-access />
+								}
+								@case (WizardStepId.RECORDING) {
+									<ov-recording-config />
+								}
+								@case (WizardStepId.RECORDING_TRIGGER) {
+									<ov-recording-trigger />
+								}
+								@case (WizardStepId.RECORDING_LAYOUT) {
+									<ov-recording-layout />
+								}
+							}
+						}
+					}
+
+					@if (!isBasicCreation() && !isCreatingRoom()) {
+						<div class="wizard-footer">
+							<ov-wizard-nav
+								class="wizard-nav jmeet-form-actions"
+								[config]="navigationConfig()"
+								[currentStepId]="currentStepIndex()"
+								(previous)="onPrevious()"
+								(next)="onNext()"
+								(cancel)="onCancel()"
+								(back)="onBack()"
+								(finish)="createRoomAdvance()"
+							/>
+						</div>
+					}
+				</section>
+			</main>
+		</div>
+	}
+</div>

@@ -1,0 +1,56 @@
+<header class="jmeet-meeting-topbar">
+	<div class="jmeet-meeting-topbar__left">
+		@if (roomName()) {
+			<span class="jmeet-meeting-topbar__title">{{ roomName() }}</span>
+		}
+		@if (recordingStarted()) {
+			<button type="button" class="jmeet-meeting-topbar__rec" (click)="activitiesClicked.emit()">
+				<nz-icon nzType="check-circle" class="blink" />
+				<span class="blink">REC</span>
+				@if (recordingTime()) { <span>{{ recordingTime() | date: 'H:mm:ss' }}</span> }
+			</button>
+		}
+	</div>
+	<div class="jmeet-meeting-topbar__right">
+		<div class="jmeet-meeting-topbar__layout" role="group" [attr.aria-label]="'TOOLBAR.MEETING_LAYOUT' | translate">
+			<button type="button" class="layout-switch-btn"
+				[class.active]="layoutMode() === SmartLayoutMode.SMART_MOSAIC"
+				(click)="layoutSelected.emit(SmartLayoutMode.SMART_MOSAIC)"
+				nz-tooltip [nzTooltipTitle]="'TOOLBAR.SMART_LAYOUT' | translate"
+				[attr.aria-label]="'TOOLBAR.SMART_LAYOUT' | translate"
+				[attr.aria-pressed]="layoutMode() === SmartLayoutMode.SMART_MOSAIC">
+				<svg class="layout-switch-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+					<rect x="2.5" y="3" width="9.5" height="14" rx="1.5" /><rect x="13.5" y="3" width="4" height="4" rx="1" />
+					<rect x="13.5" y="8.5" width="4" height="4" rx="1" /><rect x="13.5" y="14" width="4" height="3" rx="1" />
+				</svg>
+			</button>
+			<button type="button" class="layout-switch-btn"
+				[class.active]="layoutMode() === SmartLayoutMode.MOSAIC"
+				(click)="layoutSelected.emit(SmartLayoutMode.MOSAIC)"
+				nz-tooltip [nzTooltipTitle]="'TOOLBAR.GRID_LAYOUT' | translate"
+				[attr.aria-label]="'TOOLBAR.GRID_LAYOUT' | translate"
+				[attr.aria-pressed]="layoutMode() === SmartLayoutMode.MOSAIC">
+				<svg class="layout-switch-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+					<rect x="2.5" y="2.5" width="6.5" height="6.5" rx="1.25" /><rect x="11" y="2.5" width="6.5" height="6.5" rx="1.25" />
+					<rect x="2.5" y="11" width="6.5" height="6.5" rx="1.25" /><rect x="11" y="11" width="6.5" height="6.5" rx="1.25" />
+				</svg>
+			</button>
+		</div>
+		<span class="jmeet-meeting-topbar__net" role="status"
+			[class.quality-good]="quality() === ConnectionQuality.Excellent || quality() === ConnectionQuality.Good"
+			[class.quality-poor]="quality() === ConnectionQuality.Poor"
+			[class.quality-lost]="quality() === ConnectionQuality.Lost"
+			nz-tooltip
+			[nzTooltipTitle]="quality() === ConnectionQuality.Lost
+				? ('TOOLBAR.NETWORK_LOST' | translate)
+				: (quality() === ConnectionQuality.Poor
+					? ('TOOLBAR.NETWORK_POOR' | translate)
+					: ('TOOLBAR.NETWORK_GOOD' | translate))">
+			<nz-icon [nzType]="(quality() === ConnectionQuality.Lost ? 'signal_wifi_off' : 'signal_wifi_4_bar') | nzIconType" />
+		</span>
+		<span class="jmeet-meeting-topbar__secure" nz-tooltip [nzTooltipTitle]="'TOOLBAR.SECURE_MEETING' | translate">
+			<nz-icon nzType="safety-certificate" />
+		</span>
+		<span class="jmeet-meeting-topbar__elapsed">{{ elapsed() }}</span>
+	</div>
+</header>

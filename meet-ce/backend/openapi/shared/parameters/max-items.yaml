@@ -1,0 +1,8 @@
+name: maxItems
+in: query
+required: false
+description: Specifies the maximum number of items to return per page. The default value is 10, and the maximum allowed is 100.
+schema:
+    type: integer
+    default: 10
+    maximum: 100

@@ -1,0 +1,34 @@
+// Public form-control contract.
+.jmeet-form-control {
+	display: block;
+	width: 100%;
+	font-family: var(--jmeet-typography-font-family);
+	color: var(--jmeet-color-text-primary);
+	min-height: var(--jmeet-control-height-default);
+	padding: var(--jmeet-input-padding);
+	border: 1px solid var(--jmeet-input-border-color);
+	border-radius: var(--jmeet-input-border-radius);
+	background: var(--jmeet-color-surface-variant);
+	transition:
+		border-color var(--jmeet-motion-fast),
+		box-shadow var(--jmeet-motion-fast),
+		background-color var(--jmeet-motion-fast);
+
+	&:hover:not(:disabled) {
+		border-color: var(--jmeet-color-border-strong);
+		background: var(--jmeet-color-surface-card);
+	}
+
+	&:focus-visible {
+		border-color: var(--jmeet-input-border-color-focus);
+		outline: none;
+		box-shadow: var(--jmeet-focus-ring);
+	}
+
+	&:disabled,
+	&[aria-disabled='true'] {
+		cursor: not-allowed;
+		color: var(--jmeet-color-text-disabled);
+		opacity: var(--jmeet-state-disabled-opacity);
+	}
+}

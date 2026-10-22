@@ -1,0 +1,16 @@
+description: Room or participant not found
+content:
+    application/json:
+        schema:
+            $ref: '../../../shared/schemas/error.yaml'
+        examples:
+            participant_not_found:
+                summary: Participant not found
+                value:
+                    error: 'Participant Error'
+                    message: 'Participant "Alice" not found in room "room_123"'
+            room_not_found:
+                summary: Room not found
+                value:
+                    error: 'Room Error'
+                    message: 'Room "room_123" not found'

@@ -1,0 +1,235 @@
+{
+	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+	"version": 1,
+	"newProjectRoot": "projects",
+	"projects": {
+		"openvidu-meet": {
+			"root": "",
+			"sourceRoot": "src",
+			"projectType": "application",
+			"prefix": "ov",
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
+				}
+			},
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:application",
+					"options": {
+						"aot": true,
+						"outputPath": "dist/openvidu-meet",
+						"index": "src/index.html",
+						"browser": "src/main.ts",
+						"polyfills": ["zone.js"],
+						"tsConfig": "src/tsconfig.app.json",
+						"inlineStyleLanguage": "scss",
+						"stylePreprocessorOptions": {
+							"includePaths": ["projects/shared-meet-components/styles"]
+						},
+						"assets": [
+							"src/favicon.ico",
+							"src/assets"
+						],
+						"styles": ["src/styles.scss"],
+						"scripts": [],
+						"preserveSymlinks": false
+					},
+					"configurations": {
+						"development": {
+							"optimization": false,
+							"outputHashing": "all",
+							"sourceMap": true,
+							"extractLicenses": false,
+							"outputPath": {
+								"base": "../backend/public/frontend",
+								"browser": ""
+							},
+							"deleteOutputPath": true,
+							"clearScreen": true
+						},
+						"production": {
+							"outputPath": {
+								"base": "../backend/public/frontend",
+								"browser": ""
+							},
+							"deleteOutputPath": true,
+							"clearScreen": true,
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "4mb",
+									"maximumError": "10mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "100kb",
+									"maximumError": "200kb"
+								}
+							],
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.prod.ts"
+								}
+							],
+							"optimization": {
+								"scripts": true,
+								"styles": { "minify": true, "inlineCritical": true },
+								"fonts": false
+							},
+							"outputHashing": "all",
+							"sourceMap": false,
+							"namedChunks": false,
+							"aot": true,
+							"extractLicenses": true
+						},
+						"ci": {
+							"budgets": [
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "100kb"
+								}
+							],
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.ci.ts"
+								}
+							],
+							"optimization": true,
+							"outputHashing": "all",
+							"sourceMap": false,
+							"namedChunks": false,
+							"aot": true,
+							"extractLicenses": true
+						}
+					}
+				},
+				"serve": {
+					"builder": "@angular-devkit/build-angular:dev-server",
+					"options": {
+						"buildTarget": "openvidu-meet:build",
+						"proxyConfig": "src/proxy.conf.json"
+					},
+					"configurations": {
+						"development": {
+							"buildTarget": "openvidu-meet:build:development"
+						},
+						"production": {
+							"buildTarget": "openvidu-meet:build:production"
+						}
+					},
+					"defaultConfiguration": "development"
+				},
+				"extract-i18n": {
+					"builder": "@angular-devkit/build-angular:extract-i18n",
+					"options": {
+						"buildTarget": "openvidu-meet:build"
+					}
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"main": "projects/shared-meet-components/src/test-main.ts",
+						"polyfills": ["zone.js", "zone.js/testing"],
+						"tsConfig": "src/tsconfig.spec.json",
+						"karmaConfig": "src/karma.conf.js",
+						"codeCoverage": true,
+						"include": ["../projects/shared-meet-components/src/**/*.spec.ts"],
+						"stylePreprocessorOptions": {
+							"includePaths": ["projects/shared-meet-components/styles"]
+						},
+						"styles": [],
+						"scripts": [],
+						"assets": ["src/favicon.ico", "src/assets"],
+						"codeCoverageExclude": ["/**/*mock*.ts", "/**/openvidu-layout.ts"]
+					}
+				}
+			}
+		},
+		"openvidu-meet-e2e": {
+			"root": "e2e/",
+			"projectType": "application",
+			"architect": {
+				"e2e": {
+					"builder": "@angular-devkit/build-angular:protractor",
+					"options": {
+						"protractorConfig": "e2e/protractor.conf.js",
+						"devServerTarget": "openvidu-meet:serve"
+					}
+				}
+			}
+		},
+		"shared-meet-components": {
+			"projectType": "library",
+			"root": "projects/shared-meet-components",
+			"sourceRoot": "projects/shared-meet-components/src",
+			"prefix": "ov",
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
+				}
+			},
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"options": {
+						"project": "projects/shared-meet-components/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "projects/shared-meet-components/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "projects/shared-meet-components/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"main": "projects/shared-meet-components/src/test-main.ts",
+						"tsConfig": "projects/shared-meet-components/tsconfig.spec.json",
+						"polyfills": ["zone.js", "zone.js/testing"],
+						"karmaConfig": "./karma.conf.js",
+						"codeCoverage": true,
+						"stylePreprocessorOptions": {
+							"includePaths": ["projects/shared-meet-components/styles"]
+						}
+					}
+				}
+			}
+		}
+	},
+	"schematics": {
+		"@schematics/angular:component": {
+			"type": "component"
+		},
+		"@schematics/angular:directive": {
+			"type": "directive"
+		},
+		"@schematics/angular:service": {
+			"type": "service"
+		},
+		"@schematics/angular:guard": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:interceptor": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:module": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:pipe": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:resolver": {
+			"typeSeparator": "."
+		}
+  },
+  "cli": {
+    "analytics": false
+  }
+}

@@ -1,0 +1,8 @@
+description: Unauthorized — Invalid API key or access token
+content:
+    application/json:
+        schema:
+            $ref: '../../schemas/error.yaml'
+        example:
+            error: Authentication Error
+            message: 'Unauthorized'

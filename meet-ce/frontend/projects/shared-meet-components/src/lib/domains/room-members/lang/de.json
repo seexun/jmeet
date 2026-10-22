@@ -1,0 +1,179 @@
+{
+  "ROOM_MEMBERS": {
+    "COMMON": {
+      "CANCEL": "Abbrechen",
+      "SEARCH": "Suchen",
+      "ADD_MEMBER": "Mitglied hinzufügen",
+      "USER": "Benutzer",
+      "IDENTIFIED_GUEST": "Identifizierter Gast",
+      "MODERATOR": "Moderator",
+      "SPEAKER": "Sprecher"
+    },
+    "FORM": {
+      "TYPE_USER": "Benutzer",
+      "TYPE_IDENTIFIED_GUEST": "Identifizierter Gast",
+      "USER_ID_LABEL": "Benutzer-ID",
+      "USER_ID_PLACEHOLDER": "Suchen Sie einen Benutzer nach Namen oder ID...",
+      "USER_ID_HINT": "Beginnen Sie zu tippen, um Benutzer zu suchen",
+      "NO_USERS_FOUND": "Keine Benutzer gefunden",
+      "GUEST_INFO": "Identifizierte Gäste sind keine JMeet-Benutzer. Nach dem Hinzufügen erhalten sie einen eindeutigen Link, um diesen Raum zu betreten. Sie können diesen Link aus der Mitgliederliste kopieren.",
+      "MEMBER_NAME_LABEL": "Mitgliedsname",
+      "MEMBER_NAME_PLACEHOLDER": "Geben Sie einen Anzeigenamen ein...",
+      "MEMBER_NAME_HINT": "Ein Anzeigename für den Gast",
+      "BASE_ROLE_LABEL": "Basisrolle",
+      "BASE_ROLE_HINT": "Die Basisrolle bestimmt die Standardberechtigungen",
+      "CUSTOM_PERMISSIONS_TITLE": "Benutzerdefinierte Berechtigungen",
+      "CUSTOM_PERMISSIONS_DESCRIPTION": "Die Standardberechtigungen der Rolle überschreiben",
+      "CUSTOM_PERMISSIONS_HINT": "Diese Berechtigungen überschreiben die Standardwerte für die ausgewählte Rolle. Lassen Sie die Schalter in ihrer Standardposition, um die Rollenberechtigungen zu übernehmen.",
+      "UPDATE_MEMBER": "Mitglied aktualisieren",
+      "ADD_MEMBER": "Mitglied hinzufügen",
+      "DISABLED_REASON_ADMIN": "Administratorbenutzer können nicht als Mitglieder hinzugefügt werden",
+      "DISABLED_REASON_OWNER": "Der Raumeigentümer kann nicht als Mitglied hinzugefügt werden"
+    },
+    "FORM_DIALOG": {
+      "TITLE_EDIT": "Mitglied bearbeiten",
+      "TITLE_ADD": "Mitglied hinzufügen"
+    },
+    "LIST": {
+      "EMPTY_TITLE": "Noch keine Mitglieder",
+      "EMPTY_SUBTITLE": "Mitglieder erscheinen hier, nachdem Sie sie hinzugefügt haben.",
+      "SEARCH_MEMBERS": "Mitglieder suchen",
+      "SEARCH_BY_NAME": "Nach Mitgliedsnamen suchen",
+      "CLEAR_SEARCH": "Suche löschen",
+      "MATCH_CASE_INSENSITIVE": "Groß-/Kleinschreibung ignorieren",
+      "CASE_INSENSITIVE_LABEL": "Aa",
+      "MATCH_MODE_PREFIX": "Suchmodus: ",
+      "FILTER_MEMBERS": "Mitglieder filtern",
+      "REFRESH_MEMBERS": "Mitglieder aktualisieren",
+      "REMOVE_SELECTED_MEMBERS": "Ausgewählte Mitglieder entfernen",
+      "FILTER_BY_ROLE": "Nach Rolle filtern",
+      "FILTER_BY_ROLE_DESCRIPTION": "Schränkt das Ergebnis auf Mitglieder mit der ausgewählten Basisrolle ein.",
+      "ROLE": "Rolle",
+      "FILTER_BY_TYPE": "Nach Typ filtern",
+      "FILTER_BY_TYPE_DESCRIPTION": "Schränkt das Ergebnis auf Mitglieder des ausgewählten Typs ein.",
+      "TYPE": "Typ",
+      "FILTERS_LABEL": "Filter:",
+      "CLEAR_ALL": "Alle löschen",
+      "LOADING_MEMBERS": "Mitglieder werden geladen...",
+      "EMPTY_FILTER_TITLE": "Keine Mitglieder entsprechen Ihrer Suche",
+      "EMPTY_FILTER_SUBTITLE": "Versuchen Sie, Ihre Filter anzupassen oder zu löschen, um mehr Mitglieder zu sehen.",
+      "CLEAR_FILTERS": "Filter löschen",
+      "COLUMN_MEMBER": "Mitglied",
+      "COLUMN_ROLE": "Rolle",
+      "COLUMN_TYPE": "Typ",
+      "COLUMN_ADDED": "Hinzugefügt",
+      "COLUMN_ACTIONS": "Aktionen",
+      "VIEW_USER_PROFILE": "Benutzerprofil anzeigen",
+      "COPY_ACCESS_LINK": "Zugangslink kopieren",
+      "EDIT_MEMBER": "Mitglied bearbeiten",
+      "REMOVE_MEMBER": "Mitglied entfernen",
+      "MATCH_MODE_STARTS_WITH": "Beginnt mit",
+      "MATCH_MODE_CONTAINS": "Enthält",
+      "MATCH_MODE_EXACT": "Genaue Übereinstimmung",
+      "MATCH_MODE_REGEX": "Regex",
+      "ROLE_FILTER_ALL": "Alle Rollen",
+      "TYPE_FILTER_ALL": "Alle Typen",
+      "TYPE_USER": "Benutzer",
+      "TYPE_IDENTIFIED_GUEST": "Identifizierter Gast",
+      "ROLE_CHIP_PREFIX": "Rolle: ",
+      "TYPE_CHIP_PREFIX": "Typ: "
+    },
+    "ADD": {
+      "TITLE_EDIT": "Raummitglied bearbeiten",
+      "TITLE_ADD": "Raummitglied hinzufügen",
+      "SUBTITLE_EDIT": "Aktualisieren Sie die Berechtigungen für dieses Raummitglied.",
+      "SUBTITLE_ADD": "Gewähren Sie einem Benutzer oder einem identifizierten Gast Zugriff auf diesen Raum.",
+      "CARD_TITLE": "Mitgliedskonfiguration",
+      "CARD_SUBTITLE_EDIT_USER": "Berechtigungen des Benutzers für diesen Raum aktualisieren",
+      "CARD_SUBTITLE_EDIT_GUEST": "Berechtigungen des identifizierten Gasts für diesen Raum aktualisieren",
+      "CARD_SUBTITLE_ADD_USER": "Wählen Sie einen Benutzer und konfigurieren Sie seine Berechtigungen",
+      "CARD_SUBTITLE_ADD_GUEST": "Wählen Sie einen Namen für den Gast und konfigurieren Sie seine Berechtigungen"
+    },
+    "ERRORS": {
+      "FIELD_REQUIRED": "Dieses Feld ist erforderlich",
+      "PATTERN": "Nur Kleinbuchstaben, Zahlen und Unterstriche sind erlaubt",
+      "MAX_LENGTH_PREFIX": "Darf nicht überschreiten ",
+      "MAX_LENGTH_SUFFIX": " Zeichen",
+      "ROOM_ID_REQUIRED": "Raum-ID ist erforderlich",
+      "ROOM_DATA_LOAD_FAILED": "Raumdaten konnten nicht geladen werden",
+      "MEMBER_UPDATED_SUCCESS": "Mitglied erfolgreich aktualisiert",
+      "MEMBER_ADDED_SUCCESS": "Mitglied erfolgreich hinzugefügt",
+      "MEMBER_UPDATE_FAILED": "Mitglied konnte nicht aktualisiert werden",
+      "MEMBER_ADD_FAILED": "Mitglied konnte nicht hinzugefügt werden"
+    },
+    "ROLE": {
+      "MODERATOR": "Moderator",
+      "SPEAKER": "Sprecher"
+    },
+    "MEMBER_TYPE": {
+      "USER": "Benutzer",
+      "GUEST": "Identifizierter Gast"
+    },
+    "PERMISSIONS": {
+      "GROUPS": {
+        "MEETING": "Meeting",
+        "MEDIA": "Medien",
+        "RECORDINGS": "Aufnahmen",
+        "CHAT": "Chat"
+      },
+      "ITEMS": {
+        "canJoinMeeting": {
+          "LABEL": "Kann am Meeting teilnehmen",
+          "DESCRIPTION": "Erlaubt das Beitreten zum Meeting"
+        },
+        "canEndMeeting": {
+          "LABEL": "Kann Meeting beenden",
+          "DESCRIPTION": "Erlaubt das Beenden des Meetings für alle Teilnehmer"
+        },
+        "canMakeModerator": {
+          "LABEL": "Kann zum Moderator machen",
+          "DESCRIPTION": "Erlaubt das Hochstufen von Teilnehmern zur Moderatorenrolle"
+        },
+        "canKickParticipants": {
+          "LABEL": "Kann Teilnehmer entfernen",
+          "DESCRIPTION": "Erlaubt das Entfernen von Teilnehmern aus dem Meeting"
+        },
+        "canShareAccessLinks": {
+          "LABEL": "Kann Zugangslinks teilen",
+          "DESCRIPTION": "Erlaubt das Teilen von Einladungslinks mit anderen"
+        },
+        "canPublishVideo": {
+          "LABEL": "Kann Video übertragen",
+          "DESCRIPTION": "Erlaubt das Teilen des Kameravideos"
+        },
+        "canPublishAudio": {
+          "LABEL": "Kann Audio übertragen",
+          "DESCRIPTION": "Erlaubt das Teilen des Mikrofon-Audios"
+        },
+        "canShareScreen": {
+          "LABEL": "Kann Bildschirm teilen",
+          "DESCRIPTION": "Erlaubt das Teilen des Desktops oder von Browser-Tabs"
+        },
+        "canChangeVirtualBackground": {
+          "LABEL": "Kann virtuellen Hintergrund ändern",
+          "DESCRIPTION": "Erlaubt das Ändern des virtuellen Hintergrunds"
+        },
+        "canRecord": {
+          "LABEL": "Kann aufzeichnen",
+          "DESCRIPTION": "Erlaubt das Starten und Stoppen von Aufnahmen"
+        },
+        "canRetrieveRecordings": {
+          "LABEL": "Kann Aufnahmen abrufen",
+          "DESCRIPTION": "Erlaubt das Auflisten und Abspielen von Aufnahmen"
+        },
+        "canDeleteRecordings": {
+          "LABEL": "Kann Aufnahmen löschen",
+          "DESCRIPTION": "Erlaubt das Löschen von Aufnahmen"
+        },
+        "canReadChat": {
+          "LABEL": "Kann Chat lesen",
+          "DESCRIPTION": "Erlaubt das Lesen von Chat-Nachrichten"
+        },
+        "canWriteChat": {
+          "LABEL": "Kann Chat schreiben",
+          "DESCRIPTION": "Erlaubt das Senden von Chat-Nachrichten"
+        }
+      }
+    }
+  }
+}

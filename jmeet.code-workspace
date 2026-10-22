@@ -1,0 +1,95 @@
+{
+	"folders": [
+		{
+			"name": "jmeet-root",
+			"path": "."
+		},
+		{
+			"name": "meet-ce",
+			"path": "meet-ce"
+		},
+		{
+			"name": "shared-meet-components",
+			"path": "meet-ce/frontend/projects/shared-meet-components"
+		}
+	],
+	"settings": {
+		"editor.codeActionsOnSave": {
+			"source.organizeImports": "always",
+			"source.removeUnusedImports": "always"
+		},
+		"files.exclude": {
+			"**/meet-ce": true,
+			"**/.angular": true,
+			"**/public": false,
+			"**/dist": false,
+			"**/node_modules": true,
+			"**/test-results": true
+		},
+		"jest.disabledWorkspaceFolders": [
+			"jmeet-root",
+			"shared-meet-components"
+		],
+		"files.watcherExclude": {
+			"**/node_modules/**": true,
+			"**/dist/**": true
+		}
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Debug Jest Test (Backend)",
+				"type": "node",
+				"request": "launch",
+				"program": "${workspaceFolder:jmeet-root}/node_modules/.bin/jest",
+				"args": [
+					"--config",
+					"${workspaceFolder:meet-ce}/backend/jest.config.mjs",
+					"--runInBand",
+					"--no-cache",
+					"${file}"
+				],
+				"console": "integratedTerminal",
+				"internalConsoleOptions": "neverOpen",
+				"windows": {
+					"program": "${workspaceFolder:jmeet-root}/node_modules/.bin/jest.cmd"
+				},
+				"runtimeArgs": ["--experimental-vm-modules"],
+				"env": {
+					"NODE_ENV": "test"
+				},
+				"cwd": "${workspaceFolder:meet-ce}/backend"
+			},
+			{
+				"name": "Debug Current Jest Test (Backend)",
+				"type": "node",
+				"request": "launch",
+				"program": "${workspaceFolder:jmeet-root}/node_modules/.bin/jest",
+				"args": [
+					"--config",
+					"${workspaceFolder:meet-ce}/backend/jest.config.mjs",
+					"--runInBand",
+					"--testNamePattern",
+					"${input:testName}",
+					"${file}"
+				],
+				"console": "integratedTerminal",
+				"internalConsoleOptions": "neverOpen",
+				"runtimeArgs": ["--experimental-vm-modules"],
+				"env": {
+					"NODE_ENV": "test"
+				},
+				"cwd": "${workspaceFolder:meet-ce}/backend"
+			}
+		],
+		"inputs": [
+			{
+				"id": "testName",
+				"description": "Test name pattern (optional, leave empty to run all tests in file)",
+				"default": "",
+				"type": "promptString"
+			}
+		]
+	}
+}

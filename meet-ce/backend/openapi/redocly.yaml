@@ -1,0 +1,14 @@
+# Redocly config — used by `pnpm run lint:api` to validate that every $ref
+# across the multi-file spec resolves. Declares both API entry points so
+# `redocly lint` (no args) checks them together.
+apis:
+    public:
+        root: ./openvidu-meet-api.yaml
+    internal:
+        root: ./openvidu-meet-internal-api.yaml
+
+# `minimal` keeps the structural checks that matter for this multi-file spec
+# (chiefly unresolved $ref detection and OpenAPI structure) without flooding
+# the output with style warnings.
+extends:
+    - minimal

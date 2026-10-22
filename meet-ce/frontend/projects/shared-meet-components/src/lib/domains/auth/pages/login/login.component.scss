@@ -1,0 +1,8 @@
+:host {
+	display: block;
+	height: 100%;
+	overflow-y: auto;
+}
+
+/* 页面骨架与视觉由全局 _auth-patterns.scss 承载（2026-10-22 B1.5 重设计：单卡居中 + 三层装饰背景，
+   营销区/语言切换已裁剪）。窄容器场景由页内 max-width 与全局断点覆盖。 */

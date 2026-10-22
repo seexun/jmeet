@@ -1,0 +1,72 @@
+{
+  "ERROR": {
+    "DEFAULT_TITLE": "Fehler",
+    "BACK": "Zurück",
+    "BACK_TO_CONSOLE": "Zurück zur Konsole",
+    "ACCEPT": "Akzeptieren",
+    "OOPS": "Hoppla!",
+    "SOMETHING_WRONG": "Etwas ist schiefgelaufen"
+  },
+  "NAVIGATION_ERROR": {
+    "EMBEDDED_ERROR": {
+      "TITLE": "JMeet konnte nicht geladen werden",
+      "MESSAGE": "JMeet konnte nicht geladen werden. Bitte überprüfe die Einbettungskonfiguration."
+    },
+    "CLOSED_ROOM": {
+      "TITLE": "Geschlossener Raum",
+      "MESSAGE": "Meetings in diesem Raum sind nicht verfügbar, solange er geschlossen ist"
+    },
+    "ANONYMOUS_ACCESS_DISABLED": {
+      "TITLE": "Anonymer Zugriff deaktiviert",
+      "MESSAGE": "Der anonyme Zugriff für Ihre Rolle wurde in diesem Raum (und seinen Aufnahmen) deaktiviert"
+    },
+    "ANONYMOUS_RECORDING_ACCESS_DISABLED": {
+      "TITLE": "Anonymer Zugriff deaktiviert",
+      "MESSAGE": "Der anonyme Zugriff für diese Aufnahme wurde deaktiviert"
+    },
+    "INVALID_ROOM_SECRET": {
+      "TITLE": "Ungültiger Link",
+      "MESSAGE": "Der Link, mit dem Sie auf diesen Raum (oder seine Aufnahmen) zugreifen wollten, ist nicht gültig. Bitten Sie einen Moderator, den richtigen Link über die verfügbaren Teilen-Schaltflächen zu teilen"
+    },
+    "INVALID_RECORDING_SECRET": {
+      "TITLE": "Ungültiger Link",
+      "MESSAGE": "Der Link, mit dem Sie auf diese Aufnahme zugreifen wollten, ist nicht gültig"
+    },
+    "INVALID_ROOM": {
+      "TITLE": "Ungültiger Raum",
+      "MESSAGE": "Der Raum (oder seine Aufnahmen), auf den Sie zugreifen möchten, existiert nicht oder wurde gelöscht"
+    },
+    "INVALID_RECORDING": {
+      "TITLE": "Ungültige Aufnahme",
+      "MESSAGE": "Die Aufnahme, auf die Sie zugreifen möchten, existiert nicht oder wurde gelöscht"
+    },
+    "INVALID_MEMBER": {
+      "TITLE": "Ungültiges Mitglied",
+      "MESSAGE": "Sie sind kein Mitglied dieses Raums mehr oder die Mitgliedsinformationen sind fehlerhaft"
+    },
+    "FORBIDDEN_ROOM_ACCESS": {
+      "TITLE": "Zugriff auf Raum verweigert",
+      "MESSAGE": "Sie sind nicht berechtigt, auf diesen Raum (noch auf seine Aufnahmen) zuzugreifen"
+    },
+    "FORBIDDEN_ROOM_RECORDINGS_ACCESS": {
+      "TITLE": "Zugriff auf Aufnahmen verweigert",
+      "MESSAGE": "Sie sind nicht berechtigt, auf die Aufnahmen in diesem Raum zuzugreifen"
+    },
+    "FORBIDDEN_RECORDING_ACCESS": {
+      "TITLE": "Zugriff auf Aufnahme verweigert",
+      "MESSAGE": "Sie sind nicht berechtigt, auf diese Aufnahme zuzugreifen"
+    },
+    "ROOM_ACCESS_REVOKED": {
+      "TITLE": "Raumzugriff widerrufen",
+      "MESSAGE": "Ihre Berechtigungen in diesem Raum wurden geändert, und Sie haben keinen Zugriff mehr (noch auf seine Aufnahmen). Bitte wenden Sie sich für weitere Informationen an einen Moderator"
+    },
+    "TOO_MANY_REQUESTS": {
+      "TITLE": "Zu viele Anfragen",
+      "MESSAGE": "Sie haben in kurzer Zeit zu viele Anfragen gestellt. Bitte warten Sie einen Moment und versuchen Sie es erneut"
+    },
+    "INTERNAL_ERROR": {
+      "TITLE": "Interner Fehler",
+      "MESSAGE": "Ein unerwarteter Fehler ist aufgetreten, bitte versuchen Sie es später erneut"
+    }
+  }
+}

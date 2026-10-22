@@ -1,0 +1,60 @@
+{
+	"AUTH": {
+		"COMMON": {
+			"SHOW_PASSWORD": "Mostrar contraseña",
+			"HIDE_PASSWORD": "Ocultar contraseña"
+		},
+		"LOGIN": {
+			"TITLE": "Iniciar sesión",
+			"SUBTITLE": "Introduce tus credenciales para acceder a JMeet",
+			"USER_ID": "ID de usuario",
+			"USER_ID_PLACEHOLDER": "Introduce tu ID de usuario",
+			"PASSWORD": "Contraseña",
+			"PASSWORD_PLACEHOLDER": "Introduce tu contraseña",
+			"SUBMIT": "Iniciar sesión",
+			"ERROR_TOO_MANY_ATTEMPTS": "Demasiados intentos de inicio de sesión. Inténtalo de nuevo más tarde",
+			"ERROR_INVALID_CREDENTIALS": "ID de usuario o contraseña no válidos",
+			"HERO_TITLE_PREFIX": "Colaboración de reuniones inteligente",
+			"HERO_TITLE_EMPHASIS": "Conectamos a cada equipo",
+			"HERO_DESC": "HD audio & video · screen sharing · free & open source · self-hosted",
+			"WELCOME_TITLE": "Bienvenido de nuevo",
+			"WELCOME_SUBTITLE": "Inicia sesión para iniciar o unirte a una reunión",
+			"LIVE_BADGE": "Reunión en curso",
+			"MINUTES_TOAST": "Smooth collaboration",
+			"FEATURE_BAND_1_TITLE": "Nítida y estable",
+			"FEATURE_BAND_1_SUB": "1080p · sin cortes",
+			"FEATURE_BAND_2_TITLE": "In-meeting chat",
+			"FEATURE_BAND_2_SUB": "Group chat & interaction",
+			"FEATURE_BAND_3_TITLE": "Open source",
+			"FEATURE_BAND_3_SUB": "Self-hosted deployment",
+			"CAP_2": "Screen sharing & virtual backgrounds",
+			"CAP_3": "Free & open source · self-hosted"
+		},
+		"CHANGE_PASSWORD": {
+			"TITLE": "Actualiza tu contraseña",
+			"SUBTITLE": "Debes actualizar tu contraseña antes de continuar.",
+			"BANNER_TITLE": "Es necesario actualizar la contraseña",
+			"BANNER_DESC": "Tu contraseña se creó o se restableció recientemente. Establece una nueva contraseña para continuar.",
+			"CURRENT_PASSWORD": "Contraseña actual",
+			"CURRENT_PASSWORD_PLACEHOLDER": "Introduce tu contraseña actual",
+			"NEW_PASSWORD": "Nueva contraseña",
+			"NEW_PASSWORD_PLACEHOLDER": "Crea una contraseña segura y robusta",
+			"PASSWORD_MIN_HINT": "Mínimo 5 caracteres",
+			"CONFIRM_PASSWORD": "Confirmar nueva contraseña",
+			"CONFIRM_PASSWORD_PLACEHOLDER": "Repite tu nueva contraseña",
+			"SUBMIT": "Actualizar contraseña",
+			"ERRORS": {
+				"CURRENT_REQUIRED": "La contraseña actual es obligatoria",
+				"CURRENT_INCORRECT": "La contraseña actual es incorrecta",
+				"NEW_REQUIRED": "La nueva contraseña es obligatoria",
+				"NEW_MIN_PREFIX": "La contraseña debe tener al menos ",
+				"NEW_MIN_SUFFIX": " caracteres",
+				"NEW_SAME": "La nueva contraseña debe ser diferente de la actual",
+				"CONFIRM_REQUIRED": "Por favor, confirma tu contraseña",
+				"CONFIRM_MISMATCH": "Las contraseñas no coinciden",
+				"UPDATE_SUCCESS": "Contraseña actualizada correctamente",
+				"UPDATE_FAILED": "Error al actualizar la contraseña"
+			}
+		}
+	}
+}

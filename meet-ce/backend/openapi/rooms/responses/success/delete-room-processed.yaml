@@ -1,0 +1,116 @@
+description: Room was successfully processed for deletion
+content:
+    application/json:
+        schema:
+            oneOf:
+                - type: object
+                  required: [successCode, message, room]
+                  properties:
+                      successCode:
+                          type: string
+                          enum:
+                              - room_closed
+                              - room_with_active_meeting_closed
+                      message:
+                          type: string
+                      room:
+                          allOf:
+                              - $ref: '../../schemas/meet-room.yaml'
+                              - type: object
+                                properties:
+                                    _extraFields:
+                                        type: array
+                                        description: >
+                                            List of extra fields that can be included in the response based on the `X-ExtraFields` header or `extraFields` query parameter.
+                                        items:
+                                            type: string
+                                            example: config
+
+                - type: object
+                  required: [successCode, message]
+                  properties:
+                      successCode:
+                          type: string
+                          enum:
+                              - room_deleted
+                              - room_with_active_meeting_deleted
+                              - room_and_recordings_deleted
+                              - room_with_active_meeting_and_recordings_deleted
+                      message:
+                          type: string
+
+        examples:
+            room_deleted:
+                value:
+                    successCode: room_deleted
+                    message: Room 'room-123' deleted successfully
+            room_with_active_meeting_deleted:
+                value:
+                    successCode: room_with_active_meeting_deleted
+                    message: Room 'room-123' with active meeting deleted successfully
+            room_and_recordings_deleted:
+                value:
+                    successCode: room_and_recordings_deleted
+                    message: Room 'room-123' and its recordings deleted successfully
+            room_closed:
+                value:
+                    successCode: room_closed
+                    message: Room 'room-123' has been closed instead of deleted because it has recordings
+                    room:
+                        roomId: room-123
+                        roomName: room
+                        owner: 'admin'
+                        creationDate: 1620000000000
+                        access:
+                            anonymous:
+                                moderator:
+                                    enabled: true
+                                    url: 'https://example.com/room/room-123?secret=123456'
+                                speaker:
+                                    enabled: true
+                                    url: 'https://example.com/room/room-123?secret=654321'
+                                recording:
+                                    enabled: true
+                                    url: 'https://example.com/room/room-123/recordings?secret=987654'
+                            user:
+                                enabled: false
+                                url: 'https://example.com/room/room-123'
+                        status: closed
+                        rolesUpdatedAt: 1620000000000
+                        meetingEndAction: none
+                        _extraFields:
+                            - config
+                            - roles
+            room_with_active_meeting_and_recordings_deleted:
+                value:
+                    successCode: room_with_active_meeting_and_recordings_deleted
+                    message: Room 'room-123' with active meeting and its recordings deleted successfully
+            room_with_active_meeting_closed:
+                value:
+                    successCode: room_with_active_meeting_closed
+                    message: Room 'room-123' with active meeting has been closed instead of deleted because it has recordings
+                    room:
+                        roomId: room-123
+                        roomName: room
+                        owner: 'admin'
+                        creationDate: 1620000000000
+                        access:
+                            anonymous:
+                                moderator:
+                                    enabled: true
+                                    url: 'https://example.com/room/room-123?secret=123456'
+                                speaker:
+                                    enabled: true
+                                    url: 'https://example.com/room/room-123?secret=654321'
+                                recording:
+                                    enabled: true
+                                    url: 'https://example.com/room/room-123/recordings?secret=987654'
+                            user:
+                                enabled: false
+                                url: 'https://example.com/room/room-123'
+                        status: active_meeting
+                        rolesUpdatedAt: 1620000000000
+                        meetingEndAction: close
+                        _extraFields:
+                            - config
+                            - roles

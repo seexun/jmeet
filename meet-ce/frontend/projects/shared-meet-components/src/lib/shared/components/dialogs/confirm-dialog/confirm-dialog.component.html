@@ -1,0 +1,54 @@
+<div class="dialog-container">
+	@if (data.title) {
+		<h2 class="dialog-title">
+			@if (data.icon) {
+				<span class="dialog-icon"><nz-icon [nzType]="(data.icon) | nzIconType" /></span>
+			}
+			{{ data.title }}
+		</h2>
+	}
+	<div class="dialog-content">
+		<div class="dialog-message" [innerHTML]="data.message"></div>
+		@if (data.showWarningBox && data.warningMessage) {
+			<div class="warning-box" role="alert">
+				<div class="warning-box-header">
+					<span class="warning-box-icon"><nz-icon [nzType]="(data.warningIcon ?? 'warning') | nzIconType" /></span>
+					<span class="warning-box-title">{{ data.warningTitle ?? 'Warning' }}</span>
+				</div>
+				<p class="warning-box-message">{{ data.warningMessage }}</p>
+			</div>
+		}
+		@if (data.showForceCheckbox && data.forceMessage) {
+			<div class="force-checkbox-container">
+				<label nz-checkbox [nzChecked]="force()" (nzCheckedChange)="force.set($event)" class="force-checkbox">
+					<span class="checkbox-text">{{ data.forceCheckboxLabel }}</span>
+				</label>
+				<div class="checkbox-warning">
+					<span class="warning-icon"><nz-icon nzType="warning" /></span>
+					<span class="warning-text">{{ data.forceMessage }}</span>
+				</div>
+			</div>
+		}
+	</div>
+	@if (shouldShowActions()) {
+		<div class="dialog-action">
+			@if (shouldShowCancelButton()) {
+				<button type="button" (click)="close('cancel')" class="jmeet-button jmeet-button--outline cancel-button">
+					{{ data.cancelText ?? 'Cancel' }}
+				</button>
+			}
+			@if (shouldShowConfirmButton()) {
+				<button
+					type="button"
+					(click)="close('confirm')"
+					class="jmeet-button confirm-button"
+					[class.jmeet-button--primary]="!data.confirmDanger"
+					[class.jmeet-button--danger]="data.confirmDanger"
+					[class.force]="force()"
+				>
+					{{ data.confirmText ?? 'Confirm' }}
+				</button>
+			}
+		</div>
+	}
+</div>

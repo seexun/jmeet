@@ -1,0 +1,40 @@
+type: object
+properties:
+    moderator:
+        type: object
+        properties:
+            permissions:
+                type: object
+                additionalProperties:
+                    type: boolean
+                example:
+                    canRecord: false
+                    canKickParticipants: false
+                description: |
+                    Partial permissions object for the moderator role.
+                    Only specify the permissions you want to override from the default or previously configured moderator permissions.
+                    Each property should be a permission name (e.g., 'canRecord', 'canShareScreen') with a boolean value.
+
+                    For the complete list of all available permissions, see the full permissions schema:
+                    [MeetPermissions](#/schemas/MeetPermissions)
+    speaker:
+        type: object
+        properties:
+            permissions:
+                type: object
+                additionalProperties:
+                    type: boolean
+                example:
+                    canShareScreen: false
+                description: |
+                    Partial permissions object for the speaker role.
+                    Only specify the permissions you want to override from the default or previously configured speaker permissions.
+                    Each property should be a permission name (e.g., 'canRecord', 'canShareScreen') with a boolean value.
+
+                    For the complete list of all available permissions, see the full permissions schema:
+                    [MeetPermissions](#/schemas/MeetPermissions)
+description: |
+    Configuration for role permissions.
+
+    Both moderator and speaker fields are optional. If not specified, current permissions will be maintained.
+    For permissions, only specify the ones you want to change.

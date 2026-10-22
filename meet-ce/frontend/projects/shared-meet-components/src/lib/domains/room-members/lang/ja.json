@@ -1,0 +1,179 @@
+{
+  "ROOM_MEMBERS": {
+    "COMMON": {
+      "CANCEL": "キャンセル",
+      "SEARCH": "検索",
+      "ADD_MEMBER": "メンバーを追加",
+      "USER": "ユーザー",
+      "IDENTIFIED_GUEST": "識別済みゲスト",
+      "MODERATOR": "モデレーター",
+      "SPEAKER": "スピーカー"
+    },
+    "FORM": {
+      "TYPE_USER": "ユーザー",
+      "TYPE_IDENTIFIED_GUEST": "識別済みゲスト",
+      "USER_ID_LABEL": "ユーザー ID",
+      "USER_ID_PLACEHOLDER": "名前または ID でユーザーを検索...",
+      "USER_ID_HINT": "入力するとユーザーを検索します",
+      "NO_USERS_FOUND": "ユーザーが見つかりません",
+      "GUEST_INFO": "識別済みゲストは JMeet のユーザーではありません。追加されると、このルームにアクセスするための固有のリンクが割り当てられます。このリンクはメンバー一覧からコピーできます。",
+      "MEMBER_NAME_LABEL": "メンバー名",
+      "MEMBER_NAME_PLACEHOLDER": "表示名を入力...",
+      "MEMBER_NAME_HINT": "ゲストの表示名です",
+      "BASE_ROLE_LABEL": "基本ロール",
+      "BASE_ROLE_HINT": "基本ロールによってデフォルトの権限が決まります",
+      "CUSTOM_PERMISSIONS_TITLE": "カスタム権限",
+      "CUSTOM_PERMISSIONS_DESCRIPTION": "デフォルトのロール権限を上書きします",
+      "CUSTOM_PERMISSIONS_HINT": "これらの権限は、選択したロールのデフォルトを上書きします。ロールの権限を継承するには、トグルをデフォルトの位置のままにしてください。",
+      "UPDATE_MEMBER": "メンバーを更新",
+      "ADD_MEMBER": "メンバーを追加",
+      "DISABLED_REASON_ADMIN": "管理者ユーザーはメンバーとして追加できません",
+      "DISABLED_REASON_OWNER": "ルームのオーナーはメンバーとして追加できません"
+    },
+    "FORM_DIALOG": {
+      "TITLE_EDIT": "メンバーを編集",
+      "TITLE_ADD": "メンバーを追加"
+    },
+    "LIST": {
+      "EMPTY_TITLE": "メンバーがいません",
+      "EMPTY_SUBTITLE": "メンバーを追加すると、ここに表示されます。",
+      "SEARCH_MEMBERS": "メンバーを検索",
+      "SEARCH_BY_NAME": "メンバー名で検索",
+      "CLEAR_SEARCH": "検索をクリア",
+      "MATCH_CASE_INSENSITIVE": "大文字と小文字を区別しない",
+      "CASE_INSENSITIVE_LABEL": "Aa",
+      "MATCH_MODE_PREFIX": "一致モード： ",
+      "FILTER_MEMBERS": "メンバーを絞り込む",
+      "REFRESH_MEMBERS": "メンバーを更新",
+      "REMOVE_SELECTED_MEMBERS": "選択したメンバーを削除",
+      "FILTER_BY_ROLE": "ロールで絞り込む",
+      "FILTER_BY_ROLE_DESCRIPTION": "選択した基本ロールを持つメンバーに結果を絞り込みます。",
+      "ROLE": "ロール",
+      "FILTER_BY_TYPE": "タイプで絞り込む",
+      "FILTER_BY_TYPE_DESCRIPTION": "選択したタイプのメンバーに結果を絞り込みます。",
+      "TYPE": "タイプ",
+      "FILTERS_LABEL": "フィルター：",
+      "CLEAR_ALL": "すべてクリア",
+      "LOADING_MEMBERS": "メンバーを読み込んでいます...",
+      "EMPTY_FILTER_TITLE": "検索条件に一致するメンバーがいません",
+      "EMPTY_FILTER_SUBTITLE": "フィルターを調整またはクリアして、より多くのメンバーを表示してください。",
+      "CLEAR_FILTERS": "フィルターをクリア",
+      "COLUMN_MEMBER": "メンバー",
+      "COLUMN_ROLE": "ロール",
+      "COLUMN_TYPE": "タイプ",
+      "COLUMN_ADDED": "追加日",
+      "COLUMN_ACTIONS": "操作",
+      "VIEW_USER_PROFILE": "ユーザープロフィールを表示",
+      "COPY_ACCESS_LINK": "アクセスリンクをコピー",
+      "EDIT_MEMBER": "メンバーを編集",
+      "REMOVE_MEMBER": "メンバーを削除",
+      "MATCH_MODE_STARTS_WITH": "前方一致",
+      "MATCH_MODE_CONTAINS": "部分一致",
+      "MATCH_MODE_EXACT": "完全一致",
+      "MATCH_MODE_REGEX": "正規表現",
+      "ROLE_FILTER_ALL": "すべてのロール",
+      "TYPE_FILTER_ALL": "すべてのタイプ",
+      "TYPE_USER": "ユーザー",
+      "TYPE_IDENTIFIED_GUEST": "識別済みゲスト",
+      "ROLE_CHIP_PREFIX": "ロール： ",
+      "TYPE_CHIP_PREFIX": "タイプ： "
+    },
+    "ADD": {
+      "TITLE_EDIT": "ルームメンバーを編集",
+      "TITLE_ADD": "ルームメンバーを追加",
+      "SUBTITLE_EDIT": "このルームメンバーの権限を更新します。",
+      "SUBTITLE_ADD": "このルームへのアクセス権をユーザーまたは識別済みゲストに付与します。",
+      "CARD_TITLE": "メンバー設定",
+      "CARD_SUBTITLE_EDIT_USER": "このルームに対するユーザーの権限を更新します",
+      "CARD_SUBTITLE_EDIT_GUEST": "このルームに対する識別済みゲストの権限を更新します",
+      "CARD_SUBTITLE_ADD_USER": "ユーザーを選択して権限を設定します",
+      "CARD_SUBTITLE_ADD_GUEST": "ゲストの名前を選択して権限を設定します"
+    },
+    "ERRORS": {
+      "FIELD_REQUIRED": "この項目は必須です",
+      "PATTERN": "小文字、数字、アンダースコアのみ使用できます",
+      "MAX_LENGTH_PREFIX": "次の文字数を超えることはできません： ",
+      "MAX_LENGTH_SUFFIX": " 文字",
+      "ROOM_ID_REQUIRED": "ルーム ID は必須です",
+      "ROOM_DATA_LOAD_FAILED": "ルームデータの読み込みに失敗しました",
+      "MEMBER_UPDATED_SUCCESS": "メンバーを更新しました",
+      "MEMBER_ADDED_SUCCESS": "メンバーを追加しました",
+      "MEMBER_UPDATE_FAILED": "メンバーの更新に失敗しました",
+      "MEMBER_ADD_FAILED": "メンバーの追加に失敗しました"
+    },
+    "ROLE": {
+      "MODERATOR": "モデレーター",
+      "SPEAKER": "スピーカー"
+    },
+    "MEMBER_TYPE": {
+      "USER": "ユーザー",
+      "GUEST": "識別済みゲスト"
+    },
+    "PERMISSIONS": {
+      "GROUPS": {
+        "MEETING": "会議",
+        "MEDIA": "メディア",
+        "RECORDINGS": "録画",
+        "CHAT": "チャット"
+      },
+      "ITEMS": {
+        "canJoinMeeting": {
+          "LABEL": "会議に参加可能",
+          "DESCRIPTION": "会議への参加を許可します"
+        },
+        "canEndMeeting": {
+          "LABEL": "会議を終了可能",
+          "DESCRIPTION": "すべての参加者の会議を終了することを許可します"
+        },
+        "canMakeModerator": {
+          "LABEL": "モデレーターに指定可能",
+          "DESCRIPTION": "参加者をモデレーターロールに昇格させることを許可します"
+        },
+        "canKickParticipants": {
+          "LABEL": "参加者を退出させ可能",
+          "DESCRIPTION": "会議から参加者を退出させることを許可します"
+        },
+        "canShareAccessLinks": {
+          "LABEL": "アクセスリンクを共有可能",
+          "DESCRIPTION": "他の人と招待リンクを共有することを許可します"
+        },
+        "canPublishVideo": {
+          "LABEL": "ビデオを公開可能",
+          "DESCRIPTION": "カメラのビデオ共有を許可します"
+        },
+        "canPublishAudio": {
+          "LABEL": "オーディオを公開可能",
+          "DESCRIPTION": "マイクのオーディオ共有を許可します"
+        },
+        "canShareScreen": {
+          "LABEL": "画面を共有可能",
+          "DESCRIPTION": "デスクトップまたはブラウザタブの共有を許可します"
+        },
+        "canChangeVirtualBackground": {
+          "LABEL": "仮想背景を変更可能",
+          "DESCRIPTION": "仮想背景の変更を許可します"
+        },
+        "canRecord": {
+          "LABEL": "録画可能",
+          "DESCRIPTION": "録画の開始と停止を許可します"
+        },
+        "canRetrieveRecordings": {
+          "LABEL": "録画を取得可能",
+          "DESCRIPTION": "録画の一覧表示と再生を許可します"
+        },
+        "canDeleteRecordings": {
+          "LABEL": "録画を削除可能",
+          "DESCRIPTION": "録画の削除を許可します"
+        },
+        "canReadChat": {
+          "LABEL": "チャットを読み取り可能",
+          "DESCRIPTION": "チャットメッセージの読み取りを許可します"
+        },
+        "canWriteChat": {
+          "LABEL": "チャットに書き込み可能",
+          "DESCRIPTION": "チャットメッセージの送信を許可します"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+name: sortField
+in: query
+required: false
+description: The user field by which to sort the results.
+schema:
+    type: string
+    enum:
+        - name
+        - registrationDate

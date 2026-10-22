@@ -1,0 +1,6 @@
+name: nextPageToken
+in: query
+required: false
+description: A token used for pagination to fetch the next set of items in a multi-page response.
+schema:
+    type: string

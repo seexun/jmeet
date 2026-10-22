@@ -1,0 +1,120 @@
+<div class="create-user-dialog">
+	<h2 class="create-user-dialog__title">
+		{{ 'USERS.CREATE.TITLE' | translate }}
+		<button
+			type="button"
+			class="jmeet-button jmeet-button--ghost jmeet-button--icon create-user-dialog__close"
+			(click)="nzModalRef.close()"
+			[attr.aria-label]="'USERS.COMMON.CANCEL' | translate"
+		>
+			<nz-icon nzType="close" />
+		</button>
+	</h2>
+
+	<form [formGroup]="form" (ngSubmit)="onSubmit()" class="create-user-dialog__content">
+		<div class="jmeet-form-item">
+			<p class="jmeet-form-label required">{{ 'USERS.CREATE.LOGIN_NAME' | translate }}</p>
+			<div class="create-user-dialog__control">
+				<input
+					nz-input
+					formControlName="loginName"
+					placeholder="{{ 'USERS.CREATE.LOGIN_NAME_PLACEHOLDER' | translate }}"
+					autocomplete="off"
+				/>
+				@if (getFieldError('loginName')) {
+					<p class="create-user-dialog__field-error">{{ getFieldError('loginName') }}</p>
+				}
+			</div>
+		</div>
+
+		<div class="jmeet-form-item">
+			<p class="jmeet-form-label required">{{ 'USERS.CREATE.NAME' | translate }}</p>
+			<div class="create-user-dialog__control">
+				<input nz-input formControlName="name" [placeholder]="'USERS.CREATE.NAME_PLACEHOLDER' | translate" />
+				@if (getFieldError('name')) {
+					<p class="create-user-dialog__field-error">{{ getFieldError('name') }}</p>
+				}
+			</div>
+		</div>
+
+		<div class="jmeet-form-item">
+			<p class="jmeet-form-label">{{ 'USERS.CREATE.EMAIL' | translate }}</p>
+			<div class="create-user-dialog__control">
+				<input nz-input formControlName="email" type="email" placeholder="name@company.com" />
+				@if (getFieldError('email')) {
+					<p class="create-user-dialog__field-error">{{ getFieldError('email') }}</p>
+				}
+			</div>
+		</div>
+
+		<div class="jmeet-form-item">
+			<p class="jmeet-form-label">{{ 'USERS.CREATE.EMPLOYEE_NUMBER' | translate }}</p>
+			<div class="create-user-dialog__control">
+				<input nz-input formControlName="employeeNumber" placeholder="{{ 'USERS.CREATE.OPTIONAL' | translate }}" />
+			</div>
+		</div>
+
+		<div class="jmeet-form-item">
+			<p class="jmeet-form-label required">{{ 'USERS.CREATE.ROLE' | translate }}</p>
+			<div class="create-user-dialog__control">
+				<nz-select formControlName="role" class="create-user-dialog__role-select">
+					@for (role of availableRoles; track role) {
+						<nz-option [nzValue]="role" [nzLabel]="UsersUiUtils.getRoleTranslationKey(role) | translate" />
+					}
+				</nz-select>
+			</div>
+		</div>
+
+		<div class="jmeet-form-item">
+			<p class="jmeet-form-label required">{{ 'USERS.COMMON.TEMPORARY_PASSWORD' | translate }}</p>
+			<div class="create-user-dialog__control">
+				<div class="create-user-dialog__password-row">
+					<input
+						nz-input
+						[type]="showPassword() ? 'text' : 'password'"
+						formControlName="password"
+						[placeholder]="'USERS.CREATE.PASSWORD_PLACEHOLDER' | translate"
+					/>
+					<button class="jmeet-button jmeet-button--ghost jmeet-button--sm" type="button" (click)="generatePassword()">
+						{{ 'USERS.COMMON.AUTO_GENERATE' | translate }}
+					</button>
+					<button
+						class="jmeet-button jmeet-button--ghost jmeet-button--icon"
+						type="button"
+						(click)="copyPasswordToClipboard()"
+						nz-tooltip
+						[nzTooltipTitle]="copied() ? ('USERS.COMMON.COPIED' | translate) : ('USERS.COMMON.COPY_TO_CLIPBOARD' | translate)"
+					>
+						<nz-icon [nzType]="(copied() ? 'check' : 'content_copy') | nzIconType" />
+					</button>
+					<button
+						class="jmeet-button jmeet-button--ghost jmeet-button--icon"
+						type="button"
+						(click)="showPassword.set(!showPassword())"
+						nz-tooltip
+						[nzTooltipTitle]="showPassword() ? ('USERS.COMMON.HIDE_PASSWORD' | translate) : ('USERS.COMMON.SHOW_PASSWORD' | translate)"
+					>
+						<nz-icon [nzType]="(showPassword() ? 'visibility_off' : 'visibility') | nzIconType" />
+					</button>
+				</div>
+				<p class="create-user-dialog__field-hint">{{ 'USERS.CREATE.PASSWORD_MIN_HINT' | translate }}</p>
+				@if (getFieldError('password')) {
+					<p class="create-user-dialog__field-error">{{ getFieldError('password') }}</p>
+				}
+			</div>
+		</div>
+	</form>
+
+	<div class="create-user-dialog__actions">
+		<button class="jmeet-button jmeet-button--outline" type="button" (click)="nzModalRef.close()">
+			{{ 'USERS.COMMON.CANCEL' | translate }}
+		</button>
+		<button type="submit" class="jmeet-button jmeet-button--primary" [disabled]="form.invalid || isSaving()" (click)="onSubmit()">
+			@if (isSaving()) {
+				<nz-spin nzSimple nzSize="small" class="create-user-dialog__spinner" />
+			} @else {
+				{{ 'USERS.CREATE.CREATE_USER' | translate }}
+			}
+		</button>
+	</div>
+</div>

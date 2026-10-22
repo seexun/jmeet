@@ -1,0 +1,278 @@
+:host {
+	/* Fixes layout bug. The OV_root is created with the entire layout width and it has a weird UX behaviour */
+	.no-size {
+		height: 0px !important;
+		width: 0px !important;
+	}
+
+	// ── 格内左下角渐变名字条（§5.2②）──
+	// 替代旧独立深色胶囊名字条：34px 底部渐变遮罩 + 名字 + 麦克风/置顶态。
+	// pointer-events:none 不挡画面点击与悬停控件；层级沿用 --jmeet-z-tile-hud 红线不动。
+	// 外层类由 participant-name 改名为 stream-name-strip（id=participant-name-container
+	// 与内层 participant-name-container / status-icons 类名保留，e2e 选择器依赖它们）。
+	.stream-name-strip {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: var(--jmeet-z-tile-hud);
+		height: var(--jmeet-meeting-tile-info-height);
+		display: flex;
+		align-items: center;
+		padding: 0 10px;
+		background: linear-gradient(to top, rgb(0 0 0 / 55%), rgb(0 0 0 / 0%)); // design-system-allow-hardcoded: tile name strip scrim — black-family exempt
+		color: #fff; // design-system-allow-hardcoded: video tile name text
+		font-size: 12px;
+		line-height: 1.2;
+		pointer-events: none;
+
+		&.fullscreen {
+			// 全屏时底部有字幕叠层：整条上移让位（沿用旧 fullscreen 变体避让语义）
+			bottom: 40px;
+		}
+
+			// 麦克风/置顶态从旧左下角胶囊并入名字条：静音态用会议域危险色，
+			// 置顶态用会议域主色（状态附属①收口，批次 5：EP 色直连退役）
+			.status-icons {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+
+				nz-icon {
+					font-size: 16px;
+					width: 16px;
+					height: 16px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+
+				#mic-off,
+				#muted-forcibly {
+					color: var(--jmeet-meeting-danger);
+				}
+
+				#pinned {
+					color: var(--jmeet-meeting-primary);
+				}
+			}
+	}
+
+	// 条内一行：状态图标 + 名字（+ 你后缀 / 屏幕共享标签），超出省略
+	.participant-name-container {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		min-width: 0;
+		max-width: 100%;
+		box-sizing: border-box;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+
+	#participant-name {
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.you-suffix {
+		color: rgb(255 255 255 / 72%); // design-system-allow-hardcoded: video tile overlay text
+	}
+
+	#audio-wave-container {
+		position: absolute;
+		right: 0;
+		z-index: var(--jmeet-z-tile-hud);
+		padding: 5px;
+	}
+
+	.flex-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 4px;
+		flex-wrap: nowrap;
+		button {
+			margin: 0;
+			min-width: 32px;
+			width: 32px;
+			height: 32px;
+			padding: 4px;
+
+			.anticon {
+				font-size: 20px;
+				width: 20px;
+				height: 20px;
+			}
+		}
+	}
+
+	// Buttons that operate on the same feature (e.g. zoom) are wrapped in a
+	// control group with a subtle background so they read as one cluster,
+	// distinct from the independent actions (pin, mute, float).
+	.control-group {
+		display: flex;
+		align-items: center;
+		gap: 2px;
+
+		&.zoom-group {
+			background-color: rgb(255 255 255 / 18%); // design-system-allow-hardcoded: video tile control group
+			border-radius: var(--jmeet-radius-md);
+			padding: 0 2px;
+		}
+	}
+
+	.zoom-level {
+		color: var(--jmeet-color-text-on-primary);
+		font-size: 12px;
+		font-weight: 500;
+		min-width: 32px;
+		text-align: center;
+		user-select: none;
+	}
+
+	// 强制静音钮激活态：会议域危险色。!important 保留——(0,1,0) 类选择器源序在
+	// .stream-video-controls button（0,1,1）基色之前，同色权需提级压制（行为不变）
+	.muted-btn {
+		color: var(--jmeet-meeting-danger) !important;
+	}
+
+	.stream-video-controls {
+		background-color: color-mix(in srgb, var(--jmeet-color-text-primary) 82%, transparent); // design-system-allow-hardcoded: video tile controls overlay
+		border: 1px solid rgb(255 255 255 / 12%); // design-system-allow-hardcoded: video tile overlay border
+		border-radius: var(--jmeet-radius-md);
+		width: fit-content;
+		height: auto;
+		opacity: 0.82;
+		position: absolute;
+		display: inline-grid;
+		z-index: var(--jmeet-z-max);
+		bottom: 8px;
+		left: 50%;
+		transform: translateX(-50%);
+		transition:
+			opacity 160ms ease,
+			transform 160ms ease;
+		padding: 2px 4px;
+		box-shadow: 0 2px 8px color-mix(in srgb, var(--jmeet-color-text-primary) 15%, transparent);
+		// 原生 button 无任何类：必须显式抹掉 UA 默认 ButtonFace 白底与 outset 边框，
+		// 否则深色药丸上浮出两个白色方块、白图标不可见
+		button {
+			background: transparent;
+			border: 0;
+			border-radius: var(--jmeet-radius-sm);
+			cursor: pointer;
+			color: var(--jmeet-color-text-on-primary);
+			transition: all 0.2s ease;
+
+			&:hover:not(:disabled) {
+				background: rgb(255 255 255 / 16%); // design-system-allow-hardcoded: video tile control hover
+			}
+
+			&:disabled {
+				cursor: not-allowed;
+				opacity: 0.4;
+			}
+		}
+	}
+
+	.stream-video-controls:hover {
+		opacity: 1;
+		transform: translateX(-50%) translateY(-2px);
+	}
+
+	// 旧 .status-icons 独立深色胶囊已并入 .stream-name-strip（§5.2②），
+	// 图标配色规则随名字条迁移（静音态 --jmeet-meeting-danger）。
+
+	/* Contains the video element, used to fix video letter-boxing */
+	.OV_stream {
+		width: 100%;
+		height: 100%;
+		position: relative;
+		overflow: hidden;
+		background: var(--jmeet-color-ink-950);
+		border-radius: var(--jmeet-radius-lg);
+		border: 1px solid var(--jmeet-color-border);
+		box-sizing: border-box;
+	}
+
+	.OV_stream.speaking {
+		border-color: var(--jmeet-color-action-primary);
+		box-shadow: 0 0 0 2px color-mix(in srgb, var(--jmeet-color-action-primary) 18%, transparent);
+	}
+
+	// ── 会中舞台视频格（§5.2②）：4px 圆角 + 格底令牌 ──
+	// .OV_stream 被多场景共享（舞台宫格 / 漂浮画中画 / 自定义布局），
+	// 舞台规格经 :host-context(ov-base-layout) 收窄到 base-layout 宿主下的瓦片；
+	// 其他 ov-stream 场景（meeting-custom-layout 等）保持原样。
+	// 声明顺序在基础 .OV_stream 规则之后，同特异性下由此覆盖生效。
+	:host-context(ov-base-layout) .OV_stream {
+		background: var(--jmeet-meeting-tile-bg);
+		border-radius: var(--jmeet-meeting-tile-radius);
+	}
+}
+
+:host {
+	.stream-video-controls {
+		max-width: calc(100% - 16px);
+	}
+	.stream-video-controls:focus-within {
+		opacity: 1;
+	}
+	.stream-video-controls button:focus-visible {
+		outline: 2px solid var(--jmeet-color-text-on-primary);
+		outline-offset: -2px;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	:host .stream-video-controls,
+	:host .stream-video-controls button {
+		transition: none;
+	}
+	:host .stream-video-controls:hover {
+		transform: translateX(-50%);
+	}
+}
+
+// ── 浮动小窗（自视图 PiP）紧凑变体：小窗仅约 160×90px，
+// 名条/控制按钮沿用全尺寸会占满窗宽并遮挡画面，全部按比例缩小 ──
+:host-context(.OV_floating) {
+	.stream-name-strip {
+		// 34px 全尺寸遮罩条在小窗占比过高，压到 22px
+		height: 22px;
+		padding: 0 6px;
+	}
+
+	.stream-name-strip .status-icons {
+		gap: 4px;
+
+		nz-icon {
+			font-size: 13px;
+			width: 13px;
+			height: 13px;
+		}
+	}
+
+	.stream-video-controls {
+		bottom: 4px;
+		padding: 1px 2px;
+		border-radius: var(--jmeet-radius-md);
+	}
+
+	.flex-container {
+		gap: 2px;
+
+		button {
+			min-width: 22px;
+			width: 22px;
+			height: 22px;
+			padding: 1px;
+
+			.anticon {
+				font-size: 13px;
+				width: 13px;
+				height: 13px;
+			}
+		}
+	}
+}

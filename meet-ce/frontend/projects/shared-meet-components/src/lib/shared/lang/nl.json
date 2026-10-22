@@ -1,0 +1,72 @@
+{
+  "ERROR": {
+    "DEFAULT_TITLE": "Fout",
+    "BACK": "Terug",
+    "BACK_TO_CONSOLE": "Terug naar console",
+    "ACCEPT": "Accepteren",
+    "OOPS": "Oeps!",
+    "SOMETHING_WRONG": "Er is iets misgegaan"
+  },
+  "NAVIGATION_ERROR": {
+    "EMBEDDED_ERROR": {
+      "TITLE": "JMeet kan niet worden geladen",
+      "MESSAGE": "JMeet kon niet worden geladen. Controleer de insluitconfiguratie."
+    },
+    "CLOSED_ROOM": {
+      "TITLE": "Gesloten kamer",
+      "MESSAGE": "Meetings in deze kamer zijn niet beschikbaar zolang deze gesloten is"
+    },
+    "ANONYMOUS_ACCESS_DISABLED": {
+      "TITLE": "Anonieme toegang uitgeschakeld",
+      "MESSAGE": "De anonieme toegang voor uw rol is in deze kamer uitgeschakeld (en de bijbehorende opnames)"
+    },
+    "ANONYMOUS_RECORDING_ACCESS_DISABLED": {
+      "TITLE": "Anonieme toegang uitgeschakeld",
+      "MESSAGE": "De anonieme toegang voor deze opname is uitgeschakeld"
+    },
+    "INVALID_ROOM_SECRET": {
+      "TITLE": "Ongeldige link",
+      "MESSAGE": "De link die u heeft gebruikt om toegang te krijgen tot deze kamer (of de bijbehorende opnames) is niet geldig. Vraag een moderator om de juiste link te delen via de beschikbare deelknoppen"
+    },
+    "INVALID_RECORDING_SECRET": {
+      "TITLE": "Ongeldige link",
+      "MESSAGE": "De link die u heeft gebruikt om toegang te krijgen tot deze opname is niet geldig"
+    },
+    "INVALID_ROOM": {
+      "TITLE": "Ongeldige kamer",
+      "MESSAGE": "De kamer (of de bijbehorende opnames) waartoe u toegang probeert te krijgen bestaat niet of is verwijderd"
+    },
+    "INVALID_RECORDING": {
+      "TITLE": "Ongeldige opname",
+      "MESSAGE": "De opname waartoe u toegang probeert te krijgen bestaat niet of is verwijderd"
+    },
+    "INVALID_MEMBER": {
+      "TITLE": "Ongeldig lid",
+      "MESSAGE": "U bent geen lid meer van deze kamer of de ledeninformatie is onjuist"
+    },
+    "FORBIDDEN_ROOM_ACCESS": {
+      "TITLE": "Toegang tot kamer verboden",
+      "MESSAGE": "U bent niet geautoriseerd om toegang te krijgen tot deze kamer (noch tot de bijbehorende opnames)"
+    },
+    "FORBIDDEN_ROOM_RECORDINGS_ACCESS": {
+      "TITLE": "Toegang tot opnames verboden",
+      "MESSAGE": "U bent niet geautoriseerd om toegang te krijgen tot de opnames in deze kamer"
+    },
+    "FORBIDDEN_RECORDING_ACCESS": {
+      "TITLE": "Toegang tot opname verboden",
+      "MESSAGE": "U bent niet geautoriseerd om toegang te krijgen tot deze opname"
+    },
+    "ROOM_ACCESS_REVOKED": {
+      "TITLE": "Toegang tot kamer ingetrokken",
+      "MESSAGE": "Uw rechten in deze kamer zijn gewijzigd en u heeft geen toegang meer (noch tot de bijbehorende opnames). Neem contact op met een moderator voor meer informatie"
+    },
+    "TOO_MANY_REQUESTS": {
+      "TITLE": "Te veel verzoeken",
+      "MESSAGE": "U heeft in korte tijd te veel verzoeken gedaan. Wacht even en probeer het opnieuw"
+    },
+    "INTERNAL_ERROR": {
+      "TITLE": "Interne fout",
+      "MESSAGE": "Er is een onverwachte fout opgetreden, probeer het later opnieuw"
+    }
+  }
+}

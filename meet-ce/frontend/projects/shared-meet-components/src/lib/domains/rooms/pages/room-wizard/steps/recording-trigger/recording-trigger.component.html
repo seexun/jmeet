@@ -1,0 +1,21 @@
+<div class="recording-trigger-step fade-in">
+	<p class="jmeet-text--body-secondary wizard-step-description">{{ 'ROOMS.WIZARD.RECORDING_TRIGGER.DESCRIPTION' | translate }}</p>
+
+	<form [formGroup]="triggerForm" class="jmeet-settings-form trigger-form">
+			<!-- Options Cards -->
+			<div class="options-grid">
+				@for (option of triggerOptions; track option.id) {
+					<ov-selectable-card
+						[option]="option"
+						[selectedValue]="selectedOption"
+						[allowMultiSelect]="false"
+						[showSelectionIndicator]="true"
+						[showProBadge]="option.isPro ?? false"
+						[showRecommendedBadge]="option.recommended ?? false"
+						[enableHover]="!option.disabled"
+						(optionSelected)="onOptionChange($event)"
+					/>
+				}
+			</div>
+	</form>
+</div>

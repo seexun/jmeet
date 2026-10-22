@@ -1,0 +1,634 @@
+// ============================================================
+// 登录页样式（2026-10-23 重设计）——企业科技感 SaaS：实景会议室照片全幅背景
+// + 蓝白读层 + 左侧产品主张 + 今日会议玻璃面板 + 右侧白色登录卡。
+// 结构：顶栏（品牌/语言/帮助）· 左 hero（大标题/标语/三特性栏）·
+// 中 agenda 玻璃面板（装饰性示例日程，aria-hidden）· 右登录卡 · 页脚。
+// 颜色纪律：品牌渐变一律 var(--jmeet-gradient-brand)，语义色走 action-*，
+// 色阶一律 color-mix 派生——零裸 hex（照片读层的 rgba 白洗为必要覆盖层）。
+// ============================================================
+
+@use '../console-mixins' as design-tokens;
+
+.jmeet-login-page {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	overflow: hidden;
+	color: var(--jmeet-color-text-primary);
+	background: var(--jmeet-color-surface-page);
+}
+
+// ── 实景背景 ──
+.login-bg {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+.login-bg-photo {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+// 蓝白读层：左侧白渐变保证文案对比；右段大幅减淡，叠品牌蓝系深浅氛围光，
+// 让照片透出结构并保持全页蓝色主题（读层色彩为照片覆盖层，使用 rgba 不走令牌）。
+.login-bg-wash {
+	position: absolute;
+	inset: 0;
+	background:
+		// 文字区白色保底（左重右轻）
+		linear-gradient(
+			90deg,
+			rgba(238, 245, 253, 0.92) 0%,
+			rgba(239, 246, 253, 0.74) 30%,
+			rgba(241, 247, 253, 0.2) 58%,
+			rgba(235, 243, 252, 0.06) 100%
+		),
+		// 品牌蓝系氛围：右上深蓝 / 右下中蓝 / 中下亮蓝
+		radial-gradient(42% 60% at 78% 20%, rgba(30, 64, 175, 0.3), transparent 66%),
+		radial-gradient(46% 62% at 97% 88%, rgba(37, 99, 235, 0.28), transparent 66%),
+		radial-gradient(42% 56% at 46% 92%, rgba(96, 165, 250, 0.3), transparent 62%),
+		linear-gradient(180deg, transparent 84%, rgba(238, 245, 253, 0.72) 100%);
+}
+
+// ── 顶栏 ──
+.jmeet-login-topbar {
+	position: relative;
+	z-index: 3;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 14px clamp(20px, 3.5vw, 44px);
+
+	.brand {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+
+		.jmeet-login-logo {
+			width: 30px;
+			height: 30px;
+			border-radius: 8px;
+			object-fit: contain;
+		}
+
+		strong {
+			font-size: 17px;
+			font-weight: 700;
+			color: var(--jmeet-color-text-primary);
+		}
+
+		.brand-sep {
+			width: 1px;
+			height: 14px;
+			background: var(--jmeet-color-border-strong);
+		}
+
+		.brand-tagline {
+			font-size: 13px;
+			color: var(--jmeet-color-text-secondary);
+		}
+	}
+
+	.topnav {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+
+		.lang-select {
+			height: 30px;
+			padding: 0 24px 0 10px;
+			border: 1px solid var(--jmeet-color-border);
+			border-radius: var(--jmeet-radius-sm);
+			background: rgba(255, 255, 255, 0.75);
+			font-size: 12.5px;
+			color: var(--jmeet-color-text-regular);
+			cursor: pointer;
+		}
+
+		.sep {
+			width: 1px;
+			height: 14px;
+			background: var(--jmeet-color-border);
+		}
+
+		.nav-link {
+			padding: 0;
+			border: none;
+			background: none;
+			font-size: 13px;
+			color: var(--jmeet-color-text-secondary);
+			cursor: pointer;
+			transition: color 0.15s ease;
+
+			&:hover {
+				color: var(--jmeet-color-action-primary);
+			}
+		}
+	}
+}
+
+// ── 主体三栏：hero / agenda 玻璃 / 登录位 ──
+.jmeet-login-body {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex: 1;
+	gap: clamp(20px, 3vw, 44px);
+	align-items: center;
+	padding: 24px clamp(20px, 4vw, 64px) 96px;
+}
+
+// 左：产品主张（紧凑层级：标题 → 标语 → 简介 → 三特性栏）
+.jmeet-login-hero {
+	flex: 1 1 46%;
+	max-width: 520px;
+
+	.hero-title {
+		margin: 0;
+		font-size: clamp(30px, 3vw, 42px);
+		font-weight: 800;
+		letter-spacing: 1px;
+		color: var(--jmeet-color-text-primary);
+	}
+
+	.hero-tagline {
+		margin: 12px 0 0;
+		font-size: clamp(17px, 1.6vw, 21px);
+		font-weight: 600;
+		color: var(--jmeet-color-action-primary);
+	}
+
+	.hero-intro {
+		margin: 12px 0 0;
+		font-size: 14px;
+		line-height: 1.8;
+		color: var(--jmeet-color-text-secondary);
+	}
+
+	.hero-band {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 16px;
+		max-width: 470px;
+		margin-top: 26px;
+	}
+
+	.band-col {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	// 品牌蓝深浅体系：浅蓝底 → 中蓝底 → 品牌蓝实底，用深度区分而非色相
+	.band-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 12px;
+		background: color-mix(in srgb, var(--jmeet-color-action-primary) 10%, var(--jmeet-color-surface-card));
+		font-size: 20px;
+		color: var(--jmeet-color-action-primary);
+
+		&--green {
+			background: color-mix(in srgb, var(--jmeet-color-action-primary) 22%, var(--jmeet-color-surface-card));
+			color: var(--jmeet-color-action-primary-dark);
+		}
+
+		&--violet {
+			background: var(--jmeet-color-action-primary);
+			color: var(--jmeet-color-text-on-primary);
+		}
+	}
+
+	.band-text {
+		display: flex;
+		flex-direction: column;
+		gap: 3px;
+
+		strong {
+			font-size: 14.5px;
+			font-weight: 600;
+			color: var(--jmeet-color-text-primary);
+		}
+
+		span {
+			font-size: 12.5px;
+			color: var(--jmeet-color-text-secondary);
+		}
+	}
+}
+
+// ── 登录位（右，品牌蓝主视觉）──
+.jmeet-login-main {
+	display: flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	width: clamp(440px, 32vw, 520px);
+	margin-left: auto;
+}
+
+.jmeet-login-panel {
+	position: relative;
+	width: 420px;
+	max-width: 100%;
+	padding: 36px 34px 28px;
+	overflow: hidden;
+	border: 1px solid rgba(255, 255, 255, 0.85);
+	border-radius: var(--jmeet-radius-xl, 16px);
+	background: var(--jmeet-color-surface-card);
+	box-shadow: 0 30px 80px -30px rgba(30, 58, 138, 0.38);
+	animation: jmeet-login-card-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+	// 顶部品牌渐变细线（与左侧品牌蓝呼应）
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 3px;
+		background: var(--jmeet-gradient-brand);
+	}
+}
+
+@keyframes jmeet-login-card-rise {
+	from {
+		opacity: 0;
+		transform: translateY(16px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.panel-logo {
+	display: block;
+	width: 48px;
+	height: 48px;
+	margin: 0 auto 14px;
+	border-radius: 12px;
+	object-fit: contain;
+}
+
+.jmeet-login-heading {
+	margin-bottom: 24px;
+	text-align: center;
+
+	h2 {
+		margin: 0;
+		font-size: 23px;
+		font-weight: 700;
+		letter-spacing: 0.3px;
+		color: var(--jmeet-color-text-primary);
+	}
+
+	p {
+		margin: 6px 0 0;
+		font-size: 12.5px;
+		color: var(--jmeet-color-text-secondary);
+	}
+}
+
+// ── 表单 ──
+.jmeet-login-form {
+	position: relative;
+	z-index: 1;
+}
+
+.jmeet-login-directory {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	margin-bottom: 14px;
+	padding: 8px 12px;
+	border: 1px solid var(--jmeet-color-border-light);
+	border-radius: var(--jmeet-radius-md);
+	background: color-mix(in srgb, var(--jmeet-color-action-primary) 4%, var(--jmeet-color-surface-card));
+	font-size: 13px;
+	color: var(--jmeet-color-text-regular);
+
+	nz-icon {
+		margin-right: 6px;
+		color: var(--jmeet-color-action-primary);
+	}
+}
+
+.login-field-row {
+	display: flex;
+	align-items: center;
+	gap: 9px;
+	height: 44px;
+	margin-bottom: 14px;
+	padding: 0 13px;
+	border: 1px solid var(--jmeet-color-border);
+	border-radius: 10px;
+	background: var(--jmeet-color-surface-card);
+	transition:
+		border-color 0.18s ease,
+		box-shadow 0.18s ease;
+
+	&:hover {
+		border-color: var(--jmeet-color-border-strong);
+	}
+
+	&:focus-within {
+		border-color: var(--jmeet-color-action-primary);
+		box-shadow: 0 0 0 3px color-mix(in srgb, var(--jmeet-color-action-primary) 13%, transparent);
+	}
+
+	.login-field-icon {
+		flex: none;
+		font-size: 15px;
+		color: var(--jmeet-color-text-hint);
+	}
+
+	input {
+		flex: 1;
+		min-width: 0;
+		height: 100%;
+		background: transparent;
+		border: none;
+		outline: none;
+		box-shadow: none;
+		font-size: 14px;
+		color: var(--jmeet-color-text-primary);
+
+		&::placeholder {
+			color: var(--jmeet-color-text-hint);
+		}
+
+		&:focus {
+			border: none;
+			box-shadow: none;
+			outline: none;
+		}
+	}
+
+	.pw-toggle {
+		flex: none;
+		color: var(--jmeet-color-text-hint);
+		background: none;
+		border: none;
+		box-shadow: none;
+
+		&:hover {
+			color: var(--jmeet-color-text-secondary);
+			background: none;
+		}
+	}
+}
+
+// MFA 动态验证码（触发时出现）
+.jmeet-field {
+	.jmeet-field-label {
+		display: block;
+		margin-bottom: 6px;
+		font-size: 13px;
+		font-weight: 500;
+		color: var(--jmeet-color-text-regular);
+	}
+
+	.login-field-row {
+		height: 42px;
+	}
+
+	.login-field-hint {
+		margin: -6px 0 12px;
+		font-size: 12px;
+		color: var(--jmeet-color-text-tertiary);
+	}
+}
+
+.jmeet-login-form-extra {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 0 0 16px;
+
+	.remember {
+		display: inline-flex;
+		gap: 6px;
+		align-items: center;
+		font-size: 13px;
+		color: var(--jmeet-color-text-secondary);
+		cursor: pointer;
+
+		input {
+			width: 14px;
+			height: 14px;
+			accent-color: var(--jmeet-color-action-primary);
+			cursor: pointer;
+		}
+	}
+
+	.forgot {
+		padding: 0;
+		border: none;
+		background: none;
+		font-size: 13px;
+		color: var(--jmeet-color-action-primary);
+		cursor: pointer;
+		transition: color 0.15s ease;
+
+		&:hover {
+			color: var(--jmeet-color-action-primary-dark);
+		}
+	}
+}
+
+.jmeet-login-error {
+	margin: 0 0 14px;
+	padding: 8px 12px;
+	border-radius: var(--jmeet-radius-sm);
+	background: var(--jmeet-color-action-danger-light);
+	font-size: 12.5px;
+	color: var(--jmeet-color-action-danger-text);
+}
+
+.jmeet-login-submit {
+	width: 100%;
+	height: 44px;
+	border: none;
+	border-radius: 10px;
+	background: var(--jmeet-button-primary-bg, var(--jmeet-color-action-primary));
+	font-size: 15px;
+	font-weight: 600;
+	letter-spacing: 4px;
+	color: var(--jmeet-color-text-on-primary);
+	box-shadow: 0 10px 24px -8px color-mix(in srgb, var(--jmeet-color-action-primary) 55%, transparent);
+	transition:
+		transform 0.15s ease,
+		box-shadow 0.15s ease,
+		background 0.15s ease;
+
+	&:hover:not(:disabled) {
+		transform: translateY(-1px);
+		background: var(--jmeet-color-action-primary-dark);
+		box-shadow: 0 14px 28px -8px color-mix(in srgb, var(--jmeet-color-action-primary) 60%, transparent);
+	}
+
+	&:disabled {
+		// 禁用态用浅蓝填充而非透明度衰减，避免误读为默认样式
+		background: color-mix(in srgb, var(--jmeet-color-action-primary) 35%, var(--jmeet-color-surface-card));
+		color: var(--jmeet-color-text-on-primary);
+		cursor: not-allowed;
+		box-shadow: none;
+	}
+}
+
+// ── 企业目录登录（存在身份源时出现）──
+.jmeet-login-divider-auth {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 18px 0 14px;
+	color: var(--jmeet-color-text-tertiary);
+	font-size: 12px;
+
+	&::before,
+	&::after {
+		content: '';
+		flex: 1;
+		height: 1px;
+		background: var(--jmeet-color-border-light);
+	}
+}
+
+.jmeet-login-enterprise {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.jmeet-login-enterprise-btn {
+	width: 100%;
+	height: 40px;
+}
+
+// ── 卡片底行 ──
+.jmeet-login-panel-foot {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	justify-content: center;
+	margin: 18px 0 0;
+	padding-top: 16px;
+	border-top: 1px solid var(--jmeet-color-border-light);
+	font-size: 12.5px;
+	color: var(--jmeet-color-text-tertiary);
+
+	.foot-link {
+		padding: 0;
+		border: none;
+		background: none;
+		font-size: 12.5px;
+		color: var(--jmeet-color-text-secondary);
+		cursor: pointer;
+		transition: color 0.15s ease;
+
+		&:hover {
+			color: var(--jmeet-color-action-primary);
+		}
+	}
+}
+
+// ── 页脚 ──
+.jmeet-login-footer {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	justify-content: center;
+	padding: 16px clamp(20px, 4vw, 44px);
+	font-size: 12px;
+	color: var(--jmeet-color-text-tertiary);
+
+	.copy {
+		margin-right: 8px;
+	}
+
+	.foot-sep {
+		margin-right: 8px;
+		color: var(--jmeet-color-border);
+	}
+
+	.foot-link {
+		padding: 0;
+		border: none;
+		background: none;
+		font-size: 12px;
+		color: var(--jmeet-color-text-secondary);
+		cursor: pointer;
+		transition: color 0.15s ease;
+
+		&:hover {
+			color: var(--jmeet-color-action-primary);
+		}
+	}
+}
+
+// ── 响应式与可访问性 ──
+@media (max-width: 1024px) {
+	// 窄屏：文案收进单列，登录位居中
+	.jmeet-login-body {
+		flex-direction: column;
+		justify-content: center;
+		gap: 32px;
+		padding: 24px 20px 96px;
+	}
+
+	.jmeet-login-hero {
+		max-width: 480px;
+		text-align: center;
+
+		.hero-intro {
+			margin-inline: auto;
+		}
+
+		.hero-band {
+			margin-inline: auto;
+		}
+	}
+
+	.jmeet-login-main {
+		width: 100%;
+	}
+}
+
+@media (max-width: 480px) {
+	.jmeet-login-topbar {
+		padding: 12px 16px;
+
+		.brand .brand-tagline,
+		.brand .brand-sep {
+			display: none;
+		}
+	}
+
+	.jmeet-login-panel {
+		padding: 24px 20px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.jmeet-login-panel {
+		animation: none;
+	}
+
+	.jmeet-login-submit {
+		transition: none;
+	}
+}

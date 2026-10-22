@@ -1,0 +1,43 @@
+<section class="invite-dialog" aria-labelledby="invite-dialog-title">
+	<header class="invite-dialog__header">
+		<div class="invite-dialog__heading">
+			<span class="invite-dialog__icon"><nz-icon nzType="user-add" /></span>
+			<div>
+				<h2 id="invite-dialog-title">邀请成员参会</h2>
+			</div>
+		</div>
+		<button type="button" class="icon-button" aria-label="关闭邀请窗口" (click)="close()"><nz-icon nzType="close" /></button>
+	</header>
+
+	<div class="invite-dialog__content">
+		<div class="meeting-summary">
+			<span class="meeting-summary__label">会议名称</span>
+			<strong>{{ nameLabel() }}</strong>
+			<span class="secure-badge"><nz-icon nzType="safety-certificate" /> 安全会议</span>
+		</div>
+
+		<!-- 内部房间 ID 不再展示：本产品无"输入会议号入会"，入会唯一入口是下方链接，
+		     展示并允许复制只会误导邀请人（用户决策 2026-10-05，方案 A） -->
+		<div class="invite-field">
+			<div><span>会议号</span><strong>{{ codeLabel() }}</strong></div>
+			<button type="button" class="jmeet-button jmeet-button--outline" (click)="copy(codeLabel())" aria-label="复制会议号">
+				<nz-icon nzType="copy" />复制
+			</button>
+		</div>
+		<div class="invite-field invite-field--link">
+			<div><span>入会链接</span><strong>{{ data.roomAccessUrl }}</strong></div>
+			<button type="button" class="jmeet-button jmeet-button--outline" (click)="copy(data.roomAccessUrl)" aria-label="复制入会链接">
+				<nz-icon nzType="copy" />复制
+			</button>
+		</div>
+		@if(dialIn()?.enabled){<div class="invite-field"><div><span>电话拨入</span><strong>{{dialIn()?.phoneNumber}}{{dialIn()?.pin?' · PIN '+dialIn()?.pin:''}}</strong></div><button type="button" class="jmeet-button jmeet-button--outline" (click)="copy('拨入号码：'+dialIn()?.phoneNumber+(dialIn()?.pin?'\n会议 PIN：'+dialIn()?.pin:''))" aria-label="复制电话拨入信息"><nz-icon nzType="copy" />复制</button></div>}
+		<p class="invite-hint"><nz-icon nzType="info-circle" />获得链接的成员仍需通过当前房间的访问权限校验。</p>
+	</div>
+
+	<footer class="invite-dialog__actions">
+		<button type="button" class="jmeet-button jmeet-button--outline" (click)="close()">取消</button>
+		<button type="button" class="jmeet-button jmeet-button--primary" (click)="share()">
+			<nz-icon nzType="share-alt" />分享邀请
+		</button>
+	</footer>
+</section>

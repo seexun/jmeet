@@ -1,0 +1,246 @@
+// Import design system utilities
+@use '_design-tokens.scss';
+
+// === DIALOG FRAME ===
+.dialog-container {
+	@include design-tokens.ov-dialog-container;
+	// 内边距栅格（方向 B）：容器归零，标题/正文/按钮区各自持 24px 水平
+	// gutter 与统一垂直节奏，替代此前 4/0/24/24 四套内边距的错位
+	padding: 0;
+}
+
+// === DIALOG ANIMATION ===
+:host {
+	animation: dialogFadeIn 0.2s ease-out;
+}
+
+@keyframes dialogFadeIn {
+	from {
+		opacity: 0;
+		transform: scale(0.95) translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1) translateY(0);
+	}
+}
+
+// === DIALOG TITLE ===
+// Left-aligned per standard §26; size/weight come from the shared dialog-title contract.
+.dialog-title {
+	@include design-tokens.ov-theme-transition;
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-layout-space-sm);
+	margin: 0;
+	padding: var(--jmeet-layout-space-lg) var(--jmeet-layout-space-lg) 0;
+	color: var(--jmeet-color-text-primary);
+	line-height: var(--jmeet-typography-line-height-tight);
+
+	.dialog-icon {
+		@include design-tokens.ov-icon(md);
+		color: var(--jmeet-color-text-secondary);
+		flex-shrink: 0;
+	}
+}
+
+// === DIALOG CONTENT ===
+.dialog-content {
+	@include design-tokens.ov-theme-transition;
+	line-height: var(--jmeet-typography-line-height-relaxed);
+	padding: var(--jmeet-layout-space-sm) var(--jmeet-layout-space-lg) 0;
+	min-height: auto;
+
+	.dialog-message {
+		margin-bottom: 0;
+	}
+
+	.warning-box {
+		display: flex;
+		flex-direction: column;
+		gap: var(--jmeet-layout-space-xs);
+		margin-top: var(--jmeet-layout-space-sm);
+		padding: var(--jmeet-layout-space-sm) var(--jmeet-layout-space-md);
+		border: 1px solid var(--jmeet-color-action-warning);
+		border-radius: var(--jmeet-shape-radius-md);
+		background: color-mix(in srgb, var(--jmeet-color-action-warning) 12%, transparent);
+		text-align: left;
+
+		.warning-box-header {
+			display: flex;
+			align-items: center;
+			gap: var(--jmeet-layout-space-xs);
+		}
+
+		.warning-box-icon {
+			@include design-tokens.ov-icon(sm);
+			color: var(--jmeet-color-action-warning);
+			flex-shrink: 0;
+		}
+
+		.warning-box-title {
+			color: var(--jmeet-color-text-primary);
+			font-size: var(--jmeet-typography-font-size-sm);
+			font-weight: var(--jmeet-typography-font-weight-semibold);
+		}
+
+		.warning-box-message {
+			margin: 0;
+			color: var(--jmeet-color-text-secondary);
+			font-size: var(--jmeet-typography-font-size-xs);
+			line-height: var(--jmeet-typography-line-height-relaxed);
+		}
+	}
+
+	.force-checkbox-container {
+		@include design-tokens.ov-theme-transition;
+		margin-top: var(--jmeet-layout-space-lg);
+		padding: var(--jmeet-layout-space-md);
+		border: 1px solid var(--jmeet-color-border);
+		border-radius: var(--jmeet-shape-radius-md);
+		background: var(--jmeet-color-surface-variant);
+		text-align: left;
+
+		.force-checkbox {
+			margin-bottom: var(--jmeet-layout-space-sm);
+
+			.checkbox-text {
+				font-size: var(--jmeet-typography-font-size-md);
+				font-weight: var(--jmeet-typography-font-weight-medium);
+				color: var(--jmeet-color-text-primary);
+			}
+		}
+
+		.checkbox-warning {
+			display: flex;
+			align-items: flex-start;
+			justify-content: flex-start;
+			gap: var(--jmeet-layout-space-xs);
+			margin-top: var(--jmeet-layout-space-xs);
+
+			.warning-icon {
+				@include design-tokens.ov-icon(sm);
+				color: var(--jmeet-color-action-warning);
+				flex-shrink: 0;
+				margin-top: 2px; // Align with first line of text
+			}
+
+			.warning-text {
+				font-size: var(--jmeet-typography-font-size-xs);
+				color: var(--jmeet-color-text-secondary);
+				font-style: italic;
+				line-height: var(--jmeet-typography-line-height-relaxed);
+				flex: 1;
+			}
+		}
+	}
+}
+
+// === DIALOG ACTIONS ===
+// Footer buttons right-aligned per standard §26; button visuals come from jmeet-button classes.
+.dialog-action {
+	@include design-tokens.ov-theme-transition;
+	display: flex;
+	justify-content: flex-end;
+	gap: var(--jmeet-layout-space-sm);
+	padding: var(--jmeet-layout-space-lg) var(--jmeet-layout-space-lg) var(--jmeet-layout-space-md);
+	margin: 0;
+
+	// 破坏性确认（data.confirmDanger）：确认按钮渲染为 danger 色，
+	// 避免丢弃类操作使用视觉最重的主色蓝导致误点
+	button.confirm-button.jmeet-button--danger {
+		background: var(--jmeet-color-action-danger);
+
+		&:hover:not(:disabled) {
+			background: color-mix(in srgb, var(--jmeet-color-action-danger) 88%, var(--jmeet-color-surface-card));
+		}
+	}
+
+	// Force state recolors the primary confirm action to warning while the checkbox is ticked.
+	button.confirm-button.force {
+		background: var(--jmeet-color-action-warning);
+
+		&:hover:not(:disabled) {
+			background: color-mix(in srgb, var(--jmeet-color-action-warning) 88%, var(--jmeet-color-surface-card));
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--jmeet-color-action-warning);
+			outline-offset: 2px;
+		}
+	}
+}
+
+// === RESPONSIVE DESIGN ===
+@include design-tokens.ov-mobile-down {
+	.dialog-title {
+		flex-direction: column;
+		gap: var(--jmeet-layout-space-xs);
+
+		.dialog-icon {
+			@include design-tokens.ov-icon(lg);
+		}
+	}
+
+	.dialog-content {
+		padding: var(--jmeet-layout-space-sm) var(--jmeet-layout-space-md) 0;
+		font-size: var(--jmeet-typography-font-size-sm);
+
+		.warning-box {
+			padding: var(--jmeet-layout-space-sm);
+		}
+
+		.force-checkbox-container {
+			margin-top: var(--jmeet-layout-space-md);
+			padding: var(--jmeet-layout-space-sm);
+
+			.checkbox-warning {
+				margin-left: 0; // Remove extra margin on mobile
+				gap: var(--jmeet-layout-space-xs);
+
+				.warning-icon {
+					margin-top: 1px; // Adjust for smaller text
+				}
+
+				.warning-text {
+					font-size: var(--jmeet-typography-font-size-xs);
+				}
+			}
+		}
+	}
+
+	.dialog-action {
+		padding: var(--jmeet-layout-space-md);
+		flex-direction: column;
+
+		button {
+			width: 100%;
+		}
+	}
+}
+
+// === ACCESSIBILITY ENHANCEMENTS ===
+@media (prefers-reduced-motion: reduce) {
+	:host {
+		animation: none;
+	}
+
+	@keyframes dialogFadeIn {
+		from,
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+}
+
+// === HIGH CONTRAST MODE ===
+@media (prefers-contrast: high) {
+	.dialog-title {
+		font-weight: var(--jmeet-typography-font-weight-bold);
+	}
+
+	.dialog-action button {
+		border-width: 2px;
+	}
+}

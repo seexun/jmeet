@@ -1,0 +1,196 @@
+// Template shell: full-height sidebar beside the header and scrollable content.
+.jmeet-app-shell {
+	display: grid;
+	grid-template-columns: var(--jmeet-layout-sidebar-width) minmax(0, 1fr);
+	grid-template-rows: var(--jmeet-layout-topbar-height) minmax(0, 1fr);
+
+	// 锁定为视口高度：内容滚动由 __content 接管。若用 min-height:100vh，
+	// 长内容会把整层 shell 撑高，超出 host 视口后被裁剪，页面尾部不可达。
+	height: 100vh;
+	height: 100dvh;
+	background: var(--jmeet-color-surface-page);
+}
+
+.jmeet-app-shell__sidebar {
+	grid-row: 1 / -1;
+	grid-column: 1;
+	min-height: 0;
+	overflow: hidden;
+	background: var(--jmeet-color-surface-card);
+
+	// 白侧栏右缘分隔（规格 §3.2 壳）：轻 divider，比常规边框浅一档
+	border-right: 1px solid var(--jmeet-color-border-light);
+}
+
+.jmeet-app-shell__topbar {
+	grid-row: 1;
+	grid-column: 2;
+	min-width: 0;
+	display: flex;
+	align-items: center;
+	min-height: var(--jmeet-layout-topbar-height);
+	padding: 0 var(--jmeet-space-6);
+	background: var(--jmeet-color-surface-card);
+	border-bottom: 1px solid var(--jmeet-color-border-light);
+}
+
+.jmeet-app-shell__content {
+	grid-row: 2;
+	grid-column: 2;
+	min-width: 0;
+	min-height: 0;
+	padding: var(--jmeet-space-6);
+	overflow: auto;
+}
+
+.sidebar-brand {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-space-2);
+	min-height: var(--jmeet-layout-topbar-height);
+	padding: 0 var(--jmeet-space-3);
+	border-bottom: 1px solid var(--jmeet-color-border-light);
+	white-space: nowrap;  // 产品名过长不换行，避免品牌块被撑高
+}
+
+.jmeet-nav-group-title {
+	margin: var(--jmeet-space-4) 0 var(--jmeet-space-1);
+	padding: 0 var(--jmeet-space-3);
+	color: var(--jmeet-color-text-hint);
+	font-size: var(--jmeet-font-size-xs);
+	font-weight: var(--jmeet-font-weight-bold);
+}
+
+// 后台/工作台布局：内容自主内容区满宽铺展（仅保留水平内边距），
+// 不限宽居中——1440px 上限在 1920/2560 宽屏会让侧栏与内容之间出现
+// 大块留白并压缩表格列。
+.jmeet-content-container {
+	width: 100%;
+}
+
+// 白侧栏紧凑导航（规格 §3.2 壳）：32px 行高、8px 圆角、13px 图标+文字；
+// 垂直 4px 间隔由 console-nav 的 #side-navigation gap（space-1）供给。
+.jmeet-nav-item {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-space-2);
+	min-height: var(--jmeet-control-height);
+	padding: 0 var(--jmeet-space-3);
+	border-radius: var(--jmeet-radius-md);
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-secondary);  // 13px 次级正文档（紧凑导航）
+	font-weight: var(--jmeet-font-weight-regular);
+	text-decoration: none;
+	transition: background-color var(--jmeet-motion-fast), color var(--jmeet-motion-fast);
+
+	.anticon {
+		color: inherit;
+		font-size: var(--jmeet-icon-size-sm);
+		width: var(--jmeet-icon-size-sm);
+		height: var(--jmeet-icon-size-sm);
+	}
+
+	// hover（批次3 收口 brand 化）：与激活行同源走语义别名 action-primary-light——
+	// 直连 primary-soft 会切断 _semantic 的 brand 覆盖契约（brand 运行时换肤死）。
+	// 55% 兑白维持 hover < active 层级（缺省值下与原 primary-soft 配方同值：
+	// action-primary-light 与 primary-soft 同为 #EBF3FF），强度低于激活底成立。
+	&:hover {
+		background: color-mix(in srgb, var(--jmeet-color-action-primary-light) 55%, var(--jmeet-color-gray-0));
+		color: var(--jmeet-color-text-primary);
+	}
+
+	// 激活态：语义别名底 + 主色深字（批次2 对比度必修：底改走 action-primary-light 恢复 brand
+	// 运行时覆盖联动——直连 primary-soft 会切断 _semantic 的 brand-primary-light 覆盖契约；
+	// 文字 action-primary-dark #0047AD 对 #EBF3FF 对比 7.50，与 nz-select 选中模式同构）
+	&--active,
+	&.jmeet-nav-item--active {
+		background: var(--jmeet-color-action-primary-light);
+		color: var(--jmeet-color-action-primary-dark);
+		font-weight: var(--jmeet-font-weight-medium);
+	}
+}
+
+// Icon rail between 768px and 1024px: sidebar collapses to icon-only (standard §29).
+@media (width >= 768px) and (width <= 1024px) {
+	.jmeet-app-shell {
+		grid-template-columns: 64px minmax(0, 1fr);
+	}
+
+	.jmeet-app-shell__sidebar {
+		padding: 0;
+	}
+
+	.jmeet-app-shell__sidebar .jmeet-nav-item {
+		justify-content: center;
+		padding: 0;
+
+		span {
+			display: none;
+		}
+	}
+
+	.jmeet-app-shell__sidebar .nav-footer {
+		display: none;
+	}
+
+	.jmeet-app-shell__sidebar .jmeet-nav-group-title {
+		display: none;
+	}
+
+	// 图标栏下品牌块只留 logo：产品名隐藏，logo 单独居中（与 nav-item 处理一致）
+	.jmeet-app-shell__sidebar .sidebar-brand {
+		justify-content: center;
+		padding: 0;
+
+		.toolbar-brand-logo {
+			max-width: 100%;  // 自定义 logo 图按 48px 内容宽收缩，防止横向溢出
+		}
+
+		.toolbar-brand-name {
+			display: none;
+		}
+	}
+}
+
+// Drawer below 768px: sidebar becomes an overlay toggled from the topbar (standard §29).
+@media (width <= 767px) {
+	.jmeet-app-shell {
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-rows: var(--jmeet-layout-topbar-height) minmax(0, 1fr);
+	}
+
+	.jmeet-app-shell__sidebar {
+		position: fixed;
+		inset: 0 auto 0 0;
+		z-index: var(--jmeet-z-drawer);
+		width: min(280px, 85vw);
+		transform: translateX(-100%);
+		transition: transform var(--jmeet-motion-normal);
+		box-shadow: none;
+	}
+
+	.jmeet-app-shell--sidebar-open .jmeet-app-shell__sidebar {
+		transform: translateX(0);
+		box-shadow: var(--jmeet-shadow-light-lg);
+	}
+
+	.jmeet-app-shell__topbar,
+	.jmeet-app-shell__content {
+		grid-column: 1;
+		padding-inline: var(--jmeet-space-4);
+	}
+}
+
+.jmeet-app-shell__sidebar-backdrop {
+	display: none;
+}
+
+@media (width <= 767px) {
+	.jmeet-app-shell--sidebar-open .jmeet-app-shell__sidebar-backdrop {
+		display: block;
+		position: fixed;
+		inset: 0;
+		z-index: var(--jmeet-z-drawer-backdrop);
+		background: var(--jmeet-color-scrim); // 原 rgb(23 32 51 / 40%)，就近归并 scrim
+	}
+}

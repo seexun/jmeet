@@ -1,0 +1,15 @@
+<div class="panel-container panel-container--activities" id="activities-container">
+	<div class="panel-header-container">
+		<h3 class="panel-title">{{ 'PANEL.ACTIVITIES.TITLE' | translate }}</h3>
+		<button
+			class="panel-close-button jmeet-button jmeet-button--ghost jmeet-button--icon"
+			nz-tooltip
+			nzTooltipTitle="{{ 'PANEL.CLOSE' | translate }}"
+			(click)="close()"
+		>
+			<nz-icon nzType="close" />
+		</button>
+	</div>
+
+	<div class="activities-body-container"></div>
+</div>

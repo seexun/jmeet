@@ -1,0 +1,30 @@
+<!-- Leave Button for Moderators -->
+@if (showLeaveMenu()) {
+	<button
+		id="leave-btn"
+		nz-dropdown
+		[nzDropdownMenu]="leaveMenu"
+		nzTrigger="click"
+		nz-placement="bottomRight"
+		nz-tooltip
+		[nzTooltipTitle]="'LEAVE_BUTTON.MENU_TOOLTIP' | translate"
+		class="custom-leave-btn"
+		[class.mobile-btn]="isMobile()"
+	>
+		<nz-icon nzType="poweroff" />
+		<span class="control-label">{{ 'TOOLBAR.SHORT.END' | translate }}</span>
+	</button>
+	<nz-dropdown-menu #leaveMenu="nzDropdownMenu">
+		<ul nz-menu>
+			<li nz-menu-item (click)="onLeaveMeetingClick()" id="leave-option">
+				<nz-icon nzType="logout" />
+				<span>{{ 'LEAVE_BUTTON.LEAVE_OPTION' | translate }}</span>
+			</li>
+			<li nz-menu-divider></li>
+			<li nz-menu-item (click)="onEndMeetingClick()" id="end-meeting-option">
+				<nz-icon nzType="stop" />
+				<span>{{ 'LEAVE_BUTTON.END_OPTION' | translate }}</span>
+			</li>
+		</ul>
+	</nz-dropdown-menu>
+}

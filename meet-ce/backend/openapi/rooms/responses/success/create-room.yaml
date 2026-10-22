@@ -1,0 +1,52 @@
+description: Room created successfully
+content:
+    application/json:
+        schema:
+            allOf:
+                - $ref: '../../schemas/meet-room.yaml'
+                - type: object
+                  properties:
+                      _extraFields:
+                          type: array
+                          description: >
+                              List of extra fields that can be included in the response based on the `X-ExtraFields` header.
+                          items:
+                              type: string
+                              example: config
+        examples:
+            default_room_created:
+                summary: Room created successfully without extra fields
+                value:
+                    roomId: 'room-123'
+                    roomName: 'room'
+                    owner: 'admin'
+                    creationDate: 1620000000000
+                    autoDeletionDate: 1900000000000
+                    autoDeletionPolicy:
+                        withMeeting: when_meeting_ends
+                        withRecordings: close
+                    access:
+                        anonymous:
+                            moderator:
+                                enabled: true
+                                url: 'https://example.com/room/room-123?secret=123456'
+                            speaker:
+                                enabled: true
+                                url: 'https://example.com/room/room-123?secret=654321'
+                            recording:
+                                enabled: true
+                                url: 'https://example.com/room/room-123/recordings?secret=987654'
+                        user:
+                            enabled: false
+                            url: 'https://example.com/room/room-123'
+                    status: open
+                    rolesUpdatedAt: 1620000000000
+                    meetingEndAction: none
+                    _extraFields: ['config', 'roles']
+headers:
+    Location:
+        description: URL of the newly created room
+        schema:
+            type: string
+            format: uri
+        example: https://example.com/api/v1/rooms/room-123

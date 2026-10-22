@@ -1,0 +1,12 @@
+description: User created successfully
+content:
+    application/json:
+        schema:
+            $ref: '../../schemas/meet-user.yaml'
+headers:
+    Location:
+        description: URL of the newly created user
+        schema:
+            type: string
+            format: uri
+        example: https://example.com/api/v1/users/alice_smith

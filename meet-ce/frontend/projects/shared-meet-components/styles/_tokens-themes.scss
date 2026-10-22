@@ -1,0 +1,8 @@
+@use './tokens-semantic';
+
+// Compatibility entry points retained for existing consumers (light-only).
+// 批次 3：顶层 `:root { @include emit-light-theme-token-values; }` 垫片已拆
+// （理由同 _tokens-core.scss 顶部注释）——本文件只保留 mixin 定义本体。
+@mixin emit-light-theme-token-values {
+	@include tokens-semantic.emit-light-semantic-tokens;
+}

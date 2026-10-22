@@ -1,0 +1,223 @@
+@use '_design-tokens.scss';
+
+// ── 批次5 邀请卡深绘（规格 §5.4：腾讯化）────────────────────────────────────
+// 白面描边卡 8px 圆角无阴影（批次 4 卡片语言：border 承载分离）+ 主操作钮主色实底
+// hover 深档 + 链接行 stage 软座 focus 环 primary 8% + 复制钮 32px ghost + 链接标签
+// 分节头四要素。全 --jmeet-meeting-*；模板/TS 零变更。
+.room-access-url-badge {
+	margin: 0 auto;
+	padding: 20px;
+	border: 1px solid var(--jmeet-meeting-border);
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-meeting-surface);
+
+	.meeting-status {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		min-height: 24px;
+		padding: 0 10px;
+		margin-bottom: 12px;
+		border-radius: var(--jmeet-radius-sm);
+		background: var(--jmeet-meeting-success-soft);
+		color: var(--jmeet-meeting-success);
+		font-size: 11px;
+		line-height: 22px;
+		font-weight: 600;
+	}
+
+	// 已开始呼吸点：success 实点 + 12% 外圈
+	.meeting-status-dot {
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+		background: var(--jmeet-meeting-success);
+	}
+
+	.room-access-url-badge-title {
+		text-align: left;
+		font-size: 13px;
+		line-height: 22px;
+		font-weight: 400;
+		color: var(--jmeet-meeting-text-primary);
+		margin-bottom: 8px;
+
+		&.sm {
+			font-size: 13px;
+		}
+		&.md {
+			font-size: 14px;
+		}
+		&.lg {
+			font-size: 16px;
+		}
+		&.xl {
+			font-size: 18px;
+		}
+
+		&.light {
+			font-weight: 400;
+		}
+		&.semibold {
+			font-weight: 600;
+		}
+		&.bold {
+			font-weight: 600;
+		}
+		&.normal {
+			font-weight: 400;
+		}
+	}
+
+	.room-access-url-badge-subtitle {
+		text-align: left;
+		font-size: 12px;
+		line-height: 22px;
+		color: var(--jmeet-meeting-text-tertiary);
+		margin: 0 0 16px;
+	}
+
+	// 主操作钮：主色实底 + 面字，hover/active 走深档
+	.invite-primary-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		width: 100%;
+		min-height: 36px;
+		margin: 0;
+		border: 0;
+		border-radius: var(--jmeet-radius-md);
+		background: var(--jmeet-meeting-primary);
+		color: var(--jmeet-meeting-surface);
+		font: inherit;
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 22px;
+		cursor: pointer;
+		transition: background-color 160ms ease;
+
+		.anticon {
+			width: 16px;
+			height: 16px;
+			font-size: 16px; // icon/decoration sizing
+		}
+
+		&:hover {
+			background: var(--jmeet-meeting-primary-hover);
+		}
+
+		&:active {
+			background: var(--jmeet-meeting-primary-active);
+		}
+
+		&:focus-visible {
+			outline: none;
+			box-shadow: 0 0 0 3px color-mix(in srgb, var(--jmeet-meeting-primary) 8%, transparent);
+		}
+	}
+
+	// 链接标签：分节头四要素（11px/600/uppercase/0.5px 三级字色）
+	.room-access-url-label {
+		margin-bottom: 8px;
+		color: var(--jmeet-meeting-text-tertiary);
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.5px;
+		line-height: 22px;
+		text-transform: uppercase;
+	}
+
+	// 链接行：stage 软座 + meeting 描边 8px 圆角，focus 环 primary 8%
+	.room-access-url-badge-container {
+		@include design-tokens.ov-flex-center;
+		gap: var(--jmeet-layout-space-sm);
+		min-height: 42px;
+		padding: 0 8px 0 12px;
+		background-color: var(--jmeet-meeting-stage-bg);
+		border: 1px solid var(--jmeet-meeting-border);
+		color: var(--jmeet-meeting-text-secondary);
+		border-radius: var(--jmeet-radius-md);
+		max-width: 100%;
+		margin: auto;
+		cursor: pointer;
+		box-sizing: border-box;
+		transition: background-color 160ms ease, border-color 160ms ease;
+
+		&:hover {
+			border-color: color-mix(in srgb, var(--jmeet-meeting-text-tertiary) 35%, var(--jmeet-meeting-border));
+		}
+
+		&:focus-visible {
+			outline: none;
+			box-shadow: 0 0 0 3px color-mix(in srgb, var(--jmeet-meeting-primary) 8%, transparent);
+		}
+
+		.room-access-url-text {
+			font-family: var(--jmeet-typography-font-family-mono, 'Roboto Mono', monospace);
+			font-size: 12px;
+			color: var(--jmeet-meeting-text-secondary);
+			font-weight: 500;
+			letter-spacing: 0.025em;
+			user-select: none;
+			word-break: break-all;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+
+		// 复制钮：32px ghost 主色，hover primary-soft 座
+		.copy-url-btn {
+			@include design-tokens.ov-button-base;
+			width: 32px;
+			height: 32px;
+			min-width: 32px;
+			padding: 0;
+			color: var(--jmeet-meeting-primary);
+			cursor: pointer;
+			background: transparent;
+			border: 0;
+			border-radius: var(--jmeet-radius-md);
+
+			.anticon {
+				@include design-tokens.ov-icon(sm);
+				color: var(--jmeet-meeting-primary);
+			}
+
+			&:hover {
+				background: var(--jmeet-meeting-primary-soft);
+				color: var(--jmeet-meeting-primary);
+			}
+
+			&:focus-visible {
+				outline: none;
+				box-shadow: 0 0 0 3px color-mix(in srgb, var(--jmeet-meeting-primary) 8%, transparent);
+			}
+		}
+	}
+}
+
+@include design-tokens.ov-mobile-down {
+	.room-access-url-badge-container {
+		margin: var(--jmeet-layout-space-md) auto;
+		padding: var(--jmeet-layout-space-xs) var(--jmeet-layout-space-sm);
+
+		.room-access-url-text {
+			font-size: 11px;
+		}
+
+		.copy-url-btn {
+			width: 28px;
+			height: 28px;
+			min-width: 28px;
+		}
+	}
+
+	.room-access-url-badge {
+		padding: 22px 18px;
+	}
+}

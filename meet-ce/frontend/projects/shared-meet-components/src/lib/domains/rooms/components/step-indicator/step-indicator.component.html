@@ -1,0 +1,17 @@
+<nav class="wizard-step-bar" role="tablist" [attr.aria-label]="'ROOMS.WIZARD.TITLE' | translate">
+	@for (step of visibleSteps(); track step.id; let i = $index) {
+		<button
+			type="button"
+			class="wizard-step"
+			role="tab"
+			[class.active]="i === currentStepIndex()"
+			[class.completed]="step.isCompleted && i !== currentStepIndex()"
+			[attr.aria-selected]="i === currentStepIndex()"
+			[disabled]="!allowNavigation() && i !== currentStepIndex()"
+			(click)="onStepSelect(i)"
+		>
+			<span class="wizard-step-index">{{ i + 1 }}</span>
+			<span class="wizard-step-label">{{ step.label | translate }}</span>
+		</button>
+	}
+</nav>

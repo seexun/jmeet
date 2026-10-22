@@ -1,0 +1,63 @@
+@use '../selector-shared' as shared;
+
+// ── 批次5 audio-devices 残面收口（批次 2/4 终审两次指派）───────────────────────
+// .noise-suppression 浅主色卡（EP primary tint "alert 风"）退役：AI 降噪/音乐模式开关行
+// 落 stage 软座 8px 圆角，文案层级主 13px 主字色 + 说明 12px 三级字色；开关/下拉皮由
+// _nz-theme 与 selector-shared 供给，此处只做布局与文案层级。模板/TS 零变更。
+:host {
+	display: flex;
+	align-items: center;
+	height: 100%;
+
+	.audio-device-selector {
+		@include shared.device-selector-base();
+		gap: 16px;
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	// AI 降噪 / 音乐模式：stage 软座行（8px 圆角，无描边——层次由明度差承担）
+	.noise-suppression {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		margin-top: 12px;
+		padding: 12px 14px;
+		border-radius: var(--jmeet-radius-md);
+		background: var(--jmeet-meeting-stage-bg);
+	}
+
+	.noise-copy {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		min-width: 0;
+
+		> nz-icon {
+			font-size: 18px; // icon/decoration sizing
+			color: var(--jmeet-meeting-text-tertiary);
+		}
+
+		div {
+			display: grid;
+			gap: 2px;
+		}
+
+		strong {
+			font-size: 13px;
+			line-height: 22px;
+			font-weight: 500;
+			color: var(--jmeet-meeting-text-primary);
+		}
+
+		small {
+			font-size: 12px;
+			line-height: 18px;
+			color: var(--jmeet-meeting-text-tertiary);
+		}
+	}
+}
+
+// Include shared device menu styles
+@include shared.device-menu-styles();

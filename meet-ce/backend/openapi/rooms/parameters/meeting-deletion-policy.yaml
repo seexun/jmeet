@@ -1,0 +1,16 @@
+name: withMeeting
+in: query
+description: |
+    Policy for room deletion when it has an active meeting. Options are:
+    - `force`: The meeting will be ended, and the room will be deleted without waiting for participants to leave.
+    - `when_meeting_ends`: The room will be deleted when the meeting ends.
+    - `fail`: The deletion will fail if there is an active meeting.
+required: false
+schema:
+    type: string
+    enum:
+        - force
+        - when_meeting_ends
+        - fail
+    default: fail
+    example: fail

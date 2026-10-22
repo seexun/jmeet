@@ -1,0 +1,5 @@
+// 会议域样式层唯一入口。SPA（src/styles.scss）与 webcomponent（app.material.scss）都从这里取。
+@forward 'tokens';
+@forward 'toolbar';
+@forward 'prejoin';
+@forward 'misc';

@@ -1,0 +1,247 @@
+MeetRoomConfig:
+    type: object
+    properties:
+        chat:
+            $ref: '#/MeetChatConfig'
+            description: Config for the chat feature in the room.
+        recording:
+            $ref: '#/MeetRecordingConfig'
+            description: Config for recording the room.
+        virtualBackground:
+            $ref: '#/MeetVirtualBackgroundConfig'
+            description: Config for virtual background in the room.
+        e2ee:
+            $ref: '#/MeetE2EEConfig'
+            description: Config for End-to-End Encryption (E2EE) in the room.
+        captions:
+            $ref: '#/MeetCaptionsConfig'
+            description: Config for live captions in the room.
+MeetChatConfig:
+    type: object
+    properties:
+        enabled:
+            type: boolean
+            default: true
+            example: true
+            description: If true, the room will be allowed to send and receive chat messages.
+MeetRecordingConfig:
+    type: object
+    properties:
+        enabled:
+            type: boolean
+            default: true
+            example: true
+            description: If true, the room will be allowed to record the video of the participants.
+        layout:
+            type: string
+            enum:
+                - grid
+                - speaker
+                - single-speaker
+                # - grid-light
+                # - speaker-light
+                # - single-speaker-light
+            default: grid
+            example: grid
+            description: |
+                Defines the layout of the recording. Options are:
+                - `grid`: All participants are shown in a grid layout.
+                - `speaker`: The active speaker is shown prominently, with other participants in smaller thumbnails.
+                - `single-speaker`: Only the active speaker is shown in the recording.
+              # - `grid-light`: Similar to `grid` but with a light-themed background.
+              # - `speaker-light`: Similar to `speaker` but with a light-themed background.
+              # - `single-speaker-light`: Similar to `single-speaker` but with a light-themed background.
+        encoding:
+            oneOf:
+                - $ref: '#/MeetRecordingEncodingPreset'
+                - $ref: '#/MeetRecordingEncodingOptions'
+MeetVirtualBackgroundConfig:
+    type: object
+    properties:
+        enabled:
+            type: boolean
+            default: true
+            example: true
+            description: If true, the room will be allowed to use virtual background.
+MeetE2EEConfig:
+    type: object
+    properties:
+        enabled:
+            type: boolean
+            default: false
+            example: false
+            description: >
+                If true, the room will have End-to-End Encryption (E2EE) enabled.<br/>
+                This ensures that the media streams are encrypted from the sender to the receiver, providing enhanced privacy and security for the participants.<br/>
+                **Enabling E2EE will disable the recording feature for the room**.
+MeetCaptionsConfig:
+    type: object
+    properties:
+        enabled:
+            type: boolean
+            default: true
+            example: true
+            description: >
+                If true, the room will have live captions enabled.<br/>
+                This allows participants to see real-time captions of the all participants' speech during the meeting.<br/>
+MeetRecordingEncodingPreset:
+    type: string
+    enum:
+        - H264_720P_30
+        - H264_720P_60
+        - H264_1080P_30
+        - H264_1080P_60
+        - PORTRAIT_H264_720P_30
+        - PORTRAIT_H264_720P_60
+        - PORTRAIT_H264_1080P_30
+        - PORTRAIT_H264_1080P_60
+    description: |
+        Predefined encoding presets for recordings. Each preset defines a combination of resolution, frame rate, and codec:
+        - `H264_720P_30`: 1280x720, 30fps, 3000kbps, H.264_MAIN / OPUS **(default)**
+        - `H264_720P_60`: 1280x720, 60fps, 4500kbps, H.264_MAIN / OPUS
+        - `H264_1080P_30`: 1920x1080, 30fps, 4500kbps, H.264_MAIN / OPUS
+        - `H264_1080P_60`: 1920x1080, 60fps, 6000kbps, H.264_MAIN / OPUS
+        - `PORTRAIT_H264_720P_30`: 720x1280, 30fps, 3000kbps, H.264_MAIN / OPUS
+        - `PORTRAIT_H264_720P_60`: 720x1280, 60fps, 4500kbps, H.264_MAIN / OPUS
+        - `PORTRAIT_H264_1080P_30`: 1080x1920, 30fps, 4500kbps, H.264_MAIN / OPUS
+        - `PORTRAIT_H264_1080P_60`: 1080x1920, 60fps, 6000kbps, H.264_MAIN / OPUS
+    example: H264_720P_30
+MeetRecordingVideoCodec:
+    type: string
+    enum:
+        - DEFAULT_VC
+        - H264_BASELINE
+        - H264_MAIN
+        - H264_HIGH
+        - VP8
+    description: |
+        Video codec options for recording encoding:
+        - `DEFAULT_VC`: Use the default video codec (H.264_MAIN)
+        - `H264_BASELINE`: H.264 Baseline profile
+        - `H264_MAIN`: H.264 Main profile
+        - `H264_HIGH`: H.264 High profile
+        - `VP8`: VP8 codec
+    example: H264_MAIN
+MeetRecordingAudioCodec:
+    type: string
+    enum:
+        - DEFAULT_AC
+        - OPUS
+        - AAC
+        - AC_MP3
+    description: |
+        Audio codec options for recording encoding:
+        - `DEFAULT_AC`: Use the default audio codec (OPUS)
+        - `OPUS`: Opus codec
+        - `AAC`: AAC codec
+        - `AC_MP3`: MP3 codec
+    example: OPUS
+MeetRecordingVideoEncodingOptions:
+    type: object
+    required:
+        - width
+        - height
+        - framerate
+        - codec
+        - bitrate
+        - keyFrameInterval
+        - depth
+    properties:
+        width:
+            type: integer
+            minimum: 1
+            example: 1280
+            description: |
+              Video width in pixels
+        height:
+            type: integer
+            minimum: 1
+            example: 720
+            description: |
+              Video height in pixels
+        framerate:
+            type: integer
+            minimum: 1
+            example: 30
+            description: |
+              Frame rate in fps
+        codec:
+            $ref: '#/MeetRecordingVideoCodec'
+            description: |
+                Video codec
+        bitrate:
+            type: integer
+            minimum: 1
+            example: 4500
+            description: |
+              Video bitrate in kbps
+        keyFrameInterval:
+            type: number
+            minimum: 0
+            example: 4
+            description: |
+              Keyframe interval in seconds
+        depth:
+            type: integer
+            minimum: 1
+            example: 24
+            description: |
+              Video depth (pixel format) in bits
+    description: |
+        Advanced video encoding options for recordings.
+MeetRecordingAudioEncodingOptions:
+    type: object
+    required:
+        - codec
+        - bitrate
+        - frequency
+    properties:
+        codec:
+            $ref: '#/MeetRecordingAudioCodec'
+            description: |
+                Audio codec (required when audio is provided)
+        bitrate:
+            type: integer
+            minimum: 1
+            example: 128
+            description: |
+              Audio bitrate in kbps (required when audio is provided)
+        frequency:
+            type: integer
+            minimum: 1
+            example: 44100
+            description: |
+              Audio sample rate in Hz (required when audio is provided)
+    description: |
+        Advanced audio encoding options for recordings.
+        When audio encoding is provided, all fields are required.
+MeetRecordingEncodingOptions:
+    type: object
+    required:
+        - video
+        - audio
+    properties:
+        video:
+            $ref: '#/MeetRecordingVideoEncodingOptions'
+            description: Video encoding configuration
+        audio:
+            $ref: '#/MeetRecordingAudioEncodingOptions'
+            description: Audio encoding configuration
+    description: |
+        Advanced encoding options for recordings.
+        Use this for fine-grained control over video and audio encoding parameters.
+        Both video and audio configurations are required when using advanced options.
+        For common scenarios, consider using encoding presets instead.
+    example:
+        video:
+            width: 1280
+            height: 720
+            framerate: 30
+            codec: H264_MAIN
+            bitrate: 3000
+            keyFrameInterval: 4
+            depth: 24
+        audio:
+            codec: OPUS
+            bitrate: 128
+            frequency: 44100

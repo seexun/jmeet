@@ -1,0 +1,55 @@
+// 规格 §3.2 仪表盘蓝图：stat 面 = 白底 + 圆角，无描边无阴影——
+// 层次由页面底（gray-50）与表面（白）的明度差承担，语义色由图标芯片承担。
+:host {
+	display: flex;
+	gap: 14px;
+	align-items: center;
+	padding: 20px;
+	border-radius: var(--jmeet-radius-lg);
+	background: var(--jmeet-card-background);
+}
+
+.stat-icon {
+	display: grid;
+	width: 44px;
+	height: 44px;
+	place-items: center;
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-color-action-primary-light);
+	color: var(--jmeet-color-action-primary);
+}
+
+// 语义色：图标芯片跟随 tone 变色，让「异常/告警/良好」在扫视时可辨
+:host.tone-danger .stat-icon {
+	background: var(--jmeet-color-action-danger-light);
+	color: var(--jmeet-color-action-danger);
+}
+
+:host.tone-warning .stat-icon {
+	background: var(--jmeet-color-action-warning-light);
+	color: var(--jmeet-color-action-warning);
+}
+
+:host.tone-success .stat-icon {
+	background: var(--jmeet-color-action-success-light);
+	color: var(--jmeet-color-action-success);
+}
+
+.stat-copy {
+	display: grid;
+	gap: 2px;
+	min-width: 0;
+
+	small {
+		color: var(--jmeet-color-text-secondary);
+		font-size: var(--jmeet-font-size-xs);
+	}
+
+	strong {
+		color: var(--jmeet-color-text-primary);
+		font-size: var(--jmeet-font-size-number-xl);
+		font-weight: var(--jmeet-font-weight-bold);
+		letter-spacing: -0.02em;
+		line-height: 1.1;
+	}
+}

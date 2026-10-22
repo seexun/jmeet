@@ -1,0 +1,1470 @@
+// ============================================================
+// 控制台域页面样式（批次 3 任务 3 re-home）——console 域各页面的页面级类。
+// 来源：_settings-identity-config / _settings-room-detail-config(config 段) /
+// _settings-meeting-control / _settings-admin-users(meeting-workspace+tasks) /
+// _settings-rooms(recent-activity) / _form-layout(hotword-table)，原切片已物理删除。
+// 视觉：全令牌化；本件允许悬浮件 shadow（模式层 _console-patterns 才禁）。
+// ============================================================
+
+@use '../console-mixins' as design-tokens;
+
+.provider-list {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.provider-card {
+	overflow: hidden;
+	border: 1px solid var(--jmeet-color-border);
+	border-radius: var(--jmeet-shape-radius-lg);
+	background: var(--jmeet-color-surface-card);
+}
+
+.provider-card header,
+.provider-card .provider-card-header {
+	display: flex;
+	min-height: 64px;
+	align-items: center;
+	gap: 12px;
+	padding: 0 16px;
+	border-bottom: 1px solid var(--jmeet-color-border-light);
+	background: var(--jmeet-color-surface-variant);
+}
+
+.provider-card .provider-card-header {
+	min-height: 64px;
+	padding: 0;
+}
+
+.provider-card header > div:not(.provider-badge, .provider-card-actions) {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+}
+
+.provider-card header > .provider-card-actions {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	flex-shrink: 0;
+}
+
+.provider-card header strong {
+	font-size: var(--jmeet-font-size-sm);
+}
+
+.provider-card header > div:not(.provider-badge, .provider-card-actions) span {
+	color: var(--jmeet-color-text-hint);
+	font-size: var(--jmeet-font-size-caption-tight);
+	text-transform: uppercase;
+}
+
+.provider-badge {
+	display: grid;
+	width: 36px;
+	height: 36px;
+	place-items: center;
+	border-radius: 10px;
+	background: color-mix(in srgb, var(--jmeet-color-action-primary) 12%, white);
+	color: var(--jmeet-color-action-primary);
+}
+
+.provider-badge .anticon {
+	width: 19px;
+	height: 19px;
+	font-size: 19px; // icon/decoration sizing
+}
+
+.provider-health {
+	padding: 5px 9px;
+	border-radius: 999px;
+	background: var(--jmeet-color-surface-variant);
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-xs);
+}
+
+.provider-health.healthy {
+	background: color-mix(in srgb, var(--jmeet-color-action-success) 12%, white);
+	color: var(--jmeet-color-action-success);
+}
+
+.provider-health.unhealthy {
+	background: color-mix(in srgb, var(--jmeet-color-action-danger) 10%, white);
+	color: var(--jmeet-color-action-danger);
+}
+
+.remove-provider {
+	color: var(--jmeet-color-action-danger);
+}
+
+.provider-body {
+	padding-top: 0;
+}
+
+.auto-provision {
+	display: flex;
+	min-height: 56px;
+	align-items: center;
+	gap: 10px;
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-secondary);
+}
+
+.identity-empty {
+	display: flex;
+	min-height: 150px;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 7px;
+	border: 1px dashed var(--jmeet-color-border);
+	border-radius: var(--jmeet-shape-radius-lg);
+	color: var(--jmeet-color-text-secondary);
+}
+
+.identity-empty .anticon {
+	color: var(--jmeet-color-action-primary);
+}
+
+.identity-empty strong {
+	color: var(--jmeet-color-text-primary);
+	font-size: var(--jmeet-font-size-sm);
+}
+
+.identity-empty span {
+	font-size: var(--jmeet-font-size-xs);
+}
+
+// 运维工具行右组推右（批次3 任务4：jmeet-filter-bar 换轨后，原 .jmeet-filter-row 的
+// space-between 不再供给；与 users/recordings 域 *-toolbar-actions{margin-left:auto} 同款）
+.ops-toolbar-actions {
+	margin-left: auto;
+}
+
+.operations-workers-heading {
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	margin-top: 18px;
+	margin-bottom: 10px;
+
+	strong {
+		margin: 0;
+		color: var(--jmeet-color-text-primary);
+		font-size: var(--jmeet-font-size-sm);
+		font-weight: var(--jmeet-font-weight-semibold);
+	}
+
+	.worker-count {
+		display: grid;
+		min-width: 20px;
+		height: 20px;
+		place-items: center;
+		border-radius: 999px;
+		background: var(--jmeet-color-action-primary-light);
+		color: var(--jmeet-color-action-primary);
+		font-size: var(--jmeet-font-size-caption-tight);
+	}
+}
+
+.worker-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 10px;
+}
+
+.worker-card {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 13px;
+	border: 1px solid var(--jmeet-color-border-light);
+	border-radius: var(--jmeet-shape-radius-lg);
+	background: var(--jmeet-color-surface-variant);
+}
+
+.worker-card.unhealthy {
+	border-color: color-mix(in srgb, var(--jmeet-color-action-warning) 40%, white);
+	background: color-mix(in srgb, var(--jmeet-color-action-warning) 6%, white);
+}
+
+.worker-heading {
+	display: flex;
+	align-items: center;
+	gap: 7px;
+}
+
+.worker-heading strong {
+	overflow: hidden;
+	color: var(--jmeet-color-text-primary);
+	font-size: var(--jmeet-font-size-secondary);
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.worker-heading code {
+	margin-left: auto;
+	color: var(--jmeet-color-action-success);
+	font-size: var(--jmeet-font-size-xxs);
+}
+
+.worker-card.unhealthy .worker-heading code {
+	color: var(--jmeet-color-action-warning);
+}
+
+.worker-status {
+	width: 8px;
+	height: 8px;
+	flex: 0 0 auto;
+	border-radius: 50%;
+	background: var(--jmeet-color-action-success);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--jmeet-color-action-success) 20%, white);
+}
+
+.worker-card.unhealthy .worker-status {
+	background: var(--jmeet-color-action-warning);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--jmeet-color-action-warning) 20%, white);
+}
+
+.worker-card > span,
+.worker-card > div span,
+.worker-card p {
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-caption-tight);
+}
+
+.worker-card > div:not(.worker-heading) {
+	display: flex;
+	justify-content: space-between;
+}
+
+.worker-card p {
+	margin: 0;
+	color: var(--jmeet-color-action-warning);
+}
+
+.worker-empty {
+	grid-column: 1 / -1;
+	padding: 14px;
+	border: 1px dashed var(--jmeet-color-border);
+	border-radius: var(--jmeet-shape-radius-lg);
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-xs);
+	text-align: center;
+}
+
+.operations-alerts {
+	margin-top: 18px;
+}
+
+.operations-alerts h3 {
+	display: flex;
+	gap: 7px;
+	align-items: center;
+	margin: 0 0 10px;
+	color: var(--jmeet-color-text-primary);
+	font-size: var(--jmeet-font-size-sm);
+}
+
+.operations-alerts h3 span {
+	display: grid;
+	min-width: 20px;
+	height: 20px;
+	place-items: center;
+	border-radius: 999px;
+	background: var(--jmeet-color-surface-variant);
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-caption-tight);
+}
+
+.operations-alert {
+	display: grid;
+	grid-template-columns: 24px 1fr auto;
+	gap: 10px;
+	align-items: center;
+	padding: 11px 12px;
+	border-top: 1px solid var(--jmeet-color-border-light);
+}
+
+.operations-alert > div {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+}
+
+.operations-alert strong {
+	font-size: var(--jmeet-font-size-secondary);
+}
+
+.operations-alert span,
+.operations-alert code {
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-caption-tight);
+}
+
+.operations-alert.error .anticon,
+.operations-alert.critical .anticon {
+	color: var(--jmeet-color-action-danger);
+}
+
+.operations-alert.warning .anticon {
+	color: var(--jmeet-color-action-warning);
+}
+
+.operations-healthy {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 16px;
+	border-radius: var(--jmeet-shape-radius-lg);
+	background: color-mix(in srgb, var(--jmeet-color-action-success) 10%, white);
+	color: var(--jmeet-color-action-success);
+	font-size: var(--jmeet-font-size-secondary);
+}
+
+.operations-healthy .anticon {
+	color: var(--jmeet-color-action-success);
+}
+
+@include design-tokens.ov-tablet-down {
+	.worker-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+.identity-empty {
+	padding: 28px 20px;
+
+	.identity-empty-actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 8px;
+		margin-top: 14px;
+	}
+}
+
+.provider-card {
+	&.is-expanded {
+		border-color: color-mix(in srgb, var(--jmeet-color-action-primary) 35%, var(--jmeet-color-border));
+		box-shadow: 0 0 0 1px color-mix(in srgb, var(--jmeet-color-action-primary) 8%, transparent);
+	}
+
+	&.is-disabled {
+		opacity: 0.92;
+	}
+}
+
+.provider-card-header {
+	display: flex;
+	align-items: stretch;
+	width: 100%;
+	min-height: 64px;
+	padding: 0;
+}
+
+.provider-summary {
+	display: flex;
+	flex: 1;
+	align-items: center;
+	gap: 12px;
+	min-width: 0;
+	padding: 12px 16px;
+	border: 0;
+	background: transparent;
+	color: inherit;
+	text-align: left;
+	cursor: pointer;
+
+	&:hover {
+		background: color-mix(in srgb, var(--jmeet-color-action-primary) 4%, transparent);
+	}
+}
+
+.provider-summary-text {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 4px;
+	min-width: 0;
+
+	strong {
+		overflow: hidden;
+		font-size: var(--jmeet-font-size-sm);
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}
+
+.provider-meta {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-xs);
+	line-height: 1.3;
+	text-transform: none;
+}
+
+.provider-meta-id {
+	padding: 1px 6px;
+	border-radius: 4px;
+	background: color-mix(in srgb, var(--jmeet-color-text-secondary) 8%, transparent);
+	color: var(--jmeet-color-text-secondary);
+	font-family: ui-monospace, monospace;
+	font-size: var(--jmeet-font-size-caption-tight);
+}
+
+.provider-meta-type {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.provider-meta-sep {
+	color: var(--jmeet-color-text-hint);
+}
+
+.provider-summary-chevron,
+// nz-icon 宿主自带 .anticon，全局基准(.anticon 24px)与本规则同特异性但
+// 在 styles.scss 中后加载，必须用复合选择器提高特异性才能压住
+.anticon.provider-summary-chevron {
+	flex-shrink: 0;
+	margin-left: 4px;
+	color: var(--jmeet-color-text-hint);
+
+	// 行内展开箭头：16px，与 .provider-badge .anticon 同一约定；
+	// 不覆写会吃到全局 .anticon 24px 基准而溢出
+	width: 16px;
+	height: 16px;
+	font-size: 16px;
+}
+
+.provider-card-actions {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 10px;
+	flex-shrink: 0;
+	padding: 8px 14px 8px 16px;
+	border-left: 1px solid var(--jmeet-color-border-light);
+}
+
+.provider-enable-group {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.provider-status-chip {
+	padding: 4px 10px;
+	border-radius: 999px;
+	font-size: var(--jmeet-font-size-caption-tight);
+	font-weight: var(--jmeet-font-weight-semibold);
+	white-space: nowrap;
+	text-transform: none;
+
+	&.enabled {
+		background: color-mix(in srgb, var(--jmeet-color-action-success) 12%, white);
+		color: var(--jmeet-color-action-success);
+	}
+
+	&.disabled {
+		background: var(--jmeet-color-surface-card);
+		color: var(--jmeet-color-text-secondary);
+	}
+}
+
+.provider-body {
+	padding: 4px 16px 16px;
+}
+
+.provider-section {
+	padding-top: 18px;
+
+	& + & {
+		margin-top: 4px;
+		border-top: 1px solid var(--jmeet-color-border-light);
+	}
+
+	h3 {
+		margin: 0 0 12px;
+		color: var(--jmeet-color-text-primary);
+		font-size: var(--jmeet-font-size-secondary);
+		font-weight: var(--jmeet-font-weight-semibold);
+	}
+}
+
+.provider-fields {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 12px 16px;
+}
+
+.provider-field {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+
+	.ov-settings-field-label {
+		margin: 0;
+		font-size: var(--jmeet-font-size-secondary);
+		font-weight: var(--jmeet-font-weight-semibold);
+	}
+
+	&--full {
+		grid-column: 1 / -1;
+	}
+}
+
+.auto-provision-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-height: 48px;
+	padding: 4px 0;
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-secondary);
+}
+
+.provider-card-footer {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px 14px;
+	margin-top: 18px;
+	padding-top: 16px;
+	border-top: 1px dashed var(--jmeet-color-border);}
+
+@include design-tokens.ov-tablet-down {
+	.provider-fields {
+		grid-template-columns: 1fr;
+	}
+
+	.provider-field--full {
+		grid-column: auto;
+	}
+}
+
+@include design-tokens.ov-mobile-down {
+	.provider-card-header {
+		flex-direction: column;
+	}
+
+	.provider-summary {
+		padding-right: 12px;
+	}
+
+	.provider-card-actions {
+		justify-content: flex-end;
+		width: 100%;
+		padding: 0 12px 10px;
+		border-left: 0;
+		border-top: 1px solid var(--jmeet-color-border-light);
+	}
+}
+
+// .platform-brand-panel 已随 config-appearance 采纳设置蓝图双面形态退役（其 flex 列 +
+// gap 能力由 jmeet-settings-form--surface 供给；gap:16px 会顶开吸底保存条与主区）。
+
+.platform-name-field {
+	width: 100%;
+	max-width: 480px;
+}
+
+.platform-brand-form {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.platform-logo-block {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding-top: 8px;
+	border-top: 1px solid var(--jmeet-color-border-light);
+}
+
+.platform-logo-row {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+
+.platform-logo-preview {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-width: 120px;
+	min-height: 56px;
+	padding: 10px 14px;
+	border: 1px dashed var(--jmeet-color-border);
+	border-radius: var(--jmeet-shape-radius-md);
+	background: var(--jmeet-color-surface-card);
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-secondary);
+
+	img {
+		max-width: 160px;
+		max-height: 40px;
+		object-fit: contain;
+	}
+
+	.anticon {
+		font-size: 22px; // icon/decoration sizing
+		width: 22px;
+		height: 22px;
+	}
+}
+
+.platform-logo-actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.theme-form {
+	// （批次4：自指 @extend 已删——re-home 后 .theme-form 定义落在本文件，
+	// 自 extend 是零输出的空转，还触发 scss/at-extend-no-missing-placeholder）
+	.full-width {
+		width: 100%;
+	}
+
+	.color-picker-grid {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		gap: var(--jmeet-layout-space-xl);
+		margin: var(--jmeet-layout-space-lg) 0;
+
+		@include design-tokens.ov-tablet-up {
+			gap: var(--jmeet-layout-space-xs);
+		}
+
+		@include design-tokens.ov-tablet-down {
+			grid-template-columns: repeat(2, 1fr);
+			gap: var(--jmeet-layout-space-lg);
+		}
+
+		@include design-tokens.ov-mobile-down {
+			grid-template-columns: 1fr;
+			gap: var(--jmeet-layout-space-md);
+		}
+	}
+
+	.color-picker-item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--jmeet-layout-space-sm);
+		cursor: pointer;
+		transition: opacity 150ms ease;
+		height: 140px;
+
+		.color-label-container {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: var(--jmeet-layout-space-xs);
+			height: 48px;
+			text-align: center;
+			margin-bottom: var(--jmeet-layout-space-xs);
+		}
+
+		.color-label {
+			font-size: 0.875rem;
+			font-weight: var(--jmeet-font-weight-medium);
+			color: var(--jmeet-color-text-primary);
+			user-select: none;
+			line-height: 1.2;
+		}
+
+		.info-icon {
+			font-size: var(--jmeet-font-size-md);
+			width: 16px;
+			height: 16px;
+			color: var(--jmeet-color-text-hint);
+			transition: color 150ms ease;
+			cursor: help;
+			flex-shrink: 0;
+
+			&:hover {
+				color: var(--jmeet-color-action-primary);
+			}
+		}
+
+		.color-circle-wrapper {
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			.color-input {
+				position: absolute;
+				opacity: 0;
+				width: 80px;
+				height: 80px;
+				cursor: pointer;
+				border: none;
+				background: none;
+				z-index: var(--jmeet-z-raised);
+			}
+
+			.color-circle {
+				width: 80px;
+				height: 80px;
+				border-radius: var(--jmeet-shape-radius-lg);
+				border: 3px solid var(--jmeet-color-border);
+				position: relative;
+				z-index: 1;
+			}
+		}
+	}
+}
+
+.hotword-weight,
+.hotword-scope {
+	padding: 4px 8px;
+	border-radius: 999px;
+	background: var(--jmeet-color-surface-variant);
+	text-align: center;
+	font-size: var(--jmeet-font-size-xs);
+}
+
+// ASR test
+.asr-link-grid {
+	margin-top: var(--jmeet-space-2);
+}
+
+.asr-link-tile {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--jmeet-space-3);
+	padding: var(--jmeet-space-3) var(--jmeet-space-4);
+
+	strong {
+		color: var(--jmeet-color-text-primary);
+		font-size: var(--jmeet-font-size-sm);
+		font-weight: var(--jmeet-font-weight-medium);
+	}
+}
+
+.asr-source-tabs {
+	width: fit-content;
+	max-width: 100%;
+}
+
+.asr-source-body {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-space-4);
+}
+
+.asr-device-field {
+	width: min(100%, 24rem);
+}
+
+.asr-input-metrics,
+.asr-file-details {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-space-2);
+}
+
+.asr-inline-actions {
+	justify-content: flex-start;
+	width: fit-content;
+}
+
+.asr-diagnostics-block {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-space-3);
+	margin-top: var(--jmeet-space-4);
+	padding-top: var(--jmeet-space-4);
+	border-top: 1px solid var(--jmeet-color-border-light);
+}
+
+.asr-results {
+	min-height: 10rem;
+
+	pre {
+		margin: 0;
+		padding: var(--jmeet-space-4);
+		border: 1px solid var(--jmeet-color-border-light);
+		background: var(--jmeet-color-surface-variant);
+		overflow: auto;
+		max-height: 24rem;
+		white-space: pre-wrap;
+		overflow-wrap: break-word;
+	}
+}
+
+.asr-results-actions {
+	flex-wrap: wrap;
+}
+
+.asr-copy-feedback {
+	margin-top: var(--jmeet-space-2);
+}
+
+@include design-tokens.ov-mobile-down {
+	.asr-source-toolbar {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.asr-results-actions {
+		width: 100%;
+	}
+}
+
+.meeting-control-tab-page .page-content,
+.sip-tab-page .page-content {
+	padding-bottom: var(--jmeet-layout-space-xxl);
+}
+
+.meeting-control-usage {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-space-4);
+}
+
+.meeting-card {
+	padding: 14px 0;
+	border-top: 1px solid var(--jmeet-color-border-light);
+
+	&:first-of-type {
+		border-top: 0;
+		padding-top: 0;
+	}
+}
+
+.meeting-card-head,
+.participant-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+
+.meeting-card-head > div:first-child,
+.participant-row > div:first-child {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.meeting-card-head span,
+.participant-row span {
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-xs);
+}
+
+.participant-row {
+	padding: 10px 0 0;
+}
+
+.meeting-card-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.meeting-list-footer {
+	padding-top: 8px;
+	border-top: 1px solid var(--jmeet-color-border-light);
+	margin-top: 8px;
+}
+
+// 时长输入样式已随会议默认页改行式蓝图迁入组件自身
+// （meeting-defaults.component.scss，本页唯一消费方）
+
+// 平台人数上限：行内提示条（规格 §五）——淡蓝底单行，链接右置；
+// 唯一消费方 meeting-defaults（原大卡形态随 EP 堆叠行改版退役）
+.platform-limit-card {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-space-3);
+	padding: 10px 16px;
+	border-radius: var(--jmeet-radius-sm);
+	background: var(--jmeet-color-action-primary-light);
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-sm);
+
+	strong {
+		color: var(--jmeet-color-text-primary);
+	}
+
+	.platform-limit-desc {
+		margin-left: var(--jmeet-space-2);
+	}
+
+	.platform-limit-link {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--jmeet-space-1);
+		margin-left: auto;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: var(--jmeet-color-action-link);
+		font-size: var(--jmeet-font-size-sm);
+		cursor: pointer;
+	}
+}
+
+.quota-dialog-page {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	max-width: 100%;
+	max-height: calc(100dvh - 48px);
+	box-sizing: border-box;
+	padding: 4px 4px 0;
+}
+
+.quota-dialog-page .dialog-header {
+	padding: 0 12px 4px;
+}
+
+.quota-dialog-page .dialog-title {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-layout-space-sm);
+	margin: 0;
+	padding: 0;
+
+	// 原 Material 弹窗标题的全局主文字色，随迁移显式补齐
+	color: var(--jmeet-color-text-primary);
+	font-size: var(--jmeet-font-size-md);
+	font-weight: var(--jmeet-font-weight-bold);
+
+	.dialog-icon {
+		@include design-tokens.ov-icon(md);
+
+		color: var(--jmeet-color-action-primary);
+	}
+}
+
+.quota-dialog-page .dialog-subtitle {
+	margin: 6px 0 0;
+	font-size: var(--jmeet-font-size-secondary);
+	color: var(--jmeet-color-text-secondary);
+	line-height: 1.45;
+}
+
+.quota-dialog-page jmeet-status-tag {
+	display: inline-flex;
+	margin-top: 10px;
+}
+
+.quota-dialog-page .dialog-content {
+	overflow: auto;
+	min-height: 0;
+	max-height: none;
+	padding: 8px 12px 0 !important;
+	margin: 0;
+}
+
+.quota-sheet {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+	padding: 18px 20px;
+}
+
+.sheet-block-head {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 16px;
+	margin-bottom: 12px;
+
+	h3 {
+		margin: 0;
+		font-size: var(--jmeet-font-size-sm);
+		font-weight: var(--jmeet-font-weight-semibold);
+		color: var(--jmeet-color-text-primary);
+		white-space: nowrap;
+	}
+
+	p {
+		margin: 0;
+		color: var(--jmeet-color-text-secondary);
+		font-size: var(--jmeet-font-size-xs);
+		line-height: 1.4;
+		text-align: right;
+	}
+}
+
+.sheet-divider {
+	height: 1px;
+	margin: 16px 0;
+	background: var(--jmeet-color-border-light);
+}
+
+.limits-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 12px 16px;
+}
+
+.quota-field {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	min-width: 0;
+}
+
+.quota-input {
+	width: 100%;
+}
+
+.quota-dialog-page .dialog-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 12px 12px 8px;
+	border-top: 1px solid var(--jmeet-color-border-light);
+	margin-top: 4px;
+}
+
+.save-hint {
+	flex: 1;
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-xs);
+	line-height: 1.45;
+}
+
+.footer-spacer {
+	flex: 1;
+}
+
+.quota-dialog-page .dialog-actions {
+	justify-content: flex-end;
+	padding: 0;
+	margin: 0;
+	flex-wrap: nowrap;
+}
+
+// SIP
+// SIP 互通页头工具行：状态告警（内联左侧）+ 开关 + 刷新
+.sip-flow-header {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: var(--jmeet-space-3, 12px);
+	flex-wrap: wrap;
+	padding: var(--jmeet-space-2, 8px) 0;
+
+	.sip-flow-meta {
+		display: flex;
+		align-items: center;
+		gap: var(--jmeet-space-3, 12px);
+		flex-wrap: wrap;
+		min-width: 0;
+		flex: 1;
+	}
+
+	.sip-enabled-switch {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--jmeet-space-2, 8px);
+		margin-left: auto;
+		color: var(--jmeet-color-text-secondary);
+		font-size: var(--jmeet-font-size-secondary);
+		white-space: nowrap;
+	}
+}
+
+// 状态告警内联在工具行左侧（不占独立行）：小图标 + 次要字号琥珀/红色文字，
+// 超长截断（完整文案见原生 title 提示）
+.sip-inline-alert {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: var(--jmeet-color-action-danger);
+	font-size: var(--jmeet-font-size-secondary);
+
+	.anticon {
+		flex-shrink: 0;
+		font-size: 14px; // icon/decoration sizing
+	}
+}
+
+.sip-inline-alert--warning {
+	color: var(--jmeet-color-action-warning-text, var(--jmeet-color-action-warning));
+}
+
+.sip-inline-alert__text {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+// SIP tables render through .jmeet-data-table (standard §16); only layout helpers live here.
+
+.sip-table-actions {
+	white-space: nowrap;
+
+	button + button {
+		margin-left: 10px;
+		padding-left: 10px;
+		border-left: 1px solid var(--jmeet-color-border-light);
+	}
+
+	.sip-table-noop {
+		color: var(--jmeet-color-text-tertiary);
+	}
+}
+
+.sip-table-footer {
+	padding-top: 8px;
+	border-top: 1px solid var(--jmeet-color-border-light);
+	margin-top: 8px;
+}
+
+.sip-trunk-panel + .sip-trunk-panel {
+	margin-top: 16px;
+}
+
+@include design-tokens.ov-tablet-down {
+	.limits-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@include design-tokens.ov-mobile-down {
+	.meeting-card-head,
+	.participant-row {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	.limits-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.platform-limit-card,
+	.quota-dialog-page .sheet-block-head {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.quota-dialog-page .sheet-block-head p {
+		text-align: left;
+	}
+
+	.quota-dialog-page .dialog-footer {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.quota-dialog-page .dialog-actions {
+		justify-content: stretch;
+	}
+}
+
+// Embedded admin
+.embedded-admin-page .page-content {
+	padding-bottom: var(--jmeet-layout-space-xxl);
+}
+
+.section-subtitle .rest-api-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 2px;
+	color: var(--jmeet-color-action-link);
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+	transition: border-color 140ms ease;
+
+	.external-link-icon {
+		font-size: var(--jmeet-font-size-sm);
+		width: 14px;
+		height: 14px;
+	}
+
+	&:hover {
+		border-bottom-color: color-mix(in srgb, var(--jmeet-color-action-link) 40%, transparent);
+	}
+}
+
+.api-key-display {
+	display: flex;
+	align-items: flex-end;
+	gap: var(--jmeet-space-3);
+	flex-wrap: wrap;
+
+	> .jmeet-field {
+		flex: 1;
+		min-width: min(240px, 100%);
+	}
+}
+
+.api-key-actions {
+	display: flex;
+	align-items: center;
+}
+
+.api-key-input-row .toggle-visibility-button {
+	flex: 0 0 auto;
+}
+
+
+.embedded-api-actions #revoke-key-btn {
+	color: var(--jmeet-color-action-danger);
+	border-color: var(--jmeet-color-action-danger);
+	background: var(--jmeet-color-surface-card);
+
+	&:hover:not(:disabled) {
+		background: var(--jmeet-color-action-danger-light);
+	}
+}
+
+.webhook-form {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-space-3);
+
+	.full-width {
+		width: 100%;
+	}
+}
+
+// My tasks
+.tasks-filter-bar {
+	display: flex;
+	margin-bottom: var(--jmeet-space-4);
+}
+
+.tasks-filter-group {
+	width: fit-content;
+	max-width: 100%;
+}
+
+.tasks-directory-panel {
+	padding-bottom: 8px;
+}
+
+.task-rows {
+	border-top: 1px solid var(--jmeet-color-border-light);
+}
+
+.task-row {
+	display: grid;
+	grid-template-columns: 36px minmax(0, 1fr) 150px 148px;
+	gap: 14px;
+	align-items: center;
+	min-height: 82px;
+	padding: 12px 4px;
+	border-bottom: 1px solid var(--jmeet-color-border-light);
+
+	&:last-child {
+		border-bottom: none;
+	}
+
+	&.overdue {
+		background: color-mix(in srgb, var(--jmeet-color-action-danger) 3%, transparent);
+	}
+}
+
+.task-state .anticon {
+	width: 20px;
+	height: 20px;
+	font-size: var(--jmeet-font-size-xl);
+	color: var(--jmeet-color-action-primary);
+}
+
+.task-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.task-main a {
+	display: inline-block;
+	margin-top: 7px;
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-xs);
+	text-decoration: none;
+
+	&:hover {
+		color: var(--jmeet-color-action-link);
+	}
+}
+
+.due {
+	display: grid;
+	gap: 4px;
+
+	span {
+		color: var(--jmeet-color-text-primary);
+		font-size: var(--jmeet-font-size-secondary);
+		font-variant-numeric: tabular-nums;
+	}
+}
+
+.status-select {
+	width: 100%;
+	margin: 0;
+}
+
+.meeting-workspace-page {
+	min-height: 100%;
+}
+
+.meeting-workspace-state {
+	display: flex;
+	min-height: 240px;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+}
+
+.meeting-workspace-dial-in {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.meeting-workspace-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+}
+
+.meeting-workspace-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 12px 0;
+	border-bottom: 1px solid var(--jmeet-color-border-light);
+
+	&:last-child {
+		border-bottom: 0;
+	}
+}
+
+.meeting-workspace-sip-calls .meeting-workspace-row > div {
+	display: grid;
+	gap: 4px;
+}
+
+@include design-tokens.ov-tablet-down {
+	.task-row {
+		grid-template-columns: 30px 1fr;
+		padding-inline: 0;
+	}
+
+	.due,
+	.status-select {
+		grid-column: 2;
+	}
+
+	.meeting-workspace-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+@include design-tokens.ov-mobile-down {
+	.meeting-workspace-dial-in {
+		align-items: flex-start;
+		flex-direction: column;
+
+		.jmeet-button {
+			width: 100%;
+		}
+	}
+}
+
+.recent-activity {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	&__item {
+		display: flex;
+		align-items: center;
+		gap: var(--jmeet-space-3);
+		padding: var(--jmeet-space-3) 0;
+
+		& + & {
+			border-top: 1px solid var(--jmeet-color-border-light);
+		}
+	}
+
+	&__icon {
+		color: var(--jmeet-color-action-primary);
+
+		&--error {
+			color: var(--jmeet-color-action-danger);
+		}
+	}
+
+	&__main {
+		display: grid;
+		gap: 2px;
+		flex: 1;
+		min-width: 0;
+
+		strong {
+			color: var(--jmeet-color-text-primary);
+			font-size: var(--jmeet-font-size-sm);
+			font-weight: var(--jmeet-font-weight-medium);
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		span {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+
+	&__time {
+		flex: 0 0 auto;
+		color: var(--jmeet-color-text-secondary);
+		font-size: var(--jmeet-font-size-xs);
+	}
+}
+
+.hotword-table { overflow-x: auto; }
+
+.hotword-table table {
+	width: 100%;
+	min-width: 520px;
+	border-collapse: collapse;
+}
+
+.hotword-empty {
+	display: grid;
+	justify-items: center;
+	gap: 8px;
+	padding: 24px;
+}
+
+.hotword-empty span { color: var(--jmeet-color-text-secondary); }
+

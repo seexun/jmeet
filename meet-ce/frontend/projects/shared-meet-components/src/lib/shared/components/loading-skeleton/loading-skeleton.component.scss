@@ -1,0 +1,12 @@
+:host {
+	display: block;
+}
+
+.jmeet-loading-skeleton:not(.jmeet-loading-skeleton--stat) .jmeet-loading-skeleton__line {
+	height: 16px;
+}
+
+.jmeet-loading-skeleton--card .jmeet-loading-skeleton__line {
+	height: 120px;
+	border-radius: var(--jmeet-radius-lg);
+}

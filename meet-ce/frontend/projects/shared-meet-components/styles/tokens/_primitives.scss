@@ -1,0 +1,159 @@
+// ============================================================
+// 原始值 Token 层（Design Token · Primitive Layer）
+// ------------------------------------------------------------
+// 整个设计系统唯一允许出现"原始色值/像素值"的地方。
+// 上层（semantic / components）只允许引用本层变量，禁止再写裸值，
+// 这样品牌换肤、暗色模式、密度调整都只需要改这一层。
+// 命名约定：--jmeet-<类别>-<名称>-<变体>
+//   色彩：color-<色相>-<阶>      间距：space-<n>（4px 网格倍数）
+//   圆角：radius-<语义>          阴影：shadow-<强度>
+//   字体：font-<属性>-<档>       动效：transition-<速度>
+// 修改约束（标准 §46）：任何调整必须同步 docs/enterprise-light-saas-ui-frontend-standard.md
+// ============================================================
+// Primitive design tokens are the only layer that contains raw color values.
+@mixin emit-primitive-tokens {
+// —— 品牌蓝色阶：以主色 006EFF（腾讯会议浅色主色）为中心展开，50 为浅底、650/700 为按压深色 ——
+	--jmeet-color-blue-50: #EBF3FF;  // 主色浅底（与 primary-soft 同值；语义层别名 action-primary-light）
+	--jmeet-color-primary-soft: #EBF3FF;  // 主色 soft（与 blue-50 同值；壳激活底批次2、hover 批次3 均已改走语义别名 action-primary-light，现为兼容保留色面，勿新增直连消费）
+	--jmeet-color-blue-400: #79bbff;
+	--jmeet-color-blue-600: #006EFF;  // 主色
+	--jmeet-color-blue-650: #0059D6;  // 主色 hover
+	--jmeet-color-blue-700: #0047AD;  // 主色按压 active
+	--jmeet-color-accent: #06b6d4;  // 强调青色（TS-Admin --color-accent，logo/进度条/强调图形）
+	--jmeet-gradient-brand: linear-gradient(135deg, #006EFF, #3D8DFF);  // 品牌渐变：主色 → 浅主色
+	--jmeet-color-red-600: #D93025;  // 危险
+	--jmeet-color-red-750: #C5221F;  // danger-text 深档（对 #FDE8E8 = 4.94；red-600 组合仅 4.07）
+	--jmeet-color-green-600: #187741;  // 成功（success-text 深档，对 #E8F5EE = 4.99）
+// —— 琥珀色：警告语义（750 供所有者徽章等深字场景）——
+	--jmeet-color-amber-600: #B45309;  // 警告
+	--jmeet-color-amber-750: #c98c00;
+
+// —— 钢蓝色：主持人徽章等中性强调场景 ——
+	--jmeet-color-steel-500: #3b6d99;
+	--jmeet-color-steel-300: #8bb4d9;
+
+// —— 中性灰阶（TS-Admin 灰阶；旧标注"slate 系"系 EP 期遗留措辞，hex 并非 Tailwind slate，批次3 任务4 正名）——
+// 0 为纯白表面，50 为页面底色，900 为一级正文
+// 注意 gray-100 同时承担全站 hover 底色（TS-Admin --color-neutral-soft F1F5F9）
+	--jmeet-color-gray-0: #fff;
+	--jmeet-color-gray-25: #fafafa;
+	--jmeet-color-gray-50: #F2F3F5;  // 页面底色
+	--jmeet-color-gray-100: #f5f7fa;  // 全站 hover（TS-Admin --color-neutral-soft）
+	--jmeet-color-gray-200: #E6E8EB;  // 浅边框（与常规边框同值，契约锁定）
+	--jmeet-color-gray-300: #c0c4cc;
+	--jmeet-color-gray-350: #EEF0F2;  // 轻边框/分隔（比 border 浅一档）
+	--jmeet-color-gray-400: #8A9099;  // 三级文字
+	--jmeet-color-gray-450: #E6E8EB;  // 常规边框
+	--jmeet-color-gray-500: #5A6068;  // 次级文字
+	--jmeet-color-gray-700: #303133;
+	--jmeet-color-gray-900: #1F2329;  // 一级正文
+	--jmeet-color-ink-950: #141414;  // 瓦片视频占位底（EP 中性近黑）
+// —— 功能色：危险（红）与成功（绿），浅色档供标签/横幅底色使用；700 深字档自批次 1 起退役（soft 底文字语义已改指 600 档）——
+	--jmeet-color-red-50: #FDE8E8;  // 危险浅底
+	--jmeet-color-green-50: #E8F5EE;  // 成功浅底
+	--jmeet-color-amber-50: #FFF4E6;  // 警告浅底
+	--jmeet-color-green-700: #529b2e;  // （退役）原成功 soft 底深字，无消费者
+	--jmeet-color-amber-700: #b88230;  // （退役）原警告 soft 底深字，无消费者
+	--jmeet-color-red-700: #c45656;  // （退役）原危险 soft 底深字，无消费者
+	--jmeet-color-blue-600-rgb: 0 110 255;  // 主色 #006EFF 的 RGB 形（focus ring / action-primary-rgb）
+// —— 遮罩（scrim）：模态/抽屉/侧栏抽屉的半透明底，统一 slate-900 基色 40% ——
+	--jmeet-color-scrim: rgb(15 23 42 / 40%);
+
+// —— 间距：4px 基础网格（标准 §5），禁止使用网格外的间距值 ——
+	--jmeet-space-1: 4px;
+	--jmeet-space-2: 8px;  // 8px（图标与文字间距）
+	--jmeet-space-3: 12px;  // 12px（表单控件间距）
+	--jmeet-space-4: 16px;  // 16px（模块间距小）
+	--jmeet-space-6: 24px;  // 24px（页面边距/卡片内边距）
+	--jmeet-space-8: 32px;  // 32px（大区块间距）
+	--jmeet-space-12: 48px;
+
+// —— 圆角阶梯（标准 §6）：控件 8px、卡片 12px、大面板 16px ——
+	--jmeet-radius-xs: 2px;
+	--jmeet-radius-sm: 4px;
+	--jmeet-radius-md: 8px;  // 8px 控件（TS-Admin --radius-ctl）
+	--jmeet-radius-lg: 8px;  // 卡片（EP 紧凑观感；弹框已升 --jmeet-radius-dialog）
+	--jmeet-radius-dialog: 10px;  // 对话框面圆角（规格 §3.2 对话框：白面 10px；浮层白名单件）
+	--jmeet-radius-xl: 16px;  // 16px 大面板
+	--jmeet-radius-circle: 50%;
+
+// —— 阴影（TS-Admin 双层：card 常驻 / pop 浮层）——
+	--jmeet-shadow-card: 0 1px 2px rgb(15 23 42 / 6%);  // 卡片常驻
+	--jmeet-shadow-md: 0 8px 24px rgb(15 23 42 / 12%);  // 浮层（= --shadow-pop）
+	--jmeet-shadow-light-md: 0 8px 24px rgb(15 23 42 / 6%);  // 轻阴影（抽屉）
+	--jmeet-shadow-light-lg: 0 16px 40px rgb(16 24 40 / 14%);  // 较重阴影（模态）
+	--jmeet-shadow-hover: 0 2px 6px rgb(15 23 42 / 10%);  // 可交互卡片 hover 浮起
+// —— 字体族与字号阶梯（标准 §4）：sm=14px 正文基准，hero 仅限营销页 ——
+	// 不含 Plus Jakarta Sans：团队无此字体且不引入 webfont，避免栈首永远落空的误导
+	--jmeet-font-family: 'PingFang SC', 'Microsoft YaHei', 'HarmonyOS Sans SC', 'Noto Sans CJK SC', system-ui,
+		-apple-system, blinkmacsystemfont, 'Segoe UI', sans-serif;
+	--jmeet-font-size-xxs: 0.65rem;
+	--jmeet-font-size-xs: 0.75rem;  // 12px Caption
+	--jmeet-font-size-sm: 0.875rem;  // 14px Body（正文基准）
+	--jmeet-font-size-md: 1rem;  // 16px 辅助标题
+	--jmeet-font-size-lg: 1.125rem;  // 18px 卡片标题
+	--jmeet-font-size-xl: 1.25rem;  // 20px 模块标题
+	--jmeet-font-size-xxl: 1.5rem;  // 24px 页面标题（H1 上限）
+	--jmeet-font-size-hero: 2.5rem;  // 40px 仅营销/登录页
+	// 标准基准块钦定但介于阶梯之间的两档：13px 次级正文、11px 紧凑辅助（法律提示等）
+	--jmeet-font-size-secondary: 0.8125rem;  // 13px 次级正文（标准"次级 13px"）
+	--jmeet-font-size-caption-tight: 0.6875rem;  // 11px 紧凑辅助
+	// 标准钦定但高于基础阶梯的三档大字号：22px 页面标题、26px KPI 指标、28px Display
+	--jmeet-font-size-page-title: 1.375rem;  // 22px 页面标题（标准基准块 22px/800）
+	--jmeet-font-size-number-xl: 1.625rem;  // 26px KPI 指标（标准 Number XL）
+	--jmeet-font-size-display: 1.75rem;  // 28px Display（标准 §4.1；全库零消费的字阶保留位——批次 5 任务 3 裁定保留，遗留清扫复核维持，勿新增直连消费）
+// —— 字重：中文正文避免过细，菜单/按钮用 medium ——
+	--jmeet-font-weight-light: 300;
+	--jmeet-font-weight-regular: 400;
+	--jmeet-font-weight-medium: 500;  // 500 菜单/按钮
+	--jmeet-font-weight-semibold: 600;  // 600 模块/卡片标题
+	--jmeet-font-weight-bold: 700;  // 700 页面标题/数值
+	--jmeet-font-weight-extrabold: 800;  // 800 页面标题/大数字（TS-Admin 页题 800）
+// —— 行高：标题用 tight，正文 normal，长文 relaxed ——
+	--jmeet-line-height-tight: 1.2;  // 标题行高
+	--jmeet-line-height-normal: 1.5;  // 正文行高
+	--jmeet-line-height-relaxed: 1.7;
+
+// —— 动效时长（标准 §32）：150~220ms ease，禁止 bounce/overshoot ——
+	--jmeet-transition-fast: 0.15s ease-in-out;  // 150ms 悬停/菜单
+	--jmeet-transition-normal: 0.2s ease-in-out;  // 200ms 面板/抽屉
+	--jmeet-transition-slow: 0.3s ease-in-out;  // 300ms 大型过渡
+// —— 控件统一高度 36px（标准 §18/§19），按钮/输入框/菜单项共用 ——
+	--jmeet-control-height: 32px;  // 示例页面默认控件高度
+// —— 布局基准：内容区宽度 Auto 充满（标准 §30），侧栏 240px，顶栏 56px（TS-Admin 基准） ——
+	--jmeet-container-max-width: 1440px;  // 内容区上限
+	--jmeet-container-padding: var(--jmeet-space-8);  // 内容区边距
+	--jmeet-grid-gap: var(--jmeet-space-6);  // 网格间距 24px
+	--jmeet-toolbar-height: 56px;  // 顶栏高（TS-Admin 56）
+	--jmeet-shell-sidenav-width: 240px;  // 侧栏宽（TS-Admin 240）
+// —— 图标尺寸（标准 §31）：侧栏/按钮内 18px，常规 24px ——
+	--jmeet-icon-size-sm: 18px;  // 18px 侧栏/按钮内
+	--jmeet-icon-size-md: 24px;  // 24px 常规
+	--jmeet-icon-size-lg: 32px;  // 32px 空态/装饰
+	--jmeet-icon-size-xl: 48px;  // 48px 大空态
+// —— 交互状态透明度：hover/焦点/选中/禁用四级，全站统一 ——
+	--jmeet-hover-opacity: 0.08;  // hover 状态层
+	--jmeet-focus-opacity: 0.12;  // focus 状态层
+	--jmeet-selected-opacity: 0.16;  // 选中状态层
+	--jmeet-disabled-opacity: 0.38;  // 禁用 38%（WCAG）
+// —— 响应式断点（标准 §29）：768 以下侧栏转 Drawer，1024 以下折叠图标栏 ——
+	--jmeet-breakpoint-mobile: 480px;  // 480px 手机
+	--jmeet-breakpoint-tablet: 768px;  // 768px 抽屉切换
+	--jmeet-breakpoint-desktop: 1024px;  // 1024px 侧栏折叠
+	--jmeet-breakpoint-wide: 1200px;  // 1200px 宽屏
+// —— 层叠层级阶梯：全站 z 层唯一出处，组件层禁止再写裸值（同域相对大小与历史值一致） ——
+	--jmeet-z-behind: -1;  // 主体内容背后的装饰（装饰圆等）
+	--jmeet-z-raised: 2;  // 局部堆叠上下文内的叠放（徽标/悬浮小按钮）
+	--jmeet-z-overlay: 10;  // 局部覆盖层（加载遮罩/瓦片头像屏）
+	--jmeet-z-sticky: 20;  // 吸顶条与会议页固定悬浮控件
+	--jmeet-z-watermark: 35;  // 身份水印层
+	--jmeet-z-drawer-backdrop: 190;  // 移动端抽屉遮罩（必须低于抽屉面板）
+	--jmeet-z-drawer: 200;  // 移动端侧栏抽屉
+	--jmeet-z-media-overlay: 888;  // 视频瓦片海报层（视频层用 calc(+1) 叠其上）
+	--jmeet-z-tile-hud: 999;  // 瓦片内 HUD（名字条/音波/状态图标/质量徽章/悬浮自视图）
+	--jmeet-z-modal-mask: 999;  // 页面级模态遮罩（必须低于弹层面板 dropdown）
+	--jmeet-z-dropdown: 1000;  // 下拉/弹出面板（归并原 1000/1001/1002）
+	--jmeet-z-panel-app: 1110;  // 协作应用面板（agenda/material/poll/whiteboard）
+	--jmeet-z-toast: 1200;  // 顶部通知横幅
+	--jmeet-z-max: 9999;  // 极端覆盖（归并原 9999/999999）
+}

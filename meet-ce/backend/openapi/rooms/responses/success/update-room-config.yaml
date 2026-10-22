@@ -1,0 +1,5 @@
+description: Success response for updating room config. Returns the updated room configuration.
+content:
+    application/json:
+        schema:
+            $ref: '../../schemas/meet-room-config.yaml#/MeetRoomConfig'

@@ -1,0 +1,95 @@
+@if (viewportService.shouldShowLandscapeWarning()) {
+	<ov-landscape-warning />
+} @else {
+	<div class="jmeet-prejoin-page" id="prejoin-container" [class.mobile]="viewportService.isMobile()" [class.name-error]="!!errorMessage()">
+		<div class="jmeet-prejoin-shell">
+			<header class="jmeet-prejoin-brand">
+				<span class="jmeet-prejoin-mark" aria-hidden="true"><nz-icon nzType="video-camera" /></span>
+				<div class="jmeet-prejoin-brand-copy">
+					<div class="jmeet-prejoin-brand-line">
+						<h1 class="jmeet-prejoin-title">{{ roomName() || ('PREJOIN.MEETING_FALLBACK' | translate) }}</h1>
+						<p class="jmeet-prejoin-secure"><nz-icon nzType="safety-certificate" />{{ 'PREJOIN.SECURE_CONNECTION' | translate }}</p>
+					</div>
+				</div>
+			</header>
+
+			@if (isLoading()) {
+				<div class="jmeet-prejoin-loading">
+					<div class="jmeet-prejoin-loading-content"><nz-spin nzSimple class="jmeet-prejoin-loading-spinner" /><span>{{ 'PREJOIN.PREPARING' | translate }}</span></div>
+				</div>
+			} @else {
+				<main class="jmeet-prejoin-content">
+					<section class="jmeet-prejoin-preview">
+						<div class="jmeet-prejoin-preview-heading">
+							<div><p>{{ 'PREJOIN.PREVIEW_LABEL' | translate }}</p><h2>{{ 'PREJOIN.PREVIEW_TITLE' | translate }}</h2></div>
+							<span class="jmeet-prejoin-ready"><i></i>{{ 'PREJOIN.DEVICES_READY' | translate }}</span>
+						</div>
+
+						<div class="jmeet-prejoin-video">
+							<ov-video-element [videoTrack]="videoTrack" [avatar]="avatarView()" [isLocal]="true" [id]="videoTrack?.id || 'no-video'" />
+							<div class="jmeet-prejoin-video-gradient"></div>
+							<div class="jmeet-prejoin-video-controls">
+								@if (showCameraButton()) {
+									<div class="jmeet-prejoin-device" [class.off]="!isVideoEnabled()">
+										<ov-video-devices-select [compact]="true" (onVideoDeviceChanged)="videoDeviceChanged($event)" (onVideoEnabledChanged)="videoEnabledChanged($event)" />
+										<span>{{ isVideoEnabled() ? ('PREJOIN.CAMERA_ON' | translate) : ('PREJOIN.CAMERA_OFF' | translate) }}</span>
+									</div>
+								}
+								@if (showMicrophoneButton()) {
+									<div class="jmeet-prejoin-device" [class.off]="!isAudioEnabled()">
+										<ov-audio-devices-select [compact]="true" (onAudioDeviceChanged)="audioDeviceChanged($event)" (onAudioEnabledChanged)="audioEnabledChanged($event)" (onDeviceSelectorClicked)="onDeviceSelectorClicked()" />
+										<span>{{ isAudioEnabled() ? ('PREJOIN.MIC_ON' | translate) : ('PREJOIN.MIC_OFF' | translate) }}</span>
+									</div>
+								}
+								@if (showBackgroundsButton() && hasVideoDevices()) {
+									<div class="jmeet-prejoin-device">
+										<button type="button" class="jmeet-prejoin-background" (click)="toggleBackgroundPanel()" nz-tooltip [nzTooltipTitle]="'PREJOIN.BACKGROUND' | translate" [disabled]="!isVideoEnabled()" id="backgrounds-button"><nz-icon nzType="bg-colors" /></button>
+										<span>{{ 'PREJOIN.BACKGROUND' | translate }}</span>
+									</div>
+								}
+							</div>
+						</div>
+
+						<div class="jmeet-prejoin-device-summary">
+							<div [class.warning]="!hasVideoDevices()"><nz-icon [nzType]="(hasVideoDevices() ? 'videocam' : 'videocam_off') | nzIconType" /><span><small>{{ 'PREJOIN.CAMERA' | translate }}</small><strong>{{ hasVideoDevices() ? ('PREJOIN.DETECTED' | translate) : ('PREJOIN.NOT_DETECTED' | translate) }}</strong></span></div>
+							<div [class.warning]="!hasAudioDevices()"><nz-icon [nzType]="(hasAudioDevices() ? 'mic' : 'mic_off') | nzIconType" /><span><small>{{ 'PREJOIN.MICROPHONE' | translate }}</small><strong>{{ hasAudioDevices() ? ('PREJOIN.DETECTED' | translate) : ('PREJOIN.NOT_DETECTED' | translate) }}</strong></span></div>
+						</div>
+						<div class="jmeet-prejoin-diagnostic" aria-live="polite">
+							<div class="jmeet-prejoin-network" [class.warning]="networkCheckState() === 'fair'" [class.error]="networkCheckState() === 'poor' || networkCheckState() === 'offline'">
+								<nz-icon [nzType]="(networkCheckState() === 'good' ? 'wifi' : networkCheckState() === 'checking' ? 'sync' : 'signal_wifi_bad') | nzIconType" />
+								<span>
+									<small>网络状态</small>
+									<strong>
+										{{ networkCheckState() === 'checking' ? '正在检测' : networkCheckState() === 'good' ? '连接良好' : networkCheckState() === 'fair' ? '网络一般' : networkCheckState() === 'offline' ? '网络已断开' : '网络较差' }}
+										@if (networkLatencyMs(); as latency) { · {{ latency }} ms }
+									</strong>
+								</span>
+							</div>
+							<button type="button" class="jmeet-button jmeet-button--outline" (click)="testNetwork()" [disabled]="networkCheckState() === 'checking'"><nz-icon nzType="global" />重新检测</button>
+							<button type="button" class="jmeet-button jmeet-button--outline" (click)="testSpeaker()" [disabled]="speakerTestActive()"><nz-icon nzType="sound" />{{ speakerTestActive() ? '正在播放' : '测试扬声器' }}</button>
+							<div class="jmeet-prejoin-network"><nz-icon nzType="file-done" /><span><small>检测结论</small><strong>{{networkRecommendation()}} · 浏览器{{browserCompatible()?'兼容':'不兼容'}} · 麦克风权限{{mediaPermissions()==='denied'?'被拒绝':'可用'}}</strong></span></div>
+						</div>
+					</section>
+
+					<aside class="jmeet-prejoin-join">
+						<div class="jmeet-prejoin-join-heading"><div class="jmeet-prejoin-heading-icon"><nz-icon nzType="setting" /></div><div><h2>{{ 'PREJOIN.READY_TITLE' | translate }}</h2><p>{{ 'PREJOIN.READY_SUBTITLE' | translate }}</p></div></div>
+
+						<div class="jmeet-prejoin-identity"><div class="jmeet-prejoin-avatar">{{ participantName().charAt(0) || 'U' }}</div><div><small>{{ 'PREJOIN.JOIN_AS' | translate }}</small><strong>{{ participantName() || ('PREJOIN.PARTICIPANT_FALLBACK' | translate) }}</strong></div><span><nz-icon nzType="safety-certificate" />{{ 'PREJOIN.VERIFIED' | translate }}</span></div>
+
+						<div class="jmeet-prejoin-status">
+							<div><nz-icon [nzType]="(isVideoEnabled() ? 'videocam' : 'videocam_off') | nzIconType" [class.on]="isVideoEnabled()" /><span>{{ isVideoEnabled() ? ('PREJOIN.JOIN_VIDEO_ON' | translate) : ('PREJOIN.JOIN_VIDEO_OFF' | translate) }}</span></div>
+							<div><nz-icon [nzType]="(isAudioEnabled() ? 'mic' : 'mic_off') | nzIconType" [class.on]="isAudioEnabled()" /><span>{{ isAudioEnabled() ? ('PREJOIN.JOIN_AUDIO_ON' | translate) : ('PREJOIN.JOIN_AUDIO_OFF' | translate) }}</span></div>
+						</div>
+
+						@if (!!errorMessage()) {
+							<div class="jmeet-prejoin-error" id="token-error" role="alert"><nz-icon nzType="close-circle" /><span>{{ errorMessage() }}</span></div>
+						}
+
+						<button (click)="join()" class="jmeet-button jmeet-button--primary jmeet-prejoin-submit" id="join-button"><span>{{ 'PREJOIN.JOIN' | translate }}</span><nz-icon nzType="arrow-right" /></button>
+						<p class="jmeet-prejoin-privacy"><nz-icon nzType="lock" />{{ 'PREJOIN.PRIVACY_HINT' | translate }}</p>
+					</aside>
+				</main>
+			}
+		</div>
+	</div>
+}

@@ -1,0 +1,40 @@
+@use '../selector-shared' as shared;
+
+:host {
+	display: inline-block;
+
+	.language-selector-container {
+		.compact-lang-button {
+			width: 40px;
+			height: 40px;
+			background: var(--jmeet-color-surface-card);
+			border: 1px solid var(--ov-border-color, var(--jmeet-color-border));
+			border-radius: var(--jmeet-radius-md);
+			transition: all 0.2s ease;
+			color: var(--ov-text-secondary-color, var(--jmeet-color-text-secondary));
+
+			.anticon {
+				font-size: 18px;
+				width: 18px;
+				height: 18px;
+			}
+		}
+
+		// full 形态已迁移 nz-select：宽度跟随容器，样式由全局 _nz-theme 的 .ant-select 规则对齐
+		nz-select.lang-select {
+			width: 100%;
+		}
+	}
+}
+
+::ng-deep .language-menu.ant-dropdown {
+	@include shared.selector-menu('language-option', 'lang-option-name');
+
+	// The projected nz-menu ul carries antd's own padding/chrome; the overlay
+	// pane above already provides the panel surface, so neutralize it.
+	.ant-dropdown-menu {
+		padding: 0;
+		background: transparent;
+		box-shadow: none;
+	}
+}

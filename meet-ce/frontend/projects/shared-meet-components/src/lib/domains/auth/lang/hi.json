@@ -1,0 +1,60 @@
+{
+	"AUTH": {
+		"COMMON": {
+			"SHOW_PASSWORD": "पासवर्ड दिखाएं",
+			"HIDE_PASSWORD": "पासवर्ड छिपाएं"
+		},
+		"LOGIN": {
+			"TITLE": "साइन इन करें",
+			"SUBTITLE": "JMeet तक पहुंचने के लिए अपने क्रेडेंशियल दर्ज करें",
+			"USER_ID": "उपयोगकर्ता ID",
+			"USER_ID_PLACEHOLDER": "अपनी उपयोगकर्ता ID दर्ज करें",
+			"PASSWORD": "पासवर्ड",
+			"PASSWORD_PLACEHOLDER": "अपना पासवर्ड दर्ज करें",
+			"SUBMIT": "लॉगिन",
+			"ERROR_TOO_MANY_ATTEMPTS": "बहुत अधिक लॉगिन प्रयास। कृपया बाद में पुनः प्रयास करें",
+			"ERROR_INVALID_CREDENTIALS": "अमान्य उपयोगकर्ता ID या पासवर्ड",
+			"HERO_TITLE_PREFIX": "स्मार्ट मीटिंग सहयोग",
+			"HERO_TITLE_EMPHASIS": "हर टीम को जोड़ना",
+			"HERO_DESC": "HD audio & video · screen sharing · free & open source · self-hosted",
+			"WELCOME_TITLE": "वापस स्वागत है",
+			"WELCOME_SUBTITLE": "मीटिंग शुरू करने या जुड़ने के लिए साइन इन करें",
+			"LIVE_BADGE": "मीटिंग जारी है",
+			"MINUTES_TOAST": "Smooth collaboration",
+			"FEATURE_BAND_1_TITLE": "स्पष्ट और स्थिर",
+			"FEATURE_BAND_1_SUB": "1080p · पैकेट-लॉस रेसिलिएंट",
+			"FEATURE_BAND_2_TITLE": "In-meeting chat",
+			"FEATURE_BAND_2_SUB": "Group chat & interaction",
+			"FEATURE_BAND_3_TITLE": "Open source",
+			"FEATURE_BAND_3_SUB": "Self-hosted deployment",
+			"CAP_2": "Screen sharing & virtual backgrounds",
+			"CAP_3": "Free & open source · self-hosted"
+		},
+		"CHANGE_PASSWORD": {
+			"TITLE": "अपना पासवर्ड अपडेट करें",
+			"SUBTITLE": "जारी रखने से पहले आपको अपना पासवर्ड अपडेट करना होगा।",
+			"BANNER_TITLE": "पासवर्ड अपडेट आवश्यक",
+			"BANNER_DESC": "आपका पासवर्ड हाल ही में बनाया या रीसेट किया गया था। जारी रखने के लिए एक नया पासवर्ड सेट करें।",
+			"CURRENT_PASSWORD": "वर्तमान पासवर्ड",
+			"CURRENT_PASSWORD_PLACEHOLDER": "अपना वर्तमान पासवर्ड दर्ज करें",
+			"NEW_PASSWORD": "नया पासवर्ड",
+			"NEW_PASSWORD_PLACEHOLDER": "एक मजबूत, सुरक्षित पासवर्ड बनाएं",
+			"PASSWORD_MIN_HINT": "न्यूनतम 5 वर्ण",
+			"CONFIRM_PASSWORD": "नए पासवर्ड की पुष्टि करें",
+			"CONFIRM_PASSWORD_PLACEHOLDER": "अपना नया पासवर्ड दोहराएं",
+			"SUBMIT": "पासवर्ड अपडेट करें",
+			"ERRORS": {
+				"CURRENT_REQUIRED": "वर्तमान पासवर्ड आवश्यक है",
+				"CURRENT_INCORRECT": "वर्तमान पासवर्ड गलत है",
+				"NEW_REQUIRED": "नया पासवर्ड आवश्यक है",
+				"NEW_MIN_PREFIX": "पासवर्ड कम से कम ",
+				"NEW_MIN_SUFFIX": " वर्ण लंबा होना चाहिए",
+				"NEW_SAME": "नया पासवर्ड वर्तमान पासवर्ड से अलग होना चाहिए",
+				"CONFIRM_REQUIRED": "कृपया अपने पासवर्ड की पुष्टि करें",
+				"CONFIRM_MISMATCH": "पासवर्ड मेल नहीं खाते",
+				"UPDATE_SUCCESS": "पासवर्ड सफलतापूर्वक अपडेट किया गया",
+				"UPDATE_FAILED": "पासवर्ड अपडेट करने में विफल"
+			}
+		}
+	}
+}

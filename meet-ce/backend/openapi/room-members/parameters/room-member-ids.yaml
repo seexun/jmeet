@@ -1,0 +1,9 @@
+name: memberIds
+in: query
+required: true
+description: >
+    Comma-separated list of room member IDs to delete.
+    Each ID should correspond to an existing member in the room.
+schema:
+    type: string
+example: 'alice_smith,ext:abc123'

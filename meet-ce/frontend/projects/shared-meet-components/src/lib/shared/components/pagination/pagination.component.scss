@@ -1,0 +1,99 @@
+// 贴面底右置（规格 §3.2 列表蓝图）：分页坐列表表面底部、右对齐；
+// 与上方内容的间距由列表面板 gap（jmeet-list-panel）或消费方自带的 footer 分隔承担，
+// 本件不再叠加 padding-top。
+.jmeet-pagination {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-sm);
+}
+
+.jmeet-pagination__total {
+	white-space: nowrap;
+}
+
+// 页码钮 28px / 6px 圆角（nz 默认 32px 描边钮 → 上调中间档：与全站输入控件
+// 观感协调、可点面积更大；ant small 24px 档偏小，用户实测反馈后统一升档）。
+// _nz-theme.scss 为批次2 禁改层，故 nz 皮肤微调落组件 scss（::ng-deep）。
+.jmeet-pagination ::ng-deep {
+	.ant-pagination-item,
+	.ant-pagination-prev .ant-pagination-item-link,
+	.ant-pagination-next .ant-pagination-item-link {
+		min-width: 28px;
+		height: 28px;
+		line-height: 26px;
+		border-radius: 6px;
+	}
+
+	// 分页行内高差归一——尺寸选择器与快速跳页输入框同页码钮取 28px 一档
+	// （nz 默认 32px 与页码钮并排错落；批次 3 曾压 24px，随全站统一分页升档）。
+	// 选择器镜像 ant 自身的 `.ant-select-single:not(.ant-select-customize-input)
+	// .ant-select-selector` 形状并多出一层 .ant-pagination-options 前缀，确保压过库值。
+	.ant-pagination-options .ant-select-single:not(.ant-select-customize-input) .ant-select-selector,
+	.ant-pagination-options-quick-jumper input {
+		height: 28px;
+		border-radius: 6px;
+	}
+
+	// 水平对齐收口：条数选择器的**外层宿主**（nz-select/.ant-select）被 antd v21
+	// 宿主级规则 `.ant-select-single.ant-select{height:32px}` 抬高——内层 selector
+	// 单独压档没用，宿主决定可见白盒高度——宿主/内层/快速跳页容器统一 28px，
+	// 全行共享一条水平中线。
+	.ant-pagination-options .ant-select-single,
+	.ant-pagination-options nz-select,
+	.ant-pagination-options .ant-select .ant-select-selector {
+		height: 28px;
+	}
+
+	.ant-pagination-options-quick-jumper {
+		display: inline-flex;
+		align-items: center;
+		height: 28px;
+	}
+
+	.ant-pagination {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+
+	// 终局对齐：prev/next 圆钮的**宿主 li** 仍是 antd 默认 32px 档，而内层 button
+	// 已压到 28px 档且顶置排布——按钮连同内层图标整组中线高出全行 4px（探针
+	// cy=788.4 ×8 组）。宿主 li 同步落 28px 档并 flex 居中，内层件自动回中线；
+	// "共 N 条"文本件同理（行内 span 靠 strut 定位，字体基线不对称使其悬高
+	// ~1.5px），flex 居中后与全行同线。
+	.ant-pagination-prev,
+	.ant-pagination-next {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 28px;
+		height: 28px;
+	}
+
+	.ant-pagination-total-text {
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.ant-pagination-options .ant-select-single .ant-select-selector {
+		.ant-select-selection-item,
+		.ant-select-selection-placeholder {
+			line-height: 26px;
+		}
+	}
+
+	// 激活页：主色底白字（与 jmeet-button--primary 同一文字契约；hover 不回退 nz 主色字）
+	.ant-pagination-item-active,
+	.ant-pagination-item-active:hover {
+		background: var(--jmeet-color-action-primary);
+		border-color: var(--jmeet-color-action-primary);
+
+		a,
+		a:hover {
+			color: var(--jmeet-color-text-on-primary);
+		}
+	}
+}

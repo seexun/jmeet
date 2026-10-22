@@ -1,0 +1,60 @@
+{
+	"AUTH": {
+		"COMMON": {
+			"SHOW_PASSWORD": "Passwort anzeigen",
+			"HIDE_PASSWORD": "Passwort verbergen"
+		},
+		"LOGIN": {
+			"TITLE": "Anmelden",
+			"SUBTITLE": "Geben Sie Ihre Zugangsdaten ein, um auf JMeet zuzugreifen",
+			"USER_ID": "Benutzer-ID",
+			"USER_ID_PLACEHOLDER": "Geben Sie Ihre Benutzer-ID ein",
+			"PASSWORD": "Passwort",
+			"PASSWORD_PLACEHOLDER": "Geben Sie Ihr Passwort ein",
+			"SUBMIT": "Anmelden",
+			"ERROR_TOO_MANY_ATTEMPTS": "Zu viele Anmeldeversuche. Bitte versuchen Sie es später erneut",
+			"ERROR_INVALID_CREDENTIALS": "Ungültige Benutzer-ID oder Passwort",
+			"HERO_TITLE_PREFIX": "Intelligente Meeting-Kollaboration",
+			"HERO_TITLE_EMPHASIS": "Verbindet jedes Team",
+			"HERO_DESC": "HD audio & video · screen sharing · free & open source · self-hosted",
+			"WELCOME_TITLE": "Willkommen zurück",
+			"WELCOME_SUBTITLE": "Melden Sie sich an, um ein Meeting zu starten oder beizutreten",
+			"LIVE_BADGE": "Meeting läuft",
+			"MINUTES_TOAST": "Smooth collaboration",
+			"FEATURE_BAND_1_TITLE": "Klar & stabil",
+			"FEATURE_BAND_1_SUB": "1080p · paketverlustsicher",
+			"FEATURE_BAND_2_TITLE": "In-meeting chat",
+			"FEATURE_BAND_2_SUB": "Group chat & interaction",
+			"FEATURE_BAND_3_TITLE": "Open source",
+			"FEATURE_BAND_3_SUB": "Self-hosted deployment",
+			"CAP_2": "Screen sharing & virtual backgrounds",
+			"CAP_3": "Free & open source · self-hosted"
+		},
+		"CHANGE_PASSWORD": {
+			"TITLE": "Aktualisieren Sie Ihr Passwort",
+			"SUBTITLE": "Sie müssen Ihr Passwort aktualisieren, bevor Sie fortfahren.",
+			"BANNER_TITLE": "Passwortaktualisierung erforderlich",
+			"BANNER_DESC": "Ihr Passwort wurde kürzlich erstellt oder zurückgesetzt. Legen Sie ein neues Passwort fest, um fortzufahren.",
+			"CURRENT_PASSWORD": "Aktuelles Passwort",
+			"CURRENT_PASSWORD_PLACEHOLDER": "Geben Sie Ihr aktuelles Passwort ein",
+			"NEW_PASSWORD": "Neues Passwort",
+			"NEW_PASSWORD_PLACEHOLDER": "Erstellen Sie ein starkes, sicheres Passwort",
+			"PASSWORD_MIN_HINT": "Mindestens 5 Zeichen",
+			"CONFIRM_PASSWORD": "Neues Passwort bestätigen",
+			"CONFIRM_PASSWORD_PLACEHOLDER": "Wiederholen Sie Ihr neues Passwort",
+			"SUBMIT": "Passwort aktualisieren",
+			"ERRORS": {
+				"CURRENT_REQUIRED": "Aktuelles Passwort ist erforderlich",
+				"CURRENT_INCORRECT": "Aktuelles Passwort ist falsch",
+				"NEW_REQUIRED": "Neues Passwort ist erforderlich",
+				"NEW_MIN_PREFIX": "Das Passwort muss mindestens ",
+				"NEW_MIN_SUFFIX": " Zeichen lang sein",
+				"NEW_SAME": "Das neue Passwort muss sich vom aktuellen Passwort unterscheiden",
+				"CONFIRM_REQUIRED": "Bitte bestätigen Sie Ihr Passwort",
+				"CONFIRM_MISMATCH": "Die Passwörter stimmen nicht überein",
+				"UPDATE_SUCCESS": "Passwort erfolgreich aktualisiert",
+				"UPDATE_FAILED": "Passwort konnte nicht aktualisiert werden"
+			}
+		}
+	}
+}

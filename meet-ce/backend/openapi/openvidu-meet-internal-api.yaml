@@ -1,0 +1,50 @@
+# ⚠️ 此文件名被以下位置硬编码引用，禁止改名/移动：
+#   package.json (doc:internal-api)、nodemon.docs.json、meet.sh、Dockerfile
+# 路径按域组织于本目录子文件夹；调整文件结构后运行 `pnpm run lint:api` 校验 $ref。
+openapi: 3.1.0
+info:
+    $ref: './shared/info.yaml'
+servers:
+    - url: meet/internal-api/v1
+      description: JMeet Internal API
+tags:
+    $ref: './shared/tags.yaml'
+paths:
+    /auth/login:
+        $ref: './auth/auth.yaml#/~1auth~1login'
+    /auth/options:
+        $ref: './auth/auth.yaml#/~1auth~1options'
+    /auth/logout:
+        $ref: './auth/auth.yaml#/~1auth~1logout'
+    /auth/refresh:
+        $ref: './auth/auth.yaml#/~1auth~1refresh'
+    /users/me:
+        $ref: './users/internal/users.yaml#/~1users~1me'
+    /users/change-password:
+        $ref: './users/internal/users.yaml#/~1users~1change-password'
+    /config/rooms/appearance:
+        $ref: './config/config.yaml#/~1config~1rooms~1appearance'
+    /rooms/{roomId}/members/token:
+        $ref: './room-members/internal/room-members.yaml#/~1rooms~1{roomId}~1members~1token'
+    /rooms/{roomId}/members/token/refresh:
+        $ref: './room-members/internal/room-members.yaml#/~1rooms~1{roomId}~1members~1token~1refresh'
+    /meetings/{roomId}:
+        $ref: './meetings/meetings.yaml#/~1meetings~1{roomId}'
+    /meetings/{roomId}/participants/{participantIdentity}:
+        $ref: './meetings/meetings.yaml#/~1meetings~1{roomId}~1participants~1{participantIdentity}'
+    /meetings/{roomId}/participants/{participantIdentity}/role:
+        $ref: './meetings/meetings.yaml#/~1meetings~1{roomId}~1participants~1{participantIdentity}~1role'
+components:
+    securitySchemes:
+        $ref: ./shared/security.yaml
+    schemas:
+        MeetUser:
+            $ref: ./users/schemas/meet-user.yaml
+        SecurityConfig:
+            $ref: ./config/schemas/global-security-config.yaml
+        RoomsAppearanceConfig:
+            $ref: ./config/schemas/rooms-appearance-config.yaml
+        MeetRoom:
+            $ref: ./rooms/schemas/meet-room.yaml
+        Error:
+            $ref: ./shared/schemas/error.yaml

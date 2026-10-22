@@ -1,0 +1,77 @@
+@use '_design-tokens.scss';
+
+.button-text {
+	margin-left: 8px;
+}
+
+// Global styling for leave button when in toolbar
+::ng-deep {
+	#media-buttons-container .custom-leave-btn {
+		text-align: center;
+		background-color: var(--jmeet-color-action-danger, var(--jmeet-color-action-danger)) !important;
+		color: var(--jmeet-color-surface-card) !important;
+		border-radius: var(--jmeet-radius-md) !important;
+		width: 76px !important;
+		height: 56px !important;
+		margin: 2px 4px 2px 14px !important;
+		padding: 0 !important;
+		display: inline-flex !important;
+		flex-direction: column !important;
+		align-items: center !important;
+		justify-content: center !important;
+		gap: 4px !important;
+		border: none !important;
+		box-shadow: none !important;
+
+
+		.anticon,
+		.anticon {
+			width: 24px !important;
+			height: 24px !important;
+			font-size: var(--jmeet-font-size-xxl) !important;
+			line-height: 24px !important;
+			color: var(--jmeet-color-surface-card) !important;
+			margin: 0 !important;
+		}
+
+		.control-label {
+			flex-shrink: 0;
+			color: var(--jmeet-color-surface-card) !important;
+			font-size: var(--jmeet-font-size-xs);
+			font-weight: var(--jmeet-font-weight-semibold);
+			line-height: 18px;
+			max-width: 68px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		&:hover {
+			background-color: var(--jmeet-color-action-danger) !important;
+		}
+
+		&:focus-visible {
+			outline: none;
+			box-shadow: 0 0 0 3px color-mix(in srgb, var(--jmeet-color-action-danger) 22%, transparent) !important;
+		}
+	}
+}
+
+.control-label {
+	flex-shrink: 0;
+	font-size: var(--jmeet-font-size-xs);
+	font-weight: var(--jmeet-font-weight-semibold);
+	line-height: 18px;
+}
+
+@media (max-width: 767px) {
+	.control-label {
+		display: none;
+	}
+
+	::ng-deep #media-buttons-container .custom-leave-btn {
+		width: 40px !important;
+		height: 40px !important;
+		margin: 2px !important;
+	}
+}

@@ -1,0 +1,15 @@
+{$MEET_DOMAIN} {
+	tls internal
+	encode zstd gzip
+	reverse_proxy meet:6080
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+	}
+}
+
+{$LIVEKIT_DOMAIN} {
+	tls internal
+	reverse_proxy livekit:7880
+}

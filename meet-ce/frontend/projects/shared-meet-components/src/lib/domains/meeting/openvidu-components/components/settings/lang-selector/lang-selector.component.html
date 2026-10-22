@@ -1,0 +1,43 @@
+<div class="language-selector-container">
+	@if (compact()) {
+		<!-- Compact version (icon only) -->
+		<button
+			class="compact-lang-button"
+			nz-dropdown
+			[nzDropdownMenu]="langMenu"
+			nzTrigger="click"
+			nz-placement="bottomLeft"
+			[nzOverlayClassName]="'language-menu'"
+			nz-tooltip
+			[nzTooltipTitle]="'Change language'"
+		>
+			<nz-icon nzType="translation" />
+		</button>
+	} @else {
+		<!-- Full version: standard nz-select -->
+		<nz-select class="lang-select" [ngModel]="langSelected.lang" (ngModelChange)="onLangSelected($event)">
+			@for (lang of languages; track lang.lang) {
+				<nz-option [nzValue]="lang.lang" [nzLabel]="lang.name" />
+			}
+		</nz-select>
+	}
+
+	<!-- Language Menu -->
+	<nz-dropdown-menu #langMenu="nzDropdownMenu">
+		<ul nz-menu>
+			@for (lang of languages; track lang.lang) {
+				<li
+					nz-menu-item
+					(click)="onLangSelected(lang.lang)"
+					[attr.id]="'lang-opt-' + lang.lang"
+					[class.selected]="langSelected.lang === lang.lang"
+					class="language-option"
+				>
+					<nz-icon nzType="check" class="menu-check-icon"
+						[class.is-selected]="langSelected.lang === lang.lang" />
+					<span class="lang-option-name">{{ lang.name }}</span>
+				</li>
+			}
+		</ul>
+	</nz-dropdown-menu>
+</div>

@@ -1,0 +1,29 @@
+// Design Tokens - Centralized design variable system for JMeet
+// This file forwards all modular design system files to maintain the same public API
+// while organizing the code in a more maintainable structure
+
+// Three-layer token system.
+@forward './tokens-primitives';
+@forward './tokens-semantic';
+@forward './tokens-components';
+
+// Compatibility entry point for existing token consumers.
+@forward './tokens-core';
+
+// Theme-specific variables (light/dark themes)
+@forward './tokens-themes';
+
+// Layout-related mixins (containers, grids, positioning)
+@forward './mixins-layout';
+
+// Component-specific mixins (cards, buttons, headers)
+@forward './mixins-components';
+
+// Responsive design utilities
+@forward './mixins-responsive';
+
+// Animation keyframes and classes
+@forward './animations';
+
+// Utility classes
+@forward './utilities';

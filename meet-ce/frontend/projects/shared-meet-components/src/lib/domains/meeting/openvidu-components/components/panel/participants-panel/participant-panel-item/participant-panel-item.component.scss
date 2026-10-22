@@ -1,0 +1,335 @@
+// 会议域深绘（批次 2 §5.4）：成员行 42px 节奏（--jmeet-meeting-row-height）
+// 头像 24 + 名字 12 + （你) 三级字色后缀 + 音视频态图标；操作钮 hover 显现。
+// 批次 5 裁决④：基座 #mute-btn 已删（inert 双钮收敛，定制管理钮唯一承担行级静音），
+// TS 零变更，全 --jmeet-meeting-*（warning 族沿用全局令牌豁免惯例）。
+:host {
+	// 成员行：48px 紧凑单行（用户裁决：行高 48-52 + 信息密度优先）+ 柔和蓝灰 hover
+	.participant-container {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 0 12px;
+		border-radius: var(--jmeet-radius-md);
+		background-color: transparent;
+		transition: background-color 160ms ease;
+		min-height: 48px;
+
+		&:hover {
+			// 浅蓝灰悬停底（同档浅蓝灰）：primary 4% 混 surface
+			background-color: color-mix(in srgb, var(--jmeet-meeting-primary) 4%, var(--jmeet-meeting-surface));
+		}
+
+		// Loading state
+		&.loading {
+			opacity: 0.7;
+			pointer-events: none;
+
+			&::after {
+				content: '';
+				position: absolute;
+				top: 50%;
+				right: 16px;
+				width: 16px;
+				height: 16px;
+				border: 2px solid var(--jmeet-meeting-primary);
+				border-radius: 50%;
+				border-top-color: transparent;
+				animation: spin 1s linear infinite;
+			}
+		}
+
+		// Focus state for keyboard navigation
+		&:focus-within {
+			outline: 2px solid var(--jmeet-meeting-primary);
+			outline-offset: 2px;
+		}
+	}
+
+	// Avatar layout — 24px 头像规格由本层供给（avatar 子组件自身仍为 28px 通用规格）
+	ov-participant-avatar {
+		margin-right: 0;
+		flex-shrink: 0;
+
+		::ng-deep .panel-avatar {
+			width: 30px;
+			height: 30px;
+
+			.anticon {
+				font-size: 16px;
+				width: 16px;
+				height: 16px;
+			}
+
+			.panel-initial {
+				font-size: 13px;
+				font-weight: 400;
+			}
+		}
+	}
+
+	// Main content area
+	.participant-content {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		min-width: 0; // Allows text truncation
+		margin-right: 8px;
+	}
+
+	// Participant name row container
+	.participant-name-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		margin: 0;
+		gap: 4px;
+		min-height: 18px;
+	}
+
+	// Participant name styling with overflow control — 12px 行名字
+	.participant-name {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		flex: 1;
+		min-width: 0;
+		max-width: 100%;
+
+		.participant-name-text {
+			font-weight: 400;
+			font-size: 14px;
+			line-height: 1.35;
+			color: var(--jmeet-meeting-text-primary);
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			flex: 0 1 auto;
+			min-width: 0;
+		}
+
+		// "(you)" suffix integrated into the name — 三级字色弱化（自己的行标识）
+		.you-suffix {
+			font-size: 11px;
+			font-weight: 400;
+			color: var(--jmeet-meeting-text-tertiary);
+			flex-shrink: 0;
+			white-space: nowrap;
+		}
+	}
+
+	// Subtitle styling — 状态图标行（名字下方，42px 行内紧凑排布）
+	.participant-subtitle {
+		font-style: normal;
+		font-size: 11px;
+		font-weight: 400;
+		margin: 0;
+		color: var(--jmeet-meeting-text-tertiary);
+		line-height: 1.3;
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	// Action buttons container — 腾讯式悬停覆盖：状态图标组常驻贴右；管理操作钮
+	// 悬停/聚焦时 absolute 覆盖其上（渐变遮底防文字透出）。
+	// 注意不用透明占位（opacity 0 仍占宽，会把状态图标顶离行右缘——用户实测）
+	.participant-action-buttons {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 2px;
+		flex-shrink: 0;
+		margin-left: auto;
+
+		.external-elements {
+			position: absolute;
+			right: -4px;
+			top: 50%;
+			transform: translateY(-50%);
+			opacity: 0;
+			pointer-events: none;
+			padding-left: 32px;
+			background: linear-gradient(to right, transparent, var(--jmeet-meeting-surface) 32px);
+			transition: opacity 160ms ease;
+		}
+	}
+
+
+	.participant-container:hover .participant-action-buttons .external-elements {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.participant-container:focus-within .participant-action-buttons .external-elements {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	// 触屏兜底（批次 2 终审 Important#1 升级项）：hover 不存在的触屏设备上操作钮常显可达，
+	// 批次 4 起新面板一律带此标配模式（契约锚定 @media (hover: none) 常显规则）
+	@media (hover: none) {
+		.participant-action-buttons {
+			.external-elements {
+				opacity: 1;
+				pointer-events: auto;
+			}
+		}
+	}
+
+	// 状态图标组（右移至操作区）：16-18px；麦克风三态语义色——
+	// 普通静音中性灰 / 被主持人禁音红色警示（发言绿反馈由头像环承担）
+	.participant-status-icons {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		flex-shrink: 0;
+
+		.anticon {
+			font-size: 17px;
+			width: 17px;
+			height: 17px;
+		}
+
+		.camera-off-indicator {
+			color: var(--jmeet-meeting-text-tertiary);
+		}
+
+		.mic-off-indicator {
+			color: var(--jmeet-meeting-text-tertiary);
+		}
+
+		.screen-share-indicator {
+			color: var(--jmeet-meeting-primary);
+		}
+
+		&.muted-force .mic-off-indicator {
+			color: var(--jmeet-meeting-danger);
+		}
+	}
+
+	// Mute button styling — 基座 #mute-btn 已随批次 5 裁决④删除（inert 双钮收敛），
+	// 行级静音由定制管理钮（meeting-participant-item-content 层）唯一承担。
+
+	// Participant badges container — inline with the participant name
+	.participant-badges {
+		display: inline-flex;
+		align-items: center;
+		gap: 2px;
+		flex-shrink: 0;
+
+		// Scale down icons and text so the badge sits unobtrusively next to the name
+		::ng-deep .anticon {
+			font-size: 16px;
+			width: 16px;
+			height: 16px;
+			line-height: 16px;
+		}
+
+		::ng-deep .badge {
+			display: inline-flex;
+			align-items: center;
+			flex-shrink: 0;
+			font-size: 16px;
+
+			// 徽章语义色走 meeting 命名空间。全局 badge 豁免面在遗留清扫·快赢③正式化
+			// 后退役：moderator 对号 meeting badge 等值令牌（steel-500 系；四处
+			// 消费点 = item-content 三处 + 本处，契约同批锁定）
+			&.moderator {
+				color: var(--jmeet-meeting-badge-moderator);
+			}
+
+			&.speaker {
+				color: var(--jmeet-meeting-primary);
+			}
+
+			&.host {
+				color: var(--jmeet-meeting-success);
+			}
+		}
+	}
+
+	// After local participant content area
+	.after-local-content {
+		margin-top: 12px;
+		padding-top: 12px;
+		border-top: 1px solid var(--jmeet-meeting-divider);
+		animation: fadeIn 0.3s ease-in-out;
+		background-color: var(--jmeet-meeting-stage-bg);
+		border-radius: var(--jmeet-radius-md);
+		padding: 12px;
+	}
+
+	// External item elements styling（customization 管理控件投影位）
+	.external-elements {
+		display: flex;
+		align-items: center;
+		gap: 2px;
+	}
+
+	// Plain list wrapper (replaces the former neutralized mat-list shell)
+	.participant-list {
+		padding: 0;
+	}
+
+	.participant-list-item {
+		padding: 0;
+		width: 100%;
+		border-radius: var(--jmeet-radius-md);
+
+		&:hover {
+			background-color: transparent;
+		}
+	}
+
+	// Animations
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(-8px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes spin {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	// Narrow screens（drawer 形态）：行节奏统一 42px，仅放宽水平留白
+	@media (max-width: 768px) {
+		.participant-container {
+			padding: 0 10px;
+		}
+	}
+
+	// High contrast mode support
+	@media (prefers-contrast: high) {
+		.participant-container {
+			border: 2px solid var(--jmeet-meeting-text-primary);
+		}
+	}
+
+	// Reduced motion support
+	@media (prefers-reduced-motion: reduce) {
+		.participant-container,
+		ov-participant-avatar,
+		.after-local-content,
+		.participant-action-buttons .external-elements {
+			transition: none;
+			animation: none;
+		}
+	}
+}

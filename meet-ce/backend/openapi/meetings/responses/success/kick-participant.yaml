@@ -1,0 +1,9 @@
+description: Successfully kicked the participant
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                    example: Participant 'Alice' kicked successfully from meeting in room 'room-123'

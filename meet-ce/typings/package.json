@@ -1,0 +1,25 @@
+{
+	"name": "@openvidu-meet/typings",
+	"version": "1.0.0",
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist/**",
+		"package.json"
+	],
+	"scripts": {
+		"build": "pnpm run clean && tsc -p tsconfig.build.json",
+		"clean": "rm -rf dist",
+		"dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput"
+	},
+	"devDependencies": {
+		"typescript": "5.9.3"
+	}
+}

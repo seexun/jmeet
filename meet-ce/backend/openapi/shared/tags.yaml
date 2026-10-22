@@ -1,0 +1,16 @@
+- name: JMeet - Users
+  description: Operations related to managing users in JMeet
+- name: JMeet - Rooms
+  description: Operations related to managing JMeet rooms
+- name: JMeet - Room Members
+  description: Operations related to managing members within JMeet rooms
+- name: Internal API - Authentication
+  description: Authentication operations
+- name: Internal API - Users
+  description: Operations related to managing users in JMeet
+- name: Internal API - Global Config
+  description: Operations related to managing global config in JMeet
+- name: Internal API - Room Members
+  description: Operations related to managing members within JMeet rooms
+- name: Internal API - Meetings
+  description: Operations related to managing meetings in JMeet rooms

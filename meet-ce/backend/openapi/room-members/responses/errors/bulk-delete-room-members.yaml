@@ -1,0 +1,53 @@
+description: >
+    **Mixed results**. Some room members were deleted successfully while others
+    could not be deleted (e.g., if they do not exist).
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                deleted:
+                    type: array
+                    items:
+                        type: string
+                    description: List of room members that were deleted successfully.
+                failed:
+                    type: array
+                    description: List of room members that could not be deleted along with the corresponding error messages.
+                    items:
+                        type: object
+                        properties:
+                            memberId:
+                                type: string
+                                description: The unique identifier of the room member that was not deleted.
+                                example: 'alice_smith'
+                            error:
+                                type: string
+                                description: A message explaining why the deletion failed.
+                                example: 'Room member not found'
+        examples:
+            partial_deletion_with_errors:
+                summary: Some room members were deleted successfully, others failed
+                value:
+                    message: '2 room member(s) could not be deleted'
+                    deleted:
+                        - 'alice_smith'
+                        - 'ext:abc123'
+                    failed:
+                        - memberId: 'bob_jones'
+                          error: 'Room member not found'
+                        - memberId: 'ext:def456'
+                          error: 'Room member not found'
+
+            no_deletion_performed:
+                summary: No room members were deleted
+                value:
+                    message: '2 room member(s) could not be deleted'
+                    deleted: []
+                    failed:
+                        - memberId: 'bob_jones'
+                          error: 'Room member not found'
+                        - memberId: 'room-123--EG_ZYX--XX448'
+                          error: 'Room member not found'

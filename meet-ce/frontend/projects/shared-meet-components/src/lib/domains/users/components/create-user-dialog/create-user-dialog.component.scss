@@ -1,0 +1,67 @@
+// 弹窗外壳（白底、圆角、24px 内容边距）由全局 nz-modal 主题提供，这里只做内容布局。
+:host {
+	display: block;
+}
+
+.create-user-dialog {
+	display: grid;
+	gap: var(--jmeet-layout-space-md);
+}
+
+.create-user-dialog__title {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 0;
+	color: var(--jmeet-color-text-primary);
+	font-size: var(--jmeet-font-size-md);
+	font-weight: var(--jmeet-font-weight-bold);
+}
+
+.create-user-dialog__content {
+	display: grid;
+	gap: var(--jmeet-layout-space-md);
+}
+
+// 控件列：输入框 + 提示/错误文案（错误文案与输入框左缘对齐）
+.create-user-dialog__control {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	flex: 1;
+	min-width: 0;
+}
+
+.create-user-dialog__role-select {
+	width: 100%;
+}
+
+.create-user-dialog__password-row {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-space-2);
+
+	input {
+		flex: 1;
+		min-width: 0;
+	}
+}
+
+.create-user-dialog__field-hint {
+	margin: 0;
+	font-size: var(--jmeet-typography-font-size-xs);
+	color: var(--jmeet-color-text-hint);
+}
+
+.create-user-dialog__field-error {
+	margin: 0;
+	font-size: var(--jmeet-typography-font-size-xs);
+	color: var(--jmeet-color-action-danger);
+}
+
+.create-user-dialog__actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: var(--jmeet-space-3);
+	padding-top: var(--jmeet-layout-space-sm);
+}

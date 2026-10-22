@@ -1,0 +1,126 @@
+// 会议域工具条公共解剖（收尾波自 toolbar-media-buttons.component.scss 上提）：
+// .tm-btn（图标上、文字下）被媒体按钮与工具条投影的面板入口（成员/聊天）两处消费，
+// 组件视图封装规则跨组件不可见，故按 tokens 的 mixin + 双发射模式全局化。
+// 状态类：--off / --active / --changing。
+@mixin emit-meeting-toolbar {
+	.tm-btn {
+		position: relative; // 宿主定位：聊天未读圆点（__dot）锚定
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 3px;
+		width: var(--jmeet-meeting-toolbar-btn-width);
+		height: var(--jmeet-meeting-toolbar-btn-height);
+		border: 0;
+		border-radius: 8px;
+		background: transparent;
+		color: var(--jmeet-meeting-text-secondary);
+		cursor: pointer;
+		font-size: 11px;
+
+		// 悬停底只给非激活态：共享中（--active）悬停不再退灰底，保持 primary-soft 激活面
+		&:hover:not(&--active) {
+			background: var(--jmeet-meeting-stage-bg);
+		}
+
+		&:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+
+			// 断连/无设备禁用时悬停不上底色
+			&:hover {
+				background: transparent;
+			}
+		}
+
+		&:focus-visible {
+			outline: none;
+			box-shadow: var(--jmeet-focus-ring, 0 0 0 2px var(--jmeet-meeting-primary));
+		}
+
+		&__icon {
+			font-size: 20px;
+			line-height: 1;
+		} // nz-icon 继承 font-size
+
+		&__label {
+			line-height: 1;
+			max-width: 60px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		// 聊天未读圆点（数字徽标在 dock tab 区）：锚图标右上角
+		&__dot {
+			position: absolute;
+			top: 8px;
+			right: 14px;
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			background: var(--jmeet-meeting-danger);
+		}
+
+		&--off {
+			color: var(--jmeet-meeting-danger);
+		} // 关闭态（摄像头/麦克风关）
+
+		&--active {
+			background: var(--jmeet-meeting-primary-soft);
+			color: var(--jmeet-meeting-primary);
+		} // 激活态（共享中/录制中/面板开）
+
+		&--changing {
+			opacity: 0.6;
+			pointer-events: none;
+		}
+	}
+
+	// 摄像头关闭态斜线：Ant 图标集无 video-camera-off 变体（videocam_off 在映射表
+	// 归并到 video-camera），参考 audio-muted 自带斜线的语义，用 CSS 叠加同款斜线；
+	// currentColor 跟随 --off 的 danger 红，随图标盒居中、rotate(45deg) 左下→右上。
+	#camera-btn.tm-btn--off .tm-btn__icon {
+		position: relative;
+
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			width: 2px;
+			height: 24px;
+			margin: auto;
+			border-radius: 1px;
+			background: currentcolor;
+			transform: rotate(45deg);
+		}
+	}
+
+	// 面板入口（成员/聊天）图标视觉配重：Ant 的 team/message 图形密度高于设备类
+	// 线条图标（video-camera/audio/desktop），同 20px 并排时视觉偏重；入口钮图标
+	// 降至 18px 平衡，媒体按钮保持 20px 不变。
+	#toolbar-activities-entry-btn,
+	#toolbar-participants-entry-btn,
+	#toolbar-chat-entry-btn {
+		.tm-btn__icon {
+			font-size: 18px;
+		}
+	}
+
+	// 工具条胶囊内、更多选项与面板入口之间的竖分隔线（1px divider，任务 7 tab 区同令牌）
+	.toolbar-panel-divider {
+		align-self: center;
+		flex-shrink: 0;
+		width: 1px;
+		height: 28px;
+		margin: 0 4px;
+		background: var(--jmeet-meeting-divider);
+	}
+}
+
+// SPA 发射点：styles.scss 经 _index load-css 时在此发射到 body.meeting-ui。
+// webcomponent 侧由 app.material.scss 的 :host 显式发射，不依赖这里。
+body.meeting-ui {
+	@include emit-meeting-toolbar;
+}

@@ -1,0 +1,26 @@
+description: Room failed to process deletion
+content:
+    application/json:
+        schema:
+            $ref: '../../../shared/schemas/error.yaml'
+        examples:
+            room_has_active_meeting:
+                value:
+                    error: room_has_active_meeting
+                    message: Room 'room-123' cannot be deleted because it has an active meeting
+            room_has_recordings:
+                value:
+                    error: room_has_recordings
+                    message: Room 'room-123' cannot be deleted because it has recordings
+            room_with_active_meeting_has_recordings:
+                value:
+                    error: room_with_active_meeting_has_recordings
+                    message: Room 'room-123' with active meeting cannot be deleted because it has recordings
+            room_with_active_meeting_has_recordings_cannot_schedule_deletion:
+                value:
+                    error: room_with_active_meeting_has_recordings_cannot_schedule_deletion
+                    message: Room 'room-123' with active meeting cannot be scheduled to be deleted because it has recordings
+            room_with_recordings_has_active_meeting:
+                value:
+                    error: room_with_recordings_has_active_meeting
+                    message: Room 'room-123' with recordings cannot be deleted because it has an active meeting

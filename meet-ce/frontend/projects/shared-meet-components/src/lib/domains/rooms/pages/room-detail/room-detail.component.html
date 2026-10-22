@@ -1,0 +1,155 @@
+@if (isInitializing() && showInitialLoader()) {
+	<jmeet-loading-skeleton variant="card" [rows]="6" />
+}
+
+@if (!isInitializing() && room()) {
+	<div class="jmeet-stack-sections room-detail-workspace-page" [ovScrollPersist]="scrollToRestore">
+		<jmeet-page-header>
+			<span page-title class="header-identity">
+				<span class="title-mark" aria-hidden="true"><nz-icon nzType="video-camera" /></span>
+				<span class="header-copy">
+					<span class="title-row">
+						<span class="room-detail-name">{{ room()!.roomName }}</span>
+						<span
+							nz-tooltip
+							[nzTooltipTitle]="RoomUiUtils.getStatusTooltip(room()!) | translate"
+						>
+							<jmeet-status-tag
+								[label]="RoomUiUtils.getStatusLabel(room()!) | translate"
+								[variant]="roomStatusVariant(room()!)"
+							/>
+						</span>
+						@if (RoomUiUtils.hasMeetingEndAction(room()!)) {
+							<nz-icon nzType="info-circle" class="meeting-end-info-icon"
+								[class]="RoomUiUtils.getMeetingEndActionClass(room()!)"
+								nz-tooltip
+								[nzTooltipTitle]="RoomUiUtils.getMeetingEndActionTooltip(room()!) | translate" />
+						}
+					</span>
+				</span>
+			</span>
+			<div page-description class="header-meta">
+				<span
+					>{{ room()!.creationDate | date: creationDateFormat() }}
+					{{ room()!.creationDate | date: creationTimeFormat() }}</span
+				>
+				<span class="meta-sep" aria-hidden="true">·</span>
+				<span class="meta-owner">
+					{{ ownerLabel() }}
+					@if (room()!.owner === currentUserId()) {
+						<jmeet-status-tag [label]="'ROOMS.COMMON.YOU' | translate" variant="default" />
+					}
+				</span>
+				<span class="meta-sep" aria-hidden="true">·</span>
+				<button type="button" class="meta-link" (click)="copyRoomId()">
+					<nz-icon nzType="copy" />
+					{{ 'ROOMS.DETAIL.COPY_ROOM_ID' | translate }}
+				</button>
+				@if (RoomUiUtils.hasAutoDeletion(room()!)) {
+					<span class="meta-sep" aria-hidden="true">·</span>
+					<span
+						class="meta-deletion"
+						nz-tooltip
+						[nzTooltipTitle]="RoomUiUtils.getAutoDeletionTooltip(room()!) | translate"
+					>
+						{{ RoomUiUtils.getAutoDeletionStatus(room()!) | translate }}
+					</span>
+				}
+			</div>
+			<div page-actions class="actions">
+				<span
+					nz-tooltip
+					[nzTooltipTitle]="RoomUiUtils.getAccessRoomTooltip(room()!) | translate"
+				>
+					<button
+						type="button"
+						class="jmeet-button jmeet-button--primary action-btn primary-btn"
+						(click)="accessRoom()"
+						[disabled]="!RoomUiUtils.canAccessRoom(room()!)"
+					>
+						<nz-icon nzType="video-camera-add" />
+						<span>{{ 'ROOMS.DETAIL.ACCESS_ROOM' | translate }}</span>
+					</button>
+				</span>
+
+				@if (RoomUiUtils.hasAccessLinks(room()!)) {
+					<span
+						nz-tooltip
+						[nzTooltipTitle]="RoomUiUtils.getShareAccessLinksTooltip(room()!) | translate"
+					>
+						<button
+							type="button"
+							class="jmeet-button jmeet-button--secondary action-btn"
+							(click)="shareLink()"
+							[disabled]="!RoomUiUtils.canShareAccessLinks(room()!)"
+						>
+							<nz-icon nzType="share-alt" />
+							<span>{{ 'ROOMS.DETAIL.SHARE_LINK' | translate }}</span>
+						</button>
+					</span>
+				}
+
+				@if (canManageRoom()) {
+					<button
+						type="button"
+						class="jmeet-button jmeet-button--secondary action-btn"
+						nz-dropdown
+						[nzDropdownMenu]="roomManageMenu"
+						nz-tooltip
+						[nzTooltipTitle]="'ROOMS.DETAIL.MANAGE_ROOM' | translate"
+					>
+						<nz-icon nzType="more" />
+						<span>{{ 'ROOMS.DETAIL.MANAGE_ROOM' | translate }}</span>
+					</button>
+					<nz-dropdown-menu #roomManageMenu="nzDropdownMenu">
+						<ul nz-menu>
+							<li nz-menu-item (click)="copyRoomId()">
+								<nz-icon nzType="copy" />
+								<span>{{ 'ROOMS.DETAIL.COPY_ROOM_ID' | translate }}</span>
+							</li>
+							<li
+								nz-menu-item
+								nz-tooltip
+								[nzTooltipTitle]="RoomUiUtils.getEditRoomTooltip(room()!) | translate"
+								[nzDisabled]="!RoomUiUtils.canEditRoom(room()!)"
+								(click)="RoomUiUtils.canEditRoom(room()!) && editRoom()"
+							>
+								<nz-icon nzType="edit" />
+								<span>{{ 'ROOMS.COMMON.EDIT' | translate }}</span>
+							</li>
+							<li nz-menu-item (click)="toggleRoomStatus()">
+								<nz-icon [nzType]="(RoomUiUtils.getRoomToggleIcon(room()!)) | nzIconType" />
+								<span>{{ RoomUiUtils.getRoomToggleTooltip(room()!) | translate }}</span>
+							</li>
+							<li nz-menu-item class="delete-menu-item" (click)="deleteRoom()">
+								<nz-icon nzType="delete" />
+								<span>{{ 'ROOMS.COMMON.DELETE_ROOM' | translate }}</span>
+							</li>
+						</ul>
+					</nz-dropdown-menu>
+				}
+			</div>
+		</jmeet-page-header>
+
+		@if (canManageRoom()) {
+			<section class="jmeet-card room-directory-panel" aria-label="Room workspace">
+				<div class="detail-tab-body">
+					<div class="tab-pane members-pane">
+						<ov-room-members-list
+							[members]="roomMembers()"
+							[loading]="loadingMembers()"
+							[showSearchBox]="true"
+							[showFilters]="true"
+							[showSelection]="true"
+							[canViewUserProfiles]="currentUserRole() === MeetUserRole.ADMIN"
+							[initialFilters]="initialMemberFilters()"
+							(memberAction)="onMemberAction($event)"
+							(refresh)="refreshRoomMembers($event)"
+							(filterChange)="refreshRoomMembers($event)"
+						/>
+					</div>
+				</div>
+			</section>
+		}
+	</div>
+}

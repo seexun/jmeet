@@ -1,0 +1,5 @@
+@if (showShareLink()) {
+	<div id="invite-panel" class="share-room-access-link-container">
+		<ov-share-room-access-link [roomAccessUrl]="roomAccessUrl() ?? ''" (copyClicked)="onCopyClicked()" />
+	</div>
+}

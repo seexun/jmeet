@@ -1,0 +1,97 @@
+<div class="panel-container" id="participants-container">
+	<div class="panel-header-container participants-panel-header">
+		<div class="panel-heading">
+			<h3 class="panel-title">{{ 'PANEL.PARTICIPANTS.TITLE' | translate }}</h3>
+			<span class="member-count" aria-live="polite">{{ totalMembers() }}</span>
+		</div>
+		<div class="panel-header-actions">
+			<button
+				class="panel-close-button jmeet-button jmeet-button--ghost jmeet-button--icon"
+				nz-tooltip
+				nzTooltipTitle="{{ 'PANEL.CLOSE' | translate }}"
+				(click)="close()"
+			>
+				<nz-icon nzType="close" />
+			</button>
+		</div>
+	</div>
+
+	<!-- EP 搜索框：按昵称实时过滤 -->
+	<div class="participants-search">
+		<nz-icon nzType="search" class="search-icon" />
+		<input
+			nz-input
+			type="text"
+			[ngModel]="searchTerm()"
+			(ngModelChange)="searchTerm.set($event)"
+			[placeholder]="'PANEL.PARTICIPANTS.SEARCH_PLACEHOLDER' | translate"
+			aria-label="{{ 'PANEL.PARTICIPANTS.SEARCH_PLACEHOLDER' | translate }}"
+		/>
+	</div>
+
+	<div class="scrollable" role="list" aria-label="会议成员列表">
+		<!-- 主持人 / 管理员 -->
+		@if (hostGroup().length > 0) {
+			<div class="member-section-label">{{ 'PANEL.PARTICIPANTS.SECTION_HOSTS' | translate }}</div>
+			@for (participant of hostGroup(); track participant.sid) {
+				<div role="listitem">
+					<ng-container *ngTemplateOutlet="participantPanelItemTemplate(); context: { $implicit: participant }" />
+				</div>
+			}
+			<ng-container *ngTemplateOutlet="participantPanelAfterLocalParticipantTemplate() ?? null" />
+		}
+
+		<!-- 参会者 -->
+		@if (memberGroup().length > 0) {
+			<div class="member-section-label">
+				<span>{{ 'PANEL.PARTICIPANTS.SECTION_MEMBERS' | translate }}</span>
+				<span class="section-sort-hint">{{ 'PANEL.PARTICIPANTS.SORT_BY_NAME' | translate }}</span>
+			</div>
+			@for (participant of memberGroup(); track participant.sid) {
+				<div role="listitem">
+					<ng-container *ngTemplateOutlet="participantPanelItemTemplate(); context: { $implicit: participant }" />
+				</div>
+			}
+		}
+
+		@if (remoteParticipants().length === 0) {
+			<div class="members-empty-hint">
+				<nz-icon nzType="user-add" class="members-empty-hint-icon" />
+				<p class="members-empty-hint-text">{{ 'PANEL.PARTICIPANTS.EMPTY_HINT' | translate }}</p>
+				@if (showInviteButton()) {
+					<button
+						type="button"
+						class="jmeet-button jmeet-button--secondary members-empty-invite-btn"
+						(click)="onInviteClick()"
+					>
+						<nz-icon nzType="link" /><span>{{ 'PANEL.PARTICIPANTS.INVITE_NOW' | translate }}</span>
+					</button>
+				}
+			</div>
+		} @else if (filteredCount() === 0) {
+			<div class="members-empty-hint members-empty-hint--search">
+				<p class="members-empty-hint-text">{{ 'PANEL.PARTICIPANTS.NO_MATCH' | translate }}</p>
+			</div>
+		}
+	</div>
+
+	<!-- EP 底部操作条 -->
+	@if (canManageMembers() || showInviteButton()) {
+		<div class="participants-footer">
+			@if (canManageMembers() && remoteParticipants().length > 0) {
+				<button type="button" class="jmeet-button jmeet-button--outline mute-all-button" (click)="muteAll()">
+					<nz-icon nzType="audio-muted" /><span>{{ 'PANEL.PARTICIPANTS.MUTE_ALL' | translate }}</span>
+				</button>
+			}
+			@if (showInviteButton()) {
+				<button type="button" class="jmeet-button jmeet-button--primary invite-button" (click)="onInviteClick()">
+					<nz-icon nzType="user-add" /><span>{{ 'PANEL.PARTICIPANTS.INVITE' | translate }}</span>
+				</button>
+			}
+		</div>
+	}
+</div>
+
+<ng-template #defaultParticipantPanelItem let-participant>
+	<ov-participant-panel-item [participant]="participant" id="default-participant-panel-item" />
+</ng-template>

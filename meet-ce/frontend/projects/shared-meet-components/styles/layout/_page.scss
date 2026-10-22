@@ -1,0 +1,424 @@
+// ── 页头（jmeet-page-header 组件 + 独立分区头复用类）──────────────────────────
+// .jmeet-page-header 系列类同时被十余页面用作卡内/栈内分区头（独立 <div>，不经组件，
+// 见 overview/admin-overview/config-*/sip 等页），消费方模板零改动 → 基础类语义维持。
+// 组件实例的「页头出卡」节奏（单行 + 下缘 divider + 内容区间距 16px）用宿主元素
+// 后代选择器 `jmeet-page-header > .jmeet-page-header` 锚定，仅命中组件不污染独立用法。
+.jmeet-page-header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: var(--jmeet-space-4);
+	margin-bottom: var(--jmeet-space-6);
+}
+
+// 页头出卡（规格 §3.2）：组件实例 = 单行页头带，标题簇与操作区垂直居中，
+// 下缘 1px 轻 divider，与页面内容区间距 16px（--jmeet-space-4）。
+jmeet-page-header > .jmeet-page-header {
+	align-items: center;
+	flex-wrap: wrap;
+	margin-bottom: var(--jmeet-space-4);
+	padding-bottom: var(--jmeet-space-3);
+	border-bottom: 1px solid var(--jmeet-color-border-light);
+}
+
+.jmeet-page-header__main {
+	min-width: 0;
+}
+
+// 单行页头的标题簇：标题（h1/h2）+ 统计 meta 副行纵向成簇，
+// 与右侧操作区同处一行，由根 flex 的 space-between 分居两端
+.jmeet-page-header__row {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	justify-content: center;
+	gap: var(--jmeet-space-1);
+	min-width: 0;
+}
+
+// 统计 meta 副行：[description] 文案或 page-description 投影（日期/归属/统计等）；
+// 仅布局——字号字色由内容自带的 typography 类/页面样式决定；空簇不占位
+.jmeet-page-header__meta {
+	display: flex;
+	flex: 0 1 auto;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: var(--jmeet-space-2);
+	min-width: 0;
+
+	&:empty {
+		display: none;
+	}
+}
+
+.jmeet-page-header__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+	gap: var(--jmeet-space-2);
+	flex-shrink: 0;
+}
+
+// page-actions 投影容器内的多个动作（状态 tag + 刷新 + 主/次按钮）：
+// 统一 flex 右对齐、垂直居中、8px 间距——避免裸排列导致贴边与错行
+.jmeet-page-header__actions > [page-actions] {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+	gap: var(--jmeet-space-2);
+}
+
+// page-actions 投影容器内的多个动作（状态 tag + 刷新 + 主/次按钮）：
+// 统一 8px 间距与垂直居中，避免裸排列导致贴边、错行
+.jmeet-page-header__actions > * + * {
+	margin-left: 0;
+}
+
+.jmeet-page-header__actions {
+	> * + * {
+		margin-inline-start: var(--jmeet-space-2);
+	}
+}
+
+.jmeet-kpi-row {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: var(--jmeet-space-3);
+	margin-bottom: var(--jmeet-space-6);
+}
+
+// kpi 卡的链接包裹（整卡可点跳转，去链接默认字色/下划线；批次4 自 admin-overview 上收）
+.jmeet-kpi-link {
+	display: block;
+	color: inherit;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+// 仪表盘两列布局（主列 1fr / 副列 1.2fr），窄屏收单列（批次4 自 admin-overview 上收）
+.jmeet-dashboard-columns {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+	gap: var(--jmeet-space-4);
+}
+
+@media (width <= 1024px) {
+	.jmeet-dashboard-columns {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.jmeet-stat-grid {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: var(--jmeet-space-3);
+	margin-bottom: var(--jmeet-space-4);
+}
+
+@media (width <= 1280px) {
+	.jmeet-stat-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+.jmeet-quick-actions {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	gap: var(--jmeet-space-4);
+	margin-bottom: var(--jmeet-space-6);
+}
+
+.jmeet-quick-action {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-space-3);
+	width: 100%;
+	padding: var(--jmeet-space-4);
+	border: 1px solid var(--jmeet-color-border-light);
+	border-radius: var(--jmeet-radius-lg);
+	background: var(--jmeet-color-surface-card);
+	color: inherit;
+	font: inherit;
+	text-align: left;
+	cursor: pointer;
+	text-decoration: none;
+	transition: box-shadow var(--jmeet-motion-fast), border-color var(--jmeet-motion-fast);
+
+	&:hover {
+		border-color: var(--jmeet-color-border);
+		box-shadow: var(--jmeet-shadow-surface-hover);
+	}
+}
+
+.jmeet-quick-action__icon {
+	display: grid;
+	width: 44px;
+	height: 44px;
+	flex: 0 0 44px;
+	place-items: center;
+	border-radius: 12px;
+	background: var(--jmeet-color-action-primary-light);
+	color: var(--jmeet-color-action-primary);
+}
+
+.jmeet-quick-action__copy {
+	display: grid;
+	gap: 2px;
+	min-width: 0;
+
+	strong {
+		color: var(--jmeet-color-text-primary);
+		font-size: var(--jmeet-font-size-sm);
+		font-weight: var(--jmeet-font-weight-medium);
+	}
+
+	small {
+		color: var(--jmeet-color-text-secondary);
+		font-size: var(--jmeet-font-size-xs);
+	}
+
+	input {
+		flex: 1;
+		min-height: var(--jmeet-input-height-md);
+		padding: 0 var(--jmeet-space-3);
+		border: 1px solid var(--jmeet-input-border-color);
+		border-radius: var(--jmeet-input-border-radius);
+		background: var(--jmeet-color-surface-card);
+		color: var(--jmeet-color-text-primary);
+	}
+}
+
+.jmeet-dashboard-sections {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-space-4);
+}
+
+.jmeet-stack-sections {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-space-4);
+}
+
+// Stacks own spacing; their children must not add a second section gap.
+.jmeet-stack-sections,
+.jmeet-dashboard-sections {
+	> jmeet-page-header .jmeet-page-header,
+	> .jmeet-stat-grid,
+	> .jmeet-kpi-row,
+	> .jmeet-quick-actions {
+		margin-bottom: 0;
+	}
+}
+
+.jmeet-filter-field {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-space-2);
+	min-width: 160px;
+}
+
+.jmeet-row-list {
+	display: flex;
+	flex-direction: column;
+}
+
+.jmeet-row-item {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-space-4);
+	padding: var(--jmeet-space-4) 0;
+	border-top: 1px solid var(--jmeet-color-border-light);
+
+	&:first-child {
+		border-top: 0;
+		padding-top: 0;
+	}
+}
+
+.jmeet-row-item__main {
+	flex: 1;
+	min-width: 0;
+	display: grid;
+	gap: var(--jmeet-space-1);
+}
+
+.jmeet-row-item__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--jmeet-space-2);
+}
+
+.jmeet-delivery-banner {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--jmeet-space-2) var(--jmeet-space-4);
+	padding: var(--jmeet-space-3) var(--jmeet-space-4);
+	border: 1px solid var(--jmeet-color-border-light);
+	border-radius: var(--jmeet-radius-lg);
+	background: var(--jmeet-color-action-primary-light);
+	font-size: var(--jmeet-font-size-sm);
+}
+
+.jmeet-tile-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+	gap: var(--jmeet-space-3);
+}
+
+// 批次2 同面工具条：行布局与底部 1px 分隔由组件层 .jmeet-filter-bar__tools 承担，
+// 自带下边距退役——分隔线要与下方表格相连，节奏归外层列表面板 gap 供给。
+.jmeet-filter-bar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: var(--jmeet-space-3, 12px);
+}
+
+.jmeet-list-toolbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--jmeet-space-4);
+	margin-bottom: var(--jmeet-space-4);
+}
+
+.jmeet-settings-form {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-space-6);
+}
+
+.jmeet-settings-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--jmeet-space-4);
+	padding: var(--jmeet-space-2) 0;
+
+	> div:first-child {
+		display: grid;
+		gap: 2px;
+
+		strong {
+			color: var(--jmeet-color-text-primary);
+			font-size: var(--jmeet-font-size-sm);
+			font-weight: var(--jmeet-font-weight-medium);
+		}
+
+		span {
+			color: var(--jmeet-color-text-secondary);
+			font-size: var(--jmeet-font-size-xs);
+		}
+	}
+}
+
+.jmeet-settings-toolbar {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: var(--jmeet-space-4);
+	flex-wrap: wrap;
+	margin-bottom: var(--jmeet-space-4);
+
+	> div:first-child {
+		display: grid;
+		gap: 2px;
+
+		strong {
+			color: var(--jmeet-color-text-primary);
+			font-size: var(--jmeet-font-size-sm);
+		}
+
+		span {
+			color: var(--jmeet-color-text-secondary);
+			font-size: var(--jmeet-font-size-xs);
+		}
+	}
+}
+
+.jmeet-settings-toolbar-actions {
+	display: flex;
+	align-items: center;
+
+	// gap 10px 归一（批次 3 任务 3）：原 _settings-identity-config 切片副本 gap:10px
+	// 同特异性后加载胜出，删副本后此处保渲染值不变。
+	// 无对应 token 档：--jmeet-space-* 阶梯为 4/8/12/16…（tokens/_primitives.scss），
+	// 10px 无档可映射，保字面量渲染值不变。
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+.jmeet-form-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--jmeet-space-2);
+	margin-top: var(--jmeet-space-4);
+}
+
+.jmeet-form-label {
+	margin: 0;
+	color: var(--jmeet-color-text-primary);
+	font-size: var(--jmeet-font-size-secondary);
+	font-weight: var(--jmeet-font-weight-regular);
+}
+
+// 必填标记（Element 规范）：label 左侧红色星号，加 .required 即生效。
+.jmeet-form-label.required::before {
+	content: '* ';
+	color: var(--jmeet-color-action-danger);
+}
+
+.jmeet-settings-subheading {
+	display: flex;
+	align-items: flex-start;
+	gap: var(--jmeet-space-3);
+	margin-bottom: var(--jmeet-space-2);
+
+	.section-icon {
+		color: var(--jmeet-color-action-primary);
+	}
+
+	strong {
+		display: block;
+		color: var(--jmeet-color-text-primary);
+		font-size: var(--jmeet-font-size-sm);
+	}
+
+	p {
+		margin: 2px 0 0;
+		color: var(--jmeet-color-text-secondary);
+		font-size: var(--jmeet-font-size-xs);
+	}
+}
+
+.jmeet-detail-sections {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-space-4);
+}
+
+@media (width <= 1280px) {
+	.jmeet-kpi-row {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (width <= 768px) {
+	.jmeet-kpi-row,
+	.jmeet-stat-grid,
+	.jmeet-loading-skeleton--stat {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.jmeet-page-header,
+	jmeet-page-header > .jmeet-page-header {
+		flex-direction: column;
+		align-items: stretch;
+	}
+}

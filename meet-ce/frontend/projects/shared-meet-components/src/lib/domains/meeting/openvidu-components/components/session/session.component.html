@@ -1,0 +1,54 @@
+@if (loading()) {
+	<div id="spinner" [animate.enter]="'ov-fade-in-200'" [animate.leave]="'ov-fade-out-200'">
+		<nz-spin nzSimple class="joining-spin" />
+		<span>{{ 'ROOM.JOINING' | translate }}</span>
+	</div>
+} @else {
+	@if (viewportService.shouldShowLandscapeWarning()) {
+		<ov-landscape-warning />
+	}
+	<jmeet-meeting-shell
+		id="session-container"
+		[class.meeting-sidenav-open]="sidePanelOpened()"
+		[class.meeting-sidenav-wide]="settingsPanelOpened()"
+	>
+		<div class="session-stage" stage>
+			<div
+				#container
+				#videoContainer
+				class="sidenav-container"
+				[class.sidenav-over]="sidenavMode() === SidenavMode.OVER"
+				[class.panel-open]="sidePanelOpened()"
+				[class.panel-big]="settingsPanelOpened()"
+				[class.panel-drawer]="sideDrawerPanelOpened()"
+			>
+				<div
+					#sidenav
+					class="sidenav-menu"
+					[class.big]="settingsPanelOpened()"
+					[class.drawer]="sideDrawerPanelOpened()"
+				>
+					<ng-container *ngTemplateOutlet="templateRegistry.panel() ?? null" />
+				</div>
+
+				@if (sidenavMode() === SidenavMode.OVER && sidePanelOpened()) {
+					<div class="sidenav-backdrop" (click)="onBackdropClick()"></div>
+				}
+
+				<div class="sidenav-main">
+					<div id="layout-container" #layoutContainer>
+						<ng-container *ngTemplateOutlet="templateRegistry.layout() ?? null" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<ng-container hud>
+			@if (templateRegistry.toolbar()) {
+				<div id="footer-container">
+					<ng-container *ngTemplateOutlet="templateRegistry.toolbar() ?? null" />
+				</div>
+			}
+		</ng-container>
+	</jmeet-meeting-shell>
+}

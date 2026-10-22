@@ -1,0 +1,18 @@
+<aside class="jmeet-meeting-panel">
+	<div class="jmeet-meeting-panel__tabs">
+		<ng-content select="[panel-tabs]" />
+	</div>
+	<header class="jmeet-meeting-panel__head">
+		<h2>{{ title() }}</h2>
+		<button type="button" class="jmeet-meeting-panel__close" (click)="closed.emit()" [attr.aria-label]="'PANEL.CLOSE' | translate">
+			<svg viewBox="0 0 14 14" width="12" height="12" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+		</button>
+	</header>
+	<div class="jmeet-meeting-panel__body">
+		<ng-content />
+	</div>
+	<!-- §5.2⑤ 第 4 槽：面板底部操作区（修复波 I4；面板自有底部条批次 2 迁入） -->
+	<footer class="jmeet-meeting-panel__actions">
+		<ng-content select="[panel-actions]" />
+	</footer>
+</aside>

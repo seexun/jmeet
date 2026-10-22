@@ -1,0 +1,60 @@
+{
+	"AUTH": {
+		"COMMON": {
+			"SHOW_PASSWORD": "Afficher le mot de passe",
+			"HIDE_PASSWORD": "Masquer le mot de passe"
+		},
+		"LOGIN": {
+			"TITLE": "Se connecter",
+			"SUBTITLE": "Saisissez vos identifiants pour accéder à JMeet",
+			"USER_ID": "ID utilisateur",
+			"USER_ID_PLACEHOLDER": "Saisissez votre ID utilisateur",
+			"PASSWORD": "Mot de passe",
+			"PASSWORD_PLACEHOLDER": "Saisissez votre mot de passe",
+			"SUBMIT": "Connexion",
+			"ERROR_TOO_MANY_ATTEMPTS": "Trop de tentatives de connexion. Veuillez réessayer plus tard",
+			"ERROR_INVALID_CREDENTIALS": "ID utilisateur ou mot de passe invalide",
+			"HERO_TITLE_PREFIX": "Collaboration de réunions intelligente",
+			"HERO_TITLE_EMPHASIS": "Connecter chaque équipe",
+			"HERO_DESC": "HD audio & video · screen sharing · free & open source · self-hosted",
+			"WELCOME_TITLE": "Bon retour",
+			"WELCOME_SUBTITLE": "Connectez-vous pour démarrer ou rejoindre une réunion",
+			"LIVE_BADGE": "Réunion en cours",
+			"MINUTES_TOAST": "Smooth collaboration",
+			"FEATURE_BAND_1_TITLE": "Net et stable",
+			"FEATURE_BAND_1_SUB": "1080p · résistant aux pertes",
+			"FEATURE_BAND_2_TITLE": "In-meeting chat",
+			"FEATURE_BAND_2_SUB": "Group chat & interaction",
+			"FEATURE_BAND_3_TITLE": "Open source",
+			"FEATURE_BAND_3_SUB": "Self-hosted deployment",
+			"CAP_2": "Screen sharing & virtual backgrounds",
+			"CAP_3": "Free & open source · self-hosted"
+		},
+		"CHANGE_PASSWORD": {
+			"TITLE": "Mettre à jour votre mot de passe",
+			"SUBTITLE": "Vous devez mettre à jour votre mot de passe avant de continuer.",
+			"BANNER_TITLE": "Mise à jour du mot de passe requise",
+			"BANNER_DESC": "Votre mot de passe a été récemment créé ou réinitialisé. Définissez un nouveau mot de passe pour continuer.",
+			"CURRENT_PASSWORD": "Mot de passe actuel",
+			"CURRENT_PASSWORD_PLACEHOLDER": "Saisissez votre mot de passe actuel",
+			"NEW_PASSWORD": "Nouveau mot de passe",
+			"NEW_PASSWORD_PLACEHOLDER": "Créez un mot de passe fort et sécurisé",
+			"PASSWORD_MIN_HINT": "Minimum 5 caractères",
+			"CONFIRM_PASSWORD": "Confirmer le nouveau mot de passe",
+			"CONFIRM_PASSWORD_PLACEHOLDER": "Répétez votre nouveau mot de passe",
+			"SUBMIT": "Mettre à jour le mot de passe",
+			"ERRORS": {
+				"CURRENT_REQUIRED": "Le mot de passe actuel est obligatoire",
+				"CURRENT_INCORRECT": "Le mot de passe actuel est incorrect",
+				"NEW_REQUIRED": "Le nouveau mot de passe est obligatoire",
+				"NEW_MIN_PREFIX": "Le mot de passe doit comporter au moins ",
+				"NEW_MIN_SUFFIX": " caractères",
+				"NEW_SAME": "Le nouveau mot de passe doit être différent du mot de passe actuel",
+				"CONFIRM_REQUIRED": "Veuillez confirmer votre mot de passe",
+				"CONFIRM_MISMATCH": "Les mots de passe ne correspondent pas",
+				"UPDATE_SUCCESS": "Mot de passe mis à jour avec succès",
+				"UPDATE_FAILED": "Échec de la mise à jour du mot de passe"
+			}
+		}
+	}
+}

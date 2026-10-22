@@ -1,0 +1,9 @@
+description: Room roles permissions update options
+required: true
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                config:
+                    $ref: '../schemas/meet-room-roles-config.yaml'

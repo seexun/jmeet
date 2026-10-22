@@ -1,0 +1,227 @@
+@use '_design-tokens.scss';
+
+.error-page {
+	box-sizing: border-box;
+	@include design-tokens.ov-theme-transition;
+	@include design-tokens.ov-flex-center;
+	min-height: 100vh;
+	background: var(--jmeet-color-surface-page);
+	padding: var(--jmeet-layout-space-lg);
+
+	.error-container {
+		box-sizing: border-box;
+		padding: var(--jmeet-space-6);
+		border: 1px solid var(--jmeet-color-border);
+		border-radius: var(--jmeet-radius-lg);
+		background: var(--jmeet-color-surface-card);
+		box-shadow: var(--jmeet-shadow-card);
+		@include design-tokens.ov-theme-transition;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: var(--jmeet-layout-space-xxl);
+		max-width: 800px;
+		width: 100%;
+
+		@include design-tokens.ov-tablet-down {
+			flex-direction: column;
+			gap: var(--jmeet-layout-space-xl);
+			text-align: center;
+		}
+
+		.error-content {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			gap: var(--jmeet-layout-space-lg);
+
+			.error-icon-section {
+				@include design-tokens.ov-flex-center;
+				justify-content: flex-start;
+
+				@include design-tokens.ov-tablet-down {
+					justify-content: center;
+				}
+
+				.error-main-icon {
+					@include design-tokens.ov-icon(xl);
+					color: var(--jmeet-color-action-danger);
+					background: color-mix(in srgb, var(--jmeet-color-action-danger) 10%, transparent);
+					border-radius: var(--jmeet-shape-radius-circle);
+					padding: var(--jmeet-layout-space-md);
+					width: 64px;
+					height: 64px;
+					font-size: 32px; // icon/decoration sizing
+				}
+			}
+
+			.error-details {
+				.error-title {
+					margin: 0 0 var(--jmeet-layout-space-sm) 0;
+					font-size: var(--jmeet-typography-font-size-xxl);
+					font-weight: var(--jmeet-typography-font-weight-semibold);
+					color: var(--jmeet-color-text-primary);
+					line-height: var(--jmeet-typography-line-height-tight);
+
+					@include design-tokens.ov-mobile-down {
+						font-size: var(--jmeet-typography-font-size-xl);
+					}
+				}
+
+				.error-message {
+					margin: 0;
+					font-size: var(--jmeet-typography-font-size-md);
+					color: var(--jmeet-color-text-secondary);
+					line-height: var(--jmeet-typography-line-height-normal);
+					max-width: 400px;
+
+					@include design-tokens.ov-tablet-down {
+						max-width: none;
+					}
+
+					@include design-tokens.ov-mobile-down {
+						font-size: var(--jmeet-typography-font-size-sm);
+					}
+				}
+			}
+
+			.error-actions {
+				display: flex;
+				gap: var(--jmeet-layout-space-md);
+				margin-top: var(--jmeet-layout-space-md);
+
+				@include design-tokens.ov-tablet-down {
+					justify-content: center;
+				}
+
+				@include design-tokens.ov-mobile-down {
+					flex-direction: column;
+					align-items: center;
+				}
+
+				.action-button {
+					@include design-tokens.ov-button-base;
+					@include design-tokens.ov-flex-center;
+					gap: var(--jmeet-layout-space-xs);
+					min-width: 120px;
+
+					&.secondary {
+						color: var(--jmeet-color-text-secondary);
+						border-color: var(--jmeet-color-border);
+
+						&:hover {
+							color: var(--jmeet-color-text-primary);
+							border-color: var(--jmeet-color-text-primary);
+							background: var(--jmeet-color-surface-hover);
+						}
+					}
+
+					.anticon {
+						@include design-tokens.ov-icon(sm);
+					}
+
+					@include design-tokens.ov-mobile-down {
+						min-width: 200px;
+					}
+				}
+			}
+		}
+
+		.error-illustration {
+			flex: 1;
+			@include design-tokens.ov-flex-center;
+
+			@include design-tokens.ov-tablet-down {
+				order: -1;
+			}
+
+			.illustration-container {
+				@include design-tokens.ov-flex-center;
+				flex-direction: column;
+				gap: var(--jmeet-layout-space-lg);
+				opacity: 0.6;
+
+				.illustration-icon {
+					font-size: 120px; // icon/decoration sizing
+					width: 120px;
+					height: 120px;
+					color: var(--jmeet-color-text-hint);
+
+					@include design-tokens.ov-mobile-down {
+						font-size: 80px; // icon/decoration sizing
+						width: 80px;
+						height: 80px;
+					}
+				}
+
+				.illustration-text {
+					display: flex;
+					flex-direction: column;
+					gap: var(--jmeet-layout-space-xs);
+					text-align: center;
+
+					.illustration-title {
+						font-size: var(--jmeet-typography-font-size-xl);
+						font-weight: var(--jmeet-typography-font-weight-bold);
+						color: var(--jmeet-color-text-secondary);
+
+						@include design-tokens.ov-mobile-down {
+							font-size: var(--jmeet-typography-font-size-lg);
+						}
+					}
+
+					.illustration-subtitle {
+						font-size: var(--jmeet-typography-font-size-sm);
+						color: var(--jmeet-color-text-hint);
+					}
+				}
+			}
+		}
+	}
+}
+
+// Animation states
+.fade-in {
+	animation: fade-in 0.6s ease-out forwards;
+}
+
+// Enhanced responsive design
+@include design-tokens.ov-mobile-down {
+	.error-page {
+		padding: var(--jmeet-layout-space-md);
+
+		.error-container {
+			.error-content {
+				.error-details {
+					.error-title {
+						margin-bottom: var(--jmeet-layout-space-md);
+					}
+				}
+
+				.error-actions {
+					margin-top: var(--jmeet-layout-space-lg);
+
+					.action-button {
+						padding: var(--jmeet-layout-space-md) var(--jmeet-layout-space-lg);
+						font-size: var(--jmeet-typography-font-size-md);
+					}
+				}
+			}
+		}
+	}
+}
+
+// Dark theme enhancements
+[data-theme='dark'] {
+	.error-page {
+		.error-container {
+			.error-content {
+				.error-icon-section {
+					.error-main-icon {
+						background: color-mix(in srgb, var(--jmeet-color-action-danger) 15%, transparent);
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,5 @@
+<div class="jmeet-loading-skeleton" role="status" aria-live="polite" [class]="'jmeet-loading-skeleton--' + variant()">
+	@for (row of lines(); track row) {
+		<div class="jmeet-loading-skeleton__line"></div>
+	}
+</div>

@@ -1,0 +1,5 @@
+description: Success response for updating room access configuration. Returns the updated access configuration.
+content:
+    application/json:
+        schema:
+            $ref: '../../schemas/meet-room-access.yaml'

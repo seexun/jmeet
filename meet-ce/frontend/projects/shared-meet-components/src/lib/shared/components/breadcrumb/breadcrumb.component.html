@@ -1,0 +1,10 @@
+<div class="ov-breadcrumb">
+	@for (item of items(); track $index) {
+		@if (!isLastItem($index)) {
+			<a class="breadcrumb-link" (click)="onItemClick(item)">{{ item.label }}</a>
+			<span class="breadcrumb-separator" aria-hidden="true">/</span>
+		} @else {
+			<span class="breadcrumb-current" aria-current="page">{{ item.label }}</span>
+		}
+	}
+</div>

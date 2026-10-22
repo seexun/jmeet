@@ -1,0 +1,286 @@
+{
+	"ROOM": {
+		"JOINING": "Rejoindre la salle...",
+		"LANDSCAPE_WARNING": "Veuillez faire pivoter votre appareil en mode portrait pour une meilleure expérience",
+		"DISCONNECTED": "Vous avez quitté la salle",
+		"DISCONNECTED_SUBTITLE": "La session est terminée"
+	},
+	"PREJOIN": {
+		"NICKNAME": "Surnom",
+		"NO_VIDEO_DEVICE": "Appareil vidéo introuvable",
+		"NO_AUDIO_DEVICE": "Appareil audio introuvable",
+		"JOIN": "Rejoindre la réunion",
+		"PREPARING": "Préparation de la salle ...",
+		"BACKGROUND": "Effets de fond"
+	},
+	"TOOLBAR": {
+		"THEME_TOGGLE": "Basculer clair/sombre",
+		"MUTE_AUDIO": "Mettez votre audio en sourdine",
+		"UNMUTE_AUDIO": "Désactiver le son",
+		"STOP_VIDEO": "Arrêtez votre vidéo",
+		"SELECT_CAMERA": "Sélectionner la caméra",
+		"SELECT_MIC": "Sélectionner le microphone",
+		"START_VIDEO": "Démarrez votre vidéo",
+		"ENABLE_SCREEN": "Activer le partage d'écran",
+		"DISABLE_SCREEN": "Désactiver le partage d'écran",
+		"MORE_OPTIONS": "Plus d'options",
+		"FULLSCREEN": "Plein écran",
+		"EXIT_FULLSCREEN": "Quitter le plein écran",
+		"BACKGROUND": "Effets de fond",
+		"START_RECORDING": "démarrer l'enregistrement",
+		"STOP_RECORDING": "Arrêter l'enregistrement",
+		"SETTINGS": "Paramètres",
+		"LEAVE": "Quitter la salle",
+		"PARTICIPANTS": "Participants",
+		"CHAT": "Chat",
+		"PANELS": "Panneaux",
+		"NO_TRACKS_PUBLISHED": "Partagez de l’audio ou de la vidéo pour commencer l’enregistrement.",
+		"VIEW_RECORDINGS": "Voir les enregistrements"
+	},
+	"STREAM": {
+		"MUTE_SOUND": "Couper le son",
+		"UNMUTE_SOUND": "Désactiver le son",
+		"ZOOM_IN": "Zoom avant",
+		"ZOOM_OUT": "Zoom arrière",
+		"RESET_ZOOM": "Réinitialiser le zoom",
+		"REPLACE_SCREEN": "Remplacer l'écran",
+		"PIN": "Épingler",
+		"UNPIN": "Détacher",
+		"FLOAT": "Détacher",
+		"DOCK": "Ancrer",
+		"SCREEN_LABEL": "écran",
+		"YOUR_SCREEN_LABEL": "votre écran"
+	},
+	"PANEL": {
+		"CLOSE": "Fermer",
+		"MEDIA_QUALITY": {
+			"TITLE": "Qualité des médias"
+		},
+		"CAPTIONS": {
+			"TITLE": "Sous-titres en direct",
+			"SUBTITLE": "Les sous-titres sont générés en temps réel à partir de l’audio de la réunion et ne s’affichent que pour vous",
+			"EMPTY": "Aucun sous-titre pour le moment. Activez les sous-titres pour voir les interventions ici en temps réel.",
+			"INTERIM": "transcription…"
+		},
+		"CHAT": {
+			"TITLE": "Chat",
+			"YOU": "Vous",
+			"SUBTITLE": "Les messages seront supprimés à la fin de la réunion",
+			"PLACEHOLDER": "Envoyer un message...",
+			"SEND": "Envoyer",
+			"EMOJI": "Émoji",
+			"MESSAGE_SENT_NOTIFICATION": "message envoyé",
+			"OPEN_CHAT": "OUVRIR",
+			"ENCRYPTION_KEY_MISMATCH": "Il y a des participants connectés avec une clé de chiffrement différente. Vous ne recevrez pas leurs messages."
+		},
+		"ACTIVITIES": {
+			"TITLE": "Activités",
+			"COLLABORATION": "Collaboration",
+			"COLLABORATION_ARIA": "Outils de collaboration",
+			"RECORDING": "Enregistrement",
+			"WHITEBOARD": "Tableau blanc",
+			"POLL": "Sondage",
+			"MATERIALS": "Documents",
+			"AGENDA": "Ordre du jour"
+		},
+		"PARTICIPANTS": {
+			"NO_MATCH": "Aucun membre correspondant",
+			"SEARCH_PLACEHOLDER": "Rechercher des membres",
+			"SECTION_HOSTS": "Hôtes / Admins",
+			"SECTION_MEMBERS": "Participants",
+			"INVITE": "Inviter des membres",
+			"EMPTY_HINT": "Aucun autre membre — invitez votre équipe",
+			"INVITE_NOW": "Copier le lien d'invitation",
+			"GUEST": "Invité",
+			"MUTE_ALL": "Tout mettre en sourdine",
+			"MANAGEMENT": "Membres",
+			"TITLE": "Participants",
+			"CAMERA": "CAMÉRA",
+			"MICROPHONE": "MICROPHONE",
+			"SCREEN": "ÉCRAN",
+			"NO_STREAMS": "PAS_DE_FLUX",
+			"YOU": "Vous",
+			"MUTE": "Couper le son",
+			"UNMUTE": "Désactiver le son",
+			"CONNECTION_QUALITY": {
+				"LABEL": "Qualité de connexion",
+				"EXCELLENT": "Excellent",
+				"GOOD": "Bonne",
+				"POOR": "Médiocre",
+				"LOST": "Perdue"
+			},
+			"SHARING_SCREEN": "Partage d'écran en cours",
+			"MIC_OFF": "Microphone désactivé",
+			"CAM_OFF": "Caméra désactivée"
+		},
+		"SETTINGS": {
+			"TITLE": "Paramètres",
+			"GENERAL": "Général",
+			"VIDEO": "Vidéo",
+			"AUDIO": "l'audio",
+			"LANGUAGE": "Langue",
+			"DISABLED_VIDEO": "Désactiver la vidéo",
+			"THEME": "Thème"
+		},
+		"BACKGROUND": {
+			"TITLE": "Effets de fond",
+			"BLURRED_SECTION": "Aucun effet et arrière-plan flou",
+			"NO_EFFECTS": "Aucun effet de fond",
+			"BLURRED_EFFECT": "Arrière-plan flou",
+			"CATEGORY_PROFESSIONAL": "Professionnel",
+			"CATEGORY_HOME_OFFICE": "Bureau à domicile",
+			"CATEGORY_CREATIVE": "Créatif",
+			"NOT_SUPPORTED": "Les arrière-plans virtuels ne sont pas pris en charge dans ce navigateur",
+			"NOT_SUPPORTED_DESCRIPTION": "Votre navigateur ne prend pas en charge les effets d'arrière-plan. Cette fonctionnalité nécessite l'accélération GPU qui peut être désactivée ou non disponible."
+		},
+		"RECORDING": {
+			"TITLE": "Enregistrement",
+			"SUBTITLE": "Enregistrez votre réunion pour la postérité",
+			"CONTENT_TITLE": "Enregistrez votre appel vidéo",
+			"CONTENT_SUBTITLE": "Une fois l'enregistrement terminé, vous pourrez le télécharger facilement",
+			"STATUS_STOPPED": "Non démarré",
+			"STATUS_STARTING": "Démarrage",
+			"STATUS_STARTED": "En cours",
+			"STATUS_STOPPING": "Arrêt",
+			"STATUS_FAILED": "Échec",
+			"STATUS_READY": "Prêt",
+			"STARTING": "Début de l'enregistrement",
+			"STOPPING": "Arrêt de l'enregistrement",
+			"DELETE": "Effacer",
+			"CANCEL": "Annuler",
+			"ACCEPT": "Accepter",
+			"DELETE_QUESTION": "Voulez-vous vraiment supprimer l'enregistrement ?",
+			"NO_TRACKS_PUBLISHED": "Partagez de l’audio ou de la vidéo pour commencer l’enregistrement.",
+			"ERROR_STARTING": "Erreur de démarrage"
+		}
+	},
+	"ERRORS": {
+		"SESSION": "There was an error connecting to the salle",
+		"CONNECTION": "Connexion perdue",
+		"RECONNECT": "Oups ! Tentative de reconnexion à la salle...",
+		"DISCONNECT": "Vous avez été déconnecté",
+		"SIGNAL_CLOSE": "La connexion au serveur a été interrompue de manière inattendue",
+		"SERVER_SHUTDOWN": "Le serveur est actuellement hors service ou en maintenance",
+		"PARTICIPANT_REMOVED": "Vous avez été retiré de cette salle",
+		"ROOM_DELETED": "Cette salle a été supprimée",
+		"DUPLICATE_IDENTITY": "Vous avez été déconnecté car votre pseudo a été attribué à un autre participant",
+		"TOGGLE_CAMERA": "There was an error toggle camera",
+		"TOGGLE_MICROPHONE": "There was an error toggling microphone",
+		"LOAD_RECORDING_TITLE": "Erreur de chargement de l'enregistrement",
+		"MEDIA_ERR_GENERIC": "Une erreur s'est produite lors du chargement de la vidéo.",
+		"MEDIA_ERR_NETWORK": "Une erreur de réseau a causé l'échec du téléchargement de la vidéo en cours de route.",
+		"MEDIA_ERR_DECODE": "La lecture de la vidéo a été interrompue en raison d'un problème de corruption ou parce que la vidéo utilise des fonctionnalités que votre navigateur ne prend pas en charge.",
+		"MEDIA_ERR_SRC_NOT_SUPPORTED": "Erreur de diffusion de l'enregistrement : S3 n'a pas pu être atteint.",
+		"E2EE_ERROR_TITLE": "Erreur de mot de passe de la salle",
+		"E2EE_ERROR_CONTENT": "Ce participant utilise une clé de sécurité différente. La vidéo ne peut pas être affichée.",
+		"GENERIC": "Une erreur inattendue s'est produite. Veuillez réessayer."
+	},
+	"LOBBY": {
+		"E2EE_BADGE_TOOLTIP": "Chiffré de bout en bout",
+		"E2EE_BADGE_TEXT": "Les réunions dans cette salle sont chiffrées de bout en bout",
+		"JOIN_TITLE": "Rejoindre la réunion",
+		"ROOM_CLOSED_TITLE": "Salle fermée",
+		"ACCESS_RESTRICTED_TITLE": "Accès restreint",
+		"JOIN_SUBTITLE": "Rejoignez la réunion et commencez à échanger",
+		"ROOM_CLOSED_SUBTITLE": "Cette salle n'est pas disponible pour les réunions",
+		"ACCESS_RESTRICTED_SUBTITLE": "Vous n'avez pas l'autorisation de rejoindre les réunions dans cette salle",
+		"NAME_LABEL": "Votre nom affiché",
+		"NAME_PLACEHOLDER": "Saisissez votre nom",
+		"NAME_REQUIRED_PREFIX": "Le nom est ",
+		"E2EE_KEY_LABEL": "Clé de chiffrement",
+		"E2EE_KEY_PLACEHOLDER": "Saisissez la clé de chiffrement de la salle",
+		"E2EE_KEY_REQUIRED_PREFIX": "La clé de chiffrement est ",
+		"REQUIRED": "obligatoire",
+		"E2EE_KEY_HINT": "Cette réunion nécessite une clé de chiffrement",
+		"JOIN_BUTTON": "Rejoindre la réunion",
+		"ROOM_CLOSED_MESSAGE": "Désolé, cette salle est fermée. Vous ne pouvez pas rejoindre la réunion pour le moment. Veuillez contacter un gestionnaire de salle pour plus d'informations.",
+		"NO_PERMISSION_MESSAGE": "Désolé, vous avez accès à cette salle mais vous n'avez pas l'autorisation de rejoindre les réunions. Veuillez contacter un gestionnaire de salle pour plus d'informations.",
+		"RECORDINGS_TITLE": "Voir les enregistrements",
+		"RECORDINGS_SUBTITLE": "Parcourez et gérez les enregistrements précédents",
+		"RECORDINGS_DESCRIPTION": "Accédez aux réunions précédemment enregistrées dans cette salle. Vous pouvez visionner, télécharger ou gérer les enregistrements existants.",
+		"RECORDINGS_BUTTON": "Parcourir les enregistrements",
+		"BACK": "Retour",
+		"BACK_TO_ROOMS": "Retour aux salles"
+	},
+	"SHARE_ACCESS": {
+		"COPY_TOOLTIP": "Copier le lien d'accès à la salle",
+		"DEFAULT_TITLE": "Invitez d'autres personnes avec ce lien d'accès à la salle"
+	},
+	"SHARE_OVERLAY": {
+		"TITLE": "Commencez à collaborer",
+		"SUBTITLE": "Partagez ce lien pour inviter d'autres personnes à la réunion"
+	},
+	"WAITING_PANEL": {
+		"TITLE": "En attente d'autres participants",
+		"SUBTITLE": "Les participants apparaîtront ici dès qu'ils rejoindront la réunion.",
+		"ALONE_SUBTITLE": "Vous êtes seul ici pour le moment."
+	},
+	"DEVICE": {
+		"DEFAULT": "Périphérique par défaut"
+	},
+	"CAPTIONS": {
+		"ARIA_FROM": "Sous-titre de ",
+		"DISABLED_BY_ADMIN_TEXT": "Sous-titres en direct (désactivés par l'administrateur)",
+		"ENABLE": "Activer les sous-titres en direct",
+		"DISABLE": "Désactiver les sous-titres en direct",
+		"DISABLED_BY_ADMIN_TOOLTIP": "Les sous-titres en direct sont désactivés par l'administrateur"
+	},
+	"COPY_LINK": {
+		"TOOLTIP": "Copier le lien d'accès à la salle",
+		"TEXT": "Copier le lien d'accès à la salle"
+	},
+	"LEAVE_BUTTON": {
+		"MENU_TOOLTIP": "Options de sortie",
+		"LEAVE_OPTION": "Quitter la réunion",
+		"END_OPTION": "Terminer la réunion pour tous"
+	},
+	"MORE_OPTIONS": {
+		"DARK_MODE": "Mode sombre",
+		"LAYOUT_TOOLTIP": "Configurer la disposition de la grille",
+		"ADJUST_LAYOUT": "Ajuster la disposition"
+	},
+	"LAYOUT_SETTINGS": {
+		"TITLE": "Paramètres de disposition",
+		"MODE_ARIA": "Sélectionner le mode de disposition",
+		"MOSAIC": "Mosaïque",
+		"MOSAIC_DESC": "Affiche tous les participants dans une grille unifiée",
+		"SMART_MOSAIC": "Mosaïque intelligente",
+		"SMART_MOSAIC_DESC": "Affiche un nombre limité de participants actifs",
+		"COUNT_LABEL": "Nombre de participants visibles",
+		"COUNT_HELPER": "Choisissez combien de participants distants sont affichés dans la grille",
+		"COUNT_ARIA": "Nombre de participants à afficher"
+	},
+	"PARTICIPANT_ITEM": {
+		"PROMOTE_TOOLTIP": "Promouvoir en modérateur",
+		"DOWNGRADE_TOOLTIP": "Rétrograder aux autorisations d'origine",
+		"KICK_TOOLTIP": "Expulser le participant",
+		"BADGE_OWNER": "Propriétaire",
+		"BADGE_ADMIN": "Administrateur",
+		"BADGE_MODERATOR": "Modérateur"
+	},
+	"END_MEETING": {
+		"LEFT_TITLE": "Vous avez quitté la réunion",
+		"LEFT_MESSAGE": "Vous avez quitté la réunion avec succès",
+		"KICKED_TITLE": "Expulsé de la réunion",
+		"KICKED_MESSAGE": "Vous avez été expulsé de la réunion par un modérateur",
+		"ENDED_TITLE": "Réunion terminée",
+		"ENDED_MESSAGE": "La réunion a été terminée par un modérateur",
+		"ENDED_BY_SELF_MESSAGE": "Vous avez terminé la réunion avec succès",
+		"DISCONNECTED_TITLE": "Déconnecté de la réunion",
+		"NETWORK_MESSAGE": "Connexion perdue en raison de problèmes de connectivité réseau",
+		"SERVER_SHUTDOWN_MESSAGE": "Connexion perdue en raison de l'arrêt du serveur",
+		"DUPLICATE_MESSAGE": "Cette session a été fermée car vous avez rejoint la même réunion depuis un autre onglet ou appareil",
+		"UNKNOWN_MESSAGE": "Une erreur inattendue s'est produite, veuillez réessayer plus tard",
+		"FOOTER": "Merci d'utiliser JMeet",
+		"BACK": "Retour",
+		"BACK_TO_ROOMS": "Retour aux salles",
+		"ACCEPT": "Accepter"
+	},
+	"MEETING_PAGE": {
+		"PREPARING": "Préparation de votre réunion...",
+		"PREPARE_ERROR": "Impossible de préparer votre réunion.",
+		"INIT_ERROR_TITLE": "Erreur",
+		"INIT_ERROR_MESSAGE": "Une erreur s'est produite lors de l'initialisation du salon d'attente de la réunion. Veuillez réessayer plus tard.",
+		"INIT_ERROR_CONFIRM": "OK"
+	}
+}

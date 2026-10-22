@@ -1,0 +1,9 @@
+name: baseRole
+in: query
+required: false
+description: Filter members by their base role.
+schema:
+    type: string
+    enum:
+        - moderator
+        - speaker

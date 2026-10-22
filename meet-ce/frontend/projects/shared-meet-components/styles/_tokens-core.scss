@@ -1,0 +1,16 @@
+@use './tokens-components';
+@use './tokens-primitives';
+@use './tokens-semantic';
+
+// Compatibility entry point retained for existing consumers.
+// 批次 3：顶层 `:root { @include emit-core-token-values; }` 垫片已拆——
+// 它经 _design-tokens forwarder 进入 8 个 _settings-* 切片的全局链路，
+// :root（0,1,0）压过 styles.scss 的 emit-runtime-theme('html')（0,0,1），
+// brand 运行时换肤全应用死。令牌发射统一走 _runtime-theme.scss 的
+// emit-runtime-theme（含 emit-brand-semantic-overrides 覆盖层）；本文件
+// 只保留 mixin 定义本体（emit-core-token-values）供调用方按需发射。
+@mixin emit-core-token-values {
+	@include tokens-primitives.emit-primitive-tokens;
+	@include tokens-semantic.emit-light-semantic-tokens;
+	@include tokens-components.emit-component-tokens;
+}

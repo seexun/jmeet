@@ -1,0 +1,38 @@
+description: Room member added successfully
+content:
+    application/json:
+        schema:
+            allOf:
+                - $ref: '../../schemas/meet-room-member.yaml'
+                - type: object
+                  properties:
+                      _extraFields:
+                          type: array
+                          description: >
+                              List of extra fields that can be included in the response based on the `X-ExtraFields` header.
+                          items:
+                              type: string
+                              example: effectivePermissions
+        examples:
+            default_member_added:
+                summary: Room member added successfully without extra fields
+                value:
+                    memberId: 'guest-abc123'
+                    roomId: 'room-123'
+                    type: 'identified_guest'
+                    name: 'Charlie'
+                    membershipDate: 1620007200000
+                    accessUrl: 'https://example.com/room/room-123?secret=guest-abc123'
+                    baseRole: 'speaker'
+                    customPermissions:
+                        canShareScreen: true
+                        canRecord: false
+                    permissionsUpdatedAt: 1620007200000
+                    _extraFields: ['effectivePermissions']
+headers:
+    Location:
+        description: URL of the newly added room member
+        schema:
+            type: string
+            format: uri
+        example: https://example.com/api/v1/rooms/room-123/members/abc123

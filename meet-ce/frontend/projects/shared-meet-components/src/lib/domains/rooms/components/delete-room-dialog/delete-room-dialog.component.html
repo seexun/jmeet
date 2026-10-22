@@ -1,0 +1,54 @@
+<div class="delete-room-dialog-page">
+	<h2 class="dialog-title">
+		<nz-icon nzType="delete" class="dialog-icon" />
+		{{ data.title }}
+	</h2>
+
+	<div class="dialog-content">
+		<div class="dialog-message">{{ data.message }}</div>
+		<p class="jmeet-text--body-secondary">{{ 'ROOMS.DELETE_DIALOG.CHOOSE_HANDLING' | translate }}</p>
+
+		<div class="policy-options-container">
+			@if (data.showWithMeetingPolicy) {
+				<div class="policy-section">
+					<h4 class="jmeet-text--section-title">{{ 'ROOMS.DELETE_DIALOG.WITH_ACTIVE_MEETING_POLICY' | translate }}</h4>
+					<nz-radio-group [ngModel]="selectedMeetingPolicy()" (ngModelChange)="selectedMeetingPolicy.set($event)" class="policy-group">
+						@for (option of meetingPolicyOptions; track option.value) {
+							<label nz-radio [nzValue]="option.value" class="policy-option">
+								<div class="policy-option-content">
+									<span class="policy-label">{{ option.label | translate }}</span>
+									<span class="policy-description jmeet-text--body-secondary">{{ option.description | translate }}</span>
+								</div>
+							</label>
+						}
+					</nz-radio-group>
+				</div>
+			}
+
+			@if (data.showWithRecordingsPolicy) {
+				<div class="policy-section">
+					<h4 class="jmeet-text--section-title">{{ 'ROOMS.DELETE_DIALOG.WITH_RECORDINGS_POLICY' | translate }}</h4>
+					<nz-radio-group [ngModel]="selectedRecordingPolicy()" (ngModelChange)="selectedRecordingPolicy.set($event)" class="policy-group">
+						@for (option of recordingPolicyOptions; track option.value) {
+							<label nz-radio [nzValue]="option.value" class="policy-option">
+								<div class="policy-option-content">
+									<span class="policy-label">{{ option.label | translate }}</span>
+									<span class="policy-description jmeet-text--body-secondary">{{ option.description | translate }}</span>
+								</div>
+							</label>
+						}
+					</nz-radio-group>
+				</div>
+			}
+		</div>
+	</div>
+
+	<div class="jmeet-form-actions dialog-action">
+		<button type="button" class="jmeet-button jmeet-button--outline cancel-button" (click)="close('cancel')">
+			{{ 'ROOMS.COMMON.CANCEL' | translate }}
+		</button>
+		<button type="button" cdkFocusInitial class="jmeet-button jmeet-button--danger confirm-button" (click)="close('confirm')">
+			{{ data.confirmText ?? ('ROOMS.COMMON.CONFIRM' | translate) }}
+		</button>
+	</div>
+</div>

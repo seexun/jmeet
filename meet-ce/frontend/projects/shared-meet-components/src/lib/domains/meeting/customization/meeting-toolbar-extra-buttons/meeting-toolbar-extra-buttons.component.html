@@ -1,0 +1,67 @@
+<!-- Injected into toolbar "More options": 语义分组 → 发言与互动(参会人) → 音视频 → 会议管控(主持人) -->
+
+@if (!showHostControls()) {
+	<li class="menu-group-label">{{ 'TOOLBAR.GROUP_INTERACT' | translate }}</li>
+
+	<button
+		nz-menu-item
+		(click)="onToggleHand()"
+		[disabled]="isHandPending()"
+	>
+		<nz-icon [nzType]="(isHandRaised() ? 'front_hand' : 'pan_tool') | nzIconType" />
+		<span class="button-text">{{ isHandRaised() ? '取消举手' : '举手' }}</span>
+	</button>
+
+	@if (showScreenShareRequest()) {
+		<button
+			nz-menu-item
+			(click)="onRequestScreenShare()"
+			[disabled]="isShareRequestPending()"
+		>
+			<nz-icon nzType="desktop" />
+			<span class="button-text">申请共享屏幕</span>
+		</button>
+	}
+}
+
+<li class="menu-group-label">{{ 'TOOLBAR.GROUP_AV' | translate }}</li>
+
+<button nz-menu-item (click)="togglePip()" [attr.aria-pressed]="isPipOpen()">
+	<nz-icon nzType="pic-right" />
+	<span class="button-text">{{ isPipOpen() ? '关闭画中画' : '画中画' }}</span>
+</button>
+<button nz-menu-item (click)="showShortcutsHelp()">
+	<nz-icon nzType="question-circle" />
+	<span class="button-text">键盘快捷键</span>
+</button>
+
+@if (showHostControls()) {
+	<li class="menu-group-label">{{ 'TOOLBAR.GROUP_CONTROLS' | translate }}</li>
+
+	<button
+		id="mute-all-button"
+		nz-menu-item
+		(click)="onMuteAllClick()"
+		[disabled]="isMuteAllPending()"
+	>
+		<nz-icon nzType="audio-muted" />
+		<span class="button-text">全体静音</span>
+	</button>
+	<button
+		nz-menu-item
+		(click)="onToggleSelfUnmute()"
+		[disabled]="isSecurityPending()"
+	>
+		<nz-icon [nzType]="(isSelfUnmuteAllowed() ? 'voice_over_off' : 'record_voice_over') | nzIconType" />
+		<span class="button-text">{{ isSelfUnmuteAllowed() ? '禁止自行解除静音' : '允许自行解除静音' }}</span>
+	</button>
+	<button
+		id="meeting-lock-button"
+		nz-menu-item
+		(click)="onToggleMeetingLock()"
+		[disabled]="isSecurityPending()"
+	>
+		<nz-icon [nzType]="(isMeetingLocked() ? 'lock_open' : 'lock') | nzIconType" />
+		<span class="button-text">{{ isMeetingLocked() ? '解除锁定' : '锁定会议' }}</span>
+	</button>
+}

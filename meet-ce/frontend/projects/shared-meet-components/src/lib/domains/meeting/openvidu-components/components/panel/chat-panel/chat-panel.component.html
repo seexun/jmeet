@@ -1,0 +1,205 @@
+<div class="panel-container" id="chat-container">
+	<div class="panel-header-container">
+		<h3 class="panel-title">{{ 'PANEL.CHAT.TITLE' | translate }}</h3>
+		<!-- 私聊对象选择:默认发送到所有人 -->
+		@if (dmCandidates().length > 0) {
+			<nz-select
+				class="recipient-select"
+				[ngModel]="privateRecipient()"
+				(ngModelChange)="onRecipientSelected($event)"
+				nzPlaceholder="所有人"
+				nzAllowClear
+				nz-tooltip
+				[nzTooltipTitle]="privateRecipientName() ? '仅对方可见,不归档' : '发送给会议中的所有人'"
+				[attr.aria-label]="'聊天对象'"
+			>
+				@for (candidate of dmCandidates(); track candidate.identity) {
+					<nz-option [nzValue]="candidate.identity" [nzLabel]="candidate.name" />
+				}
+			</nz-select>
+		}
+		<button class="panel-close-button jmeet-button jmeet-button--ghost jmeet-button--icon" nz-tooltip nzTooltipTitle="{{ 'PANEL.CLOSE' | translate }}" (click)="close()">
+			<nz-icon nzType="close" />
+		</button>
+	</div>
+
+	@if (hasEncryptionKeyMismatch()) {
+		<div class="encryption-warning">
+			<nz-icon nzType="warning" />
+			<p>{{ 'PANEL.CHAT.ENCRYPTION_KEY_MISMATCH' | translate }}</p>
+		</div>
+	}
+
+	<div class="chat-notice" role="note">
+		<nz-icon nzType="info-circle" class="chat-notice-icon" aria-hidden="true" />
+		<p class="chat-notice-text">{{ 'PANEL.CHAT.SUBTITLE' | translate }}</p>
+	</div>
+
+	<div class="messages-container" #chatScroll (scroll)="onMessagesScroll()">
+		@for (data of messageList(); track data; let i = $index) {
+			@if (shouldShowSessionDivider(i)) {
+				<div class="chat-session-divider">
+					<span>
+						{{ 'PANEL.CHAT.SESSION_DIVIDER' | translate }} ·
+						{{ sessionDividerTime(i) | date: 'M/d HH:mm' }}
+					</span>
+				</div>
+			}
+			<div
+				class="message"
+				[class.right]="data.isLocal"
+				[class.left]="!data.isLocal"
+				[class.mention-hit]="data.mentionsMe"
+			>
+				<span class="msg-avatar" [style.background]="avatarColor(data.participantName)">
+					{{ avatarInitial(data.participantName) }}
+				</span>
+				<div class="msg-detail">
+					<div class="participant-name-container">
+						@if (data.isLocal) {
+							<p>{{ 'PANEL.CHAT.YOU' | translate }}@if (data.isPrivate && data.toName) {<span class="dm-flag" nz-tooltip nzTooltipTitle="仅对方可见,不归档"> 私聊 {{ data.toName }}</span>}</p>
+						} @else {
+							<p>{{ data.participantName }}@if (data.isPrivate) {<span class="dm-flag" nz-tooltip nzTooltipTitle="仅你们二人可见,不归档"> 私聊</span>}@if (data.mentionsMe) {<span class="mention-flag"> 提到了你</span>}</p>
+						}
+						<span class="message-time">{{ formatTime(data.timestamp) }}</span>
+					</div>
+					<div class="chat-message">
+						@if (data.attachment) {
+							@if (data.uploadStatus === 'uploading') {
+								<div class="attachment-pending">
+									<span class="attachment-spinner" nz-icon nzType="loading"></span>
+									<span>{{ 'PANEL.CHAT.UPLOADING' | translate }}</span>
+								</div>
+							} @else if (data.uploadStatus === 'failed') {
+								<div class="attachment-failed" [attr.title]="data.errorHint">
+									<nz-icon nzType="warning" />
+									<span>{{ 'PANEL.CHAT.UPLOAD_FAILED' | translate }}</span>
+									@if (data.pendingFile) {
+										<button type="button" class="attachment-failed-retry" (click)="retryAttachment(data)">{{ 'PANEL.CHAT.RETRY' | translate }}</button>
+									}
+									<button type="button" class="attachment-failed-remove" (click)="removeAttachment(data)">{{ 'PANEL.CHAT.REMOVE' | translate }}</button>
+								</div>
+							} @else if (data.attachment.type === 'image') {
+								@if (attachmentUrls()[data.attachment.attachmentId]; as imgUrl) {
+									<img class="attachment-image" [src]="imgUrl" [attr.alt]="data.attachment.fileName" (click)="openImagePreview(imgUrl, data)" />
+								} @else {
+									<div class="attachment-pending">
+										<span class="attachment-spinner" nz-icon nzType="loading"></span>
+									</div>
+								}
+							} @else {
+								<div class="attachment-file-card">
+									<nz-icon nzType="file-text" class="attachment-file-icon" />
+									<div class="attachment-file-info">
+										<!-- 文件名一律纯文本插值,严禁 innerHTML(XSS) -->
+										<p class="attachment-file-name" [attr.title]="data.attachment.fileName">{{ data.attachment.fileName }}</p>
+										<span class="attachment-file-size">{{ formatSize(data.attachment.size) }}</span>
+									</div>
+									<button type="button" class="attachment-download-btn" nz-tooltip nzTooltipTitle="{{ 'PANEL.CHAT.DOWNLOAD' | translate }}" (click)="downloadAttachment(data)">
+										<nz-icon nzType="download" />
+									</button>
+								</div>
+							}
+						} @else {
+							<p [innerHTML]="data.message | linkify"></p>
+						}
+					</div>
+				</div>
+			</div>
+		}
+		@empty {
+			<div class="chat-empty">
+				<nz-icon nzType="comment" class="chat-empty-icon" aria-hidden="true" />
+				<p class="chat-empty-title">{{ 'PANEL.CHAT.EMPTY_TITLE' | translate }}</p>
+				<p class="chat-empty-desc">{{ 'PANEL.CHAT.EMPTY_DESC' | translate }}</p>
+			</div>
+		}
+	</div>
+
+	<div class="composer">
+		@if (mentionQuery() !== undefined && mentionSuggestions().length > 0) {
+			<div class="mention-suggestions" role="listbox" aria-label="提及参会人">
+				@for (candidate of mentionSuggestions(); track candidate.identity) {
+					<button type="button" role="option" (click)="insertMention(candidate.name)">
+						<span class="mention-at">@</span>{{ candidate.name }}
+					</button>
+				}
+			</div>
+		}
+
+		@if (emojiPickerOpen()) {
+			<div class="emoji-picker" role="listbox" [attr.aria-label]="'PANEL.CHAT.EMOJI' | translate">
+				@for (emoticon of emoticons; track emoticon.name) {
+					<button
+						type="button"
+						class="emoji-item"
+						role="option"
+						[attr.title]="emoticon.name"
+						[attr.aria-label]="emoticon.name"
+						(click)="insertEmoticon(emoticon, $event)"
+					>
+						<span class="emoji-glyph" aria-hidden="true">{{ emoticon.emoji }}</span>
+					</button>
+				}
+			</div>
+		}
+
+		<div class="input-tools">
+			<button
+				type="button"
+				id="emoji-btn"
+				class="emoji-toggle"
+				[class.active]="emojiPickerOpen()"
+				(click)="toggleEmojiPicker($event)"
+				nz-tooltip
+				nzTooltipTitle="{{ 'PANEL.CHAT.EMOJI' | translate }}"
+				[attr.aria-label]="'PANEL.CHAT.EMOJI' | translate"
+				[attr.aria-expanded]="emojiPickerOpen()"
+			>
+				<nz-icon nzType="smile" />
+			</button>
+		</div>
+		<div class="input-container">
+			<label class="sr-only" for="chat-input">{{ 'PANEL.CHAT.PLACEHOLDER' | translate }}</label>
+			<textarea
+				nz-input
+				#chatInput
+				maxlength="500"
+				rows="1"
+				placeholder="{{ privateRecipientName() ? '私聊发送给 ' + privateRecipientName() + '…(输入 @ 可提及参会人)' : ('PANEL.CHAT.PLACEHOLDER' | translate) }}"
+				autocomplete="off"
+				(keypress)="eventKeyPress($event)"
+				(paste)="onPaste($event)"
+				[value]="message()"
+				(input)="onMessageInput(chatInput.value)"
+				id="chat-input"
+			></textarea>
+			<button
+				id="send-btn"
+				type="button"
+				class="send-icon-btn"
+				(click)="sendMessage()"
+				[disabled]="!message().trim()"
+				nz-tooltip
+				nzTooltipTitle="{{ 'PANEL.CHAT.SEND' | translate }}"
+				[attr.aria-label]="'PANEL.CHAT.SEND' | translate"
+			>
+				<nz-icon nzType="send" />
+			</button>
+		</div>
+	</div>
+
+	<!-- 图片预览：NzModal 承载（挂 body）——dock 面板的动画 transform 会捕获后代
+	     position:fixed 使其退化为面板内定位，图片显示不全（用户实测） -->
+	<ng-template #imagePreviewTpl>
+		<div class="image-preview-stage" (click)="closeImagePreview()">
+			@if (imagePreview(); as previewUrl) {
+				<img [src]="previewUrl" (click)="$event.stopPropagation()" [attr.alt]="'PANEL.CHAT.ATTACHMENT' | translate" />
+			}
+			<button type="button" class="image-preview-close jmeet-button jmeet-button--ghost jmeet-button--icon" (click)="closeImagePreview()">
+				<nz-icon nzType="close" />
+			</button>
+			<a class="image-preview-download" href="javascript:void(0)" (click)="downloadImageFromPreview($event)">{{ 'PANEL.CHAT.DOWNLOAD' | translate }}</a>
+		</div>
+	</ng-template>
+</div>

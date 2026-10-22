@@ -1,0 +1,40 @@
+services:
+  livekit:
+    environment:
+      LIVEKIT_CONFIG: |
+        port: 7880
+        log_level: ${LIVEKIT_LOG_LEVEL:-info}
+        rtc:
+          tcp_port: 7881
+          udp_port: 7882
+          use_external_ip: false
+          node_ip: ${LIVEKIT_NODE_IP:?Set LIVEKIT_NODE_IP to the server LAN IP}
+        redis:
+          address: redis:6379
+          password: "${REDIS_PASSWORD}"
+        keys:
+          "${LIVEKIT_API_KEY}": "${LIVEKIT_API_SECRET}"
+        turn:
+          enabled: true
+          udp_port: 443
+          relay_range_start: 30000
+          relay_range_end: 30100
+
+  caddy:
+    image: ${CADDY_IMAGE:-caddy:2.10-alpine}
+    restart: unless-stopped
+    environment:
+      MEET_DOMAIN: ${MEET_DOMAIN:?Set MEET_DOMAIN}
+      LIVEKIT_DOMAIN: ${LIVEKIT_DOMAIN:?Set LIVEKIT_DOMAIN}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile.intranet:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      meet:
+        condition: service_healthy
+      livekit:
+        condition: service_started

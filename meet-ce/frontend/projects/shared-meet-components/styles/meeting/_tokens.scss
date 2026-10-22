@@ -1,0 +1,75 @@
+// 会议域令牌：--jmeet-meeting-* 命名空间，腾讯会议浅色。
+// 本文件是会议域 hex 的唯一出处（契约测试锁定），全局 --jmeet-*（EP 蓝）不受影响。
+@mixin emit-meeting-tokens {
+	// 色板
+	--jmeet-meeting-primary: #006EFF;
+	--jmeet-meeting-primary-hover: #0059D6;
+	--jmeet-meeting-primary-active: #0047AD;
+	--jmeet-meeting-primary-soft: #EBF3FF;
+	--jmeet-meeting-stage-bg: #F2F3F5;
+	--jmeet-meeting-surface: #FFF;
+	--jmeet-meeting-border: #E6E8EB;
+	--jmeet-meeting-divider: #EEF0F2;
+	--jmeet-meeting-text-primary: #1F2329;
+	--jmeet-meeting-text-secondary: #5A6068;
+	--jmeet-meeting-text-tertiary: #8A9099;
+	--jmeet-meeting-danger: #D93025;
+	--jmeet-meeting-danger-soft: #FDE8E8;
+	--jmeet-meeting-success: #1A7F45;
+	--jmeet-meeting-success-soft: #E8F5EE;
+
+	// 警告系等值令牌（批次 5）：对齐全局 amber 系现值——warning/warning-text 同为
+	// amber-600 #B45309（全局 --jmeet-color-action-warning[-text] 现值）、soft 为
+	// amber-50 #FFF4E6（全局 warning-light 现值）。会议域自此 warning 不再豁免引用全局令牌。
+	--jmeet-meeting-warning: #B45309;
+	--jmeet-meeting-warning-soft: #FFF4E6;
+	--jmeet-meeting-warning-text: #B45309;
+	--jmeet-meeting-tile-bg: #4A5058;
+	--jmeet-meeting-scrim: rgb(15 23 42 / 12%);
+
+	// 控件 hover 混色沉淀（遗留清扫·快赢②，双令牌保值口径）：control-hover = border 55%
+	// 混 surface 现值；primary-soft-hover = primary 14% 混 surface 现值（invite 钮）。
+	// 账面曾记 #F4F8FF，实为 4cec585 已删的 EP 蓝阶 98 档旧值，非现混色结果，弃用。
+	--jmeet-meeting-control-hover: #F1F2F4;
+	--jmeet-meeting-primary-soft-hover: #DBEBFF;
+
+	// 角色徽章双令牌（遗留清扫·快赢③正式化，等值对号全局语义层现值：
+	// owner = amber-750、moderator = steel-500；admin 与 primary 同值（blue-600）直接对号）。
+	--jmeet-meeting-badge-owner: #C98C00;
+	--jmeet-meeting-badge-moderator: #3B6D99;
+
+	// 结构尺寸
+	--jmeet-meeting-topbar-height: 48px;
+	// 舞台底部预留：悬浮工具条 pill（bottom 16px + 胶囊实高）+ 呼吸间距，
+	// 供宫格布局预留，避免多排瓦片的人名条被工具条遮挡
+	--jmeet-meeting-stage-bottom-inset: 96px;
+	--jmeet-meeting-stage-gap: 10px;
+	--jmeet-meeting-stage-padding: 10px;
+	--jmeet-meeting-tile-radius: 4px;
+	--jmeet-meeting-tile-info-height: 34px;
+	--jmeet-meeting-toolbar-radius: 10px;
+	--jmeet-meeting-toolbar-btn-width: 66px;
+	--jmeet-meeting-toolbar-btn-height: 56px;
+	--jmeet-meeting-toolbar-shadow: 0 4px 18px rgb(15 23 42 / 12%);
+	--jmeet-meeting-dock-width: 420px;
+	--jmeet-meeting-dock-tab-height: 46px;
+	--jmeet-meeting-panel-head-height: 38px;
+	--jmeet-meeting-row-height: 42px;
+
+	// HUD 整层（顶栏/浮动工具条/自视图）：必须压过视频瓦片层。瓦片内部 video 为
+	// absolute+z=calc(--jmeet-z-media-overlay+1)=889，且 remote 瓦片容器（cdk-drag）
+	// 无 transform 不构成 stacking context，889/名字条 999 直接在与本层同层的
+	// #vc-container(isolate) 内比较——故取 990：>889 视频、<999 瓦片内名字条
+	// （保持瓦片内 HUD 最顶语义）、<1000 dock（--jmeet-z-dropdown）。
+	--jmeet-meeting-z-hud: 990;
+
+	// 防泄漏水印层：>889/999 视频瓦片逸出、>990 HUD、<1000 dock；
+	// pointer-events:none 不扰交互，仅改会议域消费值，全局 --jmeet-z-watermark 原值不动。
+	--jmeet-meeting-z-watermark: 995;
+}
+
+// SPA 发射点：styles.scss 经 _index load-css 时在此把令牌发射到 body.meeting-ui。
+// webcomponent 侧由 app.material.scss 的 :host 显式发射，不依赖这里。
+body.meeting-ui {
+	@include emit-meeting-tokens;
+}

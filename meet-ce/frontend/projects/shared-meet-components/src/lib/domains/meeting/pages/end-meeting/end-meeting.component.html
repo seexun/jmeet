@@ -1,0 +1,30 @@
+<div class="disconnected-container">
+	<div class="disconnect-content" role="main" aria-labelledby="disconnect-title">
+		<div class="disconnect-icon-container">
+			<!-- 与侧栏同源的品牌标识：自定义 logo/产品名，替代独立的 jmeet meeting 文字字标 -->
+			<div class="disconnect-brand" [attr.aria-label]="branding.displayName()">
+				<img class="disconnect-brand__logo" [src]="branding.logoUrl() || logoUrl" [alt]="branding.displayName()" />
+				<span class="disconnect-brand__name">{{ branding.displayName() }}</span>
+			</div>
+		</div>
+
+		<div class="disconnect-message">
+			<h1 id="disconnect-title" class="disconnect-title">{{ disconnectedTitleKey() | translate }}</h1>
+			<p class="disconnect-subtitle">
+				{{ disconnectReasonKey() | translate }}
+			</p>
+		</div>
+
+		<div class="disconnect-footer">
+			<p class="footer-text">{{ 'END_MEETING.FOOTER' | translate }}</p>
+			@if (showBackButton()) {
+				<div class="quick-actions fade-in-delayed-more">
+					<button id="back-btn" class="jmeet-button jmeet-button--ghost quick-action-button" (click)="goBack()">
+						<nz-icon nzType="arrow-left" />
+						<span>{{ backButtonTextKey() | translate }}</span>
+					</button>
+				</div>
+			}
+		</div>
+	</div>
+</div>

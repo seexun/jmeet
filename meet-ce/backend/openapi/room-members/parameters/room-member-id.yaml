@@ -1,0 +1,7 @@
+name: memberId
+in: path
+required: true
+description: The unique identifier of the room member.
+schema:
+    type: string
+example: 'abc123'

@@ -1,0 +1,372 @@
+// 响应式断点 mixin（filter-bar 移动端覆盖自 _settings-login.scss:941-948 re-home 而来，
+// 须沿用 ov-mobile-down 的 480px 语义——即 tokens/_primitives 侧 $ov-meet-breakpoint-mobile
+// 的同一断点（定义在 _mixins-responsive.scss:6），本件经 mixins-only 入口消费同一常量；
+// 本件此前无 @use，mixins-only 入口零 CSS 发射）
+@use '../console-mixins' as design-tokens;
+
+// 平面工作台形态（规格 §3.2 列表蓝图）：无外框无卡片包裹——白面由外层列表卡
+// （jmeet-card）供给，本件只保留表格 chrome；overflow-x 保留窄屏横向滚动。
+.jmeet-data-table {
+	box-sizing: border-box;
+	width: 100%;
+	overflow-x: auto;
+
+	table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	// 单元格：EP 对齐（用户裁决）——上下 12px（行高 ~48px，EP large 档），
+	// 行分隔用卡内轻分隔（--jmeet-color-border-light）。
+	th,
+	td {
+		padding: 12px var(--jmeet-space-4);
+
+		// 批次5 收紧后唯一豁免点：行分隔 divider（列表蓝图行内分隔语言，非外框描边）
+		border-bottom: 1px solid var(--jmeet-color-border-light); // design-system-allow-border: 行分隔 divider
+		text-align: left;
+		vertical-align: middle;
+		font-weight: var(--jmeet-font-weight-medium);
+		line-height: 23px;
+	}
+
+	td {
+		color: var(--jmeet-color-text-regular, var(--jmeet-color-text-secondary));
+		font-size: var(--jmeet-font-size-sm);
+	}
+
+	tbody tr:last-child td {
+		border-bottom: 0;
+	}
+}
+
+// 表头（EP 对齐，用户裁决）：浅灰底 F5F7FA（gray-100）+ 13px 灰字 600 字重——
+// EP 标志性表头特征。结构类 + 原生 thead 双通道——投影消费方与裸类宿主同款形态。
+.jmeet-data-table__head th,
+.jmeet-data-table thead th {
+	background: var(--jmeet-color-surface-hover);
+	color: var(--jmeet-color-text-tertiary);
+	font-size: var(--jmeet-font-size-sm);
+	font-weight: var(--jmeet-font-weight-semibold);
+}
+
+// 表头圆角随列表卡片首行（卡片内表格首列圆角跟随卡片 8px 壳）
+.jmeet-list-panel .jmeet-data-table thead th:first-child {
+	border-top-left-radius: var(--jmeet-radius-md);
+}
+
+.jmeet-list-panel .jmeet-data-table thead th:last-child {
+	border-top-right-radius: var(--jmeet-radius-md);
+}
+
+// 行结构：hover 中性浅底（结构类 + 原生 tbody tr 双通道）。
+.jmeet-data-table__row:hover td,
+.jmeet-data-table tbody tr:hover td {
+	background: var(--jmeet-color-surface-hover);
+}
+
+// 可排序表头（模板配 tabindex="0" + keydown.enter/space）：手型 + 禁选中。
+// 批次2 任务4 自 room-members 页本地上收全站——四种表页共用一通道。
+th.sortable {
+	cursor: pointer;
+	user-select: none;
+}
+
+// 可排序表头键盘可达（模板配 tabindex="0" + keydown.enter/space）：焦点环与全站交互态一致。
+// 顶层全局规则，覆盖四个列表宿主（users/rooms/recordings/room-members 列表均已 jmeet-data-table 化）。
+th.sortable:focus-visible {
+	outline: none;
+	box-shadow: var(--jmeet-focus-ring);
+	border-radius: var(--jmeet-radius-xs);
+}
+
+// 排序方向箭头：紧凑弱化（不设样式时会继承 .anticon 24px 基线，视觉过重）。
+// 同为顶层规则，覆盖四种列表宿主。
+th.sortable .sort-arrow {
+	font-size: var(--jmeet-font-size-xs);
+	width: 12px;
+	height: 12px;
+	margin-left: 2px;
+	vertical-align: middle;
+	color: var(--jmeet-color-text-tertiary);
+}
+
+// 列表卡片容器：筛选行 + 表格 + 分页 的纵向布局。
+.jmeet-list-panel {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-space-4);
+	min-height: 0;
+}
+
+// ==== 列表页工具行（批次3 任务4 换轨收口） ====
+// 外层 .jmeet-filter-row 已退役：全部工具行（users/rooms/room-members/recordings/audit/
+// operations-center）统一换轨 jmeet-filter-bar 组件（同面工具条 + 底部分隔，参照 users-lists
+// 批次2 先例）。`__filters` 组仍作为 bar 内的分组基座保留（flex/wrap/gap/min-width），
+// 下拉基座 .jmeet-filter-item 与筛选 chip 组不变。
+.jmeet-filter-row__filters {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: var(--jmeet-space-3);
+	min-width: 0;
+}
+
+// 单个筛选下拉：固定宽并排。
+.jmeet-filter-item {
+	flex: 0 0 148px;
+	width: 148px;
+}
+
+.jmeet-filter-chips {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: var(--jmeet-space-2);
+}
+
+.jmeet-filter-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	height: 28px;
+	padding: 0 var(--jmeet-space-2) 0 var(--jmeet-space-3);
+	border: 1px solid color-mix(in srgb, var(--jmeet-color-action-primary) 30%, var(--jmeet-color-border));
+	border-radius: var(--jmeet-radius-sm);
+	background: color-mix(in srgb, var(--jmeet-color-action-primary) 6%, var(--jmeet-color-surface-card));
+	color: var(--jmeet-color-action-primary);
+	font-size: var(--jmeet-font-size-xs);
+	cursor: pointer;
+
+	.anticon {
+		width: 14px;
+		height: 14px;
+		font-size: var(--jmeet-font-size-sm);
+	}
+
+	&:hover {
+		background: color-mix(in srgb, var(--jmeet-color-action-primary) 12%, var(--jmeet-color-surface-card));
+	}
+}
+
+@media (width <= 768px) {
+	.jmeet-filter-item {
+		flex-basis: auto;
+		width: 100%;
+	}
+}
+
+// 登录名/账号列：次要色单行，等宽数字避免长短账号错落。
+// 留痕：迁移前 td .login-name 为 max-width: 240px（users-lists 组件层，批次2 6565eae 迁移时
+// 收紧为 200px 并换轨本全局块）；inline 元素上 max-width/overflow/text-overflow 全部无效——
+// display 配套才生效（修复轮1：对齐迁移前 td .login-name 的 inline-block + 底对齐）。
+.jmeet-list-panel .col-login {
+	display: inline-block;
+	max-width: 200px;
+	overflow: hidden;
+	color: var(--jmeet-color-text-secondary);
+	font-variant-numeric: tabular-nums;
+	text-overflow: ellipsis;
+	vertical-align: bottom;
+	white-space: nowrap;
+}
+
+// 操作列文字链接：图标 + 文字（主色），危险操作红色。
+.jmeet-action-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+
+	// 图标开头的链接基线在图标底边，与文字开头的链接同行排列时按基线对齐
+	// 会出现文字一高一低；一律垂直居中（对行内级盒子生效）
+	vertical-align: middle;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--jmeet-color-action-link);
+	cursor: pointer;
+	font-size: var(--jmeet-font-size-sm);
+	font-family: var(--jmeet-typography-font-family);
+	line-height: 20px;
+	text-decoration: none;
+	white-space: nowrap;
+
+	.anticon {
+		width: 16px;
+		height: 16px;
+		font-size: var(--jmeet-font-size-md);
+	}
+
+	&:hover:not(:disabled) {
+		color: var(--jmeet-color-action-primary-dark);
+		text-decoration: underline;
+	}
+
+	&--danger {
+		color: var(--jmeet-color-action-danger);
+
+		&:hover:not(:disabled) {
+			color: color-mix(in srgb, var(--jmeet-color-action-danger) 80%, black);
+		}
+	}
+
+	&:disabled {
+		color: var(--jmeet-color-text-disabled);
+		cursor: not-allowed;
+	}
+}
+
+.jmeet-loading-skeleton {
+	display: grid;
+	gap: var(--jmeet-space-2);
+}
+
+.jmeet-loading-skeleton__line {
+	height: 12px;
+	border-radius: var(--jmeet-radius-sm);
+	background: linear-gradient(
+		90deg,
+		var(--jmeet-color-surface-hover) 25%,
+		var(--jmeet-color-surface-variant) 50%,
+		var(--jmeet-color-surface-hover) 75%
+	);
+	background-size: 200% 100%;
+	animation: jmeet-shimmer 1.4s ease-in-out infinite;
+}
+
+.jmeet-loading-skeleton--stat {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.jmeet-loading-skeleton--stat .jmeet-loading-skeleton__line {
+	height: 120px;
+	border-radius: var(--jmeet-radius-lg);
+}
+
+@keyframes jmeet-shimmer {
+	0% {
+		background-position: 200% 0;
+	}
+
+	100% {
+		background-position: -200% 0;
+	}
+}
+
+.jmeet-empty-state {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: var(--jmeet-space-2);
+	padding: var(--jmeet-space-12) var(--jmeet-space-6);
+	text-align: center;
+}
+
+.jmeet-empty-state__title {
+	color: var(--jmeet-color-text-primary);
+	font-size: var(--jmeet-font-size-sm);
+	font-weight: var(--jmeet-font-weight-regular);
+}
+
+.jmeet-empty-state__description {
+	max-width: 420px;
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-sm);
+}
+
+// ==== 审计/列表面板列宽（批次 3 任务 3 re-home：原 _settings-rooms 尾部，
+// 与本件既有 .jmeet-list-panel 容器块、.col-login 团圆；死类 .col-index 已剔）====
+.jmeet-list-panel th {
+	white-space: nowrap;
+	color: var(--jmeet-color-text-secondary);
+	font-weight: var(--jmeet-font-weight-semibold);
+}
+
+.jmeet-list-panel th,
+.jmeet-list-panel td {
+	text-align: left;
+	vertical-align: middle;
+}
+
+.jmeet-list-panel .col-event {
+	width: 220px;
+
+	.event-cell {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--jmeet-space-2);
+
+		.anticon {
+			width: 16px;
+			height: 16px;
+			font-size: var(--jmeet-font-size-md);
+			color: var(--jmeet-color-text-secondary);
+		}
+	}
+}
+
+.jmeet-list-panel .col-actor {
+	width: 180px;
+}
+
+.jmeet-list-panel .col-ip {
+	width: 140px;
+	white-space: nowrap;
+}
+
+.jmeet-list-panel .col-result {
+	width: 96px;
+	text-align: center;
+}
+
+.jmeet-list-panel tbody tr {
+	transition: background-color 120ms ease;
+
+	&:hover {
+		background: var(--jmeet-color-surface-hover);
+	}
+}
+
+.jmeet-list-panel .col-time {
+	width: 180px;
+	white-space: nowrap;
+}
+
+// ==== filter-bar 移动端堆叠（批次 3 任务 3 re-home：原 _settings-login.scss:941-948）====
+// 批次2 __tools 结构行承接行布局后，移动端纵向堆叠+拉伸须落在工具行上——
+// 外层 bar 仅一个子元素，只覆盖外层即被架空（修复轮1）。
+@include design-tokens.ov-mobile-down {
+	.jmeet-filter-bar,
+	.jmeet-filter-bar__tools {
+		flex-direction: column;
+		align-items: stretch;
+	}
+}
+
+// ==== 操作列 EP 文字钮（用户裁决：表格操作列向 EP 风格对齐） ====
+// EP text button：主色文字、透明底、hover 淡蓝底（ECF5FF 同档）。
+// 作用于各列表操作列（actions-cell 内的按钮），不影响表格外按钮。
+.jmeet-data-table td.actions-cell .jmeet-button {
+	appearance: none;
+	border: none;
+	background: transparent;
+	color: var(--jmeet-color-action-link);
+	font-size: var(--jmeet-font-size-sm);
+	padding: 0 8px;
+	border-radius: var(--jmeet-radius-sm);
+	transition: background-color 160ms ease, color 160ms ease;
+
+	.anticon {
+		font-size: 14px;
+	}
+
+	&:hover:not(:disabled) {
+		background: color-mix(in srgb, var(--jmeet-color-action-primary) 10%, transparent);
+	}
+
+	&:disabled {
+		color: var(--jmeet-color-text-hint, var(--jmeet-color-text-tertiary));
+		cursor: not-allowed;
+	}
+}

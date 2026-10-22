@@ -1,0 +1,9 @@
+<span class="jmeet-status-tag" [class]="'jmeet-status-tag--' + variant()">
+	@if (showDot()) {
+		<i class="jmeet-status-tag__dot" aria-hidden="true"></i>
+	}
+	@if (icon()) {
+		<nz-icon [nzType]="(icon()) | nzIconType" class="jmeet-status-tag__icon" aria-hidden="true" />
+	}
+	{{ label() }}
+</span>

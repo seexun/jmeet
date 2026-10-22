@@ -1,0 +1,139 @@
+@use '_design-tokens.scss';
+
+// 会议域深绘（批次 2 §5.4）：定制成员项投影内容——徽章（主持人/举手/焦点/认证）与管理
+// 控件钮（静音/邀请发言/更多）对齐 42px 行语言；全 --jmeet-meeting-*（warning 等值令牌
+// 批次 5 落地 --jmeet-meeting-warning*；badge-* 角色徽章豁免正式化为批次 5 任务 3/4 账）。
+// 行 padding 交由 participant-panel-item 基座层供给（42px 行节奏）。
+.participant-item-container {
+	width: 100%;
+	align-items: center;
+
+	.owner-badge,
+	.admin-badge,
+	.moderator-badge {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 1;
+
+		.anticon {
+			display: block;
+			line-height: 1;
+		}
+	}
+
+	.verified-identity {
+		display: inline-flex;
+		align-items: center;
+		color: var(--jmeet-meeting-primary);
+		.anticon { width: 15px; height: 15px; font-size: 15px; } // icon/decoration sizing
+	}
+
+	// 主持人徽标（浅主色底 + 4px 圆角 tag）
+	.primary-host-badge {
+		display: inline-flex;
+		align-items: center;
+		height: 20px;
+		padding: 0 6px;
+		border: 1px solid color-mix(in srgb, var(--jmeet-meeting-primary) 24%, transparent);
+		border-radius: var(--jmeet-radius-sm);
+		background: var(--jmeet-meeting-primary-soft);
+		color: var(--jmeet-meeting-primary);
+		font-size: var(--jmeet-font-size-xs);
+		font-weight: var(--jmeet-font-weight-semibold);
+		line-height: 1;
+	}
+
+	.raised-hand-badge {
+		display: inline-grid;
+		width: 22px;
+		height: 22px;
+		place-items: center;
+		border-radius: var(--jmeet-radius-sm);
+		background: color-mix(in srgb, var(--jmeet-meeting-warning) 16%, transparent);
+		color: var(--jmeet-meeting-warning);
+		.anticon { width: 14px; height: 14px; font-size: 14px; } // icon/decoration sizing
+	}
+
+	// 角色徽章三色（遗留清扫·快赢③正式化）：owner/moderator 为 meeting badge 等值令牌
+	// （amber-750 / steel-500 系），admin 与 meeting primary 同值（blue-600 系）直接对号——
+	// 全局 badge 豁免面与 replace-strip 记账自此退役（四处消费点 = 本文件三处 +
+	// participant-panel-item 的 moderator 一处，契约同批锁定）。
+	.owner-badge {
+		color: var(--jmeet-meeting-badge-owner);
+	}
+
+	.admin-badge {
+		color: var(--jmeet-meeting-primary);
+	}
+
+	.moderator-badge {
+		color: var(--jmeet-meeting-badge-moderator);
+	}
+}
+
+.force-disconnect-btn,
+.remove-moderator-btn {
+	color: var(--jmeet-meeting-danger);
+}
+
+.make-moderator-btn {
+	color: var(--jmeet-meeting-warning);
+}
+
+.mute-participant-btn {
+	color: var(--jmeet-meeting-primary);
+}
+
+// 管理控件：会议幽灵图标钮（28px、hover stage soft 底），随成员行 hover 显现
+//（显现时机由 participant-panel-item 基座层 .external-elements 的 opacity 承载）
+.moderation-controls {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+
+	// 幽灵图标钮：必须显式重置 UA 的 outset 边框/灰底（这些是裸原生按钮）
+	button {
+		appearance: none;
+		width: 28px;
+		height: 28px;
+		padding: 0;
+		border: none;
+		border-radius: var(--jmeet-radius-sm);
+		background: transparent;
+		color: var(--jmeet-meeting-text-secondary);
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		transition: background-color 150ms ease, color 150ms ease;
+
+		.anticon { font-size: 16px; width: 16px; height: 16px; }
+
+		&:hover:not(:disabled) {
+			background: var(--jmeet-meeting-stage-bg);
+			color: var(--jmeet-meeting-text-primary);
+		}
+	}
+
+	button:focus-visible { outline: none;
+			box-shadow: var(--jmeet-focus-ring, 0 0 0 2px var(--jmeet-meeting-primary)); outline-offset: 2px; }
+}
+
+.more-actions-btn { color: var(--jmeet-meeting-text-secondary); }
+
+::ng-deep .member-actions-menu .danger-menu-item,
+::ng-deep .member-actions-menu .danger-menu-item .anticon { color: var(--jmeet-meeting-danger); }
+
+@media (prefers-reduced-motion: reduce) {
+	.moderation-controls button { transition: none; }
+}
+
+.spotlight-badge {
+	padding: 0 6px;
+	border-radius: 8px;
+	background: color-mix(in srgb, var(--jmeet-meeting-warning) 18%, transparent);
+	color: var(--jmeet-meeting-warning-text);
+	font-size: 11px;
+	line-height: 16px;
+}

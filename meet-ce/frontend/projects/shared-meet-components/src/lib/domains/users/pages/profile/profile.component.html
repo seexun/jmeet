@@ -1,0 +1,315 @@
+<div class="jmeet-stack-sections profile-workspace-page">
+	<jmeet-page-header>
+		<span page-title>{{
+			(isOwnProfile() ? 'USERS.PROFILE.TITLE_OWN' : 'USERS.PROFILE.TITLE_OTHER') | translate
+		}}</span>
+	</jmeet-page-header>
+
+	@if (isLoading()) {
+		<jmeet-loading-skeleton variant="card" [rows]="4" />
+	} @else if (targetUser()) {
+		<div class="profile-content">
+			<input
+				#avatarInput
+				type="file"
+				accept="image/png,image/jpeg,image/webp"
+				hidden
+				(change)="onAvatarSelected($event)"
+			/>
+			<section class="jmeet-card profile-hero">
+				<div class="profile-avatar" [class.profile-avatar--editable]="isOwnProfile()">
+					@if (targetUser()!.avatarDataUrl) {
+						<img class="profile-avatar__img" [src]="targetUser()!.avatarDataUrl" alt="" />
+					} @else {
+						<span class="avatar-initials">{{ UsersUiUtils.getInitials(targetUser()!.name) }}</span>
+					}
+					@if (isOwnProfile()) {
+						<button
+							type="button"
+							class="profile-avatar__edit"
+							(click)="avatarInput.click()"
+							[disabled]="avatarBusy()"
+							nz-tooltip
+							[nzTooltipTitle]="'USERS.PROFILE.AVATAR_UPLOAD' | translate"
+						>
+							<nz-icon nzType="camera" />
+						</button>
+					}
+				</div>
+				<div class="profile-hero__info">
+					<div class="profile-hero__name-row">
+						@if (isOwnProfile() && editingName()) {
+							<input
+								nz-input
+								class="profile-name-input"
+								[value]="nameDraft()"
+								(input)="nameDraft.set($any($event.target).value)"
+								(keydown.enter)="saveName()"
+								(keydown.escape)="cancelEditName()"
+								maxlength="64"
+								autofocus
+							/>
+							<button
+								type="button"
+								class="jmeet-button jmeet-button--ghost jmeet-button--icon"
+								[disabled]="!nameDraft().trim()"
+								(click)="saveName()"
+								nz-tooltip
+								[nzTooltipTitle]="'USERS.PROFILE.SAVE_NAME' | translate"
+							>
+								<nz-icon nzType="check" />
+							</button>
+							<button
+								type="button"
+								class="jmeet-button jmeet-button--ghost jmeet-button--icon"
+								(click)="cancelEditName()"
+								nz-tooltip
+								[nzTooltipTitle]="'USERS.PROFILE.DIALOG_CANCEL' | translate"
+							>
+								<nz-icon nzType="close" />
+							</button>
+						} @else {
+							<h2 class="profile-name">{{ targetUser()!.name }}</h2>
+							<jmeet-status-tag
+								[label]="UsersUiUtils.getRoleTranslationKey(targetUser()!.role) | translate"
+								[variant]="roleVariant(targetUser()!.role)"
+							/>
+							@if (isOwnProfile()) {
+								<button
+									type="button"
+									class="jmeet-button jmeet-button--ghost jmeet-button--icon"
+									(click)="startEditName()"
+									nz-tooltip
+									[nzTooltipTitle]="'USERS.PROFILE.EDIT_NAME' | translate"
+								>
+									<nz-icon nzType="edit" />
+								</button>
+							}
+						}
+					</div>
+					<p class="profile-hero__meta">
+						<span class="profile-hero__meta-item">
+							<span class="meta-label">{{ 'USERS.PROFILE.LOGIN_NAME' | translate }}</span>
+							<span class="info-value monospace">{{ targetUser()!.loginName }}</span>
+						</span>
+						<span class="profile-hero__meta-divider" aria-hidden="true"></span>
+						<span class="profile-hero__meta-item">
+							<nz-icon nzType="calendar" class="meta-icon" />
+							{{ 'USERS.PROFILE.USER_SINCE' | translate }}
+							{{ UsersUiUtils.formatDate(targetUser()!.registrationDate) }}
+						</span>
+					</p>
+				</div>
+			</section>
+
+			@if (isOwnProfile()) {
+				<div class="jmeet-card profile-security-panel">
+					<header class="jmeet-form-card__header">
+						<div class="jmeet-page-header__main">
+							<h2 class="jmeet-text--section-title">
+								{{ 'USERS.PROFILE.SECURITY_TITLE' | translate }}
+							</h2>
+						</div>
+					</header>
+
+					<div class="admin-action-row">
+						<div class="action-info">
+							<nz-icon nzType="lock" class="action-icon" />
+							<div>
+								<h4 class="action-title">{{ 'USERS.PROFILE.SECURITY_PASSWORD_TITLE' | translate }}</h4>
+							</div>
+						</div>
+						<div class="action-controls">
+							<button
+								type="button"
+								class="jmeet-button jmeet-button--outline"
+								(click)="openChangePassword()"
+							>
+								{{ 'USERS.PROFILE.PASSWORD_DIALOG_TITLE' | translate }}
+							</button>
+						</div>
+					</div>
+
+					<nz-divider class="action-divider" />
+
+					<div class="admin-action-row">
+						<div class="action-info">
+							<nz-icon nzType="monitor" class="action-icon" />
+							<div>
+								<h4 class="action-title">{{ 'USERS.PROFILE.SESSIONS_TITLE' | translate }}</h4>
+							</div>
+						</div>
+						<div class="action-controls">
+							<button
+								type="button"
+								class="jmeet-button jmeet-button--outline"
+								(click)="loadSessions()"
+							>
+								{{ 'USERS.PROFILE.SESSIONS_REFRESH' | translate }}
+							</button>
+						</div>
+					</div>
+
+					<div class="session-list">
+						@for (session of pagedSessions(); track session.sessionId) {
+							<div class="session-row">
+								<div [title]="session.userAgent">
+									<strong>{{
+										describeDevice(session.userAgent) ||
+											('USERS.PROFILE.SESSIONS_UNKNOWN_DEVICE' | translate)
+									}}</strong>
+									<span
+										>{{
+											session.ipAddress ||
+												('USERS.PROFILE.SESSIONS_UNKNOWN_IP' | translate)
+									}}
+									· {{ session.createdAt | date: 'yyyy-MM-dd HH:mm' }}</span
+									>
+								</div>
+								<button
+									type="button"
+									class="jmeet-button jmeet-button--outline"
+									(click)="revokeSession(session.sessionId)"
+								>
+									{{ 'USERS.PROFILE.SESSIONS_REVOKE' | translate }}
+								</button>
+							</div>
+						} @empty {
+							<p class="empty-note">{{ 'USERS.PROFILE.SESSIONS_EMPTY' | translate }}</p>
+						}
+					</div>
+					@if (sessions().length > sessionsPageSize()) {
+						<div class="profile-sessions-pager">
+							<jmeet-pagination
+								[length]="sessions().length"
+								[pageIndex]="sessionsPageIndex()"
+								[pageSize]="sessionsPageSize()"
+								[pageSizeOptions]="[5, 10, 20]"
+								(pageChange)="onSessionsPageChange($event)"
+							/>
+						</div>
+					}
+				</div>
+
+				<div class="jmeet-card profile-preferences-panel">
+					<header class="jmeet-form-card__header">
+						<div class="jmeet-page-header__main">
+							<h2 class="jmeet-text--section-title">
+								{{ 'USERS.PROFILE.PREFERENCES_TITLE' | translate }}
+							</h2>
+						</div>
+					</header>
+
+					<div class="admin-action-row">
+						<div class="action-info">
+							<nz-icon nzType="global" class="action-icon" />
+							<div>
+								<h4 class="action-title">{{ 'USERS.PROFILE.LANGUAGE_TITLE' | translate }}</h4>
+							</div>
+						</div>
+						<div class="action-controls">
+							<nz-select
+								class="profile-lang-select"
+								[ngModel]="translateService.getCurrentLanguage()"
+								(ngModelChange)="onLanguageChange($any($event))"
+							>
+								<nz-option nzValue="cn" nzLabel="简体中文" />
+								<nz-option nzValue="en" nzLabel="English" />
+							</nz-select>
+						</div>
+					</div>
+
+					<nz-divider class="action-divider" />
+
+					<div class="admin-action-row">
+						<div class="action-info">
+							<nz-icon nzType="bell" class="action-icon" />
+							<div>
+								<h4 class="action-title">{{ 'USERS.PROFILE.MUTE_TITLE' | translate }}</h4>
+							</div>
+						</div>
+						<div class="action-controls">
+							<nz-switch
+								[ngModel]="targetUser()!.notificationsMuted ?? false"
+								(ngModelChange)="onMuteChange($any($event))"
+							/>
+						</div>
+					</div>
+				</div>
+			}
+
+			@if (isAdminViewing() && !isRootAdmin()) {
+				<div class="jmeet-card profile-admin-actions-panel">
+					<header class="jmeet-page-header">
+						<div class="jmeet-page-header__main">
+							<h2 class="jmeet-text--section-title">
+								{{ 'USERS.PROFILE.ADMIN_ACTIONS_TITLE' | translate }}
+							</h2>
+							<p class="jmeet-text--body-secondary">
+								{{ 'USERS.PROFILE.ADMIN_ACTIONS_SUBTITLE' | translate }}
+								<strong>{{ targetUser()!.userId }}</strong>
+							</p>
+						</div>
+					</header>
+
+					<div class="admin-action-row">
+						<div class="action-info">
+							<nz-icon nzType="user" class="action-icon" />
+							<div>
+								<h4 class="action-title">{{ 'USERS.PROFILE.CHANGE_ROLE_TITLE' | translate }}</h4>
+								<p class="action-description">
+									{{ 'USERS.PROFILE.CHANGE_ROLE_DESCRIPTION' | translate }}
+								</p>
+							</div>
+						</div>
+						<div class="action-controls">
+							<button class="jmeet-button jmeet-button--primary" (click)="onUpdateRole()">
+								{{ 'USERS.PROFILE.UPDATE_ROLE' | translate }}
+							</button>
+						</div>
+					</div>
+
+					<nz-divider class="action-divider" />
+
+					<div class="admin-action-row">
+						<div class="action-info">
+							<nz-icon nzType="key" class="action-icon" />
+							<div>
+								<h4 class="action-title">{{ 'USERS.PROFILE.RESET_PASSWORD_TITLE' | translate }}</h4>
+								<p class="action-description">
+									{{ 'USERS.PROFILE.RESET_PASSWORD_DESCRIPTION' | translate }}
+								</p>
+							</div>
+						</div>
+						<div class="action-controls">
+							<button class="jmeet-button jmeet-button--outline" (click)="onResetPassword()">
+								{{ 'USERS.PROFILE.RESET_PASSWORD' | translate }}
+							</button>
+						</div>
+					</div>
+
+					<nz-divider class="action-divider" />
+
+					<div class="admin-action-row">
+						<div class="action-info">
+							<nz-icon nzType="delete" class="action-icon danger-icon" />
+							<div>
+								<h4 class="action-title danger-text">
+									{{ 'USERS.PROFILE.DELETE_USER_TITLE' | translate }}
+								</h4>
+								<p class="action-description">
+									{{ 'USERS.PROFILE.DELETE_USER_DESCRIPTION' | translate }}
+								</p>
+							</div>
+						</div>
+						<div class="action-controls">
+							<button class="jmeet-button jmeet-button--danger" (click)="onDeleteUser()">
+								{{ 'USERS.PROFILE.DELETE_USER' | translate }}
+							</button>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	}
+</div>

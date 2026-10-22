@@ -1,0 +1,124 @@
+// 设置扩展（布局设置）——经 *ovSettingsPanelGeneralAdditionalElements 投影进设置面板
+// GENERAL 分节的 .additional-elements-section。行式 22px 节奏对齐设置面板：
+// 分节头 11px 三级字色、radio 行 label 13px + 行内说明 12px 三级字色、
+// 计数 chip primary-soft 底主色字。radio/slider 控件皮由全局 _nz-theme 供给，不重复造。
+.layout-section {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 0;
+	margin: 0;
+
+	// 分节头：11px 三级字色（对齐设置分节头语言）
+	.section-header {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+
+		.section-icon {
+			color: var(--jmeet-meeting-text-tertiary);
+			font-size: 14px;
+			width: 14px;
+			height: 14px;
+		}
+
+		.section-title {
+			margin: 0;
+			font-size: 11px;
+			line-height: 22px;
+			font-weight: 600;
+			letter-spacing: 0.5px;
+			text-transform: uppercase;
+			color: var(--jmeet-meeting-text-tertiary);
+		}
+	}
+
+	// 布局模式 radio 行：label 22px 节奏 + 行内说明三级字色，hover stage soft 底
+	.layout-mode-container {
+		.layout-radio-group {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+
+			.layout-radio-option {
+				margin: 0;
+				padding: 6px 10px;
+				border-radius: var(--jmeet-radius-md);
+				transition: background-color 160ms ease;
+
+				&:hover {
+					background: var(--jmeet-meeting-stage-bg);
+				}
+
+				.radio-content {
+					display: flex;
+					flex-direction: column;
+					gap: 2px;
+					margin-left: 8px;
+
+					.radio-label {
+						font-size: 13px;
+						line-height: 22px;
+						font-weight: 500;
+						color: var(--jmeet-meeting-text-primary);
+					}
+
+					.radio-description {
+						font-size: 12px;
+						line-height: 22px;
+						color: var(--jmeet-meeting-text-tertiary);
+					}
+				}
+			}
+		}
+	}
+
+	// 参会人数行：label + 行内说明 + 滑杆 + soft 主色计数 chip
+	.participant-count-container {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		padding: 0;
+		border: none;
+		border-radius: 0;
+
+		.input-label {
+			display: block;
+			margin: 0;
+			font-size: 13px;
+			line-height: 22px;
+			font-weight: 500;
+			color: var(--jmeet-meeting-text-primary);
+		}
+
+		.helper-text {
+			margin: 0;
+			font-size: 12px;
+			line-height: 22px;
+			color: var(--jmeet-meeting-text-tertiary);
+		}
+
+		.slider-container {
+			display: flex;
+			align-items: center;
+			gap: 16px;
+			margin-top: 4px;
+
+			.participant-slider {
+				flex: 1;
+			}
+
+			.participant-count-value {
+				min-width: 32px;
+				padding: 0 8px;
+				text-align: center;
+				font-size: 13px;
+				line-height: 22px;
+				font-weight: 600;
+				color: var(--jmeet-meeting-primary);
+				background-color: var(--jmeet-meeting-primary-soft);
+				border-radius: var(--jmeet-radius-sm);
+			}
+		}
+	}
+}

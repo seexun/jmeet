@@ -1,0 +1,106 @@
+services:
+  meet:
+    image: ${JMEET_IMAGE:-seexun/jmeet-ce:1.0.0}
+    build:
+      context: ..
+      dockerfile: meet-ce/docker/Dockerfile
+      args:
+        BASE_HREF: ${MEET_BASE_HREF:-/meet/}
+        INSTALL_SAFE_CHAIN: ${INSTALL_SAFE_CHAIN:-false}
+        NPM_REGISTRY: ${NPM_REGISTRY:-https://registry.npmjs.org}
+    restart: unless-stopped
+    expose:
+      - "6080"
+    environment:
+      NODE_ENV: production
+      SERVER_PORT: "6080"
+      SERVER_TRUST_PROXY: "true"
+      SERVER_CORS_ORIGIN: https://${MEET_DOMAIN}
+      MEET_BASE_URL: https://${MEET_DOMAIN}
+      MEET_BASE_PATH: ${MEET_BASE_PATH:-/meet}
+      MEET_NAME_ID: jmeet
+      MEET_INITIAL_ADMIN_USER: ${MEET_INITIAL_ADMIN_USER:-admin}
+      MEET_INITIAL_ADMIN_PASSWORD: ${MEET_INITIAL_ADMIN_PASSWORD:?Set MEET_INITIAL_ADMIN_PASSWORD in deployment/.env}
+      MEET_MONGO_URI: mongodb://mongodb:27017/?directConnection=true
+      MEET_REDIS_HOST: redis
+      MEET_REDIS_PORT: "6379"
+      MEET_REDIS_PASSWORD: ${REDIS_PASSWORD:?Set REDIS_PASSWORD in deployment/.env}
+      LIVEKIT_URL: wss://${LIVEKIT_DOMAIN}
+      LIVEKIT_URL_PRIVATE: ws://livekit:7880
+      LIVEKIT_API_KEY: ${LIVEKIT_API_KEY:?Set LIVEKIT_API_KEY in deployment/.env}
+      LIVEKIT_API_SECRET: ${LIVEKIT_API_SECRET:?Set LIVEKIT_API_SECRET in deployment/.env}
+      TZ: ${TZ:-Asia/Shanghai}
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      livekit:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:6080/meet/').then(r=>{if(r.status>=500)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  livekit:
+    image: ${LIVEKIT_IMAGE:-livekit/livekit-server:v1.13.4}
+    restart: unless-stopped
+    environment:
+      LIVEKIT_CONFIG: |
+        port: 7880
+        log_level: ${LIVEKIT_LOG_LEVEL:-info}
+        rtc:
+          tcp_port: 7881
+          udp_port: 7882
+          use_external_ip: ${LIVEKIT_USE_EXTERNAL_IP:-true}
+        redis:
+          address: redis:6379
+          password: "${REDIS_PASSWORD}"
+        keys:
+          "${LIVEKIT_API_KEY}": "${LIVEKIT_API_SECRET}"
+        turn:
+          enabled: true
+          udp_port: 443
+          relay_range_start: 30000
+          relay_range_end: 30100
+    ports:
+      - "7881:7881/tcp"
+      - "7882:7882/udp"
+      - "443:443/udp"
+      - "30000-30100:30000-30100/udp"
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  mongodb:
+    image: ${MONGO_IMAGE:-mongo:8.2.12}
+    restart: unless-stopped
+    volumes:
+      - mongodb-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  redis:
+    image: ${REDIS_IMAGE:-redis:7.4.9-alpine}
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}", "--appendonly", "yes"]
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "REDISCLI_AUTH=\"$${REDIS_PASSWORD}\" redis-cli ping | grep PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+volumes:
+  caddy-data:
+  caddy-config:
+  mongodb-data:
+  redis-data:

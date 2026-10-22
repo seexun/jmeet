@@ -1,0 +1,122 @@
+<jmeet-meeting-toolbar id="toolbar">
+	<div class="toolbar-container">
+		<jmeet-meeting-topbar
+			class="toolbar-topbar"
+			[roomName]="showRoomName() ? roomName() : ''"
+			[elapsed]="meetingElapsed()"
+			[recordingStarted]="isRecordingStarted()"
+			[recordingTime]="recordingTime()"
+			[quality]="localConnectionQuality()"
+			[layoutMode]="smartLayoutService.layoutMode()"
+			(layoutSelected)="setLayoutMode($event)"
+			(activitiesClicked)="openRecordingActivityPanel()"
+		/>
+		@if (isConnectionLost()) {
+			<div class="connection-alert" role="status">
+				<nz-icon nzType="disconnect" />
+				<span>{{ 'TOOLBAR.RECONNECTING' | translate }}</span>
+			</div>
+		}
+
+		<!-- Media buttons: bottom-centered floating pill -->
+		<div class="toolbar-pill">
+			<div class="media-buttons-container" id="media-buttons-container">
+				<ov-toolbar-media-buttons
+					[showCameraButton]="showCameraButton()"
+					[isCameraEnabled]="isCameraEnabled()"
+					[cameraMuteChanging]="cameraMuteChanging()"
+					[showMicrophoneButton]="showMicrophoneButton()"
+					[isMicrophoneEnabled]="isMicrophoneEnabled()"
+					[microphoneMuteChanging]="microphoneMuteChanging()"
+					[showScreenshareButton]="showScreenshareButton()"
+					[isScreenShareEnabled]="isScreenShareEnabled()"
+					[isFirefoxBrowser]="isFirefoxBrowser()"
+					[hasVideoDevices]="hasVideoDevices()"
+					[hasAudioDevices]="hasAudioDevices()"
+					[isConnectionLost]="isConnectionLost()"
+					[showMoreOptionsButton]="showMoreOptionsButton()"
+					[showFullscreenButton]="showFullscreenButton()"
+					[showRecordingButton]="showRecordingButton()"
+					[showViewRecordingsButton]="showViewRecordingsButton()"
+					[showBackgroundEffectsButton]="showBackgroundEffectsButton()"
+					[showSettingsButton]="showSettingsButton()"
+					[isFullscreenActive]="isFullscreenActive()"
+					[recordingStatus]="recordingStatus().status"
+					[hasRoomTracksPublished]="hasRoomTracksPublished"
+					[showLeaveButton]="showLeaveButton()"
+					[toolbarAdditionalButtonsTemplate]="templateRegistry.toolbarAdditionalButtons() ?? null"
+					[additionalButtonsPosition]="additionalButtonsPosition()"
+					[toolbarLeaveButtonTemplate]="templateRegistry.toolbarLeaveButton() ?? null"
+					(cameraToggled)="toggleCamera()"
+					(microphoneToggled)="toggleMicrophone()"
+					(screenShareToggled)="toggleScreenShare()"
+					(screenTrackReplaced)="replaceScreenTrack()"
+					(fullscreenToggled)="toggleFullscreen()"
+					(recordingToggled)="toggleRecording()"
+					(viewRecordingsClicked)="onViewRecordingsClicked.emit()"
+					(backgroundEffectsToggled)="toggleBackgroundEffects()"
+					(settingsToggled)="toggleSettings()"
+					(leaveClicked)="disconnect()"
+				>
+					<!-- Inject additional menu items via content projection -->
+						<ng-container *ovToolbarMoreOptionsAdditionalMenuItems>
+							<ng-container
+								*ngTemplateOutlet="templateRegistry.toolbarMoreOptionsAdditionalMenuItems() ?? null"
+							/>
+						</ng-container>
+
+						<!-- Dock 收起态的面板入口（成员/聊天）：投影进媒体按钮组的更多选项与离开会议之间，
+						     离开红钮保持最右（腾讯会议做法）。行为复用 toolbar 既有 toggle/信号，无新逻辑。 -->
+						@if (showParticipantsPanelButton() || showChatPanelButton()) {
+							<span class="toolbar-panel-divider" toolbarPanelEntry></span>
+						}
+						@if (showActivitiesPanelButton()) {
+							<button
+								type="button"
+								id="toolbar-activities-entry-btn"
+								class="tm-btn"
+								toolbarPanelEntry
+								[class.tm-btn--active]="isActivitiesOpened()"
+								(click)="toggleActivitiesPanel('')"
+								[attr.aria-label]="'TOOLBAR.ACTIVITIES' | translate"
+							>
+								<span class="tm-btn__icon"><nz-icon nzType="appstore" /></span>
+								<span class="tm-btn__label">{{ 'TOOLBAR.ACTIVITIES' | translate }}</span>
+							</button>
+						}
+						@if (showParticipantsPanelButton()) {
+							<button
+								type="button"
+								id="toolbar-participants-entry-btn"
+								class="tm-btn"
+								toolbarPanelEntry
+								[class.tm-btn--active]="isParticipantsOpened()"
+								(click)="toggleParticipantsPanel()"
+								[attr.aria-label]="'TOOLBAR.PARTICIPANTS' | translate"
+							>
+								<span class="tm-btn__icon"><nz-icon nzType="user" /></span>
+								<span class="tm-btn__label">{{ 'TOOLBAR.PARTICIPANTS' | translate }}</span>
+							</button>
+						}
+						@if (showChatPanelButton()) {
+							<button
+								type="button"
+								id="toolbar-chat-entry-btn"
+								class="tm-btn"
+								toolbarPanelEntry
+								[class.tm-btn--active]="isChatOpened()"
+								(click)="toggleChatPanel()"
+								[attr.aria-label]="'TOOLBAR.CHAT' | translate"
+							>
+								<span class="tm-btn__icon"><nz-icon nzType="message" /></span>
+								<span class="tm-btn__label">{{ 'TOOLBAR.CHAT' | translate }}</span>
+								@if (unreadMessages() > 0) {
+									<span class="tm-btn__dot"></span>
+								}
+							</button>
+						}
+					</ov-toolbar-media-buttons>
+			</div>
+		</div>
+	</div>
+</jmeet-meeting-toolbar>

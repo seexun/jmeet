@@ -1,0 +1,32 @@
+<div class="member-form-dialog-page">
+	<h2 class="dialog-title">
+		<nz-icon [nzType]="(data.initialData ? 'edit' : 'person_add') | nzIconType" class="dialog-icon" />
+		<span class="title-copy">
+			<span class="title-text">
+				{{
+					data.initialData
+						? ('ROOM_MEMBERS.ADD.TITLE_EDIT' | translate)
+						: ('ROOM_MEMBERS.ADD.TITLE_ADD' | translate)
+				}}
+			</span>
+			<span class="title-subtitle jmeet-text--caption">
+				{{
+					data.initialData
+						? ('ROOM_MEMBERS.ADD.SUBTITLE_EDIT' | translate)
+						: ('ROOM_MEMBERS.ADD.SUBTITLE_ADD' | translate)
+				}}
+			</span>
+		</span>
+	</h2>
+
+	<div class="dialog-content">
+		<ov-member-form
+			[roomRoles]="data.roomRoles"
+			[roomOwner]="data.roomOwner"
+			[initialData]="data.initialData"
+			[lockIdentity]="false"
+			(memberSubmitted)="onMemberSubmitted($event)"
+			(cancelled)="onCancelled()"
+		/>
+	</div>
+</div>

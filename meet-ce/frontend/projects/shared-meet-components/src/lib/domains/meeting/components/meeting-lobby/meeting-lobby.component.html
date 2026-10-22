@@ -1,0 +1,95 @@
+<div class="jmeet-prejoin-page">
+	<div class="jmeet-prejoin-shell">
+		<header class="jmeet-prejoin-brand">
+			<span class="jmeet-prejoin-mark" aria-hidden="true"><nz-icon nzType="video-camera" /></span>
+			<div class="jmeet-prejoin-brand-copy">
+				<div class="jmeet-prejoin-brand-line">
+					<h1 class="jmeet-prejoin-title">{{ roomName() }}</h1>
+					<div class="jmeet-prejoin-meta">
+						<span><nz-icon nzType="safety-certificate" />{{ 'LOBBY.SECURE_MEETING' | translate }}</span>
+						@if (isE2EEEnabled()) {
+							<span class="jmeet-prejoin-encryption" nz-tooltip [nzTooltipTitle]="'LOBBY.E2EE_BADGE_TOOLTIP' | translate">
+								<nz-icon nzType="lock" />{{ 'LOBBY.E2EE_BADGE_TEXT' | translate }}
+							</span>
+						}
+					</div>
+				</div>
+			</div>
+			@if (showBackButton()) {
+				<button class="jmeet-button jmeet-button--ghost jmeet-prejoin-back" (click)="onBackClick()">
+					<nz-icon nzType="arrow-left" />
+					<span>{{ backButtonText() | translate }}</span>
+				</button>
+			}
+		</header>
+
+		<section class="jmeet-lobby-card" aria-label="{{ 'LOBBY.MEETING_ACCESS' | translate }}">
+			<div class="jmeet-lobby-heading">
+				<div class="jmeet-lobby-heading-icon">
+					<nz-icon [nzType]="(roomClosed() ? 'lock' : !canJoinMeeting() ? 'block' : 'person') | nzIconType" />
+				</div>
+				<div>
+					<h2 class="jmeet-text--section-title">{{ roomClosed() ? ('LOBBY.ROOM_CLOSED_TITLE' | translate) : !canJoinMeeting() ? ('LOBBY.ACCESS_RESTRICTED_TITLE' | translate) : ('LOBBY.IDENTITY_TITLE' | translate) }}</h2>
+					<p class="jmeet-text--body-secondary">{{ roomClosed() ? ('LOBBY.ROOM_CLOSED_SUBTITLE' | translate) : !canJoinMeeting() ? ('LOBBY.ACCESS_RESTRICTED_SUBTITLE' | translate) : ('LOBBY.IDENTITY_SUBTITLE' | translate) }}</p>
+				</div>
+			</div>
+
+			@if (!roomClosed() && canJoinMeeting()) {
+				<form [formGroup]="participantForm()" (ngSubmit)="onFormSubmit()" class="jmeet-lobby-form">
+					@if (participantForm().get('name')?.disabled) {
+						<div class="jmeet-lobby-identity">
+							<div class="jmeet-lobby-avatar">{{ participantForm().get('name')?.value?.charAt(0) || 'U' }}</div>
+							<div class="jmeet-lobby-identity-info">
+								<span class="jmeet-text--caption">{{ 'LOBBY.CURRENT_IDENTITY' | translate }}</span>
+								<strong>{{ participantForm().get('name')?.value }}</strong>
+							</div>
+							<span class="jmeet-lobby-verified"><nz-icon nzType="safety-certificate" />{{ 'LOBBY.VERIFIED' | translate }}</span>
+						</div>
+					} @else {
+						<label class="jmeet-lobby-label" for="participant-name-input">{{ 'LOBBY.NAME_LABEL' | translate }}</label>
+						<div class="jmeet-lobby-field jmeet-lobby-input" [class.has-error]="participantForm().get('name')?.invalid && participantForm().get('name')?.touched">
+							<input id="participant-name-input" [placeholder]="'LOBBY.NAME_PLACEHOLDER' | translate" formControlName="name" required />
+							<nz-icon nzType="user" class="jmeet-lobby-input-suffix" />
+						</div>
+						@if (participantForm().get('name')?.invalid && participantForm().get('name')?.touched) {
+							<p class="jmeet-lobby-input-error" role="alert">{{ 'LOBBY.NAME_REQUIRED_PREFIX' | translate }}<strong>{{ 'LOBBY.REQUIRED' | translate }}</strong></p>
+						}
+					}
+
+					@if (showE2EEKeyInput()) {
+						<label class="jmeet-lobby-label" for="participant-e2eekey-input">{{ 'LOBBY.E2EE_KEY_LABEL' | translate }}</label>
+						<div class="jmeet-lobby-field jmeet-lobby-input">
+							<input id="participant-e2eekey-input" type="password" [placeholder]="'LOBBY.E2EE_KEY_PLACEHOLDER' | translate" formControlName="e2eeKey" required />
+							<nz-icon nzType="key" class="jmeet-lobby-input-suffix" />
+						</div>
+						<p class="jmeet-lobby-input-hint">{{ 'LOBBY.E2EE_KEY_HINT' | translate }}</p>
+					}
+
+					<button
+						id="participant-name-submit"
+						type="submit"
+						class="jmeet-button jmeet-button--primary jmeet-lobby-submit"
+						[disabled]="participantForm().invalid"
+						>
+						<span>{{ 'LOBBY.CONTINUE_BUTTON' | translate }}</span><nz-icon nzType="arrow-right" />
+					</button>
+					<p class="jmeet-lobby-hint"><nz-icon nzType="info-circle" />{{ 'LOBBY.CONTINUE_HINT' | translate }}</p>
+				</form>
+			} @else {
+				<div class="jmeet-lobby-closed">
+					<nz-icon [nzType]="(roomClosed() ? 'warning' : 'block') | nzIconType" />
+					<p>{{ roomClosed() ? ('LOBBY.ROOM_CLOSED_MESSAGE' | translate) : ('LOBBY.NO_PERMISSION_MESSAGE' | translate) }}</p>
+				</div>
+			}
+
+			@if (!roomClosed() && canJoinMeeting() && showShareLink()) {
+				<div class="jmeet-lobby-invite">
+					<button type="button" class="jmeet-lobby-invite-trigger" (click)="onCopyLinkClick()">
+						<span class="jmeet-lobby-invite-lead"><nz-icon nzType="user-add" /><span>{{ 'LOBBY.INVITE_OTHERS' | translate }}</span></span>
+						<span class="jmeet-lobby-invite-action"><nz-icon nzType="link" /><span>{{ 'LOBBY.COPY_INVITE' | translate }}</span></span>
+					</button>
+				</div>
+			}
+		</section>
+	</div>
+</div>

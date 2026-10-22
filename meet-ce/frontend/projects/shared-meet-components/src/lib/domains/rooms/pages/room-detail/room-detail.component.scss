@@ -1,0 +1,64 @@
+:host {
+	display: block;
+	min-width: 0;
+	max-width: 100%;
+	min-height: 100%;
+	overflow-x: hidden;
+	background: var(--jmeet-color-surface-page);
+	color: var(--jmeet-color-text-primary);
+}
+
+// In-panel loading block (skeleton + status caption) per standard §24.
+.panel-inline-loading {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-space-3);
+	padding: var(--jmeet-space-3) 0;
+
+	jmeet-loading-skeleton {
+		width: 100%;
+	}
+}
+
+// Inline alert banner for stale-transcript warnings (standard §25).
+.panel-alert {
+	display: flex;
+	align-items: flex-start;
+	gap: var(--jmeet-space-2);
+	padding: var(--jmeet-space-3) var(--jmeet-space-4);
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-color-red-50);
+
+	.panel-alert__icon {
+		color: var(--jmeet-color-action-danger);
+		flex-shrink: 0;
+
+		.anticon {
+			width: 18px;
+			height: 18px;
+			font-size: var(--jmeet-font-size-lg);
+		}
+	}
+
+	p {
+		margin: 0;
+		color: var(--jmeet-color-text-primary);
+		font-size: var(--jmeet-font-size-xs);
+	}
+}
+
+// 录制统计摘要条：填补 Tab 与列表间空白（工具行 showSearchBox=false 左侧空置问题）
+.recordings-summary {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-meeting-stage-bg);
+	color: var(--jmeet-meeting-text-secondary);
+	font-size: var(--jmeet-typography-font-size-sm);
+
+	.summary-sep {
+		color: var(--jmeet-meeting-text-tertiary);
+	}
+}

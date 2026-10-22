@@ -1,0 +1,12 @@
+<div class="jmeet-app-shell" [class.jmeet-app-shell--sidebar-open]="sidebarOpen()">
+	<aside class="jmeet-app-shell__sidebar">
+		<ng-content select="[sidebar],nav,[nav]" />
+	</aside>
+	<header class="jmeet-app-shell__topbar">
+		<ng-content select="[topbar],header,[header]" />
+	</header>
+	<main class="jmeet-app-shell__content">
+		<ng-content select="[content],main,[main]" />
+	</main>
+	<div class="jmeet-app-shell__sidebar-backdrop" (click)="backdropClick.emit()" aria-hidden="true"></div>
+</div>

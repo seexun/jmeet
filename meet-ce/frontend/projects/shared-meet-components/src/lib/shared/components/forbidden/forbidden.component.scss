@@ -1,0 +1,105 @@
+.forbidden-page {
+	box-sizing: border-box;
+	display: grid;
+	min-height: 100dvh;
+	padding: 32px;
+	place-items: center;
+	background: var(--jmeet-color-surface-page, var(--jmeet-color-surface-page));
+	color: var(--jmeet-color-text-primary, var(--jmeet-color-text-primary));
+}
+
+.forbidden-card {
+	box-sizing: border-box;
+	width: min(100%, 480px);
+	padding: 40px;
+	border: 1px solid var(--jmeet-color-border, var(--jmeet-color-border));
+	border-radius: var(--jmeet-radius-lg);
+	background: var(--jmeet-color-surface-card);
+	box-shadow: var(--jmeet-shadow-card);
+	text-align: center;
+}
+
+.status-icon {
+	display: grid;
+	width: 56px;
+	height: 56px;
+	margin: 0 auto 20px;
+	place-items: center;
+	border-radius: 14px;
+	background: var(--jmeet-color-action-primary-light);
+	color: var(--jmeet-color-action-primary);
+
+	.anticon {
+		width: 28px;
+		height: 28px;
+		font-size: 28px; // icon/decoration sizing
+	}
+}
+
+.eyebrow {
+	margin: 0 0 8px;
+	color: var(--jmeet-color-action-primary);
+	font-size: var(--jmeet-font-size-secondary);
+	font-weight: var(--jmeet-font-weight-semibold);
+}
+
+h1 {
+	margin: 0;
+	font-size: var(--jmeet-font-size-number-xl);
+	font-weight: var(--jmeet-font-weight-semibold);
+	letter-spacing: -0.02em;
+}
+
+.description {
+	margin: 14px auto 28px;
+	color: var(--jmeet-color-text-secondary, var(--jmeet-color-text-secondary));
+	font-size: var(--jmeet-font-size-sm);
+	line-height: 1.7;
+}
+
+.actions {
+	display: flex;
+	justify-content: center;
+	gap: 12px;
+}
+
+.primary-action,
+.secondary-action {
+	display: inline-flex;
+	min-height: 44px;
+	align-items: center;
+	justify-content: center;
+	gap: 7px;
+	padding: 0 18px;
+	border-radius: 8px;
+	font-size: var(--jmeet-font-size-sm);
+	font-weight: var(--jmeet-font-weight-semibold);
+	text-decoration: none;
+	transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+
+	&:focus-visible {
+		outline: 2px solid var(--jmeet-color-action-primary);
+		outline-offset: 2px;
+	}
+}
+
+.primary-action {
+	background: var(--jmeet-color-action-primary);
+	color: var(--jmeet-color-surface-card);
+
+	&:hover { background: var(--jmeet-color-action-primary-dark); }
+}
+
+.secondary-action {
+	border: 1px solid var(--jmeet-color-border);
+	background: var(--jmeet-color-surface-card);
+	color: var(--jmeet-color-text-secondary);
+
+	&:hover { background: var(--jmeet-color-surface-variant); color: var(--jmeet-color-text-primary); }
+}
+
+@media (max-width: 560px) {
+	.forbidden-page { padding: 20px; }
+	.forbidden-card { padding: 32px 22px; }
+	.actions { flex-direction: column; }
+}

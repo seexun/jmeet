@@ -1,0 +1,13 @@
+<!-- Grid Layout Settings Button -->
+@if (showLayoutSelector()) {
+	<button
+		nz-menu-item
+		id="grid-layout-settings-btn"
+		(click)="onOpenSettings()"
+		nz-tooltip
+		[nzTooltipTitle]="isMobileView() ? '' : ('MORE_OPTIONS.LAYOUT_TOOLTIP' | translate)"
+	>
+		<nz-icon nzType="dashboard" />
+		<span>{{ 'MORE_OPTIONS.ADJUST_LAYOUT' | translate }}</span>
+	</button>
+}

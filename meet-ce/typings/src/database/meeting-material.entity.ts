@@ -1,0 +1,2 @@
+export type MeetMaterialStatus='active'|'archived';
+export interface MeetMeetingMaterial { materialId:string;roomId:string;meetingSessionId?:string;fileName:string;contentType:string;size:number;checksum:string;version:number;downloadAllowed:boolean;status:MeetMaterialStatus;uploadedBy:string;/** Resolved display name of the uploader (user name fallback loginName); present in list responses. */uploaderName?:string;createdAt:number;updatedAt:number }

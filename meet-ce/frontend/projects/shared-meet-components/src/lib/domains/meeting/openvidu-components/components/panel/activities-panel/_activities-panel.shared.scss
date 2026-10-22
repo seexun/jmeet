@@ -1,0 +1,20 @@
+// 会议域深绘（批次 5 §5.4）：录制活动分节头——分节头四要素（11px/600/uppercase/0.5px
+// 字距 + 三级字色，22px 行高节奏；media-quality section-title 同语言）。
+// 本 partial 实际三组件消费：activities-panel、recording-activity、
+// meeting-collaboration-launcher（launcher 处 .section-label 有两个渲染面——
+// partial 供给 + launcher 私有同名覆盖；私有覆盖与本文四要素逐字同值，属冗余
+// 保险，等值不冲突，删除需动 launcher 私有层非本文件职责）。
+// 全 --jmeet-meeting-*。
+.section-label {
+	margin: 0 0 10px;
+	color: var(--jmeet-meeting-text-tertiary);
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+	line-height: 22px;
+	text-transform: uppercase;
+}
+
+.section-label:not(:first-child) {
+	margin-top: 4px;
+}

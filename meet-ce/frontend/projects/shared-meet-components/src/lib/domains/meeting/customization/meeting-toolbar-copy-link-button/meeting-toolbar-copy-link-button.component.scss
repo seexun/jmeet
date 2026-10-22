@@ -1,0 +1,71 @@
+// 会议域深绘（批次 5 §5.4）：复制链接工具条入口——桌面 = tm-btn 幽灵解剖（透明底无描边、
+// hover stage soft 底、toolbar 按钮双尺寸令牌、标签 11px 次级；与媒体按钮/面板入口同语言）；
+// 移动 = 菜单项分支（图标 14px 三级，菜单皮同语言）。
+// 盘点记录（2026-10-13）：本组件为库导出面，SPA 当前无模板实例化（dormant，e2e 口径在案：
+// share-link.test.ts 期望 #copy-speaker-link 可见属存量断言）；皮先行就位。
+// The host should be transparent in the layout so the button behaves as a
+// direct child of the toolbar's additional buttons slot (and of the mobile menu).
+:host {
+	display: contents;
+}
+
+// 桌面：工具条幽灵图标钮（tm-btn 解剖对号——非描边卡，EP 时代 64×56 描边卡退役）
+#copy-speaker-link:not([nz-menu-item]) {
+	position: relative;
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 3px;
+	width: var(--jmeet-meeting-toolbar-btn-width);
+	height: var(--jmeet-meeting-toolbar-btn-height);
+	border: 0;
+	border-radius: 8px;
+	background: transparent;
+	color: var(--jmeet-meeting-text-secondary);
+	cursor: pointer;
+	font-size: 20px;
+	transition: background-color 160ms ease, color 160ms ease;
+
+	&:hover {
+		background: var(--jmeet-meeting-stage-bg);
+	}
+
+	&:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 2px var(--jmeet-meeting-primary);
+	}
+}
+
+.control-label {
+	max-width: 60px;
+	overflow: hidden;
+	color: var(--jmeet-meeting-text-secondary);
+	font-size: 11px;
+	font-weight: var(--jmeet-font-weight-medium, 500);
+	line-height: 14px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+// 移动：nz-menu-item 分支——图标 14px 三级（more-options 菜单皮同语言），文字次级
+#copy-speaker-link[nz-menu-item] {
+	.anticon {
+		font-size: 14px;
+		color: var(--jmeet-meeting-text-tertiary);
+	}
+
+	.button-text {
+		color: var(--jmeet-meeting-text-secondary);
+	}
+}
+
+@media (max-width: 767px) {
+	#copy-speaker-link:not([nz-menu-item]) {
+		width: 40px;
+		height: 40px;
+	}
+	.control-label {
+		display: none;
+	}
+}

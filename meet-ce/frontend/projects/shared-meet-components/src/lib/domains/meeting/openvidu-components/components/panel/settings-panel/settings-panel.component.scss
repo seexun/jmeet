@@ -1,0 +1,301 @@
+// 设置面板（批次2 §5.4 深绘）：big 居中弹框形态（session 层 .big 860×min(80vh,780px)），
+// 分节头（11px 三级字色）+ 行式 22px 节奏（label + 控件 + 行内说明）+ 分节 divider。
+// 弹框形态下 session 全局骨架（:not(.big) 限定）不供给，根节点自带 flex 列骨架与白面。
+// nz 控件皮由全局 _nz-theme 供给，此处只做布局与间距。全 --jmeet-meeting-* 令牌。
+#settings-container {
+	display: flex !important;
+	flex-direction: column;
+	height: 100%;
+	min-height: 0;
+	box-sizing: border-box;
+	background: var(--jmeet-meeting-surface);
+
+	// 弹框自带头部（dock 形态由全局层隐藏）：对齐 dock __head 的 chrome 语言
+	.panel-header-container {
+		flex: none;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px;
+		height: var(--jmeet-meeting-panel-head-height);
+		padding: 0 24px;
+		border-bottom: 1px solid var(--jmeet-meeting-divider);
+
+		.panel-title {
+			margin: 0;
+			font-size: 13px;
+			font-weight: 600;
+			color: var(--jmeet-meeting-text-primary);
+		}
+
+		.panel-close-button {
+			color: var(--jmeet-meeting-text-tertiary);
+
+			&:hover {
+				color: var(--jmeet-meeting-text-primary);
+				background: var(--jmeet-meeting-stage-bg);
+			}
+		}
+	}
+
+	// 主体双栏（左分节导航 + 右内容）
+	.settings-container {
+		display: flex;
+		flex: 1;
+		min-height: 0;
+		padding: 20px 24px;
+		gap: 24px;
+		align-items: stretch;
+		box-sizing: border-box;
+	}
+
+	// 左侧分节导航行（单一皮肤，compact/vertical 只改几何不改皮）：
+	// 选中 = primary-soft 底 + 主色字，hover = stage soft 底
+	.option {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		width: 100%;
+		min-height: 36px;
+		padding: 0 10px;
+		background: transparent;
+		border: none;
+		border-radius: var(--jmeet-radius-md);
+		text-align: left;
+		font: inherit;
+		font-size: 13px;
+		line-height: 22px;
+		color: var(--jmeet-meeting-text-secondary);
+		cursor: pointer;
+		transition:
+			background-color 160ms ease,
+			color 160ms ease;
+
+		&.selected {
+			background: var(--jmeet-meeting-primary-soft);
+			color: var(--jmeet-meeting-primary);
+		}
+
+		&:hover:not(.selected) {
+			background: var(--jmeet-meeting-stage-bg);
+			color: var(--jmeet-meeting-text-primary);
+		}
+
+		&:focus-visible {
+			outline: none;
+			box-shadow: 0 0 0 3px color-mix(in srgb, var(--jmeet-meeting-primary) 8%, transparent);
+		}
+
+		.anticon {
+			flex-shrink: 0;
+			font-size: 16px;
+			width: 16px;
+			height: 16px;
+		}
+	}
+
+	.option-text {
+		font-weight: 500;
+		line-height: 22px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.item-menu {
+		flex-shrink: 0;
+		border-right: 1px solid var(--jmeet-meeting-divider);
+		width: 168px;
+		min-width: 168px;
+		padding-right: 16px;
+
+		.options-list {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+		}
+
+		// 紧凑视图（平板）：图标 + 文字纵向居中
+		&.compact {
+			width: 140px;
+			min-width: 140px;
+			padding-right: 12px;
+		}
+
+		// 仅图标（小平板）
+		&.icons-only {
+			width: 80px;
+			min-width: 80px;
+			padding-right: 8px;
+		}
+	}
+
+	// 移动端纵向布局：导航横排分段条（皮肤沿用上方行式 selected 态）
+	&.vertical-layout {
+		.settings-container {
+			flex-direction: column;
+			gap: 16px;
+			padding: 12px;
+		}
+
+		.item-menu {
+			width: 100%;
+			min-width: auto;
+			border-right: none;
+			border-bottom: 1px solid var(--jmeet-meeting-divider);
+			padding-right: 0;
+			padding-bottom: 8px;
+			margin-bottom: 4px;
+
+			.options-list {
+				flex-direction: row;
+				justify-content: space-around;
+				gap: 8px;
+				padding: 0 8px;
+			}
+
+			.option {
+				flex: 1;
+				min-width: auto;
+				min-height: 56px;
+				flex-direction: column;
+				justify-content: center;
+				gap: 4px;
+
+				.option-text {
+					font-size: 12px;
+					text-align: center;
+					line-height: 1.2;
+					max-width: 100%;
+				}
+
+				.anticon {
+					font-size: 18px;
+					width: 18px;
+					height: 18px;
+				}
+			}
+		}
+
+		.item-content.full-width {
+			padding: 0 4px;
+		}
+	}
+
+	// 仅图标模式：图标上文字下的纵向行
+	&.compact-view .item-menu.icons-only .option {
+		min-height: 52px;
+		padding: 8px;
+		justify-content: center;
+		flex-direction: column;
+		gap: 4px;
+
+		.anticon {
+			font-size: 20px;
+			width: 20px;
+			height: 20px;
+		}
+	}
+
+	// 内容区：滚动列
+	.item-content {
+		flex: 1;
+		min-width: 0;
+		padding: 0;
+		overflow-y: auto;
+		overflow-x: hidden;
+		box-sizing: border-box;
+
+		&.full-width {
+			padding: 0;
+		}
+	}
+
+	// GENERAL 分节组：分节间距走上 22px 节奏
+	.general-settings {
+		display: flex;
+		flex-direction: column;
+		gap: 22px;
+		padding: 2px 0;
+
+		// 分节头：11px 三级字色（与成员分组头/背景分节头同语言）
+		.nickname-section {
+			.input-label {
+				display: block;
+				margin: 0 0 8px;
+				font-size: 11px;
+				line-height: 22px;
+				font-weight: 600;
+				letter-spacing: 0.5px;
+				text-transform: uppercase;
+				color: var(--jmeet-meeting-text-tertiary);
+			}
+
+			.nickname-input-container {
+				width: 100%;
+				max-width: 100%;
+				box-sizing: border-box;
+
+				// 输入行吃满分节宽（皮由全局 _nz-theme 的 .ant-input 供给）
+				::ng-deep ov-participant-name-input {
+					width: 100%;
+
+					.participant-name-input-container {
+						width: 100%;
+						box-sizing: border-box;
+
+						.participant-name-input {
+							width: 100% !important;
+							box-sizing: border-box;
+						}
+					}
+				}
+			}
+		}
+
+		// 分节 divider：昵称分节与投影扩展区之间以 1px meeting divider 分隔
+		.additional-elements-section {
+			padding-top: 22px;
+			border-top: 1px solid var(--jmeet-meeting-divider);
+		}
+	}
+
+	// 设备分节容器（视频/音频）：皮由设备选择器与 _nz-theme 供给，此处只管节奏
+	// （captions-settings 为模板注释态死选择器，收尾批删除）
+	.video-settings,
+	.audio-settings {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		width: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
+	}
+}
+
+// 宽度收窄：双栏留白收紧
+@media (max-width: 1024px) {
+	#settings-container .settings-container {
+		padding: 16px;
+		gap: 16px;
+	}
+}
+
+// 移动端：弹框内边距收紧（导航形态由 vertical-layout 类承载）
+@media (max-width: 768px) {
+	#settings-container {
+		.settings-container {
+			padding: 12px;
+		}
+
+		.panel-header-container {
+			padding: 0 12px;
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#settings-container .option {
+		transition: none;
+	}
+}

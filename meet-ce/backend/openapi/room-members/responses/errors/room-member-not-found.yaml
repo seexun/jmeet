@@ -1,0 +1,16 @@
+description: Room member or room not found
+content:
+    application/json:
+        schema:
+            $ref: '../../../shared/schemas/error.yaml'
+        examples:
+            member_not_found:
+                summary: Room member does not exist in the specified room
+                value:
+                    error: 'Room Member Error'
+                    message: 'Room member "abc123" does not exist in room "room_123"'
+            room_not_found:
+                summary: Room does not exist
+                value:
+                    error: 'Room Error'
+                    message: 'Room "room_123" does not exist'

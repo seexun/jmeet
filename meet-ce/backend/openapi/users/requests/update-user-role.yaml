@@ -1,0 +1,12 @@
+description: Update user role request
+required: true
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                role:
+                    type: string
+                    enum: [admin, room_manager, room_member]
+                    description: The new role to assign to the user.
+                    example: 'room_manager'

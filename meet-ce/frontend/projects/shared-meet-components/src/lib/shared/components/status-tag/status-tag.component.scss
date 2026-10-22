@@ -1,0 +1,20 @@
+:host {
+	display: inline-block;
+}
+
+.jmeet-status-tag {
+	gap: var(--jmeet-space-1);
+}
+
+.jmeet-status-tag__icon {
+	width: 14px;
+	height: 14px;
+	font-size: var(--jmeet-font-size-sm);
+}
+
+.jmeet-status-tag__dot {
+	width: 6px;
+	height: 6px;
+	border-radius: 999px;
+	background: currentcolor;
+}

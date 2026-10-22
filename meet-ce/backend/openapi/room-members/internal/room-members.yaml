@@ -1,0 +1,60 @@
+/rooms/{roomId}/members/token:
+    post:
+        operationId: generateRoomMemberToken
+        summary: Generate room member token
+        description: >
+            Generates a token for a user to access an JMeet room and its resources.
+            When using the anonymous recording secret, generated tokens only allow retrieval of room recordings.
+            When a previous room member token is provided via `X-Room-Member-Token`, the endpoint can regenerate
+            a join token while preserving participant identity.
+        tags:
+            - Internal API - Room Members
+        security:
+            - accessTokenHeader: []
+            - roomMemberTokenHeader: []
+        parameters:
+            - $ref: '../../rooms/parameters/room-id-path.yaml'
+        requestBody:
+            $ref: './requests/room-member-token.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/generate-room-member-token.yaml'
+            '400':
+                $ref: './responses/errors/invalid-room-member-token-request.yaml'
+            '401':
+                $ref: '../../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: '../../meetings/responses/errors/room-participant-not-found.yaml'
+            '409':
+                $ref: '../../meetings/responses/errors/room-closed.yaml'
+            '422':
+                $ref: '../../shared/responses/errors/validation.yaml'
+            '500':
+                $ref: '../../shared/responses/errors/internal-server.yaml'
+
+/rooms/{roomId}/members/token/refresh:
+    post:
+        operationId: refreshRoomMemberToken
+        summary: Refresh room member token
+        description: >
+            Refreshes a room member token for a participant already connected to a meeting.
+            Requires a valid room member token in `X-Room-Member-Token`.
+        tags:
+            - Internal API - Room Members
+        security:
+            - roomMemberTokenHeader: []
+        parameters:
+            - $ref: '../../rooms/parameters/room-id-path.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/generate-room-member-token.yaml'
+            '401':
+                $ref: '../../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: '../../meetings/responses/errors/room-participant-not-found.yaml'
+            '500':
+                $ref: '../../shared/responses/errors/internal-server.yaml'

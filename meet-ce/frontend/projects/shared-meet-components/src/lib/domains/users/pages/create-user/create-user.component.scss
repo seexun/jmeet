@@ -1,0 +1,39 @@
+:host {
+	display: block;
+}
+
+// 表单块：标签在上，控件 + 提示/错误在下（原依赖 Material 字段块级布局，迁移后显式声明）。
+.form-field-block {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	min-width: 0;
+}
+
+.create-user-role-select {
+	width: 100%;
+}
+
+// 原 Material outline 密码字段（suffix 双按钮）改为一行 flex：nz-input + 按钮。
+.password-field-row {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-space-2);
+
+	input {
+		flex: 1;
+		min-width: 0;
+	}
+}
+
+.create-user-field-hint {
+	margin: 0;
+	font-size: var(--jmeet-typography-font-size-xs);
+	color: var(--jmeet-color-text-hint);
+}
+
+.create-user-field-error {
+	margin: 0;
+	font-size: var(--jmeet-typography-font-size-xs);
+	color: var(--jmeet-color-action-danger);
+}

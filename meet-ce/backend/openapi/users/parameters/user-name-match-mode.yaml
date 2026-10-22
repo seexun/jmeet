@@ -1,0 +1,18 @@
+in: query
+name: nameMatchMode
+required: false
+description: >
+    Match mode used for user name filtering.
+    - exact: full match (default)
+    - prefix: name starts with the provided value
+    - partial: name contains the provided value
+    - regex: name matches the provided regular expression pattern
+schema:
+    type: string
+    enum:
+        - exact
+        - prefix
+        - partial
+        - regex
+    default: exact
+example: partial

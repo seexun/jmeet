@@ -1,0 +1,30 @@
+{
+  "name": "jmeet-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "JMeet open-source edition monorepo",
+  "scripts": {
+    "build": "pnpm run build:typings && pnpm run build:backend && pnpm run build:shared-components && pnpm run build:frontend",
+    "clean": "rm -f pnpm-lock.yaml && pnpm --filter @openvidu-meet/backend run clean && pnpm --filter @openvidu-meet/frontend run clean",
+    "build:frontend": "pnpm --filter @openvidu-meet/frontend run build ${BASE_HREF:-/}",
+    "build:backend": "pnpm --filter @openvidu-meet/backend run build",
+    "build:typings": "pnpm --filter @openvidu-meet/typings run build",
+    "build:rest-api-docs": "pnpm --filter @openvidu-meet/backend run doc:internal-api",
+    "build:shared-components": "pnpm --filter @openvidu-meet/frontend run lib:build",
+    "dev:frontend": "pnpm --filter @openvidu-meet/frontend run dev",
+    "dev:backend": "pnpm --filter @openvidu-meet/backend run start:dev",
+    "dev:typings": "pnpm --filter @openvidu-meet/typings run dev",
+    "dev:rest-api-docs": "nodemon --config meet-ce/backend/nodemon.docs.json",
+    "test:unit-backend": "pnpm --filter @openvidu-meet/backend run test:unit",
+    "test:unit-frontend": "pnpm --filter @openvidu-meet/frontend run test:unit:lib",
+    "nz:check": "node scripts/check-nz-selectors.mjs"
+  },
+  "devDependencies": {
+    "concurrently": "9.2.1",
+    "identity-obj-proxy": "3.0.0",
+    "nodemon": "3.1.14",
+    "tree-kill": "1.2.1",
+    "wait-on": "9.0.10"
+  },
+  "packageManager": "pnpm@9.15.9+sha512.68046141893c66fad01c079231128e9afb89ef87e2691d69e4d40eee228988295fd4682181bae55b58418c3a253bde65a505ec7c5f9403ece5cc3cd37dcf2531"
+}

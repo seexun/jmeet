@@ -1,0 +1,8 @@
+description: Room cannot be updated because it has an active meeting.
+content:
+    application/json:
+        schema:
+            $ref: '../../../shared/schemas/error.yaml'
+        example:
+            error: 'Room Error'
+            message: 'Room "room_123" has an active meeting'

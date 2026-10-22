@@ -1,0 +1,31 @@
+:host {
+	display: block;
+	position: relative;
+	height: 100%;
+	background: var(--jmeet-meeting-stage-bg, var(--jmeet-color-surface-page));
+}
+
+.jmeet-meeting-shell {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.jmeet-meeting-shell__body {
+	position: relative;
+	flex: 1 1 auto;
+	min-height: 0;
+}
+
+// HUD 层：顶栏 / 浮动工具条 / 浮动自己画面都投影在这里。
+// 容器不吃指针事件，交互元素各自恢复（toolbar:host 也为 none，其子元素 auto）。
+.jmeet-meeting-shell__hud {
+	position: absolute;
+	inset: 0;
+	z-index: var(--jmeet-meeting-z-hud, 30);
+	pointer-events: none;
+
+	> * {
+		pointer-events: none;
+	}
+}

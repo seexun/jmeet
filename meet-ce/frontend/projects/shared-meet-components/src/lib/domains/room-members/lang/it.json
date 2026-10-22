@@ -1,0 +1,179 @@
+{
+  "ROOM_MEMBERS": {
+    "COMMON": {
+      "CANCEL": "Annulla",
+      "SEARCH": "Cerca",
+      "ADD_MEMBER": "Aggiungi membro",
+      "USER": "Utente",
+      "IDENTIFIED_GUEST": "Ospite identificato",
+      "MODERATOR": "Moderatore",
+      "SPEAKER": "Relatore"
+    },
+    "FORM": {
+      "TYPE_USER": "Utente",
+      "TYPE_IDENTIFIED_GUEST": "Ospite identificato",
+      "USER_ID_LABEL": "ID utente",
+      "USER_ID_PLACEHOLDER": "Cerca un utente per nome o ID...",
+      "USER_ID_HINT": "Inizia a digitare per cercare gli utenti",
+      "NO_USERS_FOUND": "Nessun utente trovato",
+      "GUEST_INFO": "Gli ospiti identificati non sono utenti di JMeet. Dopo essere stati aggiunti, gli verrà assegnato un link univoco per accedere a questa stanza. Puoi copiare questo link dall'elenco dei membri.",
+      "MEMBER_NAME_LABEL": "Nome del membro",
+      "MEMBER_NAME_PLACEHOLDER": "Inserisci un nome visualizzato...",
+      "MEMBER_NAME_HINT": "Un nome visualizzato per l'ospite",
+      "BASE_ROLE_LABEL": "Ruolo di base",
+      "BASE_ROLE_HINT": "Il ruolo di base determina le autorizzazioni predefinite",
+      "CUSTOM_PERMISSIONS_TITLE": "Autorizzazioni personalizzate",
+      "CUSTOM_PERMISSIONS_DESCRIPTION": "Sovrascrivi le autorizzazioni predefinite del ruolo",
+      "CUSTOM_PERMISSIONS_HINT": "Queste autorizzazioni sovrascrivono quelle predefinite per il ruolo selezionato. Lascia gli interruttori nella loro posizione predefinita per ereditare le autorizzazioni del ruolo.",
+      "UPDATE_MEMBER": "Aggiorna membro",
+      "ADD_MEMBER": "Aggiungi membro",
+      "DISABLED_REASON_ADMIN": "Gli utenti amministratori non possono essere aggiunti come membri",
+      "DISABLED_REASON_OWNER": "Il proprietario della stanza non può essere aggiunto come membro"
+    },
+    "FORM_DIALOG": {
+      "TITLE_EDIT": "Modifica membro",
+      "TITLE_ADD": "Aggiungi membro"
+    },
+    "LIST": {
+      "EMPTY_TITLE": "Nessun membro ancora",
+      "EMPTY_SUBTITLE": "I membri appariranno qui dopo averli aggiunti.",
+      "SEARCH_MEMBERS": "Cerca membri",
+      "SEARCH_BY_NAME": "Cerca per nome del membro",
+      "CLEAR_SEARCH": "Cancella ricerca",
+      "MATCH_CASE_INSENSITIVE": "Ignora maiuscole/minuscole",
+      "CASE_INSENSITIVE_LABEL": "Aa",
+      "MATCH_MODE_PREFIX": "Modalità di corrispondenza: ",
+      "FILTER_MEMBERS": "Filtra membri",
+      "REFRESH_MEMBERS": "Aggiorna membri",
+      "REMOVE_SELECTED_MEMBERS": "Rimuovi i membri selezionati",
+      "FILTER_BY_ROLE": "Filtra per ruolo",
+      "FILTER_BY_ROLE_DESCRIPTION": "Limita il risultato ai membri con il ruolo di base selezionato.",
+      "ROLE": "Ruolo",
+      "FILTER_BY_TYPE": "Filtra per tipo",
+      "FILTER_BY_TYPE_DESCRIPTION": "Limita il risultato ai membri del tipo selezionato.",
+      "TYPE": "Tipo",
+      "FILTERS_LABEL": "Filtri:",
+      "CLEAR_ALL": "Cancella tutto",
+      "LOADING_MEMBERS": "Caricamento dei membri...",
+      "EMPTY_FILTER_TITLE": "Nessun membro corrisponde alla tua ricerca",
+      "EMPTY_FILTER_SUBTITLE": "Prova a modificare o cancellare i filtri per vedere più membri.",
+      "CLEAR_FILTERS": "Cancella filtri",
+      "COLUMN_MEMBER": "Membro",
+      "COLUMN_ROLE": "Ruolo",
+      "COLUMN_TYPE": "Tipo",
+      "COLUMN_ADDED": "Aggiunto",
+      "COLUMN_ACTIONS": "Azioni",
+      "VIEW_USER_PROFILE": "Visualizza profilo utente",
+      "COPY_ACCESS_LINK": "Copia link di accesso",
+      "EDIT_MEMBER": "Modifica membro",
+      "REMOVE_MEMBER": "Rimuovi membro",
+      "MATCH_MODE_STARTS_WITH": "Inizia con",
+      "MATCH_MODE_CONTAINS": "Contiene",
+      "MATCH_MODE_EXACT": "Corrispondenza esatta",
+      "MATCH_MODE_REGEX": "Regex",
+      "ROLE_FILTER_ALL": "Tutti i ruoli",
+      "TYPE_FILTER_ALL": "Tutti i tipi",
+      "TYPE_USER": "Utente",
+      "TYPE_IDENTIFIED_GUEST": "Ospite identificato",
+      "ROLE_CHIP_PREFIX": "Ruolo: ",
+      "TYPE_CHIP_PREFIX": "Tipo: "
+    },
+    "ADD": {
+      "TITLE_EDIT": "Modifica membro della stanza",
+      "TITLE_ADD": "Aggiungi membro della stanza",
+      "SUBTITLE_EDIT": "Aggiorna le autorizzazioni per questo membro della stanza.",
+      "SUBTITLE_ADD": "Concedi l'accesso a un utente o a un ospite identificato per questa stanza.",
+      "CARD_TITLE": "Configurazione del membro",
+      "CARD_SUBTITLE_EDIT_USER": "Aggiorna le autorizzazioni dell'utente per questa stanza",
+      "CARD_SUBTITLE_EDIT_GUEST": "Aggiorna le autorizzazioni dell'ospite identificato per questa stanza",
+      "CARD_SUBTITLE_ADD_USER": "Seleziona un utente e configura le sue autorizzazioni",
+      "CARD_SUBTITLE_ADD_GUEST": "Seleziona un nome per l'ospite e configura le sue autorizzazioni"
+    },
+    "ERRORS": {
+      "FIELD_REQUIRED": "Questo campo è obbligatorio",
+      "PATTERN": "Sono consentiti solo lettere minuscole, numeri e trattini bassi",
+      "MAX_LENGTH_PREFIX": "Non può superare ",
+      "MAX_LENGTH_SUFFIX": " caratteri",
+      "ROOM_ID_REQUIRED": "L'ID della stanza è obbligatorio",
+      "ROOM_DATA_LOAD_FAILED": "Impossibile caricare i dati della stanza",
+      "MEMBER_UPDATED_SUCCESS": "Membro aggiornato con successo",
+      "MEMBER_ADDED_SUCCESS": "Membro aggiunto con successo",
+      "MEMBER_UPDATE_FAILED": "Impossibile aggiornare il membro",
+      "MEMBER_ADD_FAILED": "Impossibile aggiungere il membro"
+    },
+    "ROLE": {
+      "MODERATOR": "Moderatore",
+      "SPEAKER": "Relatore"
+    },
+    "MEMBER_TYPE": {
+      "USER": "Utente",
+      "GUEST": "Ospite identificato"
+    },
+    "PERMISSIONS": {
+      "GROUPS": {
+        "MEETING": "Riunione",
+        "MEDIA": "Media",
+        "RECORDINGS": "Registrazioni",
+        "CHAT": "Chat"
+      },
+      "ITEMS": {
+        "canJoinMeeting": {
+          "LABEL": "Può partecipare alla riunione",
+          "DESCRIPTION": "Consenti di partecipare alla riunione"
+        },
+        "canEndMeeting": {
+          "LABEL": "Può terminare la riunione",
+          "DESCRIPTION": "Consenti di terminare la riunione per tutti i partecipanti"
+        },
+        "canMakeModerator": {
+          "LABEL": "Può nominare moderatore",
+          "DESCRIPTION": "Consenti di promuovere i partecipanti al ruolo di moderatore"
+        },
+        "canKickParticipants": {
+          "LABEL": "Può espellere i partecipanti",
+          "DESCRIPTION": "Consenti di rimuovere i partecipanti dalla riunione"
+        },
+        "canShareAccessLinks": {
+          "LABEL": "Può condividere i link di accesso",
+          "DESCRIPTION": "Consenti di condividere i link di invito con altri"
+        },
+        "canPublishVideo": {
+          "LABEL": "Può pubblicare il video",
+          "DESCRIPTION": "Consenti di condividere il video della telecamera"
+        },
+        "canPublishAudio": {
+          "LABEL": "Può pubblicare l'audio",
+          "DESCRIPTION": "Consenti di condividere l'audio del microfono"
+        },
+        "canShareScreen": {
+          "LABEL": "Può condividere lo schermo",
+          "DESCRIPTION": "Consenti di condividere il desktop o le schede del browser"
+        },
+        "canChangeVirtualBackground": {
+          "LABEL": "Può cambiare lo sfondo virtuale",
+          "DESCRIPTION": "Consenti di cambiare lo sfondo virtuale"
+        },
+        "canRecord": {
+          "LABEL": "Può registrare",
+          "DESCRIPTION": "Consenti di avviare e interrompere le registrazioni"
+        },
+        "canRetrieveRecordings": {
+          "LABEL": "Può recuperare le registrazioni",
+          "DESCRIPTION": "Consenti di elencare e riprodurre le registrazioni"
+        },
+        "canDeleteRecordings": {
+          "LABEL": "Può eliminare le registrazioni",
+          "DESCRIPTION": "Consenti di eliminare le registrazioni"
+        },
+        "canReadChat": {
+          "LABEL": "Può leggere la chat",
+          "DESCRIPTION": "Consenti di leggere i messaggi della chat"
+        },
+        "canWriteChat": {
+          "LABEL": "Può scrivere nella chat",
+          "DESCRIPTION": "Consenti di inviare messaggi nella chat"
+        }
+      }
+    }
+  }
+}

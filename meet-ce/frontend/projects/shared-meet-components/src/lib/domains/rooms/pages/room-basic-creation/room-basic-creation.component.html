@@ -1,0 +1,137 @@
+<div class="room-basic-creation-page fade-in">
+	<jmeet-page-header>
+		<span page-title>{{ 'ROOMS.BASIC_CREATION.TITLE' | translate }}</span>
+		<div page-actions>
+			<span class="room-basic-creation-security">
+				<nz-icon nzType="safety-certificate" />
+				{{ 'ROOMS.BASIC_CREATION.SECURITY_NOTE' | translate }}
+			</span>
+		</div>
+	</jmeet-page-header>
+
+	<div class="room-basic-creation-layout">
+		<section class="jmeet-card room-basic-creation-form-card">
+			<form [formGroup]="roomDetailsForm" class="jmeet-settings-form room-basic-creation-form" (ngSubmit)="onCreateRoom()">
+				<div class="form-field-block topic-field">
+					<div class="room-basic-creation-field-label">
+						<label class="jmeet-form-label" for="meeting-topic">{{ 'ROOMS.BASIC_CREATION.ROOM_NAME' | translate }}</label>
+						<span class="jmeet-text--caption">{{ 'ROOMS.BASIC_CREATION.REQUIRED' | translate }}</span>
+					</div>
+					<input
+						id="meeting-topic"
+						nz-input
+						formControlName="roomName"
+						[placeholder]="'ROOMS.BASIC_CREATION.ROOM_NAME_PLACEHOLDER' | translate"
+						autocomplete="off"
+					/>
+					<p class="field-hint">{{ 'ROOMS.BASIC_CREATION.ROOM_NAME_HINT' | translate }}</p>
+					@if (
+						roomDetailsForm.get('roomName')?.hasError('maxlength') &&
+						(roomDetailsForm.get('roomName')?.touched || roomDetailsForm.get('roomName')?.dirty)
+					) {
+						<p class="field-error">{{ 'ROOMS.BASIC_CREATION.ROOM_NAME_MAXLENGTH' | translate }}</p>
+					}
+				</div>
+
+				<div class="room-basic-creation-schedule-fields" [formGroup]="scheduleForm">
+					<div class="form-field-block">
+						<label class="jmeet-form-label" for="meeting-mode-select">{{ 'ROOMS.BASIC_CREATION.MEETING_TYPE' | translate }}</label>
+						<nz-select
+							[nzId]="'meeting-mode-select'"
+							formControlName="mode"
+						>
+							<nz-option nzValue="scheduled" [nzLabel]="'ROOMS.BASIC_CREATION.SCHEDULED' | translate" />
+							<nz-option nzValue="instant" [nzLabel]="'ROOMS.BASIC_CREATION.INSTANT' | translate" />
+						</nz-select>
+					</div>
+
+					@if (scheduleForm.controls.mode.value === 'scheduled') {
+						<div class="form-field-block start-field">
+							<label class="jmeet-form-label" for="meeting-start">{{ 'ROOMS.BASIC_CREATION.START_TIME' | translate }}</label>
+							<div class="inline-field-row">
+								<nz-icon nzType="calendar" class="field-prefix-icon" />
+								<input id="meeting-start" nz-input type="datetime-local" formControlName="startDate" />
+							</div>
+						</div>
+						<div class="form-field-block">
+							<label class="jmeet-form-label" for="meeting-duration-select">{{ 'ROOMS.BASIC_CREATION.DURATION' | translate }}</label>
+							<nz-select
+								[nzId]="'meeting-duration-select'"
+								formControlName="durationMinutes"
+							>
+								<nz-option [nzValue]="30" [nzLabel]="30 + ' ' + ('ROOMS.BASIC_CREATION.MINUTES' | translate)" />
+								<nz-option [nzValue]="60" [nzLabel]="60 + ' ' + ('ROOMS.BASIC_CREATION.MINUTES' | translate)" />
+								<nz-option [nzValue]="90" [nzLabel]="90 + ' ' + ('ROOMS.BASIC_CREATION.MINUTES' | translate)" />
+								<nz-option [nzValue]="120" [nzLabel]="120 + ' ' + ('ROOMS.BASIC_CREATION.MINUTES' | translate)" />
+							</nz-select>
+						</div>
+						<div class="form-field-block">
+							<label class="jmeet-form-label" for="meeting-recurrence-select">{{ 'ROOMS.BASIC_CREATION.RECURRENCE' | translate }}</label>
+							<nz-select
+								[nzId]="'meeting-recurrence-select'"
+								formControlName="recurrence"
+							>
+								<nz-option nzValue="none" [nzLabel]="'ROOMS.BASIC_CREATION.RECURRENCE_NONE' | translate" />
+								<nz-option nzValue="daily" [nzLabel]="'ROOMS.BASIC_CREATION.RECURRENCE_DAILY' | translate" />
+								<nz-option nzValue="weekly" [nzLabel]="'ROOMS.BASIC_CREATION.RECURRENCE_WEEKLY' | translate" />
+							</nz-select>
+						</div>
+						<div class="form-field-block early-join-field">
+							<label class="jmeet-form-label" for="meeting-early-join-select">{{ 'ROOMS.BASIC_CREATION.EARLY_JOIN' | translate }}</label>
+							<nz-select
+								[nzId]="'meeting-early-join-select'"
+								formControlName="allowEarlyJoinMinutes"
+							>
+								<nz-option [nzValue]="0" [nzLabel]="'ROOMS.BASIC_CREATION.ON_TIME' | translate" />
+								<nz-option [nzValue]="10" [nzLabel]="10 + ' ' + ('ROOMS.BASIC_CREATION.MINUTES' | translate)" />
+								<nz-option [nzValue]="15" [nzLabel]="15 + ' ' + ('ROOMS.BASIC_CREATION.MINUTES' | translate)" />
+								<nz-option [nzValue]="30" [nzLabel]="30 + ' ' + ('ROOMS.BASIC_CREATION.MINUTES' | translate)" />
+							</nz-select>
+						</div>
+						<p class="room-basic-creation-timezone jmeet-text--caption">
+							<nz-icon nzType="global" />{{ timezone }}
+						</p>
+					}
+				</div>
+
+				<div class="jmeet-form-actions room-basic-creation-actions">
+					<button type="button" class="jmeet-button jmeet-button--ghost cancel-button" (click)="onCancel()">
+						{{ 'ROOMS.WIZARD.CANCEL' | translate }}
+					</button>
+
+					<button
+						type="button"
+						class="jmeet-button jmeet-button--outline advanced-button"
+						nz-tooltip
+						[nzTooltipTitle]="'ROOMS.BASIC_CREATION.ADVANCED_TOOLTIP' | translate"
+						(click)="onOpenAdvancedMode()"
+						>
+						<nz-icon nzType="setting" />
+						{{ 'ROOMS.BASIC_CREATION.ADVANCED_SETUP' | translate }}
+					</button>
+
+					<button
+						type="submit"
+						class="jmeet-button jmeet-button--primary create-button"
+						id="create-room-button"
+						[disabled]="!isFormValid"
+						>
+						<nz-icon nzType="plus" />
+						{{ 'ROOMS.BASIC_CREATION.CREATE_ROOM' | translate }}
+					</button>
+				</div>
+			</form>
+		</section>
+
+		<aside class="jmeet-card room-basic-creation-help-card">
+			<span class="room-basic-creation-help-icon"><nz-icon nzType="bulb" /></span>
+			<h2 class="jmeet-text--section-title">{{ 'ROOMS.BASIC_CREATION.HELP_TITLE' | translate }}</h2>
+			<p class="jmeet-text--body-secondary">{{ 'ROOMS.BASIC_CREATION.HELP_DESC' | translate }}</p>
+			<ul>
+				<li>{{ 'ROOMS.BASIC_CREATION.HELP_ITEM_1' | translate }}</li>
+				<li>{{ 'ROOMS.BASIC_CREATION.HELP_ITEM_2' | translate }}</li>
+				<li>{{ 'ROOMS.BASIC_CREATION.HELP_ITEM_3' | translate }}</li>
+			</ul>
+		</aside>
+	</div>
+</div>

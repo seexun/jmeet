@@ -1,0 +1,38 @@
+# =============================================================================
+# Development Workspace Configuration
+# =============================================================================
+# This workspace configuration is used for LOCAL DEVELOPMENT.
+# =============================================================================
+
+packages:
+  - meet-ce/typings
+  - meet-ce/frontend
+  - meet-ce/frontend/projects/shared-meet-components
+  - meet-ce/backend
+
+allowBuilds:
+  '@parcel/watcher': false
+  bcrypt: true
+  chromedriver: false
+  core-js: false
+  esbuild: false
+  lmdb: false
+  msgpackr-extract: false
+  protobufjs: false
+
+overrides:
+  livekit-client: 2.16.1
+
+strictPeerDependencies: false
+autoInstallPeers: true
+shamefullyHoist: true
+nodeLinker: hoisted
+lockfile: true
+
+# Trust the committed lockfile on frozen installs (pnpm >= 11.8.0).
+# Skips re-applying the minimumReleaseAge / trustPolicy verification to every
+# lockfile entry, so CI and Docker `pnpm install --frozen-lockfile` builds stay
+# deterministic instead of failing for ~24h after a dependency bump while newly
+# published packages clear the release-age cooldown. The cooldown still applies
+# when dependencies are updated (resolution time), where it actually protects us.
+trustLockfile: true

@@ -1,0 +1,24 @@
+:host {
+	display: block;
+}
+
+.join-control {
+	display: flex;
+	gap: var(--jmeet-space-2);
+	margin-top: var(--jmeet-space-2);
+}
+
+.join-meeting-action {
+	cursor: default;
+
+	&:hover {
+		box-shadow: none;
+	}
+}
+
+.schedule-active {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--jmeet-space-4);
+}

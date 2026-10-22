@@ -1,0 +1,419 @@
+#session-container {
+	/* min-width: 400px; */
+	height: 100%;
+}
+
+.session-stage {
+	height: 100%;
+}
+
+.ov-fade-in-200 {
+	animation: ov-fade-in-200 200ms ease;
+}
+
+.ov-fade-out-200 {
+	animation: ov-fade-out-200 200ms ease;
+}
+
+@keyframes ov-fade-in-200 {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes ov-fade-out-200 {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+#spinner {
+	position: absolute;
+	top: 40%;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	text-align: -webkit-center;
+	text-align: -moz-center;
+	color: var(--ov-text-primary-color);
+}
+
+.sidenav-container {
+	position: relative;
+	height: 100%;
+	min-height: 100%;
+	padding: 0;
+	box-sizing: border-box;
+	width: 100%;
+	overflow: hidden;
+}
+
+.sidenav-menu {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	// 浮卡基准形态（居中弹框）：仅保留给 big 设置双栏弹框与 OVER 窄屏浮出；
+	// 主模式经下方「主模式 dock」规则改为贴右缘全高白色柱列（§5.2⑤）
+	position: absolute;
+	inset: 0;
+	margin: 64px auto auto;
+	width: var(--jmeet-meeting-dock-width);
+	height: min(72vh, 680px);
+	background: var(--jmeet-meeting-surface);
+	// 四边统一常规边框色（修复波 M12：原 border-left 用 --jmeet-meeting-border，
+	// 与 --jmeet-color-border 存在微差色，弹框左缘出现色差线）
+	border: 1px solid var(--jmeet-color-border);
+	border-radius: var(--jmeet-radius-lg);
+	box-shadow: var(--jmeet-shadow-surface-lg);
+	overflow: hidden;
+	// 必须高于视频瓦片层（--jmeet-z-media-overlay 888 + 视频层 calc(+1)=889），
+	// 否则开启实时字幕/大画面视频后视频瓦片会盖住设置弹框
+	z-index: var(--jmeet-z-dropdown);
+	// 居中弹框：淡入 + 轻微上浮
+	transform: translateY(12px);
+	opacity: 0;
+	visibility: hidden;
+	transition:
+		transform 250ms cubic-bezier(0.25, 0.8, 0.25, 1),
+		opacity 250ms cubic-bezier(0.25, 0.8, 0.25, 1),
+		visibility 250ms cubic-bezier(0.25, 0.8, 0.25, 1);
+
+	&.big {
+		// 设置面板双栏布局：加宽加高提升内容利用率（保持居中弹框形态，非 dock）
+		width: min(860px, 94%);
+		height: min(80vh, 780px);
+
+		// settings(big) 弹框：标题/关闭由原版面板头承载（自带关闭钮），
+		// 任务 7 的 __tabs/__head 在弹框形态重复，隐藏（修复波 I2）。
+		// jmeet-meeting-panel 元素本身在 ov-panel 子组件模板内（无本组件 _ngcontent），
+		// 不能作为前缀，须 ::ng-deep 直接穿透。
+		::ng-deep .jmeet-meeting-panel__tabs,
+		::ng-deep .jmeet-meeting-panel__head {
+			display: none;
+		}
+	}
+}
+
+.sidenav-container.panel-open .sidenav-menu {
+	transform: translateY(0);
+	opacity: 1;
+	visibility: visible;
+}
+
+// ── 主模式 dock（非 big/非 drawer/非 over 窄屏浮出）：贴右缘、全高白色柱列 ──
+// 去掉浮卡 chrome（圆角/阴影/悬浮边距/居中边距）。顶部锚在顶栏高度：
+// dock 的 z-index（--jmeet-z-dropdown 1000）高于 HUD（990），而顶栏为全宽白底，
+// 若 top:0 会盖住顶栏右段（时长/录制/布局切换）控制钮。
+.sidenav-container:not(.sidenav-over) .sidenav-menu:not(.big):not(.drawer) {
+	top: var(--jmeet-meeting-topbar-height);
+	right: 0;
+	bottom: 0;
+	left: auto;
+	margin: 0;
+	width: var(--jmeet-meeting-dock-width);
+	height: auto;
+	border: 0;
+	border-left: 1px solid var(--jmeet-meeting-border);
+	border-radius: 0;
+	box-shadow: none;
+	// 贴边柱列自右缘滑入（替换浮卡的上浮动画）
+	transform: translateX(16px);
+
+	// dock 形态下标题/关闭由 meeting-panel 的 __head 承载（任务 7），
+	// 各面板自带的 OpenVidu 原版头部一律隐藏，防双重 chrome（修复轮 3）。
+	// 面板内容是子组件模板，须 ::ng-deep 触达（::ng-deep 等已弃用，此处为域内收窄用法）
+	::ng-deep .panel-header-container {
+		display: none;
+	}
+
+	// ── 面板骨架贴底（修复波 I2）──
+	// .panel-container 系规则随巨石 _meeting-controls.scss 删除而丢失，聊天输入框/
+	// 成员面板底部操作区不再锚底；此处按原几何令牌化找回（::ng-deep 触达子组件模板，
+	// 与上方隐藏头部规则同址）。sidenav-menu 内为全高无装饰形态（dock 与窄屏抽屉通用）。
+	::ng-deep .panel-container {
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		overflow: hidden;
+		margin: 0;
+		max-height: 100%;
+		min-height: 100%;
+		height: 100%;
+	}
+
+	// 活动面板内容少：贴合内容、不强行拉满（找回巨石 .panel-container--activities 变体）
+	::ng-deep .panel-container--activities {
+		min-height: auto;
+		height: auto;
+		align-self: flex-start;
+		width: 100%;
+	}
+}
+
+.sidenav-container.panel-open:not(.sidenav-over) .sidenav-menu:not(.big):not(.drawer) {
+	transform: translateX(0);
+}
+
+// 主模式 dock 的舞台让位（§5.2⑤「舞台自动避让，保留既有 sidenav push 行为」）：
+// 贴右缘 300px 后舞台收缩，视频宫格重排不被盖住；
+// big 设置弹框 / drawer（420px 既有推挤）/ OVER 沿用各自既有规则。
+.sidenav-container.panel-open:not(.sidenav-over):not(.panel-big):not(.panel-drawer) .sidenav-main {
+	margin-right: var(--jmeet-meeting-dock-width);
+	transition: margin-right 220ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+// 舞台推挤后 custom-layout 的参考系右缘已移到 dock 左缘：参考系内把
+// --dock-shift 清零（shell 上的 300px 只对全宽参考系有意义），否则
+// right = 24px + 300px 会双重让位。清零后按钮 right:24px 的绝对位置
+// 恰为公式「24px + 300px（距舞台右缘）」，与胶囊中心 (100%-300px)/2 同一参考系闭合。
+.sidenav-container.panel-open .sidenav-main {
+	--dock-shift: 0px;
+}
+
+// dock 打开（.meeting-sidenav-open 挂在 shell 上）时向舞台后代暴露避让量，
+// custom-layout 的视频适配按钮（right: calc(24px + var(--dock-shift, 0px))）据此让位；
+// 自定义属性沿 DOM 继承穿透组件边界（已推挤的 .sidenav-main 内会被上方规则清零）。
+// toolbar 胶囊的居中避让已在 toolbar.component.scss 经 :host-context(.meeting-sidenav-open) 处理。
+// settings(big) 不参与 dock 避让：shell 的 meeting-sidenav-wide 随 settingsPanelOpened
+// 挂上，:not 排除后开设置时胶囊仍居中（修复波 I3）。
+.meeting-sidenav-open:not(.meeting-sidenav-wide) {
+	--dock-shift: var(--jmeet-meeting-dock-width);
+}
+
+// ── 成员/聊天：右侧停靠卡（桌面 SIDE 推挤舞台 / 窄屏 OVER 全宽浮出）──
+// EP 悬浮停靠：四周留 10px 间距 + 12px 圆角 + 四周细边框，消除直角贴边的生硬感。
+// 顶部从顶栏胶囊下方开始（录制横幅时自动加大）；z-index 保持 raised（2），
+// 遮罩（z:1）仅在 OVER 模式渲染（模板按 sidenavMode 控制）。
+.sidenav-menu.drawer {
+	// 顶部让位顶栏高度（--jmeet-meeting-topbar-height），录制横幅等自适应让位由各自行内规则处理
+	inset: var(--jmeet-meeting-topbar-height) 10px 10px auto;
+	margin: 0;
+	width: min(400px, 100%);
+	height: calc(100% - var(--jmeet-meeting-topbar-height) - 10px);
+	border-radius: var(--jmeet-radius-lg);
+	border: 1px solid var(--jmeet-meeting-border);
+	box-shadow: 0 12px 32px color-mix(in srgb, var(--jmeet-meeting-text-primary) 16%, transparent);
+	overflow: hidden;
+
+	// OVER（窄屏）：全宽浮出 + 遮罩点击关闭（sidenav-over 由 ResizeObserver 驱动）
+	.sidenav-over & {
+		inset: var(--jmeet-meeting-topbar-height) 0 0 auto;
+		width: 100% !important;
+		height: calc(100% - var(--jmeet-meeting-topbar-height));
+		border-radius: 0;
+		border: none;
+		box-shadow: none;
+	}
+
+	// 关闭态：收于右缘外侧
+	transform: translateX(32px);
+	opacity: 0;
+}
+
+.sidenav-container.panel-open .sidenav-menu.drawer {
+	transform: translateX(0);
+	opacity: 1;
+}
+
+// ── 抽屉形态单头（遗留清扫缺陷②修复）──
+// 窄屏 OVER 抽屉（成员/聊天/字幕）此前不在任何头部规则作用域内（dock 规则
+// :not(.drawer)、big 规则只管设置弹框），jmeet-meeting-panel 的 __tabs/__head
+// 与面板自带 OpenVidu 原版头部（.panel-header-container）双显。
+// 取「隐藏原版头、保新语言」分支（与批次 3 dock 形态先例同一条规则的
+// 作用域扩展）：抽屉与桌面 dock 是同一面板的两种屏幕形态，头部语言应一致
+// （__tabs 切换 + __head 标题/关闭），原版头仅剩双 chrome 冗余；
+// big 设置弹框保持原版头不变（该面板头承载双栏子导航，既有规则不动）。
+.sidenav-menu.drawer {
+	// 面板内容是子组件模板，须 ::ng-deep 触达（与 dock 形态隐藏规则同址先例）
+	::ng-deep .panel-header-container {
+		display: none;
+	}
+}
+
+// ── SIDE（桌面停靠）：舞台让位 400px，宫格自动重排；字幕容器同步让位 ──
+.sidenav-container.panel-drawer:not(.sidenav-over) .sidenav-main {
+	// 400px 面板 + 左右各 10px 间隙
+	margin-right: min(420px, 100%);
+	transition: margin-right 220ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.sidenav-backdrop {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	// OVER 遮罩：仅窄屏出现，拉开浮层与页面的明暗对比
+	background: color-mix(in srgb, var(--jmeet-meeting-text-primary) 48%, transparent);
+	opacity: 1;
+	transition: opacity 200ms ease;
+}
+
+.big {
+	width: min(720px, 94%);
+	max-width: 94%;
+}
+
+.sidenav-main {
+	height: 100%;
+	overflow: hidden;
+	min-height: -webkit-fill-available;
+	min-height: -moz-available;
+	box-sizing: border-box;
+	// 底部预留：悬浮工具条占位。放在父级（而非 #layout-container 的 padding）——
+	// OpenVidu 布局算法按 layout-container 的 clientHeight 计算瓦片，容器自身
+	// padding 会造成可用高度与算法视高错位（21 人宫格叠印实测）；父级 padding
+	// 使 layout-container 继承到缩小的 content 高度，算法无感。
+	padding-bottom: var(--jmeet-meeting-stage-bottom-inset);
+	// 面板已改为居中弹框（OVER 常驻），不再推挤视频布局
+}
+
+#layout-container {
+	height: 100%;
+	width: inherit;
+}
+
+// #footer-container 的布局规则已随定位职责移交 shell HUD 与 toolbar 自身（批次1任务4）。
+
+#footer {
+	color: var(--ov-text-primary-color);
+	height: 25px;
+	background-color: var(--ov-background-color);
+	padding: 0 14px 0 0;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	z-index: var(--jmeet-z-max);
+	/* min-width: 400px !important; */
+}
+
+.reconnecting-container {
+	width: 100%;
+	height: 100%;
+	z-index: var(--jmeet-z-dropdown);
+	background-color: color-mix(in srgb, var(--jmeet-color-surface-page) 90%, transparent);
+	opacity: 1;
+	position: absolute;
+}
+
+@media only screen and (max-width: 768px) {
+	#session-container {
+		width: 100%;
+		/* position: fixed; */
+	}
+
+	// 舞台容器不得带 z-index（遗留清扫缺陷①修复）：窄屏此处的 z:1000 曾把整个
+	// 舞台（含 #layout 的不透明 --jmeet-color-surface-page 底）提到 shell HUD
+	// （--jmeet-meeting-z-hud 990）之上——390×844 下顶栏/工具栏胶囊被绘制序盖住、
+	// elementFromPoint 命中 #layout，真击全被拦。层级契约由各层自身承载：
+	// 菜单（dock/抽屉/弹框）z=--jmeet-z-dropdown(1000) > HUD 990 > 瓦片 889，
+	// 与桌面形态同构（桌面本就无此 z）。
+	.sidenav-menu {
+		width: 100% !important;
+		max-width: 100% !important;
+		z-index: var(--jmeet-z-dropdown) !important;
+	}
+
+	.sidenav-container {
+		height: 100%;
+		min-height: 100%;
+	}
+
+	.big {
+		width: 100% !important;
+		max-width: 100% !important;
+	}
+}
+
+// Narrow containers: panel stays a centered card (former OVER full-width override removed).
+.sidenav-container.sidenav-over .sidenav-menu {
+	width: min(520px, 92%) !important;
+}
+
+// 设置面板双栏需要更宽：over 模式常驻后此规则优先级最高，单独放开 big 宽高
+.sidenav-container.sidenav-over .sidenav-menu.big {
+	width: min(860px, 94%) !important;
+	height: min(80vh, 780px);
+}
+
+.sidenav-container.sidenav-over.panel-open .sidenav-main {
+	margin-inline-end: 0;
+}
+
+// Joining splash spinner: scale the nz-spin dot to the former 50px size.
+#spinner .ant-spin-dot {
+	font-size: 50px;
+}
+
+#spinner .ant-spin-dot-item {
+	width: 13px;
+	height: 13px;
+}
+
+// The meeting is a container-sized workspace, including inside an iframe or WC.
+:host {
+	display: block;
+	height: 100%;
+	min-width: 0;
+	min-height: 0;
+}
+.sidenav-menu {
+	max-width: 100%;
+	box-sizing: border-box;
+}
+// 应用（协作）弹框内容少：高度贴合内容，避免固定高留下大片空白。
+// 规则放全局层（styles/meeting/）：组件作用域编译会给 :has() 参数
+// 追加 _ngcontent 属性，而 #activities-container 属于子组件，永远匹配不上。
+.sidenav-main {
+	min-height: 0;
+	min-width: 0;
+}
+@container meeting (max-width: 768px) {
+	.sidenav-menu,
+	.sidenav-menu.big {
+		width: min(92%, 520px) !important;
+		max-width: 92% !important;
+		z-index: var(--jmeet-z-dropdown) !important;
+	}
+
+	.sidenav-container .sidenav-main {
+		margin-inline-end: 0;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.ov-fade-in-200,
+	.ov-fade-out-200 {
+		animation: none;
+	}
+}
+
+// ── 设置面板（big）尺寸兜底：必须位于所有 520px !important 覆盖之后声明，
+// 否则 over 常驻模式与容器查询的 520px 会压掉双栏面板的加宽 ──
+.sidenav-container.sidenav-over .sidenav-menu.big,
+.sidenav-menu.big {
+	width: min(860px, 94%) !important;
+	height: min(80vh, 780px);
+}
+
+// ── 右侧抽屉（成员/聊天）尺寸兜底：同理压过 over 模式与容器查询的
+// !important 宽度，保持贴右缘窄栏形态；顶部同样让出顶栏高度 ──
+.sidenav-container.sidenav-over .sidenav-menu.drawer,
+.sidenav-menu.drawer {
+	width: min(400px, 100%) !important;
+	height: calc(100% - var(--jmeet-meeting-topbar-height)) !important;
+	max-height: none !important;
+	margin: 0 !important;
+	border-radius: 0 !important;
+}
+
+@media (max-width: 768px) {
+	.sidenav-menu.big {
+		width: min(94%, 640px) !important;
+	}
+}

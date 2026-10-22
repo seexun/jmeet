@@ -1,0 +1,72 @@
+:host {
+	display: block;
+	min-height: 0;
+}
+
+.ov-page-container {
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+	box-sizing: border-box;
+	// 吸底保存条（批次 3 设置蓝图）需要 sticky 链路直达真正的滚动容器
+	// .jmeet-app-shell__content。全局 .ov-page-container（_utilities）带 overflow:auto
+	// 会把本容器变成滚动容器——而本壳高度随内容生长、从不内滚，sticky 吸底
+	// 因此被约束在不滚动的 scrollport 上失效。恢复 visible 打断滚动容器身份。
+	// 影响面（批次 3 任务 2 审查核实）：全仓 .ov-page-container 仅 2 个模板消费者——
+	// 本壳与 auth 域 change-password-required；后者在应用壳滚动容器之外（页面自滚），
+	// 不经过本壳，不受此覆盖影响。
+	overflow: visible;
+}
+
+.tab-shell-header,
+.config-tab-bar {
+	flex-shrink: 0;
+}
+
+.tab-shell-header {
+	margin-bottom: var(--jmeet-space-4);
+
+	h1 {
+		margin: 0;
+	}
+}
+
+.config-tab-bar {
+	display: flex;
+	align-items: stretch;
+	gap: 0;
+	height: 44px;
+	margin-bottom: var(--jmeet-space-4);
+	border-bottom: 1px solid var(--jmeet-color-border);
+	overflow-x: auto;
+	overflow-y: hidden;
+	-webkit-overflow-scrolling: touch;
+	scroll-snap-type: x proximity;
+}
+
+.config-tab {
+	display: inline-flex;
+	align-items: center;
+	flex-shrink: 0;
+	height: 44px;
+	box-sizing: border-box;
+	padding: 0 var(--jmeet-space-4);
+	border-bottom: 2px solid transparent;
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-sm);
+	font-weight: var(--jmeet-font-weight-medium);
+	text-decoration: none;
+	transition:
+		color 150ms ease,
+		border-color 150ms ease;
+	scroll-snap-align: start;
+
+	&:hover {
+		color: var(--jmeet-color-text-primary);
+	}
+
+	&.active {
+		color: var(--jmeet-color-action-primary);
+		border-bottom-color: var(--jmeet-color-action-primary);
+	}
+}

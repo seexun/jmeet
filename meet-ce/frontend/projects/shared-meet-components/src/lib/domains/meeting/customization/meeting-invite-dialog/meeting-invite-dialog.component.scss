@@ -1,0 +1,293 @@
+// 会议域深绘（批次 5 §5.4）：邀请弹框——nz-modal 弹框形态（成员面板 #participants-invite-btn
+// → NzModalService nzContent 挂载本组件，560px，壳类 meeting-invite-dialog-panel），白面由
+// modal 壳单点供给，本组件平面承接（agenda 弹框壳先例对齐）：32px 图标 chip（primary-soft
+// 底主色）+ 13px/600 标题 + 12px 三级 hint + 下缘 1px divider + 28px ghost 关闭钮；摘要卡
+// 白面描边 8px + 标签分节头四要素 + 安全徽标 success-soft 座；字段行 stage 软座 + 复制钮
+// 32px ghost 主色；尾栏 36px 档（上缘 divider + 主色/ghost 双钮）。模板/TS 零变更，
+// 全 --jmeet-meeting-*。
+:host {
+	display: block;
+}
+
+.invite-dialog {
+	// 宽度由打开处的 nzWidth 控制（组件不再自定宽度，避免双重宽度定义导致的横向溢出）
+	width: 100%;
+	// modal 壳（白面 + 10px 圆角 + 浮层阴影）单点供给外壳，本面去描边去阴影平面承接
+	background: var(--jmeet-meeting-surface);
+	border-radius: var(--jmeet-radius-md);
+	color: var(--jmeet-meeting-text-primary);
+}
+
+.invite-dialog__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 14px 20px;
+	border-bottom: 1px solid var(--jmeet-meeting-divider);
+}
+
+.invite-dialog__heading {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	min-width: 0;
+}
+
+// 图标 chip：32px primary-soft 座主色字（agenda 弹框头同规格）
+.invite-dialog__icon {
+	display: grid;
+	flex-shrink: 0;
+	place-items: center;
+	width: 32px;
+	height: 32px;
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-meeting-primary-soft);
+	color: var(--jmeet-meeting-primary);
+}
+
+h2 {
+	margin: 0;
+	// 全局 ant reset 给 h1-h6 固定 rgba(0,0,0,.85)，暗色下会糊在深底上；显式走主题主文字色
+	color: var(--jmeet-meeting-text-primary);
+	font-size: 16px;
+	line-height: 20px;
+	font-weight: 600;
+}
+
+p {
+	margin: 2px 0 0;
+	color: var(--jmeet-meeting-text-tertiary);
+	font-size: 12px;
+	line-height: 18px;
+}
+
+// 关闭钮：28px 会议幽灵图标钮（agenda 同规格，压全局 jmeet 32px 基线）
+.icon-button {
+	display: grid;
+	flex-shrink: 0;
+	place-items: center;
+	width: 28px;
+	height: 28px;
+	border: 0;
+	border-radius: var(--jmeet-radius-sm);
+	background: transparent;
+	color: var(--jmeet-meeting-text-tertiary);
+	cursor: pointer;
+	transition: background-color 160ms ease, color 160ms ease;
+
+	&:hover {
+		background: var(--jmeet-meeting-stage-bg);
+		color: var(--jmeet-meeting-text-primary);
+	}
+
+	&:focus-visible {
+		outline: none;
+			box-shadow: var(--jmeet-focus-ring, 0 0 0 2px var(--jmeet-meeting-primary));
+		outline-offset: 2px;
+	}
+}
+
+.invite-dialog__content {
+	display: grid;
+	gap: 12px;
+	padding: 16px 20px 20px;
+}
+
+// 会议摘要卡：白面描边 8px 无阴影（批次 4 卡片语言：border 承载分离）
+.meeting-summary {
+	position: relative;
+	display: grid;
+	gap: 4px;
+	padding: 14px 16px;
+	border: 1px solid var(--jmeet-meeting-border);
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-meeting-surface);
+}
+
+// 摘要标签：分节头四要素（11px/600/uppercase/0.5px 字距 + 三级字色，22px 行高节奏）
+.meeting-summary__label {
+	color: var(--jmeet-meeting-text-tertiary);
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+	line-height: 22px;
+	text-transform: uppercase;
+}
+
+.meeting-summary strong {
+	color: var(--jmeet-meeting-text-primary);
+	font-size: 13px;
+	line-height: 22px;
+	font-weight: 600;
+}
+
+// 安全徽标：success-soft 座 4px 圆角档（poll 徽标同语言）
+.secure-badge {
+	position: absolute;
+	top: 12px;
+	right: 14px;
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 1px 8px;
+	border-radius: var(--jmeet-radius-sm);
+	background: var(--jmeet-meeting-success-soft);
+	color: var(--jmeet-meeting-success);
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 18px;
+
+	.anticon {
+		width: 14px;
+		height: 14px;
+		font-size: 14px; // icon/decoration sizing
+	}
+}
+
+// 字段行（会议号/入会链接/电话拨入）：stage 软座 8px（share-room-access-link 链接行同语言）
+.invite-field {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 12px;
+	min-height: 52px;
+	padding: 8px 8px 8px 14px;
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-meeting-stage-bg);
+
+	> div {
+		min-width: 0;
+		display: grid;
+		gap: 2px;
+	}
+
+	span {
+		color: var(--jmeet-meeting-text-tertiary);
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.5px;
+		line-height: 22px;
+		text-transform: uppercase;
+	}
+
+	strong {
+		overflow: hidden;
+		// 值用主文字色（标签是三级灰），避免整行灰成一片看不出层级
+		color: var(--jmeet-meeting-text-primary);
+		font-size: 13px;
+		font-weight: 500;
+		// 长 secret 链接按词断行、最多两行（比单行中段省略更可读）
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		overflow-wrap: anywhere;
+		line-height: 20px;
+	}
+
+	// 复制钮：32px ghost 主色，hover primary-soft 座（copy-url-btn 同语言）
+	button {
+		height: 32px;
+		min-height: 32px;
+		padding: 0 12px;
+		border: 1px solid transparent;
+		border-radius: var(--jmeet-radius-md);
+		background: transparent;
+		color: var(--jmeet-meeting-primary);
+		font-size: 12px;
+		transition: background-color 160ms ease, color 160ms ease;
+
+		&:hover {
+			background: var(--jmeet-meeting-primary-soft);
+			color: var(--jmeet-meeting-primary);
+		}
+	}
+}
+
+// 底部提示行：图标主色 + 文案三级
+.invite-hint {
+	display: flex;
+	align-items: flex-start;
+	gap: 7px;
+	margin: 0;
+	color: var(--jmeet-meeting-text-tertiary);
+	font-size: 12px;
+	line-height: 18px;
+
+	.anticon {
+		flex-shrink: 0;
+		width: 16px;
+		height: 16px;
+		font-size: 16px; // icon/decoration sizing
+		margin-top: 1px;
+		color: var(--jmeet-meeting-primary);
+	}
+}
+
+// 尾栏：36px 档 + 上缘 1px divider（poll 尾栏同语言）；取消 ghost 描边 / 分享主色
+.invite-dialog__actions {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	justify-content: flex-end;
+	padding: 14px 20px 16px;
+	border-top: 1px solid var(--jmeet-meeting-divider);
+
+	button {
+		min-width: 96px;
+		height: 36px;
+		min-height: 36px;
+		border-radius: var(--jmeet-radius-md);
+		font-size: 13px;
+	}
+
+	.jmeet-button--outline {
+		border: 1px solid var(--jmeet-meeting-border);
+		background: transparent;
+		color: var(--jmeet-meeting-text-secondary);
+
+		&:hover:not(:disabled) {
+			border-color: color-mix(in srgb, var(--jmeet-meeting-primary) 40%, transparent);
+			background: var(--jmeet-meeting-primary-soft);
+			color: var(--jmeet-meeting-primary);
+		}
+	}
+
+	.jmeet-button--primary {
+		background: var(--jmeet-meeting-primary);
+		border-color: var(--jmeet-meeting-primary);
+		color: var(--jmeet-meeting-surface);
+
+		&:hover:not(:disabled) {
+			background: var(--jmeet-meeting-primary-hover);
+			border-color: var(--jmeet-meeting-primary-hover);
+		}
+	}
+
+	button:disabled {
+		opacity: 0.5;
+		pointer-events: none;
+	}
+}
+
+.invite-dialog button:focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--jmeet-meeting-primary) 8%, transparent);
+}
+
+@media (max-width: 560px) {
+	.invite-dialog__header,
+	.invite-dialog__content,
+	.invite-dialog__actions {
+		padding-left: 14px;
+		padding-right: 14px;
+	}
+
+	.invite-dialog__heading p,
+	.secure-badge {
+		display: none;
+	}
+
+	.invite-dialog__actions button {
+		flex: 1;
+	}
+}

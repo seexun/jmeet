@@ -1,0 +1,25 @@
+apiKeyHeader:
+    type: apiKey
+    name: X-API-KEY
+    in: header
+    description: >
+        The single full-access API Token created in Admin Console > Integration Management. It can call every
+        endpoint documented in the public JMeet API. Regenerating it immediately invalidates the old Token.
+accessTokenHeader:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: >
+        The JWT token to authenticate the request in case of consuming the API from the JMeet frontend.
+refreshTokenHeader:
+    type: apiKey
+    name: X-Refresh-Token
+    in: header
+    description: >
+        The JWT token to refresh the access token when it expires.
+roomMemberTokenHeader:
+    type: apiKey
+    name: X-Room-Member-Token
+    in: header
+    description: >
+        The JWT token to authenticate a room member when accessing a room and its resources.

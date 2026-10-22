@@ -1,0 +1,47 @@
+type: object
+required: [authentication]
+properties:
+    authentication:
+        $ref: '#/$defs/AuthenticationConfig'
+        description: Enterprise authentication configuration.
+$defs:
+    AuthenticationConfig:
+        type: object
+        required: [localLoginEnabled, identityProviders]
+        properties:
+            localLoginEnabled:
+                type: boolean
+                description: Allow password-based local accounts.
+            identityProviders:
+                type: array
+                items:
+                    $ref: '#/$defs/IdentityProviderConfig'
+    IdentityProviderConfig:
+        type: object
+        required: [id, type, displayName, enabled, autoProvision, defaultRole, allowedDomains, adminGroups, managerGroups]
+        properties:
+            id: { type: string, example: corporate-ldap }
+            type: { type: string, enum: [ldap, oidc, wecom, dingtalk, feishu] }
+            displayName: { type: string }
+            enabled: { type: boolean }
+            autoProvision: { type: boolean }
+            defaultRole: { type: string, enum: [room_member, room_manager, admin] }
+            allowedDomains: { type: array, items: { type: string } }
+            adminGroups: { type: array, items: { type: string } }
+            managerGroups: { type: array, items: { type: string } }
+            clientId: { type: string }
+            clientSecret: { type: string, format: password }
+            issuerUrl: { type: string, format: uri }
+            authorizationUrl: { type: string, format: uri }
+            tokenUrl: { type: string, format: uri }
+            userInfoUrl: { type: string, format: uri }
+            scopes: { type: array, items: { type: string } }
+            ldapUrl: { type: string }
+            bindDn: { type: string }
+            bindPassword: { type: string, format: password }
+            baseDn: { type: string }
+            userFilter: { type: string }
+            usernameAttribute: { type: string }
+            nameAttribute: { type: string }
+            emailAttribute: { type: string }
+            groupAttribute: { type: string }

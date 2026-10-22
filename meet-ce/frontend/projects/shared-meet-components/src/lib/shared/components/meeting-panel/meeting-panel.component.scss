@@ -1,0 +1,80 @@
+:host {
+	display: block;
+	height: 100%;
+	background: var(--jmeet-meeting-surface);
+}
+
+.jmeet-meeting-panel {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+	border-left: 1px solid var(--jmeet-meeting-border);
+}
+
+.jmeet-meeting-panel__tabs {
+	flex: 0 0 var(--jmeet-meeting-dock-tab-height);
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 0 8px;
+	border-bottom: 1px solid var(--jmeet-meeting-divider);
+
+	&:empty {
+		display: none;
+	} // 单面板场景无 tab
+}
+
+.jmeet-meeting-panel__head {
+	flex: 0 0 var(--jmeet-meeting-panel-head-height);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	padding: 0 12px;
+	border-bottom: 1px solid var(--jmeet-meeting-divider);
+
+	h2 {
+		margin: 0;
+		font-size: 13px;
+		font-weight: 600;
+		color: var(--jmeet-meeting-text-primary);
+	}
+}
+
+.jmeet-meeting-panel__close {
+	display: grid;
+	place-items: center;
+	width: 26px;
+	height: 26px;
+	border: 0;
+	border-radius: 6px;
+	background: transparent;
+	color: var(--jmeet-meeting-text-tertiary);
+	cursor: pointer;
+	&:hover {
+		background: var(--jmeet-meeting-stage-bg);
+		color: var(--jmeet-meeting-text-primary);
+	}
+}
+
+.jmeet-meeting-panel__body {
+	flex: 1 1 auto;
+	min-height: 0;
+	overflow: auto;
+}
+
+.jmeet-meeting-panel__actions {
+	// §5.2⑤ 第 4 槽：底部操作区（全体静音/邀请成员等）锚底（修复波 I4）
+	flex: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 10px 12px;
+	border-top: 1px solid var(--jmeet-meeting-divider);
+
+	&:empty {
+		display: none;
+	} // 无投影内容时不占位
+}

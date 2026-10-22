@@ -1,0 +1,42 @@
+JMeet Open Source Edition
+Copyright 2026 Seexun
+
+This product includes software developed by third parties, as noted below.
+
+==========================================================================
+This product is derived from OpenVidu Meet, Version 3.8.0
+  Copyright (c) OpenVidu (https://openvidu.io)
+  Licensed under the Apache License, Version 2.0
+  https://github.com/OpenVidu/openvidu-meet
+==========================================================================
+
+This product uses the following open source components:
+
+* LiveKit Server and livekit-client
+  Copyright (c) LiveKit (https://livekit.io)
+  Licensed under the Apache License, Version 2.0
+  https://github.com/livekit/livekit
+
+* DeepFilterNet noise reduction (DeepFilterNet3 ONNX model and WASM runtime)
+  Copyright (c) Romain Hennequin
+  Licensed under the MIT License
+  https://github.com/Rikorose/DeepFilterNet
+
+* ng-zorro-antd
+  Copyright (c) NG-ZORRO
+  Licensed under the MIT License
+  https://github.com/NG-ZORRO/ng-zorro-antd
+
+* Angular
+  Copyright (c) Google LLC
+  Licensed under the MIT License
+  https://angular.dev
+
+* Login page background photograph (login-bg.webp)
+  Source: Pexels, photo #260689 (https://www.pexels.com/photo/260689/)
+  Licensed under the Pexels License — free for commercial use, no attribution required
+  https://www.pexels.com/license/
+
+This product also depends on numerous other open source packages; the full
+dependency list with licenses is available in the packaged source (see
+pnpm-lock.yaml and the package.json files of each workspace package).

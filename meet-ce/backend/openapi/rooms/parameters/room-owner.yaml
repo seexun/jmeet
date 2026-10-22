@@ -1,0 +1,7 @@
+name: owner
+in: query
+required: false
+description: Filter rooms by owner user ID.
+schema:
+    type: string
+example: usr_12345

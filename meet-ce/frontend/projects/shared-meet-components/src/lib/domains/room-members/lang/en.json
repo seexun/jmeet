@@ -1,0 +1,184 @@
+{
+  "ROOM_MEMBERS": {
+    "COMMON": {
+      "CANCEL": "Cancel",
+      "SEARCH": "Search",
+      "ADD_MEMBER": "Add Member",
+      "USER": "User",
+      "IDENTIFIED_GUEST": "Identified Guest",
+      "MODERATOR": "Moderator",
+      "SPEAKER": "Speaker"
+    },
+    "FORM": {
+      "TYPE_LABEL": "Member type",
+      "TYPE_USER": "User",
+      "TYPE_IDENTIFIED_GUEST": "Identified Guest",
+      "USER_ID_LABEL": "Select user",
+      "USER_ID_PLACEHOLDER": "Search for a user by name or ID...",
+      "USER_ID_HINT": "Search by name or account, then pick from the list",
+      "NO_USERS_FOUND": "No users found",
+      "GUEST_INFO": "Identified guests are not JMeet users. After being added, they will be assigned a unique link to access this room. You can copy this link from the member list.",
+      "MEMBER_NAME_LABEL": "Member Name",
+      "MEMBER_NAME_PLACEHOLDER": "Enter a display name...",
+      "MEMBER_NAME_HINT": "A display name for the guest",
+      "BASE_ROLE_LABEL": "Base Role",
+      "BASE_ROLE_HINT": "The base role determines default permissions",
+      "CUSTOM_PERMISSIONS_TITLE": "Custom Permissions",
+      "CUSTOM_PERMISSIONS_DESCRIPTION": "Override the default role permissions",
+      "CUSTOM_PERMISSIONS_HINT": "These permissions override the defaults for the selected role. Leave toggles in their default position to inherit role permissions.",
+      "CUSTOM_PERMISSIONS_HINT_SHORT": "Expand a group to adjust items. Hover for details. Unchanged items inherit the role defaults.",
+      "CUSTOM_PERMISSIONS_RESET": "Reset to role defaults",
+      "CUSTOM_PERMISSIONS_CUSTOMIZED": "{{count}} customized",
+      "CUSTOM_PERMISSIONS_GROUP_COUNT": "{{count}} items",
+      "UPDATE_MEMBER": "Update Member",
+      "ADD_MEMBER": "Add Member",
+      "DISABLED_REASON_ADMIN": "Admin users cannot be added as members",
+      "DISABLED_REASON_OWNER": "The room owner cannot be added as a member"
+    },
+    "FORM_DIALOG": {
+      "TITLE_EDIT": "Edit Member",
+      "TITLE_ADD": "Add Member"
+    },
+    "LIST": {
+      "EMPTY_TITLE": "No members yet",
+      "EMPTY_SUBTITLE": "Members will appear here after you add them.",
+      "SEARCH_MEMBERS": "Search members",
+      "SEARCH_BY_NAME": "Search by member name",
+      "CLEAR_SEARCH": "Clear search",
+      "MATCH_CASE_INSENSITIVE": "Match case insensitive",
+      "CASE_INSENSITIVE_LABEL": "Aa",
+      "MATCH_MODE_PREFIX": "Match mode: ",
+      "FILTER_MEMBERS": "Filter members",
+      "REFRESH_MEMBERS": "Refresh members",
+      "REMOVE_SELECTED_MEMBERS": "Remove selected members",
+      "FILTER_BY_ROLE": "Filter by Role",
+      "FILTER_BY_ROLE_DESCRIPTION": "Narrows the result to members with the selected base role.",
+      "ROLE": "Role",
+      "FILTER_BY_TYPE": "Filter by Type",
+      "FILTER_BY_TYPE_DESCRIPTION": "Narrows the result to members of the selected type.",
+      "TYPE": "Type",
+      "FILTERS_LABEL": "Filters:",
+      "CLEAR_ALL": "Clear all",
+      "LOADING_MEMBERS": "Loading members...",
+      "EMPTY_FILTER_TITLE": "No members match your search",
+      "EMPTY_FILTER_SUBTITLE": "Try adjusting or clearing your filters to see more members.",
+      "CLEAR_FILTERS": "Clear Filters",
+      "COLUMN_MEMBER": "Member",
+      "COLUMN_ROLE": "Role",
+      "COLUMN_TYPE": "Type",
+      "COLUMN_ADDED": "Added",
+      "COLUMN_ACTIONS": "Actions",
+      "VIEW_USER_PROFILE": "View user profile",
+      "COPY_ACCESS_LINK": "Copy access link",
+      "EDIT_MEMBER": "Edit member",
+      "REMOVE_MEMBER": "Remove member",
+      "MATCH_MODE_STARTS_WITH": "Starts with",
+      "MATCH_MODE_CONTAINS": "Contains",
+      "MATCH_MODE_EXACT": "Exact match",
+      "MATCH_MODE_REGEX": "Regex",
+      "ROLE_FILTER_ALL": "All roles",
+      "TYPE_FILTER_ALL": "All types",
+      "TYPE_USER": "User",
+      "TYPE_IDENTIFIED_GUEST": "Identified guest",
+      "ROLE_CHIP_PREFIX": "Role: ",
+      "TYPE_CHIP_PREFIX": "Type: "
+    },
+    "ADD": {
+      "TITLE_EDIT": "Edit Room Member",
+      "TITLE_ADD": "Add Room Member",
+      "SUBTITLE_EDIT": "Update permissions for this room member.",
+      "SUBTITLE_ADD": "Grant access to a user or an identified guest for this room.",
+      "CARD_TITLE": "Member Configuration",
+      "CARD_SUBTITLE_EDIT_USER": "Update user's permissions for this room",
+      "CARD_SUBTITLE_EDIT_GUEST": "Update identified guest's permissions for this room",
+      "CARD_SUBTITLE_ADD_USER": "Select a user and configure their permissions",
+      "CARD_SUBTITLE_ADD_GUEST": "Select a name for the guest and configure their permissions"
+    },
+    "ERRORS": {
+      "FIELD_REQUIRED": "This field is required",
+      "PATTERN": "Only lowercase letters, numbers, and underscores are allowed",
+      "MAX_LENGTH_PREFIX": "Cannot exceed ",
+      "MAX_LENGTH_SUFFIX": " characters",
+      "ROOM_ID_REQUIRED": "Room ID is required",
+      "ROOM_DATA_LOAD_FAILED": "Failed to load room data",
+      "MEMBER_UPDATED_SUCCESS": "Member updated successfully",
+      "MEMBER_ADDED_SUCCESS": "Member added successfully",
+      "MEMBER_UPDATE_FAILED": "Failed to update member",
+      "MEMBER_ADD_FAILED": "Failed to add member"
+    },
+    "ROLE": {
+      "MODERATOR": "Moderator",
+      "SPEAKER": "Speaker"
+    },
+    "MEMBER_TYPE": {
+      "USER": "User",
+      "GUEST": "Identified guest"
+    },
+    "PERMISSIONS": {
+      "GROUPS": {
+        "MEETING": "Meeting",
+        "MEDIA": "Media",
+        "RECORDINGS": "Recordings",
+        "CHAT": "Chat"
+      },
+      "ITEMS": {
+        "canJoinMeeting": {
+          "LABEL": "Can join meeting",
+          "DESCRIPTION": "Allow joining the meeting"
+        },
+        "canEndMeeting": {
+          "LABEL": "Can end meeting",
+          "DESCRIPTION": "Allow ending the meeting for all participants"
+        },
+        "canMakeModerator": {
+          "LABEL": "Can make moderator",
+          "DESCRIPTION": "Allow promoting participants to moderator role"
+        },
+        "canKickParticipants": {
+          "LABEL": "Can kick participants",
+          "DESCRIPTION": "Allow removing participants from the meeting"
+        },
+        "canShareAccessLinks": {
+          "LABEL": "Can share access links",
+          "DESCRIPTION": "Allow sharing invite links with others"
+        },
+        "canPublishVideo": {
+          "LABEL": "Can publish video",
+          "DESCRIPTION": "Allow sharing camera video"
+        },
+        "canPublishAudio": {
+          "LABEL": "Can publish audio",
+          "DESCRIPTION": "Allow sharing microphone audio"
+        },
+        "canShareScreen": {
+          "LABEL": "Can share screen",
+          "DESCRIPTION": "Allow sharing desktop or browser tabs"
+        },
+        "canChangeVirtualBackground": {
+          "LABEL": "Can change virtual background",
+          "DESCRIPTION": "Allow changing the virtual background"
+        },
+        "canRecord": {
+          "LABEL": "Can record",
+          "DESCRIPTION": "Allow starting and stopping recordings"
+        },
+        "canRetrieveRecordings": {
+          "LABEL": "Can retrieve recordings",
+          "DESCRIPTION": "Allow listing and playing recordings"
+        },
+        "canDeleteRecordings": {
+          "LABEL": "Can delete recordings",
+          "DESCRIPTION": "Allow deleting recordings"
+        },
+        "canReadChat": {
+          "LABEL": "Can read chat",
+          "DESCRIPTION": "Allow reading chat messages"
+        },
+        "canWriteChat": {
+          "LABEL": "Can write chat",
+          "DESCRIPTION": "Allow sending chat messages"
+        }
+      }
+    }
+  }
+}

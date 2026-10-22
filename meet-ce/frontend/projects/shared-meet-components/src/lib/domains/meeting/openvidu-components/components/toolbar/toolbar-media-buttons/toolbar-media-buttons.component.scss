@@ -1,0 +1,85 @@
+// tm-btn 按钮解剖已上提为全局公共件：styles/meeting/_toolbar.scss（收尾波），
+// 本组件与 toolbar 投影的面板入口（成员/聊天）共用同一 anatomy。
+:host {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 2px;
+}
+
+// 更多菜单下拉浮层渲染在 overlay 容器（组件外），须 ::ng-deep 触达；
+// 菜单皮批次 5 §5.4 深绘：挂既有 nzOverlayClassName="more-options-menu" 钩子换肤
+//（不重造菜单机制、不碰 _nz-theme 全局层）——菜单行 36px 档（子菜单标题既有同档）、
+// hover stage soft 底、分组标签分节头四要素、divider meeting 边，全 --jmeet-meeting-*。
+::ng-deep .more-options-menu.ant-dropdown .ant-dropdown-menu {
+	max-height: min(70vh, 480px);
+	overflow: hidden auto;
+
+	// 菜单项多时滚轮滚动兜底，右侧滚动条不显示
+	scrollbar-width: none;
+	padding-right: 2px;
+
+	// 菜单项：36px 档 + 4px 圆角 + 次级字色 + hover stage soft 底
+	.ant-dropdown-menu-item {
+		min-height: 36px;
+		border-radius: var(--jmeet-radius-sm);
+		color: var(--jmeet-meeting-text-secondary);
+
+		&:hover {
+			background: var(--jmeet-meeting-stage-bg);
+			color: var(--jmeet-meeting-text-primary);
+		}
+	}
+
+	// 菜单项图标统一 14px 线性风格(含子菜单标题,否则 submenu 标题 icon 偏大)
+	.ant-dropdown-menu-item .anticon,
+	.ant-menu-submenu-title .anticon {
+		font-size: 14px;
+		color: var(--jmeet-meeting-text-secondary);
+	}
+
+	// 分组标签：分节头四要素（11px/600/0.5px 字距 + 三级字色，22px 行高节奏；
+	// 汉字分组无大小写语义，uppercase 不设）
+	.menu-group-label {
+		color: var(--jmeet-meeting-text-tertiary);
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.5px;
+		line-height: 22px;
+	}
+
+	// 菜单内分隔线：meeting 边
+	.ant-dropdown-menu-item-divider {
+		background: var(--jmeet-meeting-border);
+	}
+
+	// 子菜单标题与普通菜单项对齐(高度/内边距/字重一致)
+	.ant-menu-submenu-title {
+		display: flex;
+		align-items: center;
+		height: 36px;
+		line-height: 36px;
+		font-weight: 400;
+		color: var(--jmeet-meeting-text-primary);
+	}
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: transparent;
+		margin: 6px 0;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: transparent;
+		border-radius: 999px;
+	}
+
+	&::-webkit-scrollbar-button {
+		display: none;
+		height: 0;
+		width: 0;
+	}
+}

@@ -1,0 +1,59 @@
+:host {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	height: 100%;
+}
+
+.tpb-tab {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	height: 32px;
+	padding: 0 10px;
+	border: 0;
+	border-radius: 6px;
+	background: transparent;
+	color: var(--jmeet-meeting-text-secondary);
+	cursor: pointer;
+	font-size: 12px;
+
+	&:hover {
+		background: var(--jmeet-meeting-stage-bg);
+	}
+	&.active {
+		background: var(--jmeet-meeting-primary-soft);
+		color: var(--jmeet-meeting-primary);
+	}
+
+	.tpb-badge {
+		min-width: 16px;
+		height: 16px;
+		padding: 0 4px;
+		border-radius: 8px;
+		background: var(--jmeet-meeting-danger);
+		color: var(--jmeet-meeting-surface);
+		font-size: 10px;
+		line-height: 16px;
+		text-align: center;
+	}
+
+	// 参会人数是常态信息：中性灰；红色只留给聊天未读（沿用旧按钮的分级语义）
+	.tpb-badge--neutral {
+		background: var(--jmeet-meeting-stage-bg);
+		color: var(--jmeet-meeting-text-secondary);
+	}
+
+	.tpb-tab__label {
+		max-width: 72px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}

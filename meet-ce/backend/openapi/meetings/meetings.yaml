@@ -1,0 +1,84 @@
+/meetings/{roomId}:
+    delete:
+        operationId: endMeeting
+        summary: End a meeting
+        description: |
+            Ends the current meeting in an JMeet room. This will stop all recordings and disconnect all participants.
+
+            This endpoint is idempotent. If the meeting is already ended, it will return a success response without any action.
+        tags:
+            - Internal API - Meetings
+        security:
+            - roomMemberTokenHeader: []
+        parameters:
+            - $ref: '../rooms/parameters/room-id-path.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/end-meeting.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: '../rooms/responses/errors/room-not-found.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+/meetings/{roomId}/participants/{participantIdentity}:
+    delete:
+        operationId: kickParticipant
+        summary: Kick a participant from a meeting
+        description: >
+            Kicks a participant from the current meeting in an JMeet room.
+        tags:
+            - Internal API - Meetings
+        security:
+            - roomMemberTokenHeader: []
+        parameters:
+            - $ref: '../rooms/parameters/room-id-path.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/kick-participant.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: './responses/errors/room-participant-not-found.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+/meetings/{roomId}/participants/{participantIdentity}/role:
+    put:
+        operationId: updateParticipantRole
+        summary: Update participant role in a meeting
+        description: >
+            Applies a moderation action to a participant in the current meeting in an JMeet room.
+            Supported actions are `upgrade` (promote to moderator) and `downgrade` (restore original permissions).
+        tags:
+            - Internal API - Meetings
+        security:
+            - roomMemberTokenHeader: []
+        parameters:
+            - $ref: '../rooms/parameters/room-id-path.yaml'
+        requestBody:
+            $ref: './requests/update-participant-role.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/update-participant-role.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: './responses/errors/room-participant-not-found.yaml'
+            '409':
+                $ref: './responses/errors/participant-role-conflict.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'

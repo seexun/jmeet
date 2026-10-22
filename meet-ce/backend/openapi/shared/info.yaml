@@ -1,0 +1,23 @@
+title: JMeet REST API
+description: |
+    The JMeet REST API provides endpoints for integrating real-time video conferencing capabilities
+    into external systems.
+
+    ## Authentication
+
+    Configure the API Token via the `MEET_INITIAL_API_KEY` environment variable on the server, then send it in the
+    `X-API-Key` header. The Token grants access to every endpoint documented here; no scopes or separate
+    permissions are required. Generating a new Token immediately invalidates the previous one.
+
+    Keep the Token on your server. Do not expose it in browser code, mobile applications, or public repositories.
+
+    ```bash
+    curl --request GET \
+      --url "https://your-meet-host/meet/api/v1/rooms" \
+      --header "X-API-Key: ovmeet-your-token"
+    ```
+license:
+    name: Apache License 2.0
+    identifier: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+version: v1

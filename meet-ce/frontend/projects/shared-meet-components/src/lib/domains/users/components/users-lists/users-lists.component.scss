@@ -1,0 +1,58 @@
+:host {
+	display: block;
+}
+
+// 工具行布局基座由全局 .jmeet-filter-row__filters 供给（flex/wrap/gap/min-width），此处仅补弹性与底部对齐
+.users-toolbar-filters {
+	flex: 1;
+	align-items: flex-end;
+}
+
+.action-buttons {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-space-4);
+}
+
+// .users-table-footer（flex-end/--jmeet-space-3）批次3 任务4 split-brain 归一：
+// 值上收全局 _users-patterns.scss（列表页脚右置符合列表蓝图），组件副本删除。
+
+.users-role-field {
+	width: 160px;
+}
+
+// 用户头像（姓名首字色块）
+.user-avatar {
+	display: inline-grid;
+	place-items: center;
+	flex-shrink: 0;
+	width: 28px;
+	height: 28px;
+	margin-inline-end: var(--jmeet-space-2);
+	border-radius: 50%;
+	// （批次4：裸白 → gray-0 令牌——头像字色渲染等价）
+	color: var(--jmeet-color-gray-0);
+	font-size: var(--jmeet-font-size-xs);
+	font-weight: var(--jmeet-font-weight-semibold);
+}
+
+// 选择列 48px（原 nz-table nzWidth="48px" 随迁移换轨为结构类）
+.users-table {
+	th.select-header,
+	td.select-cell {
+		width: 48px;
+		min-width: 48px;
+		max-width: 48px;
+	}
+}
+
+// 刷新按钮加载旋转（原 .spin-on-loading.spinning 复合选择器永不匹配，随迁移修正为生效形态）
+.spinning {
+	animation: users-refresh-spin 1s linear infinite;
+}
+
+@keyframes users-refresh-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}

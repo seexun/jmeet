@@ -1,0 +1,42 @@
+description: >
+    Success response when a room closure is scheduled because a meeting is still active.
+    The closure takes effect when the meeting ends. Returns the updated room.
+content:
+    application/json:
+        schema:
+            allOf:
+                - $ref: '../../schemas/meet-room.yaml'
+                - type: object
+                  properties:
+                      _extraFields:
+                          type: array
+                          description: >
+                              List of extra fields that can be included in the response based on the `X-ExtraFields` header or `extraFields` query parameter.
+                          items:
+                              type: string
+                              example: config
+        example:
+            roomId: 'room-123'
+            roomName: 'room'
+            owner: 'admin'
+            creationDate: 1620000000000
+            access:
+                anonymous:
+                    moderator:
+                        enabled: true
+                        url: 'https://example.com/room/room-123?secret=123456'
+                    speaker:
+                        enabled: true
+                        url: 'https://example.com/room/room-123?secret=654321'
+                    recording:
+                        enabled: true
+                        url: 'https://example.com/room/room-123/recordings?secret=987654'
+                user:
+                    enabled: false
+                    url: 'https://example.com/room/room-123'
+            status: active_meeting
+            meetingEndAction: close
+            rolesUpdatedAt: 1620000000000
+            _extraFields:
+                - config
+                - roles

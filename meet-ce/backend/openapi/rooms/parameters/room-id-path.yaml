@@ -1,0 +1,7 @@
+name: roomId
+in: path
+required: true
+description: The unique identifier of the room.
+schema:
+    type: string
+example: 'room-123'

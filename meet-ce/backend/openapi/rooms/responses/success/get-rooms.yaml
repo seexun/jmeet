@@ -1,0 +1,292 @@
+description: Successfully retrieved the list of JMeet rooms
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                rooms:
+                    type: array
+                    items:
+                        $ref: '../../schemas/meet-room.yaml'
+                _extraFields:
+                    type: array
+                    description: >
+                        List of extra fields that can be included in the response based on the `X-ExtraFields` header or `extraFields` query parameter.
+                    items:
+                        type: string
+                        example: config
+                pagination:
+                    $ref: '../../../shared/schemas/meet-pagination.yaml'
+
+        examples:
+            default_room_details:
+                summary: Full room details without extra fields for multiple rooms
+                value:
+                    rooms:
+                        - roomId: 'room-123'
+                          roomName: 'room'
+                          owner: 'admin'
+                          creationDate: 1620000000000
+                          autoDeletionDate: 1900000000000
+                          autoDeletionPolicy:
+                              withMeeting: when_meeting_ends
+                              withRecordings: close
+                          access:
+                              anonymous:
+                                  moderator:
+                                      enabled: true
+                                      url: 'https://example.com/room/room-123?secret=123456'
+                                  speaker:
+                                      enabled: true
+                                      url: 'https://example.com/room/room-123?secret=654321'
+                                  recording:
+                                      enabled: true
+                                      url: 'https://example.com/room/room-123/recordings?secret=987654'
+                              user:
+                                  enabled: false
+                                  url: 'https://example.com/room/room-123'
+                          status: open
+                          rolesUpdatedAt: 1620000000000
+                          meetingEndAction: none
+                        - roomId: 'room-456'
+                          roomName: 'room'
+                          owner: 'alice_smith'
+                          creationDate: 1620001000000
+                          autoDeletionDate: 1900000000000
+                          autoDeletionPolicy:
+                              withMeeting: when_meeting_ends
+                              withRecordings: close
+                          access:
+                              anonymous:
+                                  moderator:
+                                      enabled: false
+                                      url: 'https://example.com/room/room-456?secret=789012'
+                                  speaker:
+                                      enabled: true
+                                      url: 'https://example.com/room/room-456?secret=210987'
+                                  recording:
+                                      enabled: true
+                                      url: 'https://example.com/room/room-456/recordings?secret=345678'
+                              user:
+                                  enabled: true
+                                  url: 'https://example.com/room/room-456'
+                          status: open
+                          rolesUpdatedAt: 1620001000000
+                          meetingEndAction: none
+                    _extraFields:
+                        - config
+                        - roles
+                    pagination:
+                        isTruncated: false
+                        maxItems: 10
+            fields=roomId:
+                summary: Response with only roomId for each room
+                value:
+                    rooms:
+                        - roomId: 'room-123'
+                        - roomId: 'room-456'
+                    _extraFields:
+                        - config
+                        - roles
+                    pagination:
+                        isTruncated: false
+                        maxItems: 10
+            extraFields=config,roles:
+                summary: Room details with expanded config and roles
+                value:
+                    rooms:
+                        - roomId: 'room-123'
+                          roomName: 'room'
+                          owner: 'admin'
+                          creationDate: 1620000000000
+                          autoDeletionDate: 1900000000000
+                          autoDeletionPolicy:
+                              withMeeting: when_meeting_ends
+                              withRecordings: close
+                          config:
+                              recording:
+                                  enabled: false
+                                  layout: grid
+                                  encoding: H264_720P_30
+                              chat:
+                                  enabled: true
+                              virtualBackground:
+                                  enabled: true
+                              e2ee:
+                                  enabled: false
+                              captions:
+                                  enabled: true
+                          roles:
+                              moderator:
+                                  permissions:
+                                      canRecord: true
+                                      canRetrieveRecordings: true
+                                      canDeleteRecordings: true
+                                      canJoinMeeting: true
+                                      canShareAccessLinks: true
+                                      canMakeModerator: true
+                                      canKickParticipants: true
+                                      canEndMeeting: true
+                                      canPublishVideo: true
+                                      canPublishAudio: true
+                                      canShareScreen: true
+                                      canReadChat: true
+                                      canWriteChat: true
+                                      canChangeVirtualBackground: true
+                              speaker:
+                                  permissions:
+                                      canRecord: false
+                                      canRetrieveRecordings: true
+                                      canDeleteRecordings: false
+                                      canJoinMeeting: true
+                                      canShareAccessLinks: false
+                                      canMakeModerator: false
+                                      canKickParticipants: false
+                                      canEndMeeting: false
+                                      canPublishVideo: true
+                                      canPublishAudio: true
+                                      canShareScreen: true
+                                      canReadChat: true
+                                      canWriteChat: true
+                                      canChangeVirtualBackground: true
+                          access:
+                              anonymous:
+                                  moderator:
+                                      enabled: true
+                                      url: 'https://example.com/room/room-123?secret=123456'
+                                  speaker:
+                                      enabled: true
+                                      url: 'https://example.com/room/room-123?secret=654321'
+                                  recording:
+                                      enabled: true
+                                      url: 'https://example.com/room/room-123/recordings?secret=987654'
+                              user:
+                                  enabled: false
+                                  url: 'https://example.com/room/room-123'
+                          status: open
+                          rolesUpdatedAt: 1620000000000
+                          meetingEndAction: none
+                        - roomId: 'room-456'
+                          roomName: 'room'
+                          owner: 'alice_smith'
+                          creationDate: 1620001000000
+                          autoDeletionDate: 1900000000000
+                          autoDeletionPolicy:
+                              withMeeting: when_meeting_ends
+                              withRecordings: close
+                          config:
+                              recording:
+                                  enabled: true
+                                  layout: grid
+                                  encoding:
+                                      video:
+                                          width: 1280
+                                          height: 720
+                                          framerate: 60
+                                          codec: H264_HIGH
+                                          bitrate: 2500
+                                          keyFrameInterval: 2
+                                          depth: 2
+                                      audio:
+                                          codec: AAC
+                                          bitrate: 192
+                                          frequency: 48000
+                              chat:
+                                  enabled: false
+                              virtualBackground:
+                                  enabled: false
+                              e2ee:
+                                  enabled: false
+                          roles:
+                              moderator:
+                                  permissions:
+                                      canRecord: true
+                                      canRetrieveRecordings: true
+                                      canDeleteRecordings: false
+                                      canJoinMeeting: true
+                                      canShareAccessLinks: true
+                                      canMakeModerator: false
+                                      canKickParticipants: true
+                                      canEndMeeting: true
+                                      canPublishVideo: true
+                                      canPublishAudio: true
+                                      canShareScreen: true
+                                      canReadChat: true
+                                      canWriteChat: true
+                                      canChangeVirtualBackground: true
+                              speaker:
+                                  permissions:
+                                      canRecord: true
+                                      canRetrieveRecordings: true
+                                      canDeleteRecordings: false
+                                      canJoinMeeting: true
+                                      canShareAccessLinks: false
+                                      canMakeModerator: false
+                                      canKickParticipants: false
+                                      canEndMeeting: false
+                                      canPublishVideo: true
+                                      canPublishAudio: true
+                                      canShareScreen: false
+                                      canReadChat: true
+                                      canWriteChat: true
+                                      canChangeVirtualBackground: true
+                          access:
+                              anonymous:
+                                  moderator:
+                                      enabled: false
+                                      url: 'https://example.com/room/room-456?secret=789012'
+                                  speaker:
+                                      enabled: true
+                                      url: 'https://example.com/room/room-456?secret=210987'
+                                  recording:
+                                      enabled: true
+                                      url: 'https://example.com/room/room-456/recordings?secret=345678'
+                              user:
+                                  enabled: true
+                                  url: 'https://example.com/room/room-456'
+                          status: open
+                          rolesUpdatedAt: 1620001000000
+                          meetingEndAction: none
+                    _extraFields:
+                        - config
+                        - roles
+                    pagination:
+                        isTruncated: false
+                        maxItems: 10
+            fields=roomId;extraFields=config:
+                summary: Room details including config
+                value:
+                    rooms:
+                        - roomId: 'room-123'
+                          config:
+                              recording:
+                                  enabled: false
+                                  layout: grid
+                                  encoding: H264_720P_30
+                              chat:
+                                  enabled: true
+                              virtualBackground:
+                                  enabled: true
+                              e2ee:
+                                  enabled: false
+                              captions:
+                                  enabled: true
+                        - roomId: 'room-456'
+                          config:
+                              recording:
+                                  enabled: true
+                                  layout: grid
+                                  encoding: H264_720P_30
+                              chat:
+                                  enabled: false
+                              virtualBackground:
+                                  enabled: false
+                              e2ee:
+                                  enabled: false
+                    _extraFields:
+                        - config
+                        - roles
+                    pagination:
+                        isTruncated: true
+                        nextPageToken: 'abc123'
+                        maxItems: 10

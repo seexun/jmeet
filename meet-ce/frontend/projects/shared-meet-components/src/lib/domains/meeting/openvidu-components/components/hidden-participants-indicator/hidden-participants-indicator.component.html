@@ -1,0 +1,38 @@
+@if (count() > 0) {
+	<div class="hidden-participants-container" [class.horizontal]="isTopBarMode()" [class.vertical]="!isTopBarMode()">
+		@if (isTopBarMode()) {
+			<div class="horizontal-content">
+				<div class="unified-indicator" (click)="clicked.emit()">
+					<nz-icon class="indicator-icon" [nzType]="count() === 1 ? 'user' : 'team'" />
+
+					<div class="text-container">
+						<span class="participant-count-value">+{{ count() }}</span>
+						<span class="participant-count-label">{{ descriptionText() }}</span>
+						@if (formattedParticipantNames()) {
+							<span class="names-text">({{ formattedParticipantNames() }})</span>
+						}
+					</div>
+				</div>
+			</div>
+		} @else {
+			<div class="vertical-content" (click)="clicked.emit()">
+				<div class="count-section">
+					<div class="count-badge">
+						<nz-icon class="badge-icon" [nzType]="count() === 1 ? 'user' : 'team'" />
+						<span class="badge-number">+{{ count() }}</span>
+					</div>
+					<div class="count-info">
+						<span class="participant-count-value">+{{ count() }}</span>
+						<span class="participant-count-label">{{ descriptionText() }}</span>
+					</div>
+					@if (formattedParticipantNames()) {
+						<div class="participant-names">
+							<nz-icon nzType="eye-invisible" class="names-icon" />
+							<span class="names-text">{{ formattedParticipantNames() }}</span>
+						</div>
+					}
+				</div>
+			</div>
+		}
+	</div>
+}

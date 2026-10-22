@@ -1,0 +1,179 @@
+{
+  "ROOM_MEMBERS": {
+    "COMMON": {
+      "CANCEL": "Annuler",
+      "SEARCH": "Rechercher",
+      "ADD_MEMBER": "Ajouter un membre",
+      "USER": "Utilisateur",
+      "IDENTIFIED_GUEST": "Invité identifié",
+      "MODERATOR": "Modérateur",
+      "SPEAKER": "Intervenant"
+    },
+    "FORM": {
+      "TYPE_USER": "Utilisateur",
+      "TYPE_IDENTIFIED_GUEST": "Invité identifié",
+      "USER_ID_LABEL": "ID utilisateur",
+      "USER_ID_PLACEHOLDER": "Rechercher un utilisateur par nom ou par ID...",
+      "USER_ID_HINT": "Commencez à taper pour rechercher des utilisateurs",
+      "NO_USERS_FOUND": "Aucun utilisateur trouvé",
+      "GUEST_INFO": "Les invités identifiés ne sont pas des utilisateurs JMeet. Une fois ajoutés, un lien unique leur sera attribué pour accéder à cette salle. Vous pouvez copier ce lien depuis la liste des membres.",
+      "MEMBER_NAME_LABEL": "Nom du membre",
+      "MEMBER_NAME_PLACEHOLDER": "Saisissez un nom affiché...",
+      "MEMBER_NAME_HINT": "Un nom affiché pour l'invité",
+      "BASE_ROLE_LABEL": "Rôle de base",
+      "BASE_ROLE_HINT": "Le rôle de base détermine les autorisations par défaut",
+      "CUSTOM_PERMISSIONS_TITLE": "Autorisations personnalisées",
+      "CUSTOM_PERMISSIONS_DESCRIPTION": "Remplacer les autorisations par défaut du rôle",
+      "CUSTOM_PERMISSIONS_HINT": "Ces autorisations remplacent celles par défaut du rôle sélectionné. Laissez les interrupteurs dans leur position par défaut pour hériter des autorisations du rôle.",
+      "UPDATE_MEMBER": "Mettre à jour le membre",
+      "ADD_MEMBER": "Ajouter un membre",
+      "DISABLED_REASON_ADMIN": "Les administrateurs ne peuvent pas être ajoutés comme membres",
+      "DISABLED_REASON_OWNER": "Le propriétaire de la salle ne peut pas être ajouté comme membre"
+    },
+    "FORM_DIALOG": {
+      "TITLE_EDIT": "Modifier le membre",
+      "TITLE_ADD": "Ajouter un membre"
+    },
+    "LIST": {
+      "EMPTY_TITLE": "Aucun membre pour l'instant",
+      "EMPTY_SUBTITLE": "Les membres apparaîtront ici après les avoir ajoutés.",
+      "SEARCH_MEMBERS": "Rechercher des membres",
+      "SEARCH_BY_NAME": "Rechercher par nom de membre",
+      "CLEAR_SEARCH": "Effacer la recherche",
+      "MATCH_CASE_INSENSITIVE": "Ne pas tenir compte de la casse",
+      "CASE_INSENSITIVE_LABEL": "Aa",
+      "MATCH_MODE_PREFIX": "Mode de correspondance : ",
+      "FILTER_MEMBERS": "Filtrer les membres",
+      "REFRESH_MEMBERS": "Actualiser les membres",
+      "REMOVE_SELECTED_MEMBERS": "Retirer les membres sélectionnés",
+      "FILTER_BY_ROLE": "Filtrer par rôle",
+      "FILTER_BY_ROLE_DESCRIPTION": "Limite le résultat aux membres ayant le rôle de base sélectionné.",
+      "ROLE": "Rôle",
+      "FILTER_BY_TYPE": "Filtrer par type",
+      "FILTER_BY_TYPE_DESCRIPTION": "Limite le résultat aux membres du type sélectionné.",
+      "TYPE": "Type",
+      "FILTERS_LABEL": "Filtres :",
+      "CLEAR_ALL": "Tout effacer",
+      "LOADING_MEMBERS": "Chargement des membres...",
+      "EMPTY_FILTER_TITLE": "Aucun membre ne correspond à votre recherche",
+      "EMPTY_FILTER_SUBTITLE": "Essayez d'ajuster ou d'effacer vos filtres pour voir plus de membres.",
+      "CLEAR_FILTERS": "Effacer les filtres",
+      "COLUMN_MEMBER": "Membre",
+      "COLUMN_ROLE": "Rôle",
+      "COLUMN_TYPE": "Type",
+      "COLUMN_ADDED": "Ajouté",
+      "COLUMN_ACTIONS": "Actions",
+      "VIEW_USER_PROFILE": "Voir le profil de l'utilisateur",
+      "COPY_ACCESS_LINK": "Copier le lien d'accès",
+      "EDIT_MEMBER": "Modifier le membre",
+      "REMOVE_MEMBER": "Retirer le membre",
+      "MATCH_MODE_STARTS_WITH": "Commence par",
+      "MATCH_MODE_CONTAINS": "Contient",
+      "MATCH_MODE_EXACT": "Correspondance exacte",
+      "MATCH_MODE_REGEX": "Regex",
+      "ROLE_FILTER_ALL": "Tous les rôles",
+      "TYPE_FILTER_ALL": "Tous les types",
+      "TYPE_USER": "Utilisateur",
+      "TYPE_IDENTIFIED_GUEST": "Invité identifié",
+      "ROLE_CHIP_PREFIX": "Rôle : ",
+      "TYPE_CHIP_PREFIX": "Type : "
+    },
+    "ADD": {
+      "TITLE_EDIT": "Modifier le membre de la salle",
+      "TITLE_ADD": "Ajouter un membre à la salle",
+      "SUBTITLE_EDIT": "Mettez à jour les autorisations de ce membre de la salle.",
+      "SUBTITLE_ADD": "Accordez l'accès à un utilisateur ou à un invité identifié pour cette salle.",
+      "CARD_TITLE": "Configuration du membre",
+      "CARD_SUBTITLE_EDIT_USER": "Mettre à jour les autorisations de l'utilisateur pour cette salle",
+      "CARD_SUBTITLE_EDIT_GUEST": "Mettre à jour les autorisations de l'invité identifié pour cette salle",
+      "CARD_SUBTITLE_ADD_USER": "Sélectionnez un utilisateur et configurez ses autorisations",
+      "CARD_SUBTITLE_ADD_GUEST": "Sélectionnez un nom pour l'invité et configurez ses autorisations"
+    },
+    "ERRORS": {
+      "FIELD_REQUIRED": "Ce champ est obligatoire",
+      "PATTERN": "Seuls les lettres minuscules, les chiffres et les tirets bas sont autorisés",
+      "MAX_LENGTH_PREFIX": "Ne peut pas dépasser ",
+      "MAX_LENGTH_SUFFIX": " caractères",
+      "ROOM_ID_REQUIRED": "L'ID de la salle est requis",
+      "ROOM_DATA_LOAD_FAILED": "Échec du chargement des données de la salle",
+      "MEMBER_UPDATED_SUCCESS": "Membre mis à jour avec succès",
+      "MEMBER_ADDED_SUCCESS": "Membre ajouté avec succès",
+      "MEMBER_UPDATE_FAILED": "Échec de la mise à jour du membre",
+      "MEMBER_ADD_FAILED": "Échec de l'ajout du membre"
+    },
+    "ROLE": {
+      "MODERATOR": "Modérateur",
+      "SPEAKER": "Intervenant"
+    },
+    "MEMBER_TYPE": {
+      "USER": "Utilisateur",
+      "GUEST": "Invité identifié"
+    },
+    "PERMISSIONS": {
+      "GROUPS": {
+        "MEETING": "Réunion",
+        "MEDIA": "Média",
+        "RECORDINGS": "Enregistrements",
+        "CHAT": "Chat"
+      },
+      "ITEMS": {
+        "canJoinMeeting": {
+          "LABEL": "Peut rejoindre la réunion",
+          "DESCRIPTION": "Autoriser à rejoindre la réunion"
+        },
+        "canEndMeeting": {
+          "LABEL": "Peut terminer la réunion",
+          "DESCRIPTION": "Autoriser à terminer la réunion pour tous les participants"
+        },
+        "canMakeModerator": {
+          "LABEL": "Peut nommer modérateur",
+          "DESCRIPTION": "Autoriser à promouvoir des participants au rôle de modérateur"
+        },
+        "canKickParticipants": {
+          "LABEL": "Peut expulser des participants",
+          "DESCRIPTION": "Autoriser à retirer des participants de la réunion"
+        },
+        "canShareAccessLinks": {
+          "LABEL": "Peut partager des liens d'accès",
+          "DESCRIPTION": "Autoriser à partager des liens d'invitation avec d'autres personnes"
+        },
+        "canPublishVideo": {
+          "LABEL": "Peut publier de la vidéo",
+          "DESCRIPTION": "Autoriser le partage de la vidéo de la caméra"
+        },
+        "canPublishAudio": {
+          "LABEL": "Peut publier de l'audio",
+          "DESCRIPTION": "Autoriser le partage de l'audio du microphone"
+        },
+        "canShareScreen": {
+          "LABEL": "Peut partager l'écran",
+          "DESCRIPTION": "Autoriser le partage du bureau ou des onglets du navigateur"
+        },
+        "canChangeVirtualBackground": {
+          "LABEL": "Peut changer l'arrière-plan virtuel",
+          "DESCRIPTION": "Autoriser à changer l'arrière-plan virtuel"
+        },
+        "canRecord": {
+          "LABEL": "Peut enregistrer",
+          "DESCRIPTION": "Autoriser à démarrer et arrêter les enregistrements"
+        },
+        "canRetrieveRecordings": {
+          "LABEL": "Peut récupérer les enregistrements",
+          "DESCRIPTION": "Autoriser à lister et lire les enregistrements"
+        },
+        "canDeleteRecordings": {
+          "LABEL": "Peut supprimer les enregistrements",
+          "DESCRIPTION": "Autoriser à supprimer les enregistrements"
+        },
+        "canReadChat": {
+          "LABEL": "Peut lire le chat",
+          "DESCRIPTION": "Autoriser à lire les messages du chat"
+        },
+        "canWriteChat": {
+          "LABEL": "Peut écrire dans le chat",
+          "DESCRIPTION": "Autoriser à envoyer des messages dans le chat"
+        }
+      }
+    }
+  }
+}

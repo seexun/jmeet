@@ -1,0 +1,179 @@
+{
+  "ROOM_MEMBERS": {
+    "COMMON": {
+      "CANCEL": "रद्द करें",
+      "SEARCH": "खोजें",
+      "ADD_MEMBER": "सदस्य जोड़ें",
+      "USER": "उपयोगकर्ता",
+      "IDENTIFIED_GUEST": "पहचाना गया अतिथि",
+      "MODERATOR": "मॉडरेटर",
+      "SPEAKER": "स्पीकर"
+    },
+    "FORM": {
+      "TYPE_USER": "उपयोगकर्ता",
+      "TYPE_IDENTIFIED_GUEST": "पहचाना गया अतिथि",
+      "USER_ID_LABEL": "उपयोगकर्ता ID",
+      "USER_ID_PLACEHOLDER": "नाम या ID से किसी उपयोगकर्ता को खोजें...",
+      "USER_ID_HINT": "उपयोगकर्ताओं को खोजने के लिए टाइप करना शुरू करें",
+      "NO_USERS_FOUND": "कोई उपयोगकर्ता नहीं मिला",
+      "GUEST_INFO": "पहचाने गए अतिथि JMeet उपयोगकर्ता नहीं हैं। जोड़े जाने के बाद, उन्हें इस कक्ष तक पहुंचने के लिए एक अद्वितीय लिंक असाइन किया जाएगा। आप इस लिंक को सदस्य सूची से कॉपी कर सकते हैं।",
+      "MEMBER_NAME_LABEL": "सदस्य नाम",
+      "MEMBER_NAME_PLACEHOLDER": "एक प्रदर्शित नाम दर्ज करें...",
+      "MEMBER_NAME_HINT": "अतिथि के लिए एक प्रदर्शित नाम",
+      "BASE_ROLE_LABEL": "आधार भूमिका",
+      "BASE_ROLE_HINT": "आधार भूमिका डिफ़ॉल्ट अनुमतियां निर्धारित करती है",
+      "CUSTOM_PERMISSIONS_TITLE": "कस्टम अनुमतियां",
+      "CUSTOM_PERMISSIONS_DESCRIPTION": "डिफ़ॉल्ट भूमिका अनुमतियों को ओवरराइड करें",
+      "CUSTOM_PERMISSIONS_HINT": "ये अनुमतियां चयनित भूमिका के लिए डिफ़ॉल्ट को ओवरराइड करती हैं। भूमिका अनुमतियों को इनहेरिट करने के लिए टॉगल को उनकी डिफ़ॉल्ट स्थिति में छोड़ दें।",
+      "UPDATE_MEMBER": "सदस्य अपडेट करें",
+      "ADD_MEMBER": "सदस्य जोड़ें",
+      "DISABLED_REASON_ADMIN": "व्यवस्थापक उपयोगकर्ताओं को सदस्य के रूप में नहीं जोड़ा जा सकता",
+      "DISABLED_REASON_OWNER": "कक्ष स्वामी को सदस्य के रूप में नहीं जोड़ा जा सकता"
+    },
+    "FORM_DIALOG": {
+      "TITLE_EDIT": "सदस्य संपादित करें",
+      "TITLE_ADD": "सदस्य जोड़ें"
+    },
+    "LIST": {
+      "EMPTY_TITLE": "अभी तक कोई सदस्य नहीं",
+      "EMPTY_SUBTITLE": "सदस्य जोड़ने के बाद वे यहाँ दिखाई देंगे।",
+      "SEARCH_MEMBERS": "सदस्य खोजें",
+      "SEARCH_BY_NAME": "सदस्य नाम से खोजें",
+      "CLEAR_SEARCH": "खोज साफ़ करें",
+      "MATCH_CASE_INSENSITIVE": "केस असंवेदनशील मिलान",
+      "CASE_INSENSITIVE_LABEL": "Aa",
+      "MATCH_MODE_PREFIX": "मिलान मोड: ",
+      "FILTER_MEMBERS": "सदस्य फ़िल्टर करें",
+      "REFRESH_MEMBERS": "सदस्य रीफ़्रेश करें",
+      "REMOVE_SELECTED_MEMBERS": "चयनित सदस्य हटाएं",
+      "FILTER_BY_ROLE": "भूमिका के अनुसार फ़िल्टर करें",
+      "FILTER_BY_ROLE_DESCRIPTION": "परिणाम को चयनित आधार भूमिका वाले सदस्यों तक सीमित करता है।",
+      "ROLE": "भूमिका",
+      "FILTER_BY_TYPE": "प्रकार के अनुसार फ़िल्टर करें",
+      "FILTER_BY_TYPE_DESCRIPTION": "परिणाम को चयनित प्रकार के सदस्यों तक सीमित करता है।",
+      "TYPE": "प्रकार",
+      "FILTERS_LABEL": "फ़िल्टर:",
+      "CLEAR_ALL": "सभी साफ़ करें",
+      "LOADING_MEMBERS": "सदस्य लोड हो रहे हैं...",
+      "EMPTY_FILTER_TITLE": "आपकी खोज से कोई सदस्य मेल नहीं खाता",
+      "EMPTY_FILTER_SUBTITLE": "अधिक सदस्य देखने के लिए अपने फ़िल्टर समायोजित करने या साफ़ करने का प्रयास करें।",
+      "CLEAR_FILTERS": "फ़िल्टर साफ़ करें",
+      "COLUMN_MEMBER": "सदस्य",
+      "COLUMN_ROLE": "भूमिका",
+      "COLUMN_TYPE": "प्रकार",
+      "COLUMN_ADDED": "जोड़ा गया",
+      "COLUMN_ACTIONS": "क्रियाएं",
+      "VIEW_USER_PROFILE": "उपयोगकर्ता प्रोफ़ाइल देखें",
+      "COPY_ACCESS_LINK": "पहुंच लिंक कॉपी करें",
+      "EDIT_MEMBER": "सदस्य संपादित करें",
+      "REMOVE_MEMBER": "सदस्य हटाएं",
+      "MATCH_MODE_STARTS_WITH": "इससे शुरू होता है",
+      "MATCH_MODE_CONTAINS": "शामिल है",
+      "MATCH_MODE_EXACT": "सटीक मिलान",
+      "MATCH_MODE_REGEX": "Regex",
+      "ROLE_FILTER_ALL": "सभी भूमिकाएं",
+      "TYPE_FILTER_ALL": "सभी प्रकार",
+      "TYPE_USER": "उपयोगकर्ता",
+      "TYPE_IDENTIFIED_GUEST": "पहचाना गया अतिथि",
+      "ROLE_CHIP_PREFIX": "भूमिका: ",
+      "TYPE_CHIP_PREFIX": "प्रकार: "
+    },
+    "ADD": {
+      "TITLE_EDIT": "कक्ष सदस्य संपादित करें",
+      "TITLE_ADD": "कक्ष सदस्य जोड़ें",
+      "SUBTITLE_EDIT": "इस कक्ष सदस्य के लिए अनुमतियां अपडेट करें।",
+      "SUBTITLE_ADD": "इस कक्ष के लिए किसी उपयोगकर्ता या पहचाने गए अतिथि को पहुंच प्रदान करें।",
+      "CARD_TITLE": "सदस्य कॉन्फ़िगरेशन",
+      "CARD_SUBTITLE_EDIT_USER": "इस कक्ष के लिए उपयोगकर्ता की अनुमतियां अपडेट करें",
+      "CARD_SUBTITLE_EDIT_GUEST": "इस कक्ष के लिए पहचाने गए अतिथि की अनुमतियां अपडेट करें",
+      "CARD_SUBTITLE_ADD_USER": "एक उपयोगकर्ता चुनें और उनकी अनुमतियां कॉन्फ़िगर करें",
+      "CARD_SUBTITLE_ADD_GUEST": "अतिथि के लिए एक नाम चुनें और उनकी अनुमतियां कॉन्फ़िगर करें"
+    },
+    "ERRORS": {
+      "FIELD_REQUIRED": "यह फ़ील्ड आवश्यक है",
+      "PATTERN": "केवल छोटे अक्षर, संख्याएं और अंडरस्कोर की अनुमति है",
+      "MAX_LENGTH_PREFIX": "इससे अधिक नहीं हो सकता ",
+      "MAX_LENGTH_SUFFIX": " वर्ण",
+      "ROOM_ID_REQUIRED": "कक्ष ID आवश्यक है",
+      "ROOM_DATA_LOAD_FAILED": "कक्ष डेटा लोड करने में विफल",
+      "MEMBER_UPDATED_SUCCESS": "सदस्य सफलतापूर्वक अपडेट किया गया",
+      "MEMBER_ADDED_SUCCESS": "सदस्य सफलतापूर्वक जोड़ा गया",
+      "MEMBER_UPDATE_FAILED": "सदस्य अपडेट करने में विफल",
+      "MEMBER_ADD_FAILED": "सदस्य जोड़ने में विफल"
+    },
+    "ROLE": {
+      "MODERATOR": "मॉडरेटर",
+      "SPEAKER": "स्पीकर"
+    },
+    "MEMBER_TYPE": {
+      "USER": "उपयोगकर्ता",
+      "GUEST": "पहचाना गया अतिथि"
+    },
+    "PERMISSIONS": {
+      "GROUPS": {
+        "MEETING": "मीटिंग",
+        "MEDIA": "मीडिया",
+        "RECORDINGS": "रिकॉर्डिंग",
+        "CHAT": "बातचीत"
+      },
+      "ITEMS": {
+        "canJoinMeeting": {
+          "LABEL": "मीटिंग में शामिल हो सकते हैं",
+          "DESCRIPTION": "मीटिंग में शामिल होने की अनुमति दें"
+        },
+        "canEndMeeting": {
+          "LABEL": "मीटिंग समाप्त कर सकते हैं",
+          "DESCRIPTION": "सभी सदस्यों के लिए मीटिंग समाप्त करने की अनुमति दें"
+        },
+        "canMakeModerator": {
+          "LABEL": "मॉडरेटर बना सकते हैं",
+          "DESCRIPTION": "सदस्यों को मॉडरेटर भूमिका में पदोन्नत करने की अनुमति दें"
+        },
+        "canKickParticipants": {
+          "LABEL": "सदस्यों को निकाल सकते हैं",
+          "DESCRIPTION": "मीटिंग से सदस्यों को हटाने की अनुमति दें"
+        },
+        "canShareAccessLinks": {
+          "LABEL": "पहुंच लिंक साझा कर सकते हैं",
+          "DESCRIPTION": "दूसरों के साथ आमंत्रण लिंक साझा करने की अनुमति दें"
+        },
+        "canPublishVideo": {
+          "LABEL": "वीडियो प्रकाशित कर सकते हैं",
+          "DESCRIPTION": "कैमरा वीडियो साझा करने की अनुमति दें"
+        },
+        "canPublishAudio": {
+          "LABEL": "ऑडियो प्रकाशित कर सकते हैं",
+          "DESCRIPTION": "माइक्रोफ़ोन ऑडियो साझा करने की अनुमति दें"
+        },
+        "canShareScreen": {
+          "LABEL": "स्क्रीन साझा कर सकते हैं",
+          "DESCRIPTION": "डेस्कटॉप या ब्राउज़र टैब साझा करने की अनुमति दें"
+        },
+        "canChangeVirtualBackground": {
+          "LABEL": "वर्चुअल बैकग्राउंड बदल सकते हैं",
+          "DESCRIPTION": "वर्चुअल बैकग्राउंड बदलने की अनुमति दें"
+        },
+        "canRecord": {
+          "LABEL": "रिकॉर्ड कर सकते हैं",
+          "DESCRIPTION": "रिकॉर्डिंग शुरू और बंद करने की अनुमति दें"
+        },
+        "canRetrieveRecordings": {
+          "LABEL": "रिकॉर्डिंग प्राप्त कर सकते हैं",
+          "DESCRIPTION": "रिकॉर्डिंग सूचीबद्ध और चलाने की अनुमति दें"
+        },
+        "canDeleteRecordings": {
+          "LABEL": "रिकॉर्डिंग हटा सकते हैं",
+          "DESCRIPTION": "रिकॉर्डिंग हटाने की अनुमति दें"
+        },
+        "canReadChat": {
+          "LABEL": "बातचीत पढ़ सकते हैं",
+          "DESCRIPTION": "बातचीत संदेश पढ़ने की अनुमति दें"
+        },
+        "canWriteChat": {
+          "LABEL": "बातचीत लिख सकते हैं",
+          "DESCRIPTION": "बातचीत संदेश भेजने की अनुमति दें"
+        }
+      }
+    }
+  }
+}

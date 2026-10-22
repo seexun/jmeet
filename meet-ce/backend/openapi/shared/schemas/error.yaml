@@ -1,0 +1,21 @@
+type: object
+required:
+    - error
+    - message
+properties:
+    error:
+        type: string
+        description: Name of the error
+    message:
+        type: string
+        description: Description of the error
+    details:
+        description: List of validation errors in case of '422 Unprocessable Entity' error
+        type: array
+        items:
+            type: object
+            properties:
+                field:
+                    type: string
+                message:
+                    type: string

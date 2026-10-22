@@ -1,0 +1,18 @@
+description: User credentials
+required: true
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                loginName:
+                    type: string
+                    description: The account login name.
+                    example: 'admin'
+                password:
+                    type: string
+                    description: The password of the user.
+                    example: 'password123'
+            required:
+                - loginName
+                - password

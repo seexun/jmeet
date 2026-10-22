@@ -1,0 +1,7 @@
+// 邀请面板壳：仅薄内边距（真面为 ov-share-room-access-link 卡——本面板是其唯一运行时
+// 消费方，卡片语言批次 5 深绘见 components/share-room-access-link/）。
+// 盘点注记：当前 SPA 接线中 ov-meeting 未 select 本面板（邀请流程已由 NzModal 邀请
+// 弹框承接），本壳为 dormant 路径——令牌语言与禁令契约仍锁定，防复活即回潮。
+.share-room-access-link-container {
+	padding: 10px;
+}

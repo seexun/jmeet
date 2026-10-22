@@ -1,0 +1,64 @@
+<div class="dialog-container">
+	<h2 class="dialog-title">
+		<nz-icon nzType="user" class="dialog-icon" />
+		{{ 'USERS.UPDATE_ROLE_DIALOG.TITLE' | translate }}
+	</h2>
+
+	<p class="dialog-subtitle">
+		{{ 'USERS.UPDATE_ROLE_DIALOG.SUBTITLE' | translate }}
+		<strong>{{ data.user.name }}</strong>
+		<span class="user-id-hint">({{ data.user.loginName }})</span>
+	</p>
+
+	<div class="jmeet-form-item">
+		<p class="jmeet-form-label">{{ 'USERS.UPDATE_ROLE_DIALOG.ROLE' | translate }}</p>
+		<nz-select
+			class="update-role-dialog__role-select"
+			[ngModel]="selectedRole()"
+			(ngModelChange)="selectedRole.set($any($event))"
+		>
+			@for (role of availableRoles; track role) {
+				<nz-option
+					[nzValue]="role"
+					[nzLabel]="UsersUiUtils.getRoleTranslationKey(role) | translate"
+					[nzCustomContent]="true"
+				>
+					<div class="role-option">
+						<nz-icon [nzType]="(UsersUiUtils.getRoleIcon(role)) | nzIconType" class="role-option-icon" />
+						<span>{{ UsersUiUtils.getRoleTranslationKey(role) | translate }}</span>
+					</div>
+				</nz-option>
+			}
+		</nz-select>
+	</div>
+
+	@if (roleChanged()) {
+		@if (roleSpecificWarning()) {
+			<div class="warning-banner">
+				<nz-icon nzType="warning" class="warning-icon" />
+				<p>{{ roleSpecificWarning() }}</p>
+			</div>
+		}
+
+		<div class="warning-banner">
+			<nz-icon nzType="audit" class="warning-icon" />
+			<p>{{ 'USERS.UPDATE_ROLE_DIALOG.WARNING_KICK' | translate }}</p>
+		</div>
+	}
+
+	<div class="jmeet-form-actions dialog-actions">
+		<button class="jmeet-button jmeet-button--outline" type="button" (click)="cancel()">{{ 'USERS.COMMON.CANCEL' | translate }}</button>
+		<button
+			class="jmeet-button jmeet-button--primary"
+			type="button"
+			[disabled]="!roleChanged() || isSaving()"
+			(click)="save()"
+			>
+			@if (isSaving()) {
+				<nz-spin nzSimple nzSize="small" class="update-role-dialog__spinner" />
+			} @else {
+				{{ 'USERS.UPDATE_ROLE_DIALOG.SAVE_ROLE' | translate }}
+			}
+		</button>
+	</div>
+</div>

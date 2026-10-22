@@ -1,0 +1,15 @@
+<section class="jmeet-empty-state" [class.jmeet-empty-state--compact]="compact()">
+	<div class="jmeet-empty-state__icon">
+		<ng-content select="[empty-icon]"><nz-icon nzType="inbox" /></ng-content>
+	</div>
+	<h2 class="jmeet-empty-state__title">{{ title() }}</h2>
+	@if (description()) {
+		<p class="jmeet-empty-state__description">{{ description() }}</p>
+	}
+	@if (actionLabel()) {
+		<button type="button" class="jmeet-button jmeet-button--primary" (click)="action.emit()">
+			{{ actionLabel() }}
+		</button>
+	}
+	<ng-content select="[empty-actions]" />
+</section>

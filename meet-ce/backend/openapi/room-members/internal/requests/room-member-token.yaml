@@ -1,0 +1,6 @@
+description: Room member token options
+required: true
+content:
+    application/json:
+        schema:
+            $ref: '../schemas/room-member-token-options.yaml'

@@ -1,0 +1,7 @@
+in: query
+name: userId
+required: false
+description: Filter users by userId
+schema:
+    type: string
+example: 'alice_smith'

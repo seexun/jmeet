@@ -1,0 +1,7 @@
+// 会中页私有样式仅剩 :host 定位；横幅/加载态/水印等骨架已上收全局层
+// styles/meeting/_misc.scss（body.meeting-ui / :host 双发射，收尾批 re-home）。
+:host {
+	display: block;
+	height: 100%;
+	position: relative;
+}

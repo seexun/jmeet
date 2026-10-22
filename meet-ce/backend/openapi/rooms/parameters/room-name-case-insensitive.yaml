@@ -1,0 +1,8 @@
+name: roomNameCaseInsensitive
+in: query
+required: false
+description: Whether roomName filtering should ignore case. Defaults to false.
+schema:
+    type: boolean
+    default: false
+example: true

@@ -1,0 +1,33 @@
+description: All specified room members were deleted successfully.
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                deleted:
+                    type: array
+                    items:
+                        type: string
+                    description: List of room members that were deleted successfully.
+                failed:
+                    type: array
+                    description: Always present; empty when all room members were deleted successfully.
+                    items:
+                        type: object
+                        properties:
+                            memberId:
+                                type: string
+                            error:
+                                type: string
+                                description: Name of the error
+                            message:
+                                type: string
+                                description: Description of the error
+        example:
+            message: "All room members deleted successfully"
+            deleted:
+                - 'alice_smith'
+                - 'ext:abc123'
+            failed: []

@@ -1,0 +1,6 @@
+description: New rooms appearance config
+required: true
+content:
+    application/json:
+        schema:
+            $ref: '../schemas/rooms-appearance-config.yaml'

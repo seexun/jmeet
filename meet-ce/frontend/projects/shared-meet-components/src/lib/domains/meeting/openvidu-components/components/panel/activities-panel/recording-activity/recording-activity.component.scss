@@ -1,0 +1,242 @@
+@use '../activities-panel.shared' as *;
+
+// 会议域深绘（批次 5 §5.4）：录制活动卡——白面描边 8px 无阴影（批次 4 卡片语言）、
+// 状态图标 chip 32px 三色 soft 座（live success-soft / pending warning-soft / failed
+// danger-soft）、状态徽标 4px soft 座档（poll 徽标同语言）、消息条 soft 座。
+// 批次 2 挂账收敛：7 处全局 action-warning 引用归零，全 --jmeet-meeting-*。
+// 模板/TS 零变更。
+:host {
+	display: block;
+}
+
+.recording-card {
+	display: grid;
+	gap: 10px;
+	padding: 12px;
+	border: 1px solid var(--jmeet-meeting-border);
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-meeting-surface);
+}
+
+.recording-card__header {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 12px;
+}
+
+// 状态图标 chip：32px soft 三色座（录制中 success / 启停中 warning / 失败 danger）
+.recording-card__icon {
+	display: grid;
+	place-items: center;
+	width: 32px;
+	height: 32px;
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-meeting-primary-soft);
+	color: var(--jmeet-meeting-primary);
+
+	.anticon {
+		width: 20px;
+		height: 20px;
+		font-size: 20px;
+	}
+
+	&.is-live {
+		background: var(--jmeet-meeting-success-soft);
+		color: var(--jmeet-meeting-success);
+	}
+
+	&.is-failed {
+		background: var(--jmeet-meeting-danger-soft);
+		color: var(--jmeet-meeting-danger);
+	}
+
+	&.is-pending {
+		background: var(--jmeet-meeting-warning-soft);
+		color: var(--jmeet-meeting-warning);
+	}
+}
+
+.recording-card__meta {
+	display: grid;
+	min-width: 0;
+	gap: 2px;
+
+	strong {
+		color: var(--jmeet-meeting-text-primary);
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 20px;
+	}
+
+	span {
+		color: var(--jmeet-meeting-text-tertiary);
+		font-size: 12px;
+		line-height: 18px;
+	}
+}
+
+// 状态徽标：4px soft 座档（poll 徽标同语言）——待机 stage 座次级字 / 录制中 success-soft +
+// success / 启停中 warning-soft + warning-text / 失败 danger-soft + danger
+.recording-card__status {
+	flex-shrink: 0;
+	padding: 1px 8px;
+	border-radius: var(--jmeet-radius-sm);
+	background: var(--jmeet-meeting-stage-bg);
+	color: var(--jmeet-meeting-text-secondary);
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 18px;
+	white-space: nowrap;
+
+	&.is-live {
+		background: var(--jmeet-meeting-success-soft);
+		color: var(--jmeet-meeting-success);
+	}
+
+	&.is-failed {
+		background: var(--jmeet-meeting-danger-soft);
+		color: var(--jmeet-meeting-danger);
+	}
+
+	&.is-pending {
+		background: var(--jmeet-meeting-warning-soft);
+		color: var(--jmeet-meeting-warning-text);
+	}
+}
+
+.recording-card__body {
+	// 动作按钮（开始/停止录制、查看录像）并排一行；提示消息横贯整行
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 10px;
+}
+
+.recording-message,
+.start-recording-button-container,
+#reset-recording-status-btn {
+	grid-column: 1 / -1;
+}
+
+// 有"查看录像"可并排时，开始/停止录制只占一列，两按钮同行；
+// 按钮本体撑满所在列，避免容器拉宽后按钮仍按内容宽度左对齐
+.recording-card__body:has(#view-recordings-btn) .start-recording-button-container {
+	grid-column: auto;
+}
+
+.start-recording-button-container button {
+	width: 100%;
+}
+
+// 消息条：soft 座（pending = warning-soft 座 + warning-text；error = danger-soft 座 + danger）
+.recording-message {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 10px 12px;
+	border-radius: var(--jmeet-radius-md);
+	font-size: 13px;
+	line-height: 1.4;
+
+	.anticon {
+		flex-shrink: 0;
+		width: 18px;
+		height: 18px;
+		font-size: 18px;
+		margin-top: 1px;
+	}
+
+	strong {
+		display: block;
+		margin-bottom: 2px;
+		font-size: 13px;
+	}
+
+	span {
+		display: block;
+		font-size: 12px;
+		opacity: 0.9;
+	}
+
+	&--pending {
+		background: var(--jmeet-meeting-warning-soft);
+		color: var(--jmeet-meeting-warning-text);
+	}
+
+	&--error {
+		background: var(--jmeet-meeting-danger-soft);
+		color: var(--jmeet-meeting-danger);
+	}
+}
+
+.start-recording-button-container,
+#stop-recording-btn,
+#view-recordings-btn,
+#reset-recording-status-btn {
+	width: 100%;
+}
+
+// 动作钮：主色实底（开始/停止录制）与 ghost 描边（查看录像/重置）28px 档
+//（poll 卡内操作同语言，min-height 同步压全局 32px 基线）
+button {
+	min-height: 28px;
+	border-radius: var(--jmeet-radius-md);
+	box-shadow: none;
+	font-size: 12px;
+}
+
+.jmeet-button--primary {
+	background: var(--jmeet-meeting-primary);
+	border-color: var(--jmeet-meeting-primary);
+	color: var(--jmeet-meeting-surface);
+
+	&:hover:not(:disabled) {
+		background: var(--jmeet-meeting-primary-hover);
+		border-color: var(--jmeet-meeting-primary-hover);
+	}
+}
+
+.jmeet-button--outline {
+	border: 1px solid var(--jmeet-meeting-border);
+	background: transparent;
+	color: var(--jmeet-meeting-text-secondary);
+
+	&:hover:not(:disabled) {
+		border-color: color-mix(in srgb, var(--jmeet-meeting-primary) 40%, transparent);
+		background: var(--jmeet-meeting-primary-soft);
+		color: var(--jmeet-meeting-primary);
+	}
+}
+
+button:disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+#view-recordings-btn .anticon {
+	width: 15px;
+	height: 15px;
+	font-size: 15px;
+	margin-right: 5px;
+}
+
+.blink {
+	animation: recording-blink 1.5s linear infinite;
+}
+
+@keyframes recording-blink {
+	50% {
+		opacity: 0.45;
+	}
+}
+
+@media (max-width: 560px) {
+	.recording-card__header {
+		grid-template-columns: auto minmax(0, 1fr);
+	}
+
+	.recording-card__status {
+		grid-column: 1 / -1;
+		justify-self: start;
+	}
+}

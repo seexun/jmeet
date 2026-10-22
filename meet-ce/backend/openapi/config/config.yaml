@@ -1,0 +1,46 @@
+/config/rooms/appearance:
+    get:
+        operationId: getRoomsAppearanceConfig
+        summary: Get rooms appearance config
+        description: >
+            Retrieves the appearance config for rooms in the JMeet application.
+        tags:
+            - Internal API - Global Config
+        security:
+            - accessTokenHeader: []
+        responses:
+            '200':
+                $ref: './responses/success/get-appearance-config.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+    put:
+        operationId: updateRoomsAppearanceConfig
+        summary: Update rooms appearance config
+        description: >
+            Updates the appearance config for rooms in the JMeet application.
+        tags:
+            - Internal API - Global Config
+        security:
+            - accessTokenHeader: []
+        requestBody:
+            $ref: './requests/update-appearance-config.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/update-appearance-config.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+

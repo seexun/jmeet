@@ -1,0 +1,36 @@
+<div class="room-access-url-badge">
+	@if (showStatus()) {
+		<div class="meeting-status">
+			<span class="meeting-status-dot"></span>
+			{{ 'SHARE_ACCESS.MEETING_STARTED' | translate }}
+		</div>
+	}
+	<div class="room-access-url-badge-title" [class]="[titleSize(), titleWeight()]">
+		{{ title() ?? ('SHARE_ACCESS.DEFAULT_TITLE' | translate) }}
+	</div>
+
+	@if (subtitle()) {
+		<div class="room-access-url-badge-subtitle">
+			{{ subtitle() }}
+		</div>
+	}
+
+	<button type="button" class="invite-primary-button" (click)="copyClicked.emit()">
+		<nz-icon nzType="user-add" />
+		<span>{{ 'SHARE_ACCESS.COPY_INVITE' | translate }}</span>
+	</button>
+
+	@if (showLink()) {
+		<div class="room-access-url-label">{{ 'SHARE_ACCESS.LINK_LABEL' | translate }}</div>
+		<div class="room-access-url-badge-container" role="button" tabindex="0" (click)="copyClicked.emit()" (keydown.enter)="copyClicked.emit()">
+			<span class="room-access-url-text">{{ roomAccessUrl() }}</span>
+			<button type="button" class="copy-url-btn jmeet-button jmeet-button--ghost jmeet-button--icon" [attr.aria-label]="'SHARE_ACCESS.COPY_TOOLTIP' | translate" nz-tooltip [nzTooltipTitle]="'SHARE_ACCESS.COPY_TOOLTIP' | translate">
+				<nz-icon nzType="copy" />
+			</button>
+		</div>
+	}
+
+	@if (additionalInfo()) {
+		<div class="room-access-url-badge-additional-info">{{ additionalInfo() }}</div>
+	}
+</div>

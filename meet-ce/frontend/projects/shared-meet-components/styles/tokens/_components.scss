@@ -1,0 +1,39 @@
+// ============================================================
+// 组件契约 Token 层（Component Tokens）
+// ------------------------------------------------------------
+// 把语义值落成"组件级承诺"：卡片多大、按钮多高、输入框什么边框。
+// 组件样式只允许消费这里的变量，出现新组件时先来这里补契约再写样式。
+// ============================================================
+// Component tokens translate semantic and primitive values into component contracts.
+@mixin emit-component-tokens {
+// —— 卡片契约（标准 §13）：白底 12px 圆角 + 20px 内边距（20~24px 区间取紧凑档），轻阴影 ——
+	--jmeet-card-padding: 20px;
+	--jmeet-card-border-radius: var(--jmeet-radius-lg);
+	--jmeet-card-shadow: var(--jmeet-shadow-surface-sm);
+	--jmeet-card-shadow-hover: var(--jmeet-shadow-surface-hover);
+	--jmeet-card-background: var(--jmeet-color-surface-card);
+
+// —— 示例页面按钮：小号 24px / 默认 32px；入会主行动保留大号 ——
+	--jmeet-button-height-sm: 24px;
+	--jmeet-button-height-md: 32px;
+	--jmeet-button-height-lg: 52px;
+
+// —— 输入框：32px 高、8px 圆角、聚焦主色描边 ——
+	--jmeet-input-height-md: 32px;
+
+// —— 骨架尺寸：顶栏 56px 全宽、侧栏 240px ——
+	--jmeet-layout-topbar-height: 56px;
+	--jmeet-layout-sidebar-width: 240px;
+
+// —— 按钮取色与形态：主色底、8px 圆角、水平 16px 内边距 ——
+	--jmeet-button-primary-bg: var(--jmeet-color-action-primary);
+	--jmeet-button-border-radius: var(--jmeet-radius-md);
+	--jmeet-button-padding-horizontal: var(--jmeet-space-4);
+	--jmeet-button-padding-vertical: 5px;
+	--jmeet-button-transition: var(--jmeet-transition-fast);
+	--jmeet-button-font-weight: var(--jmeet-font-weight-medium);
+	--jmeet-input-border-radius: var(--jmeet-radius-md);
+	--jmeet-input-padding: var(--jmeet-space-4);
+	--jmeet-input-border-color: var(--jmeet-color-border);
+	--jmeet-input-border-color-focus: var(--jmeet-color-action-primary);
+}

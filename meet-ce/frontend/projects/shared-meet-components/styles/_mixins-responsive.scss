@@ -1,0 +1,45 @@
+// Responsive Mixins - Breakpoints and responsive design utilities
+// This file contains mixins and variables for responsive design
+
+// === RESPONSIVE MIXINS ===
+// Sass variables for breakpoints (needed for media queries since CSS variables can't be used)
+$ov-meet-breakpoint-mobile: 480px;
+$ov-meet-breakpoint-tablet: 768px;
+$ov-meet-breakpoint-desktop: 1024px;
+$ov-meet-breakpoint-wide: 1200px;
+
+@mixin ov-mobile-down {
+	@media (max-width: #{$ov-meet-breakpoint-mobile}) {
+		@content;
+	}
+}
+
+@mixin ov-tablet-down {
+	@media (max-width: #{$ov-meet-breakpoint-tablet}) {
+		@content;
+	}
+}
+
+@mixin ov-desktop-down {
+	@media (max-width: #{$ov-meet-breakpoint-desktop}) {
+		@content;
+	}
+}
+
+@mixin ov-mobile-up {
+	@media (min-width: #{$ov-meet-breakpoint-mobile + 1px}) {
+		@content;
+	}
+}
+
+@mixin ov-tablet-up {
+	@media (min-width: #{$ov-meet-breakpoint-tablet + 1px}) {
+		@content;
+	}
+}
+
+@mixin ov-desktop-up {
+	@media (min-width: #{$ov-meet-breakpoint-desktop + 1px}) {
+		@content;
+	}
+}

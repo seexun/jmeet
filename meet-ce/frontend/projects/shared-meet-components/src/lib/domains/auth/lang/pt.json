@@ -1,0 +1,60 @@
+{
+	"AUTH": {
+		"COMMON": {
+			"SHOW_PASSWORD": "Mostrar senha",
+			"HIDE_PASSWORD": "Ocultar senha"
+		},
+		"LOGIN": {
+			"TITLE": "Entrar",
+			"SUBTITLE": "Insira suas credenciais para acessar o JMeet",
+			"USER_ID": "ID do usuário",
+			"USER_ID_PLACEHOLDER": "Insira seu ID de usuário",
+			"PASSWORD": "Senha",
+			"PASSWORD_PLACEHOLDER": "Insira sua senha",
+			"SUBMIT": "Entrar",
+			"ERROR_TOO_MANY_ATTEMPTS": "Muitas tentativas de login. Tente novamente mais tarde",
+			"ERROR_INVALID_CREDENTIALS": "ID de usuário ou senha inválidos",
+			"HERO_TITLE_PREFIX": "Colaboração de reuniões inteligente",
+			"HERO_TITLE_EMPHASIS": "Conectando cada equipe",
+			"HERO_DESC": "HD audio & video · screen sharing · free & open source · self-hosted",
+			"WELCOME_TITLE": "Bem-vindo de volta",
+			"WELCOME_SUBTITLE": "Entre para iniciar ou participar de uma reunião",
+			"LIVE_BADGE": "Reunião em andamento",
+			"MINUTES_TOAST": "Smooth collaboration",
+			"FEATURE_BAND_1_TITLE": "Nítida e estável",
+			"FEATURE_BAND_1_SUB": "1080p · resistente a falhas",
+			"FEATURE_BAND_2_TITLE": "In-meeting chat",
+			"FEATURE_BAND_2_SUB": "Group chat & interaction",
+			"FEATURE_BAND_3_TITLE": "Open source",
+			"FEATURE_BAND_3_SUB": "Self-hosted deployment",
+			"CAP_2": "Screen sharing & virtual backgrounds",
+			"CAP_3": "Free & open source · self-hosted"
+		},
+		"CHANGE_PASSWORD": {
+			"TITLE": "Atualize sua senha",
+			"SUBTITLE": "Você deve atualizar sua senha antes de continuar.",
+			"BANNER_TITLE": "Atualização de senha necessária",
+			"BANNER_DESC": "Sua senha foi criada ou redefinida recentemente. Defina uma nova senha para continuar.",
+			"CURRENT_PASSWORD": "Senha atual",
+			"CURRENT_PASSWORD_PLACEHOLDER": "Insira sua senha atual",
+			"NEW_PASSWORD": "Nova senha",
+			"NEW_PASSWORD_PLACEHOLDER": "Crie uma senha forte e segura",
+			"PASSWORD_MIN_HINT": "Mínimo de 5 caracteres",
+			"CONFIRM_PASSWORD": "Confirmar nova senha",
+			"CONFIRM_PASSWORD_PLACEHOLDER": "Repita sua nova senha",
+			"SUBMIT": "Atualizar senha",
+			"ERRORS": {
+				"CURRENT_REQUIRED": "A senha atual é obrigatória",
+				"CURRENT_INCORRECT": "A senha atual está incorreta",
+				"NEW_REQUIRED": "A nova senha é obrigatória",
+				"NEW_MIN_PREFIX": "A senha deve ter pelo menos ",
+				"NEW_MIN_SUFFIX": " caracteres",
+				"NEW_SAME": "A nova senha deve ser diferente da senha atual",
+				"CONFIRM_REQUIRED": "Confirme sua senha",
+				"CONFIRM_MISMATCH": "As senhas não coincidem",
+				"UPDATE_SUCCESS": "Senha atualizada com sucesso",
+				"UPDATE_FAILED": "Falha ao atualizar a senha"
+			}
+		}
+	}
+}

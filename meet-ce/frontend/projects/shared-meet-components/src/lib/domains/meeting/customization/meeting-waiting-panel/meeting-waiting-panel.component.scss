@@ -1,0 +1,26 @@
+@use '_design-tokens.scss';
+
+// ── 批次5 等候面板深绘（规格 §5.4：腾讯化）────────────────────────────────────
+// 仅 embedded 模式渲染（布局层居中浮层 + 成员面板本地行后内联块两宿主）：
+// 主标题 13px/600 主字色 + 副文案 12px 三级字色，22px 行节奏。模板/TS 零变更。
+.waiting-panel {
+	@include design-tokens.ov-flex-center;
+	flex-direction: column;
+	gap: 4px;
+	padding: var(--jmeet-layout-space-lg) var(--jmeet-layout-space-md);
+	text-align: center;
+
+	.waiting-panel-title {
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 22px;
+		color: var(--jmeet-meeting-text-primary);
+	}
+
+	.waiting-panel-subtitle {
+		font-size: 12px;
+		font-weight: 400;
+		line-height: 22px;
+		color: var(--jmeet-meeting-text-tertiary);
+	}
+}

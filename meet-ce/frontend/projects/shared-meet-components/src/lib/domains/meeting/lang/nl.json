@@ -1,0 +1,287 @@
+{
+	"ROOM": {
+		"JOINING": "De ruimte betreden...",
+		"LANDSCAPE_WARNING": "Draai uw apparaat voor een betere ervaring naar portretmodus",
+		"DISCONNECTED": "U heeft de kamer verlaten",
+		"DISCONNECTED_SUBTITLE": "De sessie is beëindigd"
+	},
+	"PREJOIN": {
+		"NICKNAME": "Bijnaam",
+		"NO_VIDEO_DEVICE": "Videoapparaat niet gevonden",
+		"NO_AUDIO_DEVICE": "Audioapparaat niet gevonden",
+		"JOIN": "Deelnemen aan meeting",
+		"PREPARING": "Kamer voorbereiden ...",
+		"BACKGROUND": "Achtergrondeffecten"
+	},
+	"TOOLBAR": {
+		"THEME_TOGGLE": "Wissel licht/donker",
+		"MUTE_AUDIO": "Audio dempen",
+		"UNMUTE_AUDIO": "Audio niet meer dempen",
+		"STOP_VIDEO": "Stop je video",
+		"SELECT_CAMERA": "Camera selecteren",
+		"SELECT_MIC": "Microfoon selecteren",
+		"START_VIDEO": "Start je video",
+		"ENABLE_SCREEN": "Scherm delen inschakelen",
+		"DISABLE_SCREEN": "Scherm delen uitschakelen",
+		"MORE_OPTIONS": "Meer opties",
+		"FULLSCREEN": "Volledig scherm",
+		"EXIT_FULLSCREEN": "Volledig scherm verlaten",
+		"BACKGROUND": "Achtergrondeffecten",
+		"START_RECORDING": "Start opname",
+		"STOP_RECORDING": "Stop opname",
+		"SETTINGS": "Instellingen",
+		"LEAVE": "Verlaat de kamer",
+		"PARTICIPANTS": "Deelnemers",
+		"CHAT": "Chat",
+		"ACTIVITIES": "Activiteiten",
+		"PANELS": "Panelen",
+		"NO_TRACKS_PUBLISHED": "Deel audio of video om met opnemen te beginnen.",
+		"VIEW_RECORDINGS": "Opnames bekijken"
+	},
+	"STREAM": {
+		"MUTE_SOUND": "Geluid dempen",
+		"UNMUTE_SOUND": "Geluid niet meer dempen",
+		"ZOOM_IN": "Inzoomen",
+		"ZOOM_OUT": "Uitzoomen",
+		"RESET_ZOOM": "Zoom resetten",
+		"REPLACE_SCREEN": "Vervang scherm",
+		"PIN": "Vastzetten",
+		"UNPIN": "Losmaken",
+		"FLOAT": "Losmaken",
+		"DOCK": "Vastzetten",
+		"SCREEN_LABEL": "scherm",
+		"YOUR_SCREEN_LABEL": "jouw scherm"
+	},
+	"PANEL": {
+		"CLOSE": "Sluiten",
+		"MEDIA_QUALITY": {
+			"TITLE": "Mediakwaliteit"
+		},
+		"CAPTIONS": {
+			"TITLE": "Live ondertitels",
+			"SUBTITLE": "Ondertitels worden in realtime gegenereerd uit de vergaderaudio en alleen voor jou weergegeven",
+			"EMPTY": "Nog geen ondertitels. Zet ondertitels aan en spraak verschijnt hier realtime.",
+			"INTERIM": "herkennen…"
+		},
+		"CHAT": {
+			"TITLE": "Chat",
+			"YOU": "Jij",
+			"SUBTITLE": "Berichten worden aan het einde van de meeting verwijderd",
+			"PLACEHOLDER": "Stuur een bericht ...",
+			"SEND": "Versturen",
+			"EMOJI": "Emoji",
+			"MESSAGE_SENT_NOTIFICATION": "bericht verzonden",
+			"OPEN_CHAT": "OPENEN",
+			"ENCRYPTION_KEY_MISMATCH": "Er zijn deelnemers verbonden met een andere versleutelingssleutel. U ontvangt hun berichten niet."
+		},
+		"ACTIVITIES": {
+			"TITLE": "Activiteiten",
+			"COLLABORATION": "Samenwerking",
+			"COLLABORATION_ARIA": "Samenwerkingstools",
+			"RECORDING": "Opname",
+			"WHITEBOARD": "Whiteboard",
+			"POLL": "Poll",
+			"MATERIALS": "Materialen",
+			"AGENDA": "Agenda"
+		},
+		"PARTICIPANTS": {
+			"NO_MATCH": "Geen overeenkomende leden",
+			"SEARCH_PLACEHOLDER": "Leden zoeken",
+			"SECTION_HOSTS": "Hosts / Admins",
+			"SECTION_MEMBERS": "Deelnemers",
+			"INVITE": "Leden uitnodigen",
+			"EMPTY_HINT": "Nog geen andere leden — nodig je team uit",
+			"INVITE_NOW": "Uitnodigingslink kopiëren",
+			"GUEST": "Gast",
+			"MUTE_ALL": "Alles dempen",
+			"MANAGEMENT": "Leden",
+			"TITLE": "Deelnemers",
+			"CAMERA": "CAMERA",
+			"MICROPHONE": "MICROFOON",
+			"SCREEN": "SCHERM",
+			"NO_STREAMS": "GEEN",
+			"YOU": "Jij",
+			"MUTE": "Dempen",
+			"UNMUTE": "Dempen opheffen",
+			"CONNECTION_QUALITY": {
+				"LABEL": "Verbindingskwaliteit",
+				"EXCELLENT": "Uitstekend",
+				"GOOD": "Goed",
+				"POOR": "Slecht",
+				"LOST": "Verloren"
+			},
+			"SHARING_SCREEN": "Scherm delen",
+			"MIC_OFF": "Microfoon uit",
+			"CAM_OFF": "Camera uit"
+		},
+		"SETTINGS": {
+			"TITLE": "Instellingen",
+			"GENERAL": "Algemeen",
+			"VIDEO": "Video",
+			"AUDIO": "Audio",
+			"LANGUAGE": "Taal",
+			"DISABLED_VIDEO": "Geen video",
+			"THEME": "Thema"
+		},
+		"BACKGROUND": {
+			"TITLE": "Achtergrondeffecten",
+			"BLURRED_SECTION": "Geen effecten en onscherpe achtergrond",
+			"NO_EFFECTS": "Geen achtergrondeffect",
+			"BLURRED_EFFECT": "Onscherpe achtergrond",
+			"CATEGORY_PROFESSIONAL": "Professioneel",
+			"CATEGORY_HOME_OFFICE": "Thuiskantoor",
+			"CATEGORY_CREATIVE": "Creatief",
+			"NOT_SUPPORTED": "Virtuele achtergronden worden niet ondersteund in deze browser",
+			"NOT_SUPPORTED_DESCRIPTION": "Uw browser ondersteunt geen achtergrondeffecten. Deze functie vereist GPU-versnelling die mogelijk uitgeschakeld of niet beschikbaar is."
+		},
+		"RECORDING": {
+			"TITLE": "Opname",
+			"SUBTITLE": "Neem uw vergadering op voor het nageslacht",
+			"CONTENT_TITLE": "Neem uw videogesprek op",
+			"CONTENT_SUBTITLE": "Als de opname klaar is kunt u deze met gemak downloaden",
+			"STATUS_STOPPED": "Niet gestart",
+			"STATUS_STARTING": "Bezig met starten",
+			"STATUS_STARTED": "Opnemen",
+			"STATUS_STOPPING": "Bezig met stoppen",
+			"STATUS_FAILED": "Mislukt",
+			"STATUS_READY": "Gereed",
+			"STARTING": "Beginnen met opnemen",
+			"STOPPING": "Opname stoppen",
+			"DELETE": "Verwijderen",
+			"CANCEL": "Annuleren",
+			"ACCEPT": "Accepteren",
+			"DELETE_QUESTION": "Weet je zeker dat je de opname wilt verwijderen?",
+			"NO_TRACKS_PUBLISHED": "Deel audio of video om met opnemen te beginnen.",
+			"ERROR_STARTING": "Fout bij starten opname"
+		}
+	},
+	"ERRORS": {
+		"SESSION": "Er is een fout opgetreden bij het verbinden met de kamer",
+		"CONNECTION": "Verbinding verloren",
+		"RECONNECT": "Proberen opnieuw verbinding te maken met de kamer...",
+		"DISCONNECT": "Je bent losgekoppeld",
+		"SIGNAL_CLOSE": "De verbinding met de server werd onverwacht verbroken",
+		"SERVER_SHUTDOWN": "De server is momenteel offline of ondergaat onderhoud",
+		"PARTICIPANT_REMOVED": "Je bent uit deze kamer verwijderd",
+		"ROOM_DELETED": "Deze kamer is verwijderd",
+		"DUPLICATE_IDENTITY": "Je bent losgekoppeld omdat je bijnaam aan een andere deelnemer is toegewezen",
+		"TOGGLE_CAMERA": "Er is een fout opgetreden bij het overschakelen naar een andere camera",
+		"TOGGLE_MICROPHONE": "Er is een fout opgetreden bij het overschakelen naar een microfoon",
+		"LOAD_RECORDING_TITLE": "Fout bij het laden van opname",
+		"MEDIA_ERR_GENERIC": "Er is een fout opgetreden bij het laden van de video.",
+		"MEDIA_ERR_NETWORK": "Een netwerkfout heeft ertoe geleid dat het downloaden van de video halverwege is mislukt.",
+		"MEDIA_ERR_DECODE": "Het afspelen van de video is afgebroken vanwege een corruptieprobleem of omdat de video functies gebruikte die uw browser niet ondersteunde.",
+		"MEDIA_ERR_SRC_NOT_SUPPORTED": "Fout bij het streamen van de opname: S3 kon niet worden bereikt.",
+		"E2EE_ERROR_TITLE": "Kamerwachtwoordfout",
+		"E2EE_ERROR_CONTENT": "Deze deelnemer gebruikt een andere beveiligingssleutel. Video kan niet worden weergegeven.",
+		"GENERIC": "Er is een onverwachte fout opgetreden. Probeer het opnieuw."
+	},
+	"LOBBY": {
+		"E2EE_BADGE_TOOLTIP": "End-to-end versleuteld",
+		"E2EE_BADGE_TEXT": "Meetings in deze kamer zijn end-to-end versleuteld",
+		"JOIN_TITLE": "Deelnemen aan meeting",
+		"ROOM_CLOSED_TITLE": "Kamer gesloten",
+		"ACCESS_RESTRICTED_TITLE": "Toegang beperkt",
+		"JOIN_SUBTITLE": "Neem deel aan de meeting en maak verbinding",
+		"ROOM_CLOSED_SUBTITLE": "Deze kamer is niet beschikbaar voor meetings",
+		"ACCESS_RESTRICTED_SUBTITLE": "U heeft geen toestemming om deel te nemen aan meetings in deze kamer",
+		"NAME_LABEL": "Uw weergavenaam",
+		"NAME_PLACEHOLDER": "Voer uw naam in",
+		"NAME_REQUIRED_PREFIX": "De naam is ",
+		"E2EE_KEY_LABEL": "Versleutelingssleutel",
+		"E2EE_KEY_PLACEHOLDER": "Voer de versleutelingssleutel van de kamer in",
+		"E2EE_KEY_REQUIRED_PREFIX": "De versleutelingssleutel is ",
+		"REQUIRED": "vereist",
+		"E2EE_KEY_HINT": "Deze meeting vereist een versleutelingssleutel",
+		"JOIN_BUTTON": "Deelnemen aan meeting",
+		"ROOM_CLOSED_MESSAGE": "Sorry, deze kamer is gesloten. U kunt op dit moment niet deelnemen aan de meeting. Neem contact op met een kamerbeheerder voor meer informatie.",
+		"NO_PERMISSION_MESSAGE": "Sorry, u heeft toegang tot deze kamer maar geen toestemming om deel te nemen aan meetings. Neem contact op met een kamerbeheerder voor meer informatie.",
+		"RECORDINGS_TITLE": "Opnames bekijken",
+		"RECORDINGS_SUBTITLE": "Blader door eerdere opnames en beheer ze",
+		"RECORDINGS_DESCRIPTION": "Open eerder opgenomen meetings van deze kamer. U kunt bestaande opnames bekijken, downloaden of beheren.",
+		"RECORDINGS_BUTTON": "Opnames bekijken",
+		"BACK": "Terug",
+		"BACK_TO_ROOMS": "Terug naar kamers"
+	},
+	"SHARE_ACCESS": {
+		"COPY_TOOLTIP": "Toegangslink van kamer kopiëren",
+		"DEFAULT_TITLE": "Nodig anderen uit met deze toegangslink van de kamer"
+	},
+	"SHARE_OVERLAY": {
+		"TITLE": "Begin met samenwerken",
+		"SUBTITLE": "Deel deze link om anderen aan de meeting te laten deelnemen"
+	},
+	"WAITING_PANEL": {
+		"TITLE": "Wachten tot anderen deelnemen",
+		"SUBTITLE": "Deelnemers verschijnen hier zodra ze deelnemen aan de meeting.",
+		"ALONE_SUBTITLE": "U bent op dit moment de enige hier."
+	},
+	"DEVICE": {
+		"DEFAULT": "Systeemstandaard"
+	},
+	"CAPTIONS": {
+		"ARIA_FROM": "Ondertiteling van ",
+		"DISABLED_BY_ADMIN_TEXT": "Live ondertiteling (uitgeschakeld door beheerder)",
+		"ENABLE": "Live ondertiteling inschakelen",
+		"DISABLE": "Live ondertiteling uitschakelen",
+		"DISABLED_BY_ADMIN_TOOLTIP": "Live ondertiteling is uitgeschakeld door de beheerder"
+	},
+	"COPY_LINK": {
+		"TOOLTIP": "De toegangslink van de kamer kopiëren",
+		"TEXT": "Toegangslink van kamer kopiëren"
+	},
+	"LEAVE_BUTTON": {
+		"MENU_TOOLTIP": "Opties voor verlaten",
+		"LEAVE_OPTION": "Meeting verlaten",
+		"END_OPTION": "Meeting voor iedereen beëindigen"
+	},
+	"MORE_OPTIONS": {
+		"DARK_MODE": "Donkere modus",
+		"LAYOUT_TOOLTIP": "Rasterindeling configureren",
+		"ADJUST_LAYOUT": "Indeling aanpassen"
+	},
+	"LAYOUT_SETTINGS": {
+		"TITLE": "Indelingsinstellingen",
+		"MODE_ARIA": "Indelingsmodus selecteren",
+		"MOSAIC": "Mozaïek",
+		"MOSAIC_DESC": "Toont alle deelnemers in één raster",
+		"SMART_MOSAIC": "Slim mozaïek",
+		"SMART_MOSAIC_DESC": "Toont een beperkt aantal actieve deelnemers",
+		"COUNT_LABEL": "Aantal zichtbare deelnemers",
+		"COUNT_HELPER": "Kies hoeveel externe deelnemers in het raster worden getoond",
+		"COUNT_ARIA": "Aantal weer te geven deelnemers"
+	},
+	"PARTICIPANT_ITEM": {
+		"PROMOTE_TOOLTIP": "Promoveren tot moderator",
+		"DOWNGRADE_TOOLTIP": "Terugzetten naar oorspronkelijke rechten",
+		"KICK_TOOLTIP": "Deelnemer verwijderen",
+		"BADGE_OWNER": "Eigenaar",
+		"BADGE_ADMIN": "Beheerder",
+		"BADGE_MODERATOR": "Moderator"
+	},
+	"END_MEETING": {
+		"LEFT_TITLE": "U heeft de meeting verlaten",
+		"LEFT_MESSAGE": "U heeft de meeting succesvol verlaten",
+		"KICKED_TITLE": "Verwijderd uit meeting",
+		"KICKED_MESSAGE": "U bent door een moderator uit de meeting verwijderd",
+		"ENDED_TITLE": "Meeting beëindigd",
+		"ENDED_MESSAGE": "De meeting is door een moderator beëindigd",
+		"ENDED_BY_SELF_MESSAGE": "U heeft de meeting succesvol beëindigd",
+		"DISCONNECTED_TITLE": "Verbinding met meeting verbroken",
+		"NETWORK_MESSAGE": "Verbinding verloren door netwerkproblemen",
+		"SERVER_SHUTDOWN_MESSAGE": "Verbinding verloren door het afsluiten van de server",
+		"DUPLICATE_MESSAGE": "Deze sessie is gesloten omdat u via een ander tabblad of apparaat aan dezelfde meeting bent gaan deelnemen",
+		"UNKNOWN_MESSAGE": "Er is een onverwachte fout opgetreden, probeer het later opnieuw",
+		"FOOTER": "Bedankt voor het gebruik van JMeet",
+		"BACK": "Terug",
+		"BACK_TO_ROOMS": "Terug naar kamers",
+		"ACCEPT": "Accepteren"
+	},
+	"MEETING_PAGE": {
+		"PREPARING": "Uw meeting voorbereiden...",
+		"PREPARE_ERROR": "Kan uw meeting niet voorbereiden.",
+		"INIT_ERROR_TITLE": "Fout",
+		"INIT_ERROR_MESSAGE": "Er is een fout opgetreden bij het initialiseren van de meetinglobby. Probeer het later opnieuw.",
+		"INIT_ERROR_CONFIRM": "OK"
+	}
+}

@@ -1,0 +1,274 @@
+@use '_design-tokens.scss';
+
+.main-container {
+	position: relative;
+	height: 100%;
+	background: var(--jmeet-meeting-stage-bg); // EP surface-page（gray-50）与 meeting stage 同值 #F2F3F5——对号
+}
+
+.video-fit-button {
+	position: absolute;
+	// 吸附在视频画面的右上角内侧（视频区自带 12px 内边距时与圆角对齐）；
+	// 顶部让出顶栏高度（--jmeet-meeting-topbar-height）+ 16px 间距。
+	// --dock-shift 由 session 的 .meeting-sidenav-open 后代规则赋值（任务 7 的 dock 化），
+	// 未定义时回退 0px 优雅降级。
+	top: calc(var(--jmeet-meeting-topbar-height, 48px) + 16px);
+	right: calc(24px + var(--dock-shift, 0px));
+	z-index: var(--jmeet-meeting-z-hud, 990);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	border: 1px solid var(--jmeet-meeting-border);
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-meeting-surface);
+	color: var(--jmeet-meeting-text-secondary);
+	cursor: pointer;
+	transition: background-color 160ms ease, color 160ms ease;
+
+	.anticon { width: 18px; height: 18px; font-size: var(--jmeet-font-size-lg); color: var(--jmeet-meeting-primary); }
+	&:hover { background: var(--jmeet-meeting-primary-soft); color: var(--jmeet-meeting-primary); }
+	&:focus-visible { outline: none;
+			box-shadow: var(--jmeet-focus-ring, 0 0 0 2px var(--jmeet-meeting-primary)); outline-offset: 2px; }
+}
+
+:host ::ng-deep .main-container.fit-video .OV_stream video {
+	object-fit: contain !important;
+	background: var(--jmeet-meeting-text-primary);
+}
+
+.remote-participant {
+	height: -webkit-fill-available;
+	height: -moz-available;
+}
+
+.container {
+	height: 100%;
+}
+
+.withMargin {
+	margin: 0px 5px;
+	max-height: calc(100% - 5px) !important;
+	height: calc(100% - 5px) !important;
+}
+
+.layout {
+	position: relative;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	min-width: 350px !important;
+	min-height: 100%;
+	width: inherit;
+	height: -webkit-fill-available;
+	height: -moz-available;
+	overflow: none;
+}
+
+.OV_root,
+.OV_root * {
+	color: var(--jmeet-meeting-text-primary);
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+.OV_publisher,
+.OV_subscriber {
+	position: relative;
+	min-width: 0px;
+	min-height: 0px;
+	padding: 1px;
+	transition-duration: 0.1s;
+	transition-timing-function: ease-in-out;
+}
+
+.OV_publisher .OV_video-element,
+.OV_subscriber .OV_video-element {
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	-webkit-transform-origin: 0 0;
+	transform-origin: 0 0;
+}
+
+.OV_ignored {
+	display: none;
+	width: 0px !important;
+	height: 0px !important;
+}
+
+.OV_floating {
+	width: 230px !important;
+	height: 130px !important;
+	// position: absolute !important;
+	bottom: 0 !important;
+	right: 0 !important;
+	top: 0 !important;
+	left: 0 !important;
+	z-index: var(--jmeet-z-tile-hud) !important;
+	cursor: move;
+}
+
+.OV_top-bar {
+	box-sizing: border-box;
+	// padding: 4px 4px 2px 4px !important;
+}
+
+.main-share-room-access-link-container {
+	background: transparent;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 0;
+	border-radius: 0;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	pointer-events: none;
+	z-index: 1;
+
+	.main-share-room-access-link {
+		pointer-events: all;
+		width: min(560px, calc(100% - 48px));
+		max-width: 100%;
+	}
+
+	&.collapsed {
+		width: auto !important;
+	}
+}
+
+.invite-collapse-button {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: var(--jmeet-z-raised);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	border: 0;
+	border-radius: var(--jmeet-radius-md);
+	background: transparent;
+	color: var(--jmeet-meeting-text-secondary);
+	cursor: pointer;
+
+	.anticon { width: 18px; height: 18px; font-size: var(--jmeet-font-size-lg); }
+	&:hover { background: var(--jmeet-meeting-stage-bg); color: var(--jmeet-meeting-text-primary); } // EP surface-hover（gray-100）无 meeting 等值——对号 stage 软座（#F5F7FA→#F2F3F5 微深）
+	&:focus-visible { outline: none;
+			box-shadow: var(--jmeet-focus-ring, 0 0 0 2px var(--jmeet-meeting-primary)); outline-offset: 2px; }
+}
+
+.collapsed-invite-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 7px;
+	min-width: 104px;
+	height: 32px;
+	padding: 0 16px;
+	// EP accent-light（blue-400）无 meeting 等值——按 breakout 先例以 primary 50% 混 surface 等值替代
+	border: 1px solid color-mix(in srgb, var(--jmeet-meeting-primary) 50%, var(--jmeet-meeting-surface));
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-meeting-surface);
+	color: var(--jmeet-meeting-primary-active);
+	box-shadow: 0 8px 20px color-mix(in srgb, var(--jmeet-meeting-text-primary) 10%, transparent);
+	font: inherit;
+	font-size: var(--jmeet-font-size-secondary);
+	font-weight: var(--jmeet-font-weight-semibold);
+	cursor: pointer;
+
+	.anticon { width: 18px; height: 18px; font-size: var(--jmeet-font-size-lg); color: var(--jmeet-meeting-primary); }
+	&:hover { background: var(--jmeet-meeting-primary-soft); }
+	&:focus-visible { outline: none;
+			box-shadow: var(--jmeet-focus-ring, 0 0 0 2px var(--jmeet-meeting-primary)); outline-offset: 2px; }
+}
+
+/*
+ * The invitation panel participates in the smart layout as a synthetic tile.
+ * Keep the meeting canvas dark and make the real camera tile read as a compact
+ * desktop preview rather than a tall, phone-like sidebar.
+ */
+:host ::ng-deep #layout:has(#share-link-overlay) {
+	background: var(--jmeet-meeting-stage-bg);
+}
+
+:host ::ng-deep #layout:has(#share-link-overlay) .OV_stream {
+	border-color: var(--jmeet-meeting-border);
+	border-radius: var(--jmeet-radius-lg);
+	box-shadow: 0 8px 24px color-mix(in srgb, var(--jmeet-meeting-text-primary) 12%, transparent);
+}
+
+/* Desktop empty-room composition: collaboration stage + compact self preview. */
+@media (min-width: 901px) {
+	:host ::ng-deep #layout:has(#share-link-overlay) #share-link-overlay {
+		top: auto !important;
+		right: 24px !important;
+		bottom: 24px !important;
+		left: auto !important;
+		width: 320px !important;
+		height: auto !important;
+		z-index: 8 !important;
+	}
+
+	:host ::ng-deep #layout:has(#share-link-overlay) .local_participant {
+		position: absolute !important;
+		top: 8px !important;
+		right: 8px !important;
+		bottom: 8px !important;
+		left: 8px !important;
+		width: auto !important;
+		height: auto !important;
+		padding: 0 !important;
+	}
+
+	:host ::ng-deep #layout:has(#share-link-overlay) .local_participant video {
+		object-fit: contain !important;
+		background: var(--jmeet-meeting-text-primary);
+	}
+}
+
+@media (max-width: 900px) {
+	.video-fit-button { top: 62px; right: 12px; width: 40px; padding: 0; }
+	.video-fit-button span { display: none; }
+
+	:host ::ng-deep #layout:has(#share-link-overlay) #share-link-overlay {
+		top: auto !important;
+		right: 12px !important;
+		bottom: 12px !important;
+		left: 12px !important;
+		width: auto !important;
+		height: auto !important;
+		z-index: 8 !important;
+	}
+}
+
+@media (max-width: 900px) {
+	.main-share-room-access-link-container .main-share-room-access-link {
+		width: min(520px, calc(100% - 32px));
+	}
+}
+
+.fade-in-delayed-more {
+	animation: fadeIn 0.5s ease-in 0.9s both;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

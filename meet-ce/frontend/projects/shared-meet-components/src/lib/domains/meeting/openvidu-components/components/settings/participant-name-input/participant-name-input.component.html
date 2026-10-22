@@ -1,0 +1,17 @@
+<div class="participant-name-input-container" [class.error]="error()">
+	<div class="input-wrapper">
+		<nz-icon nzType="user" class="input-icon" />
+		<input
+			id="participant-name-input"
+			type="text"
+			maxlength="20"
+			[(ngModel)]="name"
+			autocomplete="off"
+			[disabled]="!isPrejoinPage()"
+			(input)="updateName()"
+			(keypress)="eventKeyPress($event)"
+			[placeholder]="'PREJOIN.NICKNAME' | translate"
+			class="name-input-field"
+		/>
+	</div>
+</div>

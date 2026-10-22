@@ -1,0 +1,102 @@
+<section class="recording-section" aria-labelledby="recording-section-title">
+	<p class="section-label" id="recording-section-title">{{ 'PANEL.ACTIVITIES.RECORDING' | translate }}</p>
+
+	<article class="recording-card">
+		<header class="recording-card__header">
+			<div
+				class="recording-card__icon"
+				[class.is-live]="recordingStatus() === recStatusEnum.STARTED"
+				[class.is-failed]="recordingStatus() === recStatusEnum.FAILED"
+				[class.is-pending]="
+					recordingStatus() === recStatusEnum.STARTING || recordingStatus() === recStatusEnum.STOPPING
+				"
+			>
+				@if (recordingStatus() === recStatusEnum.FAILED) {
+					<nz-icon nzType="close-circle" />
+				} @else if (recordingStatus() === recStatusEnum.STARTED) {
+					<nz-icon nzType="check-circle" class="blink" />
+				} @else {
+					<nz-icon nzType="video-camera" />
+				}
+			</div>
+
+			<div class="recording-card__meta">
+				<strong>{{ 'PANEL.RECORDING.TITLE' | translate }}</strong>
+				<span>{{ 'PANEL.RECORDING.SUBTITLE' | translate }}</span>
+			</div>
+
+			<span
+				class="recording-card__status"
+				id="recording-status"
+				[attr.data-status]="recordingStatus()"
+				[class.is-live]="recordingStatus() === recStatusEnum.STARTED"
+				[class.is-failed]="recordingStatus() === recStatusEnum.FAILED"
+				[class.is-pending]="
+					recordingStatus() === recStatusEnum.STARTING || recordingStatus() === recStatusEnum.STOPPING
+				"
+			>
+				{{ statusLabelKey() | translate }}
+			</span>
+		</header>
+
+		<div class="recording-card__body">
+			@if (recordingStatus() === recStatusEnum.STARTING) {
+				<div class="recording-message recording-message--pending" role="status">
+					<nz-icon nzType="hourglass" aria-hidden="true" />
+					<span>{{ 'PANEL.RECORDING.STARTING' | translate }}</span>
+				</div>
+			}
+
+			@if (recordingStatus() === recStatusEnum.STOPPING) {
+				<div class="recording-message recording-message--pending" role="status">
+					<nz-icon nzType="hourglass" aria-hidden="true" />
+					<span>{{ 'PANEL.RECORDING.STOPPING' | translate }}</span>
+				</div>
+			}
+
+			@if (showStartStopRecordingButton() && recordingStatus() === recStatusEnum.FAILED && recordingError()) {
+				<div class="recording-message recording-message--error" role="alert">
+					<nz-icon nzType="close-circle" aria-hidden="true" />
+					<div>
+						<strong>{{ 'PANEL.RECORDING.ERROR_STARTING' | translate }}</strong>
+						<span>{{ recordingError() }}</span>
+					</div>
+				</div>
+				<button class="jmeet-button jmeet-button--outline" type="button" id="reset-recording-status-btn" (click)="resetStatus()">
+					{{ 'PANEL.RECORDING.ACCEPT' | translate }}
+				</button>
+			}
+
+			@if (recordingAlive() && showStartStopRecordingButton()) {
+				<button class="jmeet-button jmeet-button--primary" type="button" id="stop-recording-btn" (click)="stopRecording()">
+					{{ 'TOOLBAR.STOP_RECORDING' | translate }}
+				</button>
+			}
+
+			@if (recordingStatus() === recStatusEnum.STOPPED && showStartStopRecordingButton()) {
+				<div
+					class="start-recording-button-container"
+					nz-tooltip
+					[nzTooltipTitle]="hasRoomTracksPublished() ? '' : ('PANEL.RECORDING.NO_TRACKS_PUBLISHED' | translate)"
+				>
+					<button
+						type="button"
+						class="jmeet-button jmeet-button--primary"
+						id="start-recording-btn"
+						[disabled]="!hasRoomTracksPublished()"
+						(click)="startRecording()"
+					>
+						{{ 'TOOLBAR.START_RECORDING' | translate }}
+					</button>
+				</div>
+			}
+
+			@if (showViewRecordingsButton() && recordingStatus() !== recStatusEnum.FAILED) {
+				<button class="jmeet-button jmeet-button--outline" type="button" id="view-recordings-btn" (click)="viewAllRecordings()">
+					<nz-icon nzType="export" />
+					{{ 'TOOLBAR.VIEW_RECORDINGS' | translate }}
+				</button>
+			}
+		</div>
+	</article>
+</section>

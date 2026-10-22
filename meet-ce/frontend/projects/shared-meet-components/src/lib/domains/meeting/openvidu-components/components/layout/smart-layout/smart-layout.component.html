@@ -1,0 +1,16 @@
+<ov-base-layout [ovRemoteStreams]="visibleRemoteStreams()" [externalAdditionalElements]="projectedAdditionalElements()">
+	@if (shouldShowHiddenParticipantsIndicator()) {
+		<ng-container *ovLayoutAdditionalElements="'bottom'">
+			<div [class.OV_top-bar]="showTopBarHiddenParticipantsIndicator()" [class.OV_last]="!showTopBarHiddenParticipantsIndicator()">
+				<ov-hidden-participants-indicator
+					(clicked)="hiddenParticipantsIndicatorClicked.emit()"
+					[count]="hiddenParticipantsCount()"
+					[mode]="showTopBarHiddenParticipantsIndicator() ? 'topbar' : 'standard'"
+					[hiddenParticipantNames]="hiddenParticipantNames()"
+				/>
+			</div>
+		</ng-container>
+	}
+</ov-base-layout>
+<!-- DOM-mounted host for persistent remote <audio> elements (kept hidden, required for Safari autoplay). -->
+<div #audioContainer hidden aria-hidden="true"></div>

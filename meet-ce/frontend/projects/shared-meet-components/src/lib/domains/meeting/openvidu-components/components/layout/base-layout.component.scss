@@ -1,0 +1,185 @@
+.remote-participant {
+	height: -webkit-fill-available;
+	height: -moz-available;
+}
+
+.container {
+	height: 100%;
+}
+
+.withMargin {
+	margin: 0px 5px;
+	max-height: calc(100% - 5px) !important;
+	height: calc(100% - 5px) !important;
+}
+
+.layout {
+	position: relative;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	min-width: 0 !important;
+	min-height: 100%;
+	width: inherit;
+	height: -webkit-fill-available;
+	height: -moz-available;
+	overflow: hidden;
+	// 舞台内边距（§5.1 尺寸规格：舞台内边距 10px），令牌化同值
+	padding: var(--jmeet-meeting-stage-padding);
+	box-sizing: border-box;
+}
+
+// 单人格子：SMART_MOSAIC 自研布局接管后没有 JS 内联尺寸，
+// 格子会塌成 1px（视频元素绝对定位溢出绘制，画面看似正常但尺寸链是断的）。
+// 撑满 stage 让视频容器获得真实高度，名牌/连线指示器也随之正确定位。
+.local_participant.OV_publisher:not(.OV_floating) {
+	width: 100%;
+	height: 100%;
+
+	> .OV-STREAM,
+	.OV_stream {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.OV_root,
+.OV_root * {
+	color: var(--ov-text-primary-color);
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+.OV_publisher,
+.OV_subscriber {
+	position: relative;
+	min-width: 0px;
+	min-height: 0px;
+	// 格间距槽位（§5.1：格间距 10px）：宫格瓦片由 mosaic 逐格绝对定位、无真实 grid gap，
+	// 视觉间距 = 相邻瓦片透明内衬之和，各出 calc(stage-gap/2)=5px → 相邻 10px。
+	// layout renderer 会从分配盒中扣除该 padding，几何不受影响。
+	padding: calc(var(--jmeet-meeting-stage-gap) / 2);
+	transition-duration: 0.18s;
+	transition-timing-function: ease-in-out;
+}
+
+.OV_publisher .OV_video-element,
+.OV_subscriber .OV_video-element {
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	-webkit-transform-origin: 0 0;
+	transform-origin: 0 0;
+}
+
+.OV_ignored {
+	display: none;
+	width: 0px !important;
+	height: 0px !important;
+}
+
+.OV_floating {
+	// Width/height use CSS custom properties so the resize feature can override them
+	// while !important still beats the layout renderer's inline styles.
+	// The fallbacks are the minimum allowed size (160px wide), so a freshly floated
+	// tile starts as small as possible until the user resizes it.
+	position: relative;
+	width: var(--ov-min-w, 200px) !important;
+	height: var(--ov-min-h, 113px) !important;
+	bottom: 0 !important;
+	right: 0 !important;
+	top: 0 !important;
+	left: 0 !important;
+	z-index: var(--jmeet-z-dropdown) !important;
+	cursor: move;
+
+	.resize-handle {
+		position: absolute;
+		width: 20px;
+		height: 20px;
+		z-index: var(--jmeet-z-dropdown);
+
+		&::after {
+			content: '';
+			position: absolute;
+		}
+
+		&.resize-se {
+			bottom: 0;
+			right: 0;
+			cursor: se-resize;
+
+			&::after {
+				bottom: 3px;
+				right: 3px;
+				width: 8px;
+				height: 8px;
+				border-right: 2px solid color-mix(in srgb, var(--jmeet-color-surface-card) 65%, transparent);
+				border-bottom: 2px solid color-mix(in srgb, var(--jmeet-color-surface-card) 65%, transparent);
+			}
+		}
+
+		&.resize-sw {
+			bottom: 0;
+			left: 0;
+			cursor: sw-resize;
+
+			&::after {
+				bottom: 3px;
+				left: 3px;
+				width: 8px;
+				height: 8px;
+				border-left: 2px solid color-mix(in srgb, var(--jmeet-color-surface-card) 65%, transparent);
+				border-bottom: 2px solid color-mix(in srgb, var(--jmeet-color-surface-card) 65%, transparent);
+			}
+		}
+
+		&.resize-ne {
+			top: 0;
+			right: 0;
+			cursor: ne-resize;
+
+			&::after {
+				top: 3px;
+				right: 3px;
+				width: 8px;
+				height: 8px;
+				border-right: 2px solid color-mix(in srgb, var(--jmeet-color-surface-card) 65%, transparent);
+				border-top: 2px solid color-mix(in srgb, var(--jmeet-color-surface-card) 65%, transparent);
+			}
+		}
+
+		&.resize-nw {
+			top: 0;
+			left: 0;
+			cursor: nw-resize;
+
+			&::after {
+				top: 3px;
+				left: 3px;
+				width: 8px;
+				height: 8px;
+				border-left: 2px solid color-mix(in srgb, var(--jmeet-color-surface-card) 65%, transparent);
+				border-top: 2px solid color-mix(in srgb, var(--jmeet-color-surface-card) 65%, transparent);
+			}
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.OV_publisher,
+	.OV_subscriber {
+		transition-duration: 0s;
+	}
+}
+
+// ── 本地瓦片网格承载（对齐商业会议系统宫格语义，自视图收敛轮）──
+// 自己的摄像头瓦片默认与其他参会人同格排布在主区域（独处时即主画面大格）；
+// 画中画（.OV_floating 漂浮窗）保留为纯手动能力——悬浮控件的「漂浮」按钮切换，
+// 无任何自动漂浮/停靠触发。历史方案（HUD 角落 self-view 组件唯一承载 + 会中域
+// CSS 隐藏本地瓦片）已随该组件一并退役。

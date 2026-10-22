@@ -1,0 +1,9 @@
+description: Successfully updated participant role
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                    example: 'Moderation action "upgrade" applied to participant "alice_smith" in room "room_123"'

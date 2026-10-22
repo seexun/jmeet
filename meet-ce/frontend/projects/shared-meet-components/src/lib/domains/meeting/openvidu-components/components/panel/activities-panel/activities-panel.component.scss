@@ -1,0 +1,21 @@
+@use './activities-panel.shared' as *;
+
+:host {
+	display: block;
+}
+
+.activities-body-container {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 12px 16px 16px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	// 弹框高度已贴合内容，常规情况无需滚动；滚动条彻底隐藏，
+	// 避免悬停浮现造成的视觉噪音（滚轮能力保留，兜底小屏）
+	scrollbar-width: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}

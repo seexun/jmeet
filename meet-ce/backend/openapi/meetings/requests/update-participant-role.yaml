@@ -1,0 +1,17 @@
+description: Update participant role
+required: true
+content:
+    application/json:
+        schema:
+            type: object
+            required:
+                - action
+            properties:
+                action:
+                    type: string
+                    enum: ['upgrade', 'downgrade']
+                    description: |
+                        Moderation action to apply to the participant. Possible values:
+                        - `upgrade`: Promote the participant to moderator role.
+                        - `downgrade`: Restore the participant's original permissions, removing moderator privileges
+                    example: 'upgrade'

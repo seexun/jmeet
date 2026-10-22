@@ -1,0 +1,20 @@
+<nz-pagination
+	class="jmeet-pagination"
+	[nzTotal]="length()"
+	[nzPageIndex]="pageIndex() + 1"
+	[nzPageSize]="pageSize()"
+	[nzPageSizeOptions]="pageSizeOptions()"
+	[nzShowSizeChanger]="true"
+	[nzShowQuickJumper]="true"
+	[nzDisabled]="disabled()"
+	[nzShowTotal]="totalTemplate"
+	(nzPageIndexChange)="onPageIndexChange($event)"
+	(nzPageSizeChange)="onPageSizeChange($event)"
+>
+	<ng-template #totalTemplate let-total>
+		<span class="jmeet-pagination__total">
+			{{ 'COMMON.PAGINATION.TOTAL_PREFIX' | translate }}{{ total
+			}}{{ 'COMMON.PAGINATION.TOTAL_SUFFIX' | translate }}
+		</span>
+	</ng-template>
+</nz-pagination>

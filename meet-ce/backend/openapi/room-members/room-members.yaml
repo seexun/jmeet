@@ -1,0 +1,208 @@
+/rooms/{roomId}/members:
+    post:
+        operationId: addRoomMember
+        summary: Add a member to a room
+        description: |
+            Adds a new member to the specified room with custom permissions.
+
+            Identified guests receives a unique access URL, while users use the shared user access URL.
+            The member's permissions are based on a base role (moderator or speaker) with optional overrides.
+
+            This allows fine-grained control over what each specific participant can do in the meeting.
+        tags:
+            - JMeet - Room Members
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+        parameters:
+            - $ref: '../rooms/parameters/room-id-path.yaml'
+            - $ref: './parameters/room-member-x-fields-header.yaml'
+            - $ref: './parameters/room-member-x-extra-fields-header.yaml'
+        requestBody:
+            $ref: './requests/add-room-member.yaml'
+        responses:
+            '201':
+                $ref: './responses/success/add-room-member.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: '../rooms/responses/errors/room-not-found.yaml'
+            '409':
+                $ref: './responses/errors/room-member-conflict.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+    get:
+        operationId: getRoomMembers
+        summary: Get all members of a room
+        description: |
+            Retrieves a paginated list of all members in the specified room.
+            Each member has their own access URL and custom permissions that can differ from the default moderator and speaker roles.
+
+            By default, the room members are sorted by membership date in descending order (newest first).
+        tags:
+            - JMeet - Room Members
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+        parameters:
+            - $ref: '../rooms/parameters/room-id-path.yaml'
+            - $ref: './parameters/room-member-name.yaml'
+            - $ref: './parameters/room-member-name-match-mode.yaml'
+            - $ref: './parameters/room-member-name-case-insensitive.yaml'
+            - $ref: './parameters/room-member-base-role.yaml'
+            - $ref: './parameters/room-member-type.yaml'
+            - $ref: './parameters/room-member-fields.yaml'
+            - $ref: './parameters/room-member-extra-fields.yaml'
+            - $ref: '../shared/parameters/max-items.yaml'
+            - $ref: '../shared/parameters/next-page-token.yaml'
+            - $ref: './parameters/room-member-sort-field.yaml'
+            - $ref: '../shared/parameters/sort-order.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/get-room-members.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: '../rooms/responses/errors/room-not-found.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+    delete:
+        operationId: bulkDeleteRoomMembers
+        summary: Bulk delete room members
+        description: |
+            Deletes multiple members from the room at once by their member IDs.
+        tags:
+            - JMeet - Room Members
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+        parameters:
+            - $ref: '../rooms/parameters/room-id-path.yaml'
+            - $ref: './parameters/room-member-ids.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/bulk-delete-room-members.yaml'
+            '400':
+                $ref: './responses/errors/bulk-delete-room-members.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: '../rooms/responses/errors/room-not-found.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+/rooms/{roomId}/members/{memberId}:
+    get:
+        operationId: getRoomMember
+        summary: Get a room member
+        description: >
+            Retrieves the details of a specific room member by their member ID.
+        tags:
+            - JMeet - Room Members
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+            - roomMemberTokenHeader: []
+        parameters:
+            - $ref: '../rooms/parameters/room-id-path.yaml'
+            - $ref: './parameters/room-member-id.yaml'
+            - $ref: './parameters/room-member-fields.yaml'
+            - $ref: './parameters/room-member-extra-fields.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/get-room-member.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: './responses/errors/room-member-not-found.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+    put:
+        operationId: updateRoomMember
+        summary: Update a room member
+        description: |
+            Updates the permissions and/or base role of a specific room member.
+
+            You can modify the member's base role and custom permission overrides.
+            The effective permissions will be recalculated based on the new base role and custom permissions.
+        tags:
+            - JMeet - Room Members
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+        parameters:
+            - $ref: '../rooms/parameters/room-id-path.yaml'
+            - $ref: './parameters/room-member-id.yaml'
+            - $ref: './parameters/room-member-x-fields-header.yaml'
+            - $ref: './parameters/room-member-x-extra-fields-header.yaml'
+        requestBody:
+            $ref: './requests/update-room-member.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/update-room-member.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: './responses/errors/room-member-not-found.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+    delete:
+        operationId: deleteRoomMember
+        summary: Delete a room member
+        description: |
+            Removes a member from the specified room, revoking their access.
+
+            If the member is currently in an active meeting, they will be immediately kicked out.
+            The member's access URL will no longer be valid after deletion.
+        tags:
+            - JMeet - Room Members
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+        parameters:
+            - $ref: '../rooms/parameters/room-id-path.yaml'
+            - $ref: './parameters/room-member-id.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/delete-room-member.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: './responses/errors/room-member-not-found.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'

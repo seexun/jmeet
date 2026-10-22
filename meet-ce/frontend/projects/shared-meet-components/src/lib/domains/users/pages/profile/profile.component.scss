@@ -1,0 +1,77 @@
+:host {
+	display: block;
+}
+
+// 原 Material outline 密码字段（suffix 眼睛按钮）改为一行 flex：nz-input + 按钮。
+.password-field-row {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-space-2);
+
+	input {
+		flex: 1;
+		min-width: 0;
+	}
+}
+
+.password-field-hint {
+	margin: 0;
+	font-size: var(--jmeet-typography-font-size-xs);
+	color: var(--jmeet-color-text-hint);
+}
+
+.password-field-error {
+	margin: 0;
+	font-size: var(--jmeet-typography-font-size-xs);
+	color: var(--jmeet-color-action-danger);
+}
+
+
+// Hero 头像：可编辑态右下角悬浮相机按钮
+.profile-avatar {
+	position: relative;
+}
+
+.profile-avatar--editable .profile-avatar__edit {
+	position: absolute;
+	right: 2px;
+	bottom: 2px;
+	width: 28px;
+	height: 28px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid var(--jmeet-color-border);
+	border-radius: 50%;
+	background: var(--jmeet-color-surface-card);
+	color: var(--jmeet-color-text-secondary);
+	cursor: pointer;
+
+	.anticon {
+		font-size: 14px;
+	}
+}
+
+.profile-avatar__img {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	object-fit: cover;
+	user-select: none;
+}
+
+.profile-name-input {
+	width: 220px;
+}
+
+.profile-lang-select {
+	width: 140px;
+}
+
+.profile-sessions-pager {
+	display: flex;
+	justify-content: flex-end;
+	padding-top: 12px;
+	border-top: 1px solid var(--jmeet-color-border-light);
+	margin-top: 8px;
+}
