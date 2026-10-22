@@ -1,0 +1,52 @@
+<div
+	[class]="getCardClasses()"
+	[attr.aria-label]="getAriaLabel()"
+	[attr.role]="allowMultiSelect() ? 'checkbox' : 'radio'"
+	[attr.aria-checked]="isOptionSelected(option().id)"
+	[attr.aria-disabled]="option().disabled"
+	[attr.tabindex]="option().disabled ? -1 : 0"
+	(click)="onOptionSelect(option().id)"
+	(mouseenter)="onMouseEnter()"
+	(mouseleave)="onMouseLeave()"
+	(keydown.enter)="onOptionSelect(option().id)"
+	(keydown.space)="onOptionSelect(option().id); $event.preventDefault()"
+>
+	<!-- Pro Badge -->
+	@if (option().isPro && showProBadge()) {
+		<ov-pro-feature-badge [badgeText]="proBadgeText()" [badgeIcon]="proBadgeIcon()" />
+	} @else if (showSelectionIndicator()) {
+		<!-- Selection Indicator -->
+		<div class="selection-indicator">
+			<nz-icon [nzType]="(getSelectionIcon()) | nzIconType" class="selection-icon" [class.selected]="isOptionSelected(option().id)" />
+		</div>
+	}
+
+	<!-- Card Content -->
+	<div class="card-content">
+		<!-- Image Section -->
+		@if (shouldShowImage()) {
+			<div class="card-image" [style.aspect-ratio]="imageAspectRatio()">
+				<img [src]="option().imageUrl" [alt]="option().title + ' preview'" loading="lazy" />
+			</div>
+		}
+
+		<!-- Icon and Title -->
+		<div class="card-header">
+			@if (shouldShowIcon()) {
+				<nz-icon [nzType]="(option().icon) | nzIconType" class="option-icon ov-action-icon" />
+			}
+			<h4 class="option-title" [ngClass]="{ 'has-icon': shouldShowIcon(), 'has-image': shouldShowImage() }">
+				{{ option().title }}
+				@if (option().recommended && showRecommendedBadge()) {
+					<span class="recommended-badge">Recommended</span>
+				}
+				@if (option().badge) {
+					<span class="custom-badge">{{ option().badge }}</span>
+				}
+			</h4>
+		</div>
+
+		<!-- Description -->
+		<p class="option-description">{{ option().description }}</p>
+	</div>
+</div>

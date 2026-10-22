@@ -1,0 +1,72 @@
+{
+  "ERROR": {
+    "DEFAULT_TITLE": "エラー",
+    "BACK": "戻る",
+    "BACK_TO_CONSOLE": "コンソールに戻る",
+    "ACCEPT": "OK",
+    "OOPS": "おっと！",
+    "SOMETHING_WRONG": "問題が発生しました"
+  },
+  "NAVIGATION_ERROR": {
+    "EMBEDDED_ERROR": {
+      "TITLE": "JMeet を読み込めませんでした",
+      "MESSAGE": "JMeet を読み込めませんでした。埋め込み設定を確認してください。"
+    },
+    "CLOSED_ROOM": {
+      "TITLE": "クローズ済みルーム",
+      "MESSAGE": "このルームはクローズしているため、会議を利用できません"
+    },
+    "ANONYMOUS_ACCESS_DISABLED": {
+      "TITLE": "匿名アクセスが無効です",
+      "MESSAGE": "このルーム（およびその録画）では、あなたのロールに対する匿名アクセスが無効になっています"
+    },
+    "ANONYMOUS_RECORDING_ACCESS_DISABLED": {
+      "TITLE": "匿名アクセスが無効です",
+      "MESSAGE": "この録画への匿名アクセスは無効になっています"
+    },
+    "INVALID_ROOM_SECRET": {
+      "TITLE": "無効なリンク",
+      "MESSAGE": "このルーム（またはその録画）にアクセスするために使用したリンクは無効です。利用可能な共有ボタンを使って正しいリンクを共有するよう、モデレーターに依頼してください"
+    },
+    "INVALID_RECORDING_SECRET": {
+      "TITLE": "無効なリンク",
+      "MESSAGE": "この録画にアクセスするために使用したリンクは無効です"
+    },
+    "INVALID_ROOM": {
+      "TITLE": "無効なルーム",
+      "MESSAGE": "アクセスしようとしているルーム（またはその録画）は存在しないか、削除されています"
+    },
+    "INVALID_RECORDING": {
+      "TITLE": "無効な録画",
+      "MESSAGE": "アクセスしようとしている録画は存在しないか、削除されています"
+    },
+    "INVALID_MEMBER": {
+      "TITLE": "無効なメンバー",
+      "MESSAGE": "あなたはこのルームのメンバーではなくなったか、メンバー情報が正しくありません"
+    },
+    "FORBIDDEN_ROOM_ACCESS": {
+      "TITLE": "ルームへのアクセスが禁止されています",
+      "MESSAGE": "このルーム（およびその録画）にアクセスする権限がありません"
+    },
+    "FORBIDDEN_ROOM_RECORDINGS_ACCESS": {
+      "TITLE": "録画へのアクセスが禁止されています",
+      "MESSAGE": "このルームの録画にアクセスする権限がありません"
+    },
+    "FORBIDDEN_RECORDING_ACCESS": {
+      "TITLE": "録画へのアクセスが禁止されています",
+      "MESSAGE": "この録画にアクセスする権限がありません"
+    },
+    "ROOM_ACCESS_REVOKED": {
+      "TITLE": "ルームへのアクセスが取り消されました",
+      "MESSAGE": "このルームでのあなたの権限が変更され、アクセスできなくなりました（その録画も含みます）。詳しくはモデレーターにお問い合わせください"
+    },
+    "TOO_MANY_REQUESTS": {
+      "TITLE": "リクエストが多すぎます",
+      "MESSAGE": "短時間に過剰なリクエストが行われました。しばらく待ってからもう一度お試しください"
+    },
+    "INTERNAL_ERROR": {
+      "TITLE": "内部エラー",
+      "MESSAGE": "予期しないエラーが発生しました。後でもう一度お試しください"
+    }
+  }
+}

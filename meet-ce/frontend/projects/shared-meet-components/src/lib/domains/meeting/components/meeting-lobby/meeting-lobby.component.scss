@@ -1,0 +1,8 @@
+// 会议访问页：批量视觉已上收全局层 styles/meeting/_prejoin.scss（SPA body.meeting-ui /
+// WC :host 双发射）。此处仅保留宿主尺寸与 container 声明（容器名供全局层 @container 查询）。
+:host {
+	display: block;
+	height: 100%;
+	overflow-y: auto;
+	container: lobby / inline-size;
+}

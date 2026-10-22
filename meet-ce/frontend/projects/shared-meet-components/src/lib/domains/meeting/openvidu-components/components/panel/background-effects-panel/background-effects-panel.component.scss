@@ -1,0 +1,158 @@
+// 背景效果面板（批次2 §5.4 深绘）：会议形态宿主为 dock 300px 柱列（自带头部由全局层隐藏），
+// 8px 圆角瓦片网格 + 选中态 primary-soft 底主色描边（soft 双要素）；
+// 分节头 11px 三级字色对齐设置分节语言。nz 图标皮由全局供给，此处只做网格布局。
+.prejoin-mode {
+	// Fixed height (provided by the host .vb-container via --vb-panel-height)
+	// keeps the inner layout stable while the container animates open/closed.
+	height: var(--vb-panel-height, 300px);
+	max-height: var(--vb-panel-height, 300px);
+	min-height: unset;
+	margin: 0 10px;
+
+	.panel-close-button {
+		margin: 0;
+	}
+}
+
+// 分节头：11px 三级字色（与成员分组头/设置分节头同语言）
+.background-title {
+	margin: 16px 0 10px;
+	font-size: 11px;
+	line-height: 22px;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
+	color: var(--jmeet-meeting-text-tertiary);
+}
+
+.not-supported-message {
+	padding: 15px;
+	margin: 10px 12px;
+	// 警告横幅：warning 等值令牌 soft 座（批次 5 落地）
+	background-color: var(--jmeet-meeting-warning-soft);
+	border: 1px solid color-mix(in srgb, var(--jmeet-meeting-warning) 20%, transparent);
+	border-radius: var(--jmeet-radius-md);
+	color: var(--jmeet-meeting-warning);
+
+	.warning-title {
+		font-weight: 500;
+		margin: 0 0 8px 0;
+	}
+
+	.warning-description {
+		font-size: 0.9em;
+		margin: 0;
+		opacity: 0.9;
+	}
+}
+
+.effects-container {
+	display: block !important;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 4px 12px 16px;
+	flex: 1 1 0;
+	min-height: 0;
+}
+
+// 瓦片：8px 圆角 + 透明占位描边（选中态补主色描边不跳动）
+.effect-button {
+	box-sizing: border-box;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 64px;
+	height: 64px;
+	margin: 5px;
+	overflow: hidden;
+	border: 2px solid transparent;
+	border-radius: var(--jmeet-radius-md);
+	background-color: var(--jmeet-meeting-stage-bg);
+	color: var(--jmeet-meeting-text-secondary);
+	font-size: 20px;
+	line-height: inherit;
+	cursor: pointer;
+	transition:
+		border-color 160ms ease,
+		background-color 160ms ease;
+}
+
+.effect-button.disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+// 选中态：primary-soft 底 + 主色描边（soft 双要素）
+.active-effect-btn {
+	border-color: var(--jmeet-meeting-primary);
+	background-color: var(--jmeet-meeting-primary-soft);
+}
+
+// hover 描边预告（选中瓦片保持主色描边不被 hover 覆盖）
+.effect-button:hover:not(.active-effect-btn) {
+	border-color: var(--jmeet-meeting-border);
+}
+
+#hard_blur-btn .anticon {
+	font-weight: bold !important;
+}
+
+// 缩略图网格：dock 300px 内四列等宽方瓦（模糊/无效果组模板为裸 div 无 .grid 类，
+// 以结构选择器并入同一网格节奏，消除其 inline-flow margin 与网格 gap 的 5px 差）
+.grid,
+.effects-container > div:first-child > div {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 10px;
+
+	.effect-button {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 1;
+		margin: 0;
+	}
+}
+
+.grid img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: var(--jmeet-radius-md);
+}
+
+/* 自定义背景上传与删除 */
+.custom-upload {
+	border-style: dashed;
+	border-color: var(--jmeet-meeting-border);
+	background-color: var(--jmeet-meeting-surface);
+	color: var(--jmeet-meeting-text-tertiary);
+
+	&.disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+.custom-effect {
+	position: relative;
+
+	.custom-remove {
+		position: absolute;
+		top: 4px;
+		right: 4px;
+		display: none;
+		width: 20px;
+		height: 20px;
+		align-items: center;
+		justify-content: center;
+		border: none;
+		border-radius: 50%;
+		background: rgb(0 0 0 / 60%); // design-system-allow-hardcoded: overlay control on video thumb
+		color: var(--jmeet-meeting-surface);
+		cursor: pointer;
+	}
+
+	&:hover .custom-remove {
+		display: flex;
+	}
+}

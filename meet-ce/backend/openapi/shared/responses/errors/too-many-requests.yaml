@@ -1,0 +1,8 @@
+description: Too Many Requests — Rate limit exceeded. Retry after the period indicated by the `RateLimit` response headers
+content:
+    application/json:
+        schema:
+            $ref: '../../schemas/error.yaml'
+        example:
+            error: 'Too Many Requests'
+            message: 'Too many requests, please try again later'

@@ -1,0 +1,91 @@
+@if (showLobby()) {
+	<!-- Lobby phase (before joining meeting) -->
+	@if (lobbyState() === 'ready') {
+		<ov-meeting-lobby />
+	} @else if (lobbyState() === 'error') {
+		<div class="prejoin-loading-container">
+			<nz-icon nzType="close-circle" />
+			<p class="prejoin-loading-text">{{ 'MEETING_PAGE.PREPARE_ERROR' | translate }}</p>
+		</div>
+	} @else {
+		<div class="prejoin-loading-container">
+			<nz-spin nzSimple class="prejoin-spin" />
+			<p class="prejoin-loading-text">{{ 'MEETING_PAGE.PREPARING' | translate }}</p>
+		</div>
+	}
+} @else if (!isMeetingLeft()) {
+	@if (hostUnavailableEndsAt()) {
+		<section class="host-unavailable-banner" role="alert" aria-live="assertive">
+			<nz-icon nzType="warning" aria-hidden="true" />
+			<div><strong>{{ 'MEETING.HOST_OFFLINE_TITLE' | translate }}</strong><span>{{ 'MEETING.HOST_OFFLINE_SUFFIX' | translate }} {{ hostUnavailableSeconds() }} {{ 'MEETING.SECONDS_SUFFIX' | translate }}</span></div>
+			@if (canClaimHost()) { <button class="jmeet-button jmeet-button--primary" type="button" (click)="claimHost()">{{ 'MEETING.CLAIM_HOST' | translate }}</button> }
+		</section>
+	}
+	<ov-videoconference
+		[token]="roomMemberToken()!"
+		[prejoin]="true"
+		[videoEnabled]="features().videoEnabled"
+		[audioEnabled]="features().audioEnabled"
+		[e2eeKey]="e2eeKey()"
+		[toolbarRoomName]="roomName()"
+		[toolbarDisplayLogo]="false"
+		[toolbarCameraButton]="features().showCamera"
+		[toolbarMicrophoneButton]="features().showMicrophone"
+		[toolbarScreenshareButton]="features().showScreenShare"
+		[toolbarLeaveButton]="!features().showEndMeeting"
+		[toolbarRecordingButton]="false"
+		[toolbarViewRecordingsButton]="false"
+		[toolbarChatPanelButton]="features().showChat"
+		[toolbarBackgroundEffectsButton]="features().showBackgrounds"
+		[toolbarParticipantsPanelButton]="features().showParticipantList"
+		[toolbarSettingsButton]="features().showSettings"
+		[toolbarFullscreenButton]="features().showFullscreen"
+		[toolbarActivitiesPanelButton]="false"
+		[showDisconnectionDialog]="false"
+		(onRoomCreated)="onRoomCreated($event)"
+		(onParticipantConnected)="onParticipantConnected($event)"
+		(onParticipantLeft)="onParticipantLeft($event)"
+	>
+		<!-- Toolbar Leave Button (for moderators) -->
+		<ng-container *ovToolbarLeaveButton>
+			<ng-content select="ov-meeting-toolbar-leave-button" />
+		</ng-container>
+
+		<!-- Toolbar Additional Buttons -->
+		<div *ovToolbarAdditionalButtons>
+			<ng-content select="ov-meeting-toolbar-extra-buttons" />
+		</div>
+
+		<!-- Custom participants panel with invite action -->
+		<ov-meeting-participants-panel *ovParticipantsPanel />
+
+		<!-- Panel After Local Participant (only while alone) -->
+		<div *ovParticipantPanelAfterLocalParticipant>
+			@if (isAlone()) {
+				@if (isEmbeddedMode()) {
+					<!-- Embedded (webcomponent or iframe): link sharing is handled by the host app -->
+					<div id="waiting-panel">
+						<ng-content select="ov-meeting-waiting-panel" />
+					</div>
+				}
+			}
+		</div>
+
+		<!-- Participant Panel Item Template -->
+		<div *ovParticipantPanelItem="let participant">
+			<ng-container
+				[ngTemplateOutlet]="participantItemTemplate()"
+				[ngTemplateOutletContext]="{ participant: participant }"
+			/>
+		</div>
+
+		<ng-container *ovSettingsPanelGeneralAdditionalElements>
+			<ng-content select="ov-meeting-settings-extensions" />
+		</ng-container>
+
+		<!-- Custom layout component -->
+		<ng-container *ovLayout>
+			<ng-content select="ov-meeting-custom-layout" />
+		</ng-container>
+	</ov-videoconference>
+}

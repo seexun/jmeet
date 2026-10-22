@@ -1,0 +1,108 @@
+<div class="video-device-selector" [class.compact]="compact()">
+	<!-- Unified Device Button (Compact Mode) -->
+	@if (compact()) {
+		@if (hasVideoDevices()) {
+			<div class="unified-device-button">
+				<!-- Main toggle button -->
+				<button
+					class="toggle-section"
+				[disabled]="!hasVideoDevices() || cameraStatusChanging"
+				[class.device-enabled]="isCameraEnabled"
+				[class.device-disabled]="!isCameraEnabled"
+				(click)="toggleCam($event)"
+				nz-tooltip
+				[nzTooltipTitle]="
+					!hasVideoDevices()
+						? ''
+						: isCameraEnabled
+							? ('TOOLBAR.STOP_VIDEO' | translate)
+							: ('TOOLBAR.START_VIDEO' | translate)
+			"
+					id="camera-button"
+					[attr.aria-label]="(isCameraEnabled ? 'TOOLBAR.STOP_VIDEO' : 'TOOLBAR.START_VIDEO') | translate"
+					[attr.aria-pressed]="isCameraEnabled"
+				>
+					<nz-icon [nzType]="(isCameraEnabled ? 'videocam' : 'videocam_off') | nzIconType" [id]="isCameraEnabled ? 'videocam' : 'videocam_off'" aria-hidden="true" />
+				</button>
+
+				<!-- Dropdown section -->
+				@if (isCameraEnabled) {
+					<button
+						id="video-dropdown"
+						class="dropdown-section"
+						nz-dropdown
+						[nzDropdownMenu]="cameraMenu"
+						nzTrigger="click"
+						nz-placement="bottomLeft"
+						[nzOverlayClassName]="'device-menu'"
+						[disabled]="cameraStatusChanging"
+						[attr.aria-label]="'TOOLBAR.SELECT_CAMERA' | translate"
+					>
+						<nz-icon nzType="down" aria-hidden="true" />
+					</button>
+				}
+			</div>
+		} @else {
+			<!-- No Camera Available -->
+			<div id="no-video-device-message" class="no-device-message">
+				<nz-icon nzType="warning" class="warning-icon" />
+				<span>{{ 'PREJOIN.NO_VIDEO_DEVICE' | translate }}</span>
+			</div>
+		}
+	} @else {
+		<!-- Normal Mode - Input-style Selector -->
+		<div class="normal-device-selector">
+			<!-- Device Selector (Input Style) -->
+			@if (isCameraEnabled) {
+				<div class="device-input-selector">
+					<nz-icon nzType="video-camera" class="device-icon" />
+					<nz-select
+						id="video-dropdown"
+						class="device-select"
+						[ngModel]="cameraSelected()?.device"
+						(ngModelChange)="onCameraIdSelected($event)"
+						[nzDisabled]="cameraStatusChanging || cameras().length <= 1"
+					>
+						@for (camera of cameras(); track camera.device) {
+							<nz-option [nzValue]="camera.device" [nzLabel]="camera.label" />
+						}
+					</nz-select>
+				</div>
+			} @else {
+				@if (hasVideoDevices()) {
+					<!-- Disabled state message -->
+					<div class="device-input-selector disabled">
+						<div class="selector-button disabled">
+							<nz-icon nzType="video-camera" class="device-icon" />
+							<span class="selected-device-name">{{ 'PANEL.SETTINGS.DISABLED_VIDEO' | translate }}</span>
+						</div>
+					</div>
+				} @else {
+					<!-- No Camera Available -->
+					<div id="no-video-device-message" class="no-device-message">
+						<nz-icon nzType="warning" class="warning-icon" />
+						<span>{{ 'PREJOIN.NO_VIDEO_DEVICE' | translate }}</span>
+					</div>
+				}
+			}
+		</div>
+	}
+
+	<!-- Device Selection Menu (Shared) -->
+	<nz-dropdown-menu #cameraMenu="nzDropdownMenu">
+		<ul nz-menu>
+			@for (camera of cameras(); track camera.device) {
+				<li
+					nz-menu-item
+					id="option-{{ camera.label }}"
+					(click)="onCameraSelected({ value: camera })"
+					[class.selected]="camera.device === cameraSelected()?.device"
+				>
+					<nz-icon nzType="check" class="menu-check-icon"
+						[class.is-selected]="camera.device === cameraSelected()?.device" />
+					<span>{{ camera.label }}</span>
+				</li>
+			}
+		</ul>
+	</nz-dropdown-menu>
+</div>

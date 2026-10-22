@@ -1,0 +1,24 @@
+:host {
+	display: block;
+	height: 100%;
+}
+
+.jmeet-meeting-toolbar {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-space-2);
+	height: 100%;
+	box-sizing: border-box;
+	padding: var(--jmeet-space-2) var(--jmeet-space-4);
+	border: 1px solid var(--jmeet-color-border);
+	border-radius: var(--jmeet-radius-lg);
+	background: var(--jmeet-color-surface-card);
+	color: var(--jmeet-color-icon-default);
+}
+
+@container meeting (max-width: 768px) {
+	.jmeet-meeting-toolbar {
+		padding: 4px;
+		justify-content: center;
+	}
+}

@@ -1,0 +1,9 @@
+description: Meeting ended successfully
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                    example: Meeting in room 'room-123' ended successfully

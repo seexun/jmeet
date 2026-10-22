@@ -1,0 +1,60 @@
+{
+	"AUTH": {
+		"COMMON": {
+			"SHOW_PASSWORD": "パスワードを表示",
+			"HIDE_PASSWORD": "パスワードを非表示"
+		},
+		"LOGIN": {
+			"TITLE": "サインイン",
+			"SUBTITLE": "JMeet にアクセスするには認証情報を入力してください",
+			"USER_ID": "ユーザー ID",
+			"USER_ID_PLACEHOLDER": "ユーザー ID を入力してください",
+			"PASSWORD": "パスワード",
+			"PASSWORD_PLACEHOLDER": "パスワードを入力してください",
+			"SUBMIT": "ログイン",
+			"ERROR_TOO_MANY_ATTEMPTS": "ログインの試行回数が多すぎます。しばらくしてからもう一度お試しください",
+			"ERROR_INVALID_CREDENTIALS": "ユーザー ID またはパスワードが正しくありません",
+			"HERO_TITLE_PREFIX": "スマート会議コラボレーション",
+			"HERO_TITLE_EMPHASIS": "すべてのチームをつなぐ",
+			"HERO_DESC": "HD audio & video · screen sharing · free & open source · self-hosted",
+			"WELCOME_TITLE": "おかえりなさい",
+			"WELCOME_SUBTITLE": "会議を開始または参加するにはサインイン",
+			"LIVE_BADGE": "会議進行中",
+			"MINUTES_TOAST": "Smooth collaboration",
+			"FEATURE_BAND_1_TITLE": "高画質で安定",
+			"FEATURE_BAND_1_SUB": "1080p · パケットロス耐性",
+			"FEATURE_BAND_2_TITLE": "In-meeting chat",
+			"FEATURE_BAND_2_SUB": "Group chat & interaction",
+			"FEATURE_BAND_3_TITLE": "Open source",
+			"FEATURE_BAND_3_SUB": "Self-hosted deployment",
+			"CAP_2": "Screen sharing & virtual backgrounds",
+			"CAP_3": "Free & open source · self-hosted"
+		},
+		"CHANGE_PASSWORD": {
+			"TITLE": "パスワードを更新",
+			"SUBTITLE": "続行する前にパスワードを更新する必要があります。",
+			"BANNER_TITLE": "パスワードの更新が必要です",
+			"BANNER_DESC": "パスワードは最近作成またはリセットされました。続行するには新しいパスワードを設定してください。",
+			"CURRENT_PASSWORD": "現在のパスワード",
+			"CURRENT_PASSWORD_PLACEHOLDER": "現在のパスワードを入力してください",
+			"NEW_PASSWORD": "新しいパスワード",
+			"NEW_PASSWORD_PLACEHOLDER": "強力で安全なパスワードを作成してください",
+			"PASSWORD_MIN_HINT": "5 文字以上",
+			"CONFIRM_PASSWORD": "新しいパスワードの確認",
+			"CONFIRM_PASSWORD_PLACEHOLDER": "新しいパスワードをもう一度入力してください",
+			"SUBMIT": "パスワードを更新",
+			"ERRORS": {
+				"CURRENT_REQUIRED": "現在のパスワードは必須です",
+				"CURRENT_INCORRECT": "現在のパスワードが正しくありません",
+				"NEW_REQUIRED": "新しいパスワードは必須です",
+				"NEW_MIN_PREFIX": "パスワードは少なくとも ",
+				"NEW_MIN_SUFFIX": " 文字以上である必要があります",
+				"NEW_SAME": "新しいパスワードは現在のパスワードと異なる必要があります",
+				"CONFIRM_REQUIRED": "パスワードを確認してください",
+				"CONFIRM_MISMATCH": "パスワードが一致しません",
+				"UPDATE_SUCCESS": "パスワードを更新しました",
+				"UPDATE_FAILED": "パスワードの更新に失敗しました"
+			}
+		}
+	}
+}

@@ -1,0 +1,220 @@
+<form [formGroup]="form" class="jmeet-settings-form member-form-page">
+	@if (!form.get('memberType')!.disabled) {
+		<div class="form-field-block member-type-block">
+			<p class="jmeet-form-label">{{ 'ROOM_MEMBERS.FORM.TYPE_LABEL' | translate }}</p>
+			<div class="member-type-segment" role="tablist" [attr.aria-label]="'ROOM_MEMBERS.FORM.TYPE_LABEL' | translate">
+				<button
+					type="button"
+					class="jmeet-button"
+					role="tab"
+					[attr.aria-selected]="isUserMode()"
+					[class.is-active]="isUserMode()"
+					(click)="setMemberType('user')"
+					>
+					{{ 'ROOM_MEMBERS.FORM.TYPE_USER' | translate }}
+				</button>
+				<button
+					type="button"
+					class="jmeet-button"
+					role="tab"
+					[attr.aria-selected]="!isUserMode()"
+					[class.is-active]="!isUserMode()"
+					(click)="setMemberType('identified_guest')"
+					>
+					{{ 'ROOM_MEMBERS.FORM.TYPE_IDENTIFIED_GUEST' | translate }}
+				</button>
+			</div>
+		</div>
+	}
+
+	@if (isUserMode()) {
+			<div class="form-field-block">
+				<p class="jmeet-form-label">{{ 'ROOM_MEMBERS.FORM.USER_ID_LABEL' | translate }}</p>
+				<div class="search-field">
+					<input
+						nz-input
+						formControlName="userId"
+						[placeholder]="'ROOM_MEMBERS.FORM.USER_ID_PLACEHOLDER' | translate"
+						[nzAutocomplete]="userAutocomplete"
+						(focus)="onUserInputFocus()"
+					/>
+					@if (isLoadingUsers()) {
+						<nz-spin nzSimple nzSize="small" class="search-field-suffix" />
+					} @else {
+						<nz-icon nzType="search" class="search-field-suffix" />
+					}
+				</div>
+				@if (getFieldError('userId')) {
+					<p class="form-field-error">{{ getFieldError('userId') }}</p>
+				} @else if (!lockIdentity()) {
+					<p class="form-field-hint">{{ 'ROOM_MEMBERS.FORM.USER_ID_HINT' | translate }}</p>
+				}
+				<nz-autocomplete #userAutocomplete="nzAutocomplete" [nzDefaultActiveFirstOption]="false" [nzOverlayClassName]="'member-user-dropdown'">
+					@for (user of filteredUsers(); track user.userId) {
+						<nz-auto-option [nzValue]="user.userId" [nzLabel]="user.name" [nzDisabled]="isUserDisabled(user)">
+							<div class="user-option" [nzTooltipTitle]="getDisabledReason(user)" nz-tooltip style="pointer-events: all">
+								<span class="user-option-avatar"><nz-icon nzType="user" /></span>
+								<div class="user-option-info">
+									<span class="user-option-name">{{ user.name }}</span>
+									<span class="user-option-id">{{ user.userId }}</span>
+								</div>
+							</div>
+						</nz-auto-option>
+					}
+				@if (!isLoadingUsers() && filteredUsers().length === 0) {
+					<nz-auto-option [nzValue]="''" [nzDisabled]="true">
+						<span class="no-results">{{ 'ROOM_MEMBERS.FORM.NO_USERS_FOUND' | translate }}</span>
+					</nz-auto-option>
+				}
+			</nz-autocomplete>
+		</div>
+	} @else {
+		@if (!lockIdentity()) {
+			<div class="guest-info-box">
+				<nz-icon nzType="info-circle" class="guest-info-icon" />
+				<p class="guest-info-text jmeet-text--body-secondary">{{ 'ROOM_MEMBERS.FORM.GUEST_INFO' | translate }}</p>
+			</div>
+		}
+		<div class="form-field-block">
+			<p class="jmeet-form-label">{{ 'ROOM_MEMBERS.FORM.MEMBER_NAME_LABEL' | translate }}</p>
+			<input
+				nz-input
+				formControlName="memberName"
+				[placeholder]="'ROOM_MEMBERS.FORM.MEMBER_NAME_PLACEHOLDER' | translate"
+				autofocus
+			/>
+			@if (getFieldError('memberName')) {
+				<p class="form-field-error">{{ getFieldError('memberName') }}</p>
+			} @else if (!lockIdentity()) {
+				<p class="form-field-hint">{{ 'ROOM_MEMBERS.FORM.MEMBER_NAME_HINT' | translate }}</p>
+			}
+		</div>
+	}
+
+	<div class="form-field-block">
+		<p class="jmeet-form-label">{{ 'ROOM_MEMBERS.FORM.BASE_ROLE_LABEL' | translate }}</p>
+		<nz-select formControlName="role">
+			@for (role of RoomMemberUiUtils.AVAILABLE_ROLES; track role) {
+				<nz-option [nzValue]="role" [nzLabel]="RoomMemberUiUtils.getRoleLabel(role) | translate">
+					<div class="role-option">
+						<nz-icon [nzType]="(RoomMemberUiUtils.getRoleIcon(role)) | nzIconType" class="role-option-icon" />
+						<span>{{ RoomMemberUiUtils.getRoleLabel(role) | translate }}</span>
+					</div>
+				</nz-option>
+			}
+		</nz-select>
+		@if (getFieldError('role')) {
+			<p class="form-field-error">{{ getFieldError('role') }}</p>
+		} @else {
+			<p class="form-field-hint">{{ 'ROOM_MEMBERS.FORM.BASE_ROLE_HINT' | translate }}</p>
+		}
+	</div>
+
+	<div class="permissions-section">
+		<nz-collapse class="permissions-accordion" [nzAccordion]="true" [nzBordered]="false" nzExpandIconPosition="end">
+			<nz-collapse-panel
+				class="permissions-panel"
+				[nzHeader]="permissionsHeader"
+				[nzExtra]="permissionsExtra"
+			>
+				<ng-template #permissionsHeader>
+					<span class="permissions-panel-title">
+						<nz-icon nzType="lock" class="permissions-panel-icon" />
+						<span>{{ 'ROOM_MEMBERS.FORM.CUSTOM_PERMISSIONS_TITLE' | translate }}</span>
+					</span>
+				</ng-template>
+				<ng-template #permissionsExtra>
+					<span class="permissions-panel-description">
+						@if (customizedPermissionCount() > 0) {
+							{{ customizedPermissionSummary() }}
+						} @else {
+							{{ 'ROOM_MEMBERS.FORM.CUSTOM_PERMISSIONS_DESCRIPTION' | translate }}
+						}
+					</span>
+				</ng-template>
+
+				<div class="permissions-content" [formGroup]="permissionsForm">
+					<div class="permissions-toolbar">
+						<p class="permissions-hint jmeet-text--caption">{{ 'ROOM_MEMBERS.FORM.CUSTOM_PERMISSIONS_HINT_SHORT' | translate }}</p>
+						@if (customizedPermissionCount() > 0) {
+							<button type="button" class="jmeet-button jmeet-button--ghost permissions-reset-btn" (click)="resetCustomPermissions()">
+								{{ 'ROOM_MEMBERS.FORM.CUSTOM_PERMISSIONS_RESET' | translate }}
+							</button>
+						}
+					</div>
+
+					<nz-collapse class="permission-groups-accordion" [nzAccordion]="false" [nzBordered]="false" nzExpandIconPosition="end">
+						@for (group of permissionGroups; track group.label) {
+							<nz-collapse-panel
+								class="permission-group-panel"
+								[nzHeader]="groupHeader"
+								[nzExtra]="groupExtra"
+							>
+								<ng-template #groupHeader>
+									<span class="permission-group-title">
+										<nz-icon [nzType]="(group.icon) | nzIconType" class="permission-group-icon" />
+										<span>{{ group.label | translate }}</span>
+										@if (groupCustomizedCount(group) > 0) {
+											<span class="group-customized-badge">{{ groupCustomizedCount(group) }}</span>
+										}
+									</span>
+								</ng-template>
+								<ng-template #groupExtra>
+									<span class="permission-group-count">{{ groupPermissionCountLabel(group.permissions.length) }}</span>
+								</ng-template>
+
+								<div class="permission-grid">
+									@for (permission of group.permissions; track permission.key) {
+										<div
+											class="permission-row"
+											[class.customized]="permissionDiffersFromDefault(permission.key)"
+										>
+											<span
+												class="permission-label"
+												nz-tooltip
+												[nzTooltipTitle]="permission.description | translate"
+												[nzTooltipPlacement]="'top'"
+											>
+												{{ permission.label | translate }}
+											</span>
+											<nz-switch
+												class="permission-toggle"
+												[formControlName]="permission.key"
+												nz-tooltip
+												[nzTooltipTitle]="permission.description | translate"
+												[nzTooltipPlacement]="'top'"
+											/>
+										</div>
+									}
+								</div>
+							</nz-collapse-panel>
+						}
+					</nz-collapse>
+				</div>
+			</nz-collapse-panel>
+		</nz-collapse>
+	</div>
+
+	<div class="jmeet-form-actions member-form-actions">
+		<button type="button" class="jmeet-button jmeet-button--outline" (click)="onCancel()" [disabled]="isSaving()">
+			{{ 'ROOM_MEMBERS.COMMON.CANCEL' | translate }}
+		</button>
+		<button
+			type="button"
+			class="jmeet-button jmeet-button--primary"
+			[disabled]="form.invalid || isSaving()"
+			(click)="onSubmit()"
+			>
+			@if (isSaving()) {
+				<nz-spin nzSimple nzSize="small" />
+			} @else {
+				<nz-icon [nzType]="(initialData() ? 'save' : 'person_add') | nzIconType" />
+			}
+			{{
+				initialData()
+					? ('ROOM_MEMBERS.FORM.UPDATE_MEMBER' | translate)
+					: ('ROOM_MEMBERS.FORM.ADD_MEMBER' | translate)
+			}}
+		</button>
+	</div>
+</form>

@@ -1,0 +1,14 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"outDir": "../out-tsc/spec",
+		"types": ["jasmine", "node"]
+	},
+	"files": ["../projects/shared-meet-components/src/test-main.ts"],
+	"include": [
+		"**/*.spec.ts",
+		"**/*.d.ts",
+		"../projects/shared-meet-components/src/**/*.spec.ts"
+	],
+	"exclude": ["node_modules", "dist", "../dist"]
+}

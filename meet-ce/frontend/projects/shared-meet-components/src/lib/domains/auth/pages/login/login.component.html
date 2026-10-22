@@ -1,0 +1,254 @@
+<div class="jmeet-login-page" [attr.aria-label]="'AUTH.LOGIN.TITLE' | translate">
+	<!-- 实景背景（会议室照片 + 蓝白读层） -->
+	<div class="login-bg" aria-hidden="true">
+		<img class="login-bg-photo" [src]="assets.resolve('assets/images/login-bg.webp')" alt="" />
+		<div class="login-bg-wash"></div>
+	</div>
+
+	<header class="jmeet-login-topbar">
+		<div class="brand">
+			<img class="jmeet-login-logo" [src]="branding.logoUrl() || assets.logo" [alt]="branding.displayName()" />
+			<strong>{{ branding.displayName() }}</strong>
+			<span class="brand-sep" aria-hidden="true"></span>
+			<span class="brand-tagline">{{ 'AUTH.LOGIN.HERO_TAGLINE' | translate }}</span>
+		</div>
+		<nav class="topnav" [attr.aria-label]="'AUTH.LOGIN.TOPNAV_LABEL' | translate">
+			<span class="lang-wrap">
+				<select
+					class="lang-select"
+					[attr.aria-label]="'AUTH.LOGIN.LANG_LABEL' | translate"
+					(change)="onLanguageChange($event)"
+				>
+					@for (option of languages; track option.lang) {
+						<option [value]="option.lang" [selected]="option.lang === currentLang().lang">
+							{{ option.name }}
+						</option>
+					}
+				</select>
+			</span>
+			<span class="sep" aria-hidden="true"></span>
+			<button type="button" class="nav-link" (click)="showSupportHint()">
+				{{ 'AUTH.LOGIN.TOP_HELP' | translate }}
+			</button>
+		</nav>
+	</header>
+
+	<div class="jmeet-login-body">
+		<!-- 左：产品主张 -->
+		<aside class="jmeet-login-hero">
+			<h1 class="hero-title">{{ 'AUTH.LOGIN.HERO_TITLE_PREFIX' | translate }}</h1>
+			<p class="hero-tagline">{{ 'AUTH.LOGIN.HERO_TAGLINE' | translate }}</p>
+			<p class="hero-intro">{{ 'AUTH.LOGIN.HERO_DESC' | translate }}</p>
+
+			<div class="hero-band" [attr.aria-label]="'AUTH.LOGIN.BENEFITS_LABEL' | translate">
+				<div class="band-col">
+					<span class="band-icon"><nz-icon nzType="video-camera" /></span>
+					<div class="band-text">
+						<strong>{{ 'AUTH.LOGIN.FEATURE_BAND_1_TITLE' | translate }}</strong>
+						<span>{{ 'AUTH.LOGIN.FEATURE_BAND_1_SUB' | translate }}</span>
+					</div>
+				</div>
+				<div class="band-col">
+					<span class="band-icon band-icon--green"><nz-icon nzType="message" /></span>
+					<div class="band-text">
+						<strong>{{ 'AUTH.LOGIN.FEATURE_BAND_2_TITLE' | translate }}</strong>
+						<span>{{ 'AUTH.LOGIN.FEATURE_BAND_2_SUB' | translate }}</span>
+					</div>
+				</div>
+				<div class="band-col">
+					<span class="band-icon band-icon--violet"><nz-icon nzType="cloud" /></span>
+					<div class="band-text">
+						<strong>{{ 'AUTH.LOGIN.FEATURE_BAND_3_TITLE' | translate }}</strong>
+						<span>{{ 'AUTH.LOGIN.FEATURE_BAND_3_SUB' | translate }}</span>
+					</div>
+				</div>
+			</div>
+		</aside>
+
+		<!-- 右：登录卡 -->
+		<main class="jmeet-login-main">
+			<section class="jmeet-login-panel">
+				<img class="panel-logo" [src]="branding.logoUrl() || assets.logo" [alt]="branding.displayName()" />
+				<div class="jmeet-login-heading">
+					<h2>{{ branding.displayName() }}</h2>
+					<p>{{ 'AUTH.LOGIN.HERO_TAGLINE' | translate }}</p>
+				</div>
+
+				@if (localLoginEnabled() || selectedDirectoryProvider() || emergencyLogin()) {
+					<form [formGroup]="loginForm" (ngSubmit)="login()" id="login-form" class="jmeet-login-form">
+						@if (selectedDirectoryProvider()) {
+							<div class="jmeet-login-directory">
+								<span><nz-icon nzType="apartment" />{{ selectedDirectoryProvider()?.displayName }}</span>
+								@if (localLoginEnabled()) {
+									<button
+										type="button"
+										class="jmeet-button jmeet-button--ghost jmeet-button--sm"
+										(click)="useLocalLogin()"
+									>
+										{{ 'AUTH.LOGIN.SWITCH_TO_LOCAL' | translate }}
+									</button>
+								}
+							</div>
+						}
+
+						<div class="login-field-row">
+							<nz-icon nzType="user" class="login-field-icon" />
+							<input
+								nz-input
+								formControlName="userId"
+								autocomplete="username"
+								id="userId-input"
+								[placeholder]="
+									selectedDirectoryProvider()
+										? ('AUTH.LOGIN.DIRECTORY_USER_LABEL' | translate)
+										: ('AUTH.LOGIN.USER_ID' | translate)
+								"
+								[attr.aria-label]="
+									selectedDirectoryProvider()
+										? ('AUTH.LOGIN.DIRECTORY_USER_LABEL' | translate)
+										: ('AUTH.LOGIN.USER_ID' | translate)
+								"
+							/>
+						</div>
+
+						<div class="login-field-row">
+							<nz-icon nzType="lock" class="login-field-icon" />
+							<input
+								nz-input
+								[type]="showPassword() ? 'text' : 'password'"
+								formControlName="password"
+								autocomplete="current-password"
+								id="password-input"
+								[placeholder]="'AUTH.LOGIN.PASSWORD' | translate"
+								[attr.aria-label]="'AUTH.LOGIN.PASSWORD' | translate"
+							/>
+							<button
+								type="button"
+								class="jmeet-button jmeet-button--ghost jmeet-button--icon pw-toggle"
+								(click)="showPassword.set(!showPassword())"
+								[attr.aria-label]="
+									showPassword()
+										? ('AUTH.LOGIN.HIDE_PASSWORD' | translate)
+										: ('AUTH.LOGIN.SHOW_PASSWORD' | translate)
+								"
+							>
+								<nz-icon [nzType]="(showPassword() ? 'visibility_off' : 'visibility') | nzIconType" />
+							</button>
+						</div>
+
+						@if (mfaRequired()) {
+							<div class="jmeet-field">
+								<label class="jmeet-field-label" for="otp-input">{{
+									'AUTH.LOGIN.MFA_LABEL' | translate
+								}}</label>
+								<div class="login-field-row">
+									<nz-icon nzType="safety-certificate" class="login-field-icon" />
+									<input
+										nz-input
+										id="otp-input"
+										formControlName="otp"
+										inputmode="numeric"
+										autocomplete="one-time-code"
+										maxlength="6"
+										autofocus
+									/>
+								</div>
+								<p class="login-field-hint">{{ 'AUTH.LOGIN.MFA_HINT' | translate }}</p>
+							</div>
+						}
+
+						<div class="jmeet-login-form-extra">
+							<label class="remember">
+								<input
+									type="checkbox"
+									[checked]="rememberMe()"
+									(change)="rememberMe.set($any($event.target).checked)"
+								/>
+								<span>{{ 'AUTH.LOGIN.REMEMBER_ME' | translate }}</span>
+							</label>
+							<button type="button" class="forgot" (click)="forgotPassword()">
+								{{ 'AUTH.LOGIN.FORGOT_PASSWORD' | translate }}
+							</button>
+						</div>
+
+						@if (loginErrorMessage()) {
+							<p class="jmeet-login-error" role="alert">{{ loginErrorMessage() }}</p>
+						}
+
+						<button
+							type="submit"
+							class="jmeet-button jmeet-button--primary jmeet-login-submit"
+							[disabled]="loginForm.invalid"
+							id="login-button"
+						>
+							{{
+								selectedDirectoryProvider()
+									? ('AUTH.LOGIN.SUBMIT_DIRECTORY' | translate)
+									: ('AUTH.LOGIN.SUBMIT' | translate)
+							}}
+						</button>
+					</form>
+				}
+
+				@if (identityProviders().length > 0) {
+					<div class="jmeet-login-divider-auth">
+						<span>{{ 'AUTH.LOGIN.DIVIDER_OR' | translate }}</span>
+					</div>
+					<div class="jmeet-login-enterprise" [attr.aria-label]="'AUTH.LOGIN.ENTERPRISE_LABEL' | translate">
+						@for (provider of identityProviders(); track provider.id) {
+							@if (provider.type === 'ldap') {
+								<button
+									type="button"
+									class="jmeet-button jmeet-button--outline jmeet-login-enterprise-btn"
+									[class.active]="selectedDirectoryProvider()?.id === provider.id"
+									(click)="selectDirectoryProvider(provider)"
+								>
+									<nz-icon nzType="bank" />
+									{{ 'AUTH.LOGIN.LOGIN_WITH_PREFIX' | translate }} {{ provider.displayName }}
+									{{ 'AUTH.LOGIN.LOGIN_WITH_SUFFIX' | translate }}
+								</button>
+							} @else {
+								<button
+									type="button"
+									class="jmeet-button jmeet-button--outline jmeet-login-enterprise-btn"
+									(click)="startEnterpriseLogin(provider.id)"
+								>
+									<nz-icon [nzType]="(provider.type === 'wecom' ? 'work' : provider.type === 'dingtalk' ? 'notifications_active' : provider.type === 'feishu' ? 'forum' : 'domain') | nzIconType" />
+									{{ provider.displayName }} {{ 'AUTH.LOGIN.SSO_SUFFIX' | translate }}
+								</button>
+							}
+						}
+					</div>
+				}
+
+				<p class="jmeet-login-panel-foot">
+					<span>{{ 'AUTH.LOGIN.NO_ACCOUNT_HINT' | translate }}</span>
+					<span class="sep" aria-hidden="true">|</span>
+					<button type="button" class="foot-link" (click)="showSupportHint()">
+						{{ 'AUTH.LOGIN.USE_HELP' | translate }}
+					</button>
+				</p>
+			</section>
+		</main>
+	</div>
+
+	<footer class="jmeet-login-footer">
+		<span class="copy">© 2026 {{ branding.displayName() }} {{ 'AUTH.LOGIN.FOOTER_RIGHTS' | translate }}</span>
+		<span class="foot-sep" aria-hidden="true">|</span>
+		<button type="button" class="foot-link" (click)="showSupportHint()">
+			{{ 'AUTH.LOGIN.FOOTER_ABOUT' | translate }}
+		</button>
+		<span class="sep" aria-hidden="true">·</span>
+		<button type="button" class="foot-link" (click)="showSupportHint()">
+			{{ 'AUTH.LOGIN.FOOTER_PRIVACY' | translate }}
+		</button>
+		<span class="sep" aria-hidden="true">·</span>
+		<button type="button" class="foot-link" (click)="showSupportHint()">
+			{{ 'AUTH.LOGIN.FOOTER_TERMS' | translate }}
+		</button>
+		<span class="sep" aria-hidden="true">·</span>
+		<button type="button" class="foot-link" (click)="showSupportHint()">
+			{{ 'AUTH.LOGIN.TOP_HELP' | translate }}
+		</button>
+	</footer>
+</div>

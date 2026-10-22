@@ -1,0 +1,42 @@
+<div class="recording-config-step fade-in">
+<p class="jmeet-text--body-secondary wizard-step-description">{{ 'ROOMS.WIZARD.RECORDING_CONFIG.DESCRIPTION' | translate }}</p>
+
+	<form [formGroup]="recordingForm" class="jmeet-settings-form recording-form">
+		@if (isE2EEEnabled) {
+			<div class="e2ee-info-section fade-in">
+				<div class="warning-card">
+					<nz-icon nzType="warning" class="warning-icon" />
+					<div class="warning-content">
+						<p class="warning-title">{{ 'ROOMS.WIZARD.RECORDING_CONFIG.RESTRICTIONS' | translate }}</p>
+						<p class="warning-text">
+							{{ 'ROOMS.WIZARD.RECORDING_CONFIG.E2EE_WARNING_PREFIX' | translate }}<b>{{ 'ROOMS.WIZARD.RECORDING_CONFIG.E2EE_WARNING_BOLD' | translate }}</b>{{ 'ROOMS.WIZARD.RECORDING_CONFIG.E2EE_WARNING_SUFFIX' | translate }}
+						</p>
+					</div>
+				</div>
+			</div>
+		}
+
+		<div class="jmeet-settings-row">
+			<div>
+				<strong>{{ 'ROOMS.WIZARD.RECORDING_CONFIG.ALLOW_RECORDING_TITLE' | translate }}</strong>
+				<span>{{ 'ROOMS.WIZARD.RECORDING_CONFIG.ALLOW_RECORDING_DESC' | translate }}</span>
+			</div>
+			<nz-switch
+				[nzId]="'wizard-recording-enable-switch'"
+				[ngModel]="isRecordingEnabled"
+				[ngModelOptions]="{ standalone: true }"
+				(ngModelChange)="onRecordingToggleChange($event)"
+			/>
+		</div>
+
+		@if (isRecordingEnabled) {
+			<div class="jmeet-settings-row">
+				<div>
+					<strong>{{ 'ROOMS.WIZARD.RECORDING_CONFIG.ANONYMOUS_ACCESS_LABEL' | translate }}</strong>
+					<span>{{ 'ROOMS.WIZARD.RECORDING_CONFIG.ANONYMOUS_ACCESS_DESC' | translate }}</span>
+				</div>
+				<nz-switch [nzId]="'wizard-recording-anonymous-switch'" formControlName="anonymousRecordingEnabled" />
+			</div>
+		}
+	</form>
+</div>

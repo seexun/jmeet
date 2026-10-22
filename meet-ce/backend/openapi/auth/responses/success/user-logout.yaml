@@ -1,0 +1,9 @@
+description: Successfully logged out
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                    example: 'Logout successful'

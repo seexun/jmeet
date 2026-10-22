@@ -1,0 +1,28 @@
+:host {
+	display: block;
+}
+
+// 规格列表蓝图（批次2）：工具条与表格同面——搜索/筛选工具一行，
+// 底部 1px 分隔与下方表格相连；白面由外层列表卡供给，本件不设卡不设底色
+// （同 data-table 单表面纪律，行内布局细节仍由全局 .jmeet-filter-field 等供给）。
+.jmeet-filter-bar__tools {
+	display: flex;
+	flex: 1 1 auto;
+	min-width: 0;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: var(--jmeet-space-3, 12px);
+	padding-bottom: var(--jmeet-space-3);
+	border-bottom: 1px solid var(--jmeet-color-border-light);
+}
+
+// 移动端（480px 字面量 = 全局 ov-mobile-down 同一断点，即 _mixins-responsive.scss 的
+// $ov-meet-breakpoint-mobile；组件层不能 @use 全局 partial，故字面量复制并以本注释互链——
+// 改断点须两处同步）：纵向堆叠时的横向拉伸。
+// 全局层的 align-items:stretch 会被本组件 scoped 的 flex-end 架空——
+// 同断点冲突属性必须由组件层自行覆盖（修复轮1）。
+@media (max-width: 480px) {
+	.jmeet-filter-bar__tools {
+		align-items: stretch;
+	}
+}

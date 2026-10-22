@@ -1,0 +1,53 @@
+description: >
+    **Mixed results**. Some users were deleted successfully while others
+    could not be deleted (e.g., if they do not exist).
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                deleted:
+                    type: array
+                    items:
+                        type: string
+                    description: List of users that were deleted successfully.
+                failed:
+                    type: array
+                    description: List of users that could not be deleted along with the corresponding error messages.
+                    items:
+                        type: object
+                        properties:
+                            userId:
+                                type: string
+                                description: The unique identifier of the user that was not deleted.
+                                example: 'john_doe'
+                            error:
+                                type: string
+                                description: A message explaining why the deletion failed.
+                                example: 'User not found'
+        examples:
+            partial_deletion_with_errors:
+                summary: Some users were deleted successfully, others failed
+                value:
+                    message: '2 user(s) could not be deleted'
+                    deleted:
+                        - 'john_doe'
+                        - 'jane_doe'
+                    failed:
+                        - userId: 'alice_smith'
+                          error: 'User not found'
+                        - userId: 'bob_jones'
+                          error: 'User not found'
+
+            no_deletion_performed:
+                summary: No users were deleted
+                value:
+                    message: '2 user(s) could not be deleted'
+                    deleted: []
+                    failed:
+                        - userId: 'alice_smith'
+                          error: 'User not found'
+                        - userId: 'bob_jones'
+                          error: 'User not found'

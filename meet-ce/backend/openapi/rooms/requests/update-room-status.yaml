@@ -1,0 +1,17 @@
+description: New room status
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                status:
+                    type: string
+                    enum:
+                        - open
+                        - active_meeting
+                        - closed
+                    example: closed
+                    description: |
+                        The new status of the room. Options are:
+                        - open: The room will be open for new participants to join.
+                        - closed: The room will be closed to new participants.

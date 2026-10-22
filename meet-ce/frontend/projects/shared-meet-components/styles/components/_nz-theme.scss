@@ -1,0 +1,442 @@
+// ============================================================
+// NG-ZORRO 主题覆盖：nz 组件外观的全局唯一归属地。
+// Zorro 运行时 CSS-in-JS 注入硬编码默认色（旧版主色蓝系）且晚于
+// 静态样式加载，此处按组件把消费点映射到 jmeet 语义令牌，nz 组件随
+// 全局色板自动换肤。纪律：
+//   1. 本文件禁止任何裸 hex（契约锁定），色值一律 var(--jmeet-*)；
+//   2. EP 时代几何补丁（开关 40×20 / 复选框 14px 等）已退役，几何回归
+//      antd 原生，仅保留色彩钩子与行为必需的结构壳；
+//   3. 带 !important 的声明用于压过 CSS-in-JS 运行时注入的同名默认值；
+//   4. 升级 ng-zorro 前后运行 node scripts/check-nz-selectors.mjs。
+// ============================================================
+
+// ── 按钮/链接：主色实底、危险实底、默认钮细边框 ──
+.ant-btn-primary,
+.ant-btn-primary:not(:disabled):hover {
+	background: var(--jmeet-color-action-primary);
+	border-color: var(--jmeet-color-action-primary);
+	color: var(--jmeet-color-text-on-primary);
+}
+
+.ant-btn-primary:not(:disabled):active {
+	background: var(--jmeet-color-action-primary-dark);
+	border-color: var(--jmeet-color-action-primary-dark);
+}
+
+.ant-btn-default, .ant-btn:not(.ant-btn-primary, .ant-btn-dangerous) {
+	border-color: var(--jmeet-color-border);
+	color: var(--jmeet-color-text-primary);
+	border-radius: var(--jmeet-radius-sm);
+}
+
+.ant-btn {
+	border-radius: var(--jmeet-radius-md);
+}
+
+.ant-btn-dangerous, .ant-btn-dangerous:not(:disabled) {
+	background: var(--jmeet-color-action-danger);
+	border-color: var(--jmeet-color-action-danger);
+	color: var(--jmeet-color-text-on-primary);
+}
+
+// 禁用主按钮：主色 45% 混白实底 + 白字，与 jmeet-button 禁用态同语言
+// （两套按钮系统可能同屏，禁用观感必须一致）
+.ant-btn-primary:disabled, .ant-btn-primary.ant-btn-disabled {
+	background: color-mix(in srgb, var(--jmeet-color-action-primary) 45%, var(--jmeet-color-surface-card));
+	border-color: transparent;
+	color: var(--jmeet-color-text-on-primary);
+}
+
+// 按钮内 nz-spin 加载点语义上随文字色；"主色填充"组在其后加载，
+// 现网计算值即主色，此处保留语义钩子不改变现网结果
+.jmeet-button .ant-spin-dot-item {
+	background: currentcolor;
+}
+
+// ── 表格：白底 + 表头 40px / 行 40px 紧凑节奏（对齐列表蓝图行节奏）──
+.ant-table-wrapper .ant-table {
+	background: var(--jmeet-color-surface-card);
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-sm);
+}
+
+.ant-table-wrapper .ant-table-thead > tr > th {
+	padding: 8px 16px !important;
+	line-height: 20px !important;
+	background: transparent;
+	color: var(--jmeet-color-text-tertiary);
+	font-size: var(--jmeet-font-size-sm);
+	font-weight: var(--jmeet-font-weight-semibold);
+}
+
+.ant-table-wrapper .ant-table-thead > tr > td {
+	padding: 8px 16px !important;
+	line-height: 20px !important;
+}
+
+.ant-table-wrapper .ant-table-thead > tr > th::before {
+	display: none; // 去掉表头列间分隔竖线
+}
+
+.ant-table-wrapper .ant-table-tbody > tr > td {
+	padding: 8px 16px !important;
+	border-bottom: 1px solid var(--jmeet-color-border-light);
+}
+
+.ant-table-wrapper .ant-table-tbody > tr:last-child > td {
+	border-bottom: 0;
+}
+
+// ── 分页：贴面页码 + 翻页方块细边框（hover 主色见"主色描边/文字"组）──
+.ant-pagination.ant-table-pagination {
+	margin-bottom: 0;
+}
+
+.ant-pagination .ant-pagination-prev .ant-pagination-item-link,
+.ant-pagination .ant-pagination-next .ant-pagination-item-link {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid var(--jmeet-color-border);
+	border-radius: var(--jmeet-radius-sm);
+	color: var(--jmeet-color-text-secondary);
+}
+
+.ant-pagination .ant-pagination-prev .ant-pagination-item-link .anticon,
+.ant-pagination .ant-pagination-next .ant-pagination-item-link .anticon {
+	font-size: 12px;
+}
+
+.ant-pagination .ant-pagination-prev .ant-pagination-item-link svg,
+.ant-pagination .ant-pagination-next .ant-pagination-item-link svg {
+	width: 12px;
+	height: 12px;
+}
+
+// 0 为布局对齐基线值，无对应 token：水平分隔线归零默认 margin，
+// 页面需要间距时用自身类覆盖
+.ant-divider-horizontal {
+	margin: 0;
+}
+
+// ── 输入控件：细边框 + hover/focus 主色与焦点环（!important 压运行时注入）──
+// 焦点环显式收口（批次 5 承接项，批次 4 挂"巧合重合"）：--jmeet-focus-ring 改经
+// action-primary-rgb 语义别名取色（别名现值 = blue-600-rgb，行为逐字节不变），
+// "primary 8% 3px" 自此是声明而非巧合。已知边界：品牌换肤三变量组（brand-primary/light/dark）
+// 不含 -rgb 别名，换肤宿主焦点环保留默认蓝——原行为即如此，未收窄。
+// !important 保留：nz 运行时注入样式特异性不可控，去除属行为变更非收口。
+.ant-input, .ant-select-selector, .ant-picker {
+	border-color: var(--jmeet-color-border) !important;
+	border-radius: var(--jmeet-radius-sm) !important;
+}
+
+.ant-input:hover, .ant-select-selector:hover, .ant-picker:hover {
+	border-color: var(--jmeet-color-action-primary) !important;
+}
+
+.ant-input:focus, .ant-select-focused .ant-select-selector, .ant-picker-focused {
+	border-color: var(--jmeet-color-action-primary) !important;
+	box-shadow: var(--jmeet-focus-ring) !important;
+}
+
+.ant-input-number {
+	border-color: var(--jmeet-color-border);
+	border-radius: var(--jmeet-input-border-radius);
+}
+
+.ant-input-number-focused {
+	border-color: var(--jmeet-color-action-primary);
+	box-shadow: var(--jmeet-focus-ring);
+}
+
+// 复选框边框钩子（选中/hover 主色见"主色描边"组）；尺寸回归 antd 原生
+.ant-checkbox .ant-checkbox-inner {
+	border: 1px solid var(--jmeet-color-border);
+}
+
+// 复选框文字：antd 硬编码黑字（rgba(0,0,0,.85)）随主题文字档，勾选行与 EP 正文同色
+.ant-checkbox-wrapper {
+	color: var(--jmeet-color-text-primary);
+}
+
+// ── 徽标/标签/图标基准 ──
+.ant-tag {
+	border-radius: 999px;
+	font-size: var(--jmeet-font-size-xs);
+}
+
+.anticon {
+	font-size: var(--jmeet-icon-control-md);
+	line-height: 1;
+}
+
+// ── 弹窗：白面 10px 圆角浮层外壳 + scrim 遮罩（body 级 overlay 只能在此覆盖）──
+// 规格 §3.2 对话框：白面、10px 圆角（--jmeet-radius-dialog）、阴影（悬浮件白名单档）、
+// 头部+内容+右下操作区。壳形态在此单点供给：confirm/域对话框页/config/users/sip
+// 自绘弹框共用 .ant-modal-content；白面无描边，层次由浮层阴影承担。
+.ant-modal .ant-modal-content {
+	background: var(--jmeet-color-surface-card);
+
+	// 不改内边距：沿用 Zorro 自带 header/body/footer 节奏
+	border-radius: var(--jmeet-shape-radius-dialog);
+	box-shadow: var(--jmeet-shadow-surface-lg);
+}
+
+// 兜底：自绘弹框（.dialog-container，confirm/config/users 系弹窗共用）
+// 在 Zorro 默认内边距里再包一层会出大段空白，一律去内边距
+.ant-modal:has(.dialog-container) .ant-modal-body, .ant-modal:has(.dialog-container) .ant-modal-content {
+	padding: 0 !important;
+}
+
+// 自绘弹框内容贴壳：overflow 裁出壳圆角；白面无描边（原 1px 描边随平面化退役）
+.ant-modal:has(.dialog-container) .ant-modal-content {
+	overflow: hidden;
+}
+
+.ant-modal .ant-modal-header {
+	background: transparent;
+
+	// 头部底边 divider（规格 §3.2 分区语言；单边 divider 走 allow-border 行级豁免惯例）
+	border-bottom: 1px solid var(--jmeet-color-border-light); // design-system-allow-border: 头部底边 divider
+	border-radius: 0;
+}
+
+.ant-modal .ant-modal-title {
+	color: var(--jmeet-color-text-primary);
+	font-size: var(--jmeet-font-size-md);
+	font-weight: var(--jmeet-font-weight-semibold);
+}
+
+.ant-modal .ant-modal-close:hover {
+	color: var(--jmeet-color-text-primary);
+}
+
+// nz-footer 弹窗兜底：操作区右下（规格 §3.2）。当前 console 弹窗均自绘操作区
+// （nzFooter: null），右置由各承载件/域 partial 的 dialog-actions 承接；此条为
+// 未来 nzFooter 弹窗的形态锁。
+.ant-modal .ant-modal-footer {
+	text-align: right;
+}
+
+.ant-modal-mask {
+	background: var(--jmeet-color-scrim);
+}
+
+// ── 通知条（notification.service → nz-message）：顶部居中卡片式 ──
+.ant-message {
+	left: 0;
+	right: 0;
+	width: 100%;
+	text-align: center;
+}
+
+.ant-message-notice.custom-snackbar .ant-message-notice-content {
+	border: 1px solid var(--jmeet-color-border);
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-color-surface-card);
+	color: var(--jmeet-color-text-primary);
+	box-shadow: var(--jmeet-shadow-surface-md);
+}
+
+// ── 下拉菜单：紧凑菜单项（多为 <button nz-menu-item>，须占满整行可点）──
+.ant-dropdown .ant-dropdown-menu {
+	padding-block: var(--jmeet-space-1);
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-color-surface-card);
+	box-shadow: var(--jmeet-shadow-surface-md);
+	scrollbar-width: none;
+}
+
+.ant-dropdown .ant-dropdown-menu::-webkit-scrollbar {
+	display: none;
+}
+
+.ant-dropdown .ant-dropdown-menu-item {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	min-height: 30px;
+	padding: var(--jmeet-space-1) var(--jmeet-space-3);
+	margin-inline: var(--jmeet-space-1);
+	border: 0;
+	border-radius: var(--jmeet-radius-sm);
+	background: transparent;
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-secondary);
+	line-height: var(--jmeet-typography-line-height-normal);
+	text-align: left;
+}
+
+.ant-dropdown .ant-dropdown-menu-item:hover {
+	color: var(--jmeet-color-text-primary);
+	background: var(--jmeet-color-surface-hover);
+}
+
+// 禁用项置灰：暗色 wrapper 的菜单项 color 特异性更高，需 !important 压住
+.ant-dropdown .ant-dropdown-menu-item:disabled, .ant-dropdown .ant-dropdown-menu-item-disabled {
+	cursor: not-allowed !important;
+	color: var(--jmeet-color-text-tertiary) !important;
+}
+
+.ant-dropdown .ant-dropdown-menu-item:disabled:hover, .ant-dropdown .ant-dropdown-menu-item-disabled:hover {
+	background: transparent !important;
+	color: var(--jmeet-color-text-tertiary) !important;
+}
+
+.ant-dropdown .ant-dropdown-menu-item .anticon {
+	font-size: 14px;
+	margin-inline-end: var(--jmeet-space-2);
+	color: var(--jmeet-color-text-tertiary);
+}
+
+.ant-dropdown .ant-dropdown-menu-item-danger {
+	color: var(--jmeet-color-action-danger);
+}
+
+// danger:hover 必须位于 item:hover 之后（同特异性，后者不得盖掉危险项 hover 底）
+.ant-dropdown .ant-dropdown-menu-item-danger:hover {
+	background: var(--jmeet-color-action-danger-light);
+	color: var(--jmeet-color-action-danger);
+}
+
+.ant-dropdown .ant-dropdown-menu-item-divider {
+	background: var(--jmeet-color-border-light);
+}
+
+// 菜单分组标题行（meeting 工具栏自绘分组）：小号三级字，不可交互
+.ant-dropdown .ant-dropdown-menu .menu-group-label {
+	display: flex;
+	align-items: center;
+	margin-top: var(--jmeet-space-2);
+	padding: var(--jmeet-space-1) var(--jmeet-space-3);
+	list-style: none;
+	color: var(--jmeet-color-text-tertiary);
+	font-size: var(--jmeet-font-size-xs);
+	font-weight: var(--jmeet-font-weight-semibold);
+	letter-spacing: 0.02em;
+	cursor: default;
+	user-select: none;
+}
+
+.ant-dropdown .ant-dropdown-menu .menu-group-label:first-child {
+	margin-top: 0;
+}
+
+// ── 下拉选择面板（nz-select/nz-autocomplete）：紧凑行距 + 选中浅主色底 ──
+.ant-select-dropdown {
+	padding: var(--jmeet-space-1) 0;
+	border-radius: var(--jmeet-radius-md);
+	box-shadow: var(--jmeet-shadow-surface-md);
+}
+
+.ant-select-item {
+	border-radius: var(--jmeet-radius-sm);
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-secondary);
+}
+
+.ant-select-item-option {
+	min-height: 30px;
+	padding: var(--jmeet-space-1) var(--jmeet-space-3);
+}
+
+// active 项必须位于 selected 之前（同特异性，选中+悬浮时选中底胜出）
+.ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+	background: var(--jmeet-color-surface-hover);
+	color: var(--jmeet-color-text-primary);
+}
+
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+	background: var(--jmeet-color-action-primary-light);
+	color: var(--jmeet-color-action-primary-dark);
+	font-weight: var(--jmeet-font-weight-medium);
+}
+
+// 多选标签（权限/角色多选的已选 chip）：soft 主色底胶囊
+.ant-select-multiple .ant-select-selection-item {
+	background: var(--jmeet-color-action-primary-light);
+	border: 1px solid transparent;
+	border-radius: var(--jmeet-radius-sm);
+	color: var(--jmeet-color-action-primary-dark);
+}
+
+// 单选触发器文字与箭头间距：antd 18px 在窄容器贴箭头，统一 24px
+// （CSS-in-JS 后注入，必须 !important 才能压住）
+.ant-select-single.ant-select-show-arrow .ant-select-selection-item,
+.ant-select-single.ant-select-show-arrow .ant-select-selection-placeholder {
+	padding-inline-end: 24px !important;
+}
+
+// select 箭头回归容器字号（上方全局 .anticon 基准 24px 会溢出槽位）
+.ant-select-arrow .anticon {
+	font-size: inherit;
+}
+
+// ── 日期选择面板：面板壳 + 本月文字；hover/选中/今日见下方分组 ──
+.ant-picker-panel-container {
+	border-radius: var(--jmeet-radius-md);
+	box-shadow: var(--jmeet-shadow-surface-md);
+}
+
+.ant-picker-cell-in-view {
+	color: var(--jmeet-color-text-primary);
+}
+
+// ── 折叠面板：边框/标题对齐卡片语言 ──
+.ant-collapse {
+	background: var(--jmeet-color-surface-card);
+	border-color: var(--jmeet-color-border-light);
+}
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+	color: var(--jmeet-color-text-primary);
+	font-weight: var(--jmeet-font-weight-semibold);
+}
+
+// ── 滑杆手柄 / 分段控制器选中文字 / 工具提示圆角 ──
+.ant-slider .ant-slider-handle {
+	border: solid 2px var(--jmeet-color-action-primary);
+}
+
+.ant-segmented-item-selected, .ant-segmented-item:hover {
+	color: var(--jmeet-color-text-primary);
+}
+
+.ant-tooltip-inner {
+	border-radius: var(--jmeet-radius-sm);
+}
+
+// ── 主色填充：antd 硬编码主色的底色消费点统一映射（开关/复选框选中底/
+// 单选圆点/加载/徽标/进度/滑杆填充/日格选中；background 简写与原
+// background-color 计算等价，这些元素均无背景图）──
+.ant-switch-checked, .ant-checkbox-checked .ant-checkbox-inner, .ant-radio-inner::after,
+.ant-spin .ant-spin-dot-item, .ant-badge-count, .ant-progress-bg,
+.ant-slider .ant-slider-track, .ant-picker-cell-selected .ant-picker-cell-inner {
+	background: var(--jmeet-color-action-primary);
+}
+
+// ── 主色描边：复选/单选选中与 hover、今日格、翻页方块 hover ──
+.ant-checkbox-wrapper:hover .ant-checkbox-inner, .ant-checkbox-checked .ant-checkbox-inner,
+.ant-radio-checked .ant-radio-inner, .ant-radio-wrapper:hover .ant-radio,
+.ant-radio-wrapper:hover .ant-radio-inner,
+.ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before,
+.ant-pagination .ant-pagination-prev .ant-pagination-item-link:hover,
+.ant-pagination .ant-pagination-next .ant-pagination-item-link:hover {
+	border-color: var(--jmeet-color-action-primary);
+}
+
+// ── 主色文字：链接与翻页方块 hover ──
+a, .ant-pagination .ant-pagination-prev .ant-pagination-item-link:hover,
+.ant-pagination .ant-pagination-next .ant-pagination-item-link:hover {
+	color: var(--jmeet-color-action-primary);
+}
+
+// ── hover 面：滑杆轨道 / 日格悬浮 / 分段控制器轨道 ──
+.ant-slider .ant-slider-rail, .ant-picker-cell:hover .ant-picker-cell-inner, .ant-segmented {
+	background: var(--jmeet-color-surface-hover);
+}
+
+// ── 三级弱字：弹窗关闭钮 / 折叠箭头 / 进度文字 ──
+.ant-modal .ant-modal-close, .ant-collapse .ant-collapse-expand-icon .anticon, .ant-progress-text {
+	color: var(--jmeet-color-text-tertiary);
+}

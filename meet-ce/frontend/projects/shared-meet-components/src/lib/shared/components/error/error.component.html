@@ -1,0 +1,37 @@
+<div class="error-page">
+	<div class="error-container fade-in">
+		<div class="error-content">
+			<div class="error-icon-section">
+				<nz-icon nzType="close-circle" class="error-main-icon" />
+			</div>
+
+			<div class="error-details">
+				<h1 class="error-title">{{ errorTitleKey() | translate }}</h1>
+				@if (errorMessageKey()) {
+					<p class="error-message">{{ errorMessageKey() | translate }}</p>
+				}
+			</div>
+
+			<div class="error-actions">
+				@if (showBackButton()) {
+					<div class="fade-in-delayed-more">
+						<button type="button" class="jmeet-button jmeet-button--ghost" (click)="goBack()">
+							<nz-icon nzType="arrow-left" />
+							<span>{{ backButtonTextKey() | translate }}</span>
+						</button>
+					</div>
+				}
+			</div>
+		</div>
+
+		<div class="error-illustration">
+			<div class="illustration-container">
+				<nz-icon nzType="disconnect" class="illustration-icon" />
+				<div class="illustration-text">
+					<span class="illustration-title">{{ 'ERROR.OOPS' | translate }}</span>
+					<span class="illustration-subtitle">{{ 'ERROR.SOMETHING_WRONG' | translate }}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

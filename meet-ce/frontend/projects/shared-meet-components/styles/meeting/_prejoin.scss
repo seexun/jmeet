@@ -1,0 +1,1125 @@
+// 会前两页（会议访问 lobby / 设备检查 pre-join）全局视觉层——批次 3a 按 §5.3 破坏性重做。
+// 去卡片化：一律平面白面 + 圆角 8px，无描边无阴影（jmeet-card 从两页模板移除）。
+// 色全部 --jmeet-meeting-*；豁免口径同会中：视频表面上的叠层用黑系/白系 rgba（注明处）。
+// 几何意图参照巨石原版（b3dded9 styles/_meeting-controls.scss）但按 §5.3 重写而非复原。
+// WC：app.material.scss 经 :host 显式发射（body.meeting-ui 前缀在 shadow DOM 不可达），
+// 与 _tokens.scss 同款双模式。类名沿用既有 jmeet-prejoin-* / jmeet-lobby-*（§8 不重命名）。
+@mixin emit-prejoin-styles {
+	// ─── 页面骨架（两页共用）：舞台底 + 白底通栏顶栏 ───
+	.jmeet-prejoin-page {
+		display: flex;
+		box-sizing: border-box;
+		flex-direction: column;
+		gap: 24px;
+		min-height: 100%;
+		padding: 0 0 32px;
+		background: var(--jmeet-meeting-stage-bg);
+	}
+
+	// shell 只是包装层：display:contents 让顶栏与内容列直接成为 page 的 flex 子级，
+	// 顶栏才能"通栏"到页面全宽（模板里 header 在 shell 内，负 margin 会引入横向滚动）。
+	.jmeet-prejoin-shell {
+		display: contents;
+	}
+
+	.jmeet-prejoin-brand {
+		display: grid;
+		flex: 0 0 auto;
+		grid-template-columns: auto minmax(0, 1fr) auto;
+		align-items: center;
+		gap: 12px;
+		padding: 8px 16px;
+		border-bottom: 1px solid var(--jmeet-meeting-border);
+		background: var(--jmeet-meeting-surface);
+	}
+
+	.jmeet-prejoin-mark {
+		display: grid;
+		width: 36px;
+		height: 36px;
+		place-items: center;
+		border-radius: 8px;
+		background: var(--jmeet-meeting-primary-soft);
+		color: var(--jmeet-meeting-primary);
+
+		.anticon {
+			width: 20px;
+			height: 20px;
+			font-size: 20px; // icon/decoration sizing
+		}
+	}
+
+	.jmeet-prejoin-brand-copy {
+		min-width: 0;
+	}
+
+	// 单行 brand（顶栏收敛轮）：房间名主标题 + 安全世界徽标内联一行——原"eyebrow/标题/徽标"
+	// 三行堆叠把顶栏顶到 83px，超过会中 topbar（--jmeet-meeting-topbar-height: 48px）标准；
+	// 收敛后 8+36+8+1 = 53px。eyebrow（会议访问/设备检查）信息由页面内容自明，移除。
+	.jmeet-prejoin-brand-line {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		min-width: 0;
+	}
+
+	.jmeet-prejoin-title {
+		margin: 0;
+		overflow: hidden;
+		color: var(--jmeet-meeting-text-primary);
+		font-size: 15px;
+		font-weight: 600;
+		line-height: 1.3;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	// 安全徽标（prejoin 的独立行 / lobby 的 meta 行）
+	.jmeet-prejoin-secure,
+	.jmeet-prejoin-meta {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin: 0;
+		color: var(--jmeet-meeting-text-secondary);
+		font-size: 11px;
+
+		> span,
+		> .jmeet-prejoin-encryption {
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
+		}
+
+		.anticon {
+			width: 13px;
+			height: 13px;
+			font-size: 13px; // icon/decoration sizing
+			color: var(--jmeet-meeting-primary);
+		}
+	}
+
+	// E2EE 徽标：主色软底胶囊
+	.jmeet-prejoin-encryption {
+		padding: 1px 8px;
+		border-radius: 999px;
+		background: var(--jmeet-meeting-primary-soft);
+		color: var(--jmeet-meeting-primary);
+		font-size: 11px;
+
+		.anticon {
+			width: 12px;
+			height: 12px;
+			font-size: 12px; // icon/decoration sizing
+		}
+	}
+
+	.jmeet-prejoin-back {
+		justify-self: end;
+	}
+
+	// ─── 会议域按钮语义（页面内统一到腾讯蓝）：压过全局 EP 蓝变体 ───
+	.jmeet-prejoin-page .jmeet-button--primary {
+		background: var(--jmeet-meeting-primary);
+
+		&:hover:not(:disabled) {
+			background: var(--jmeet-meeting-primary-hover);
+		}
+
+		&:active:not(:disabled) {
+			background: var(--jmeet-meeting-primary-active);
+		}
+	}
+
+	.jmeet-prejoin-page .jmeet-button--outline {
+		border-color: var(--jmeet-meeting-border);
+		color: var(--jmeet-meeting-text-primary);
+
+		&:hover:not(:disabled) {
+			border-color: var(--jmeet-meeting-border);
+			background: var(--jmeet-meeting-stage-bg);
+		}
+	}
+
+	.jmeet-prejoin-page .jmeet-button--ghost {
+		color: var(--jmeet-meeting-text-secondary);
+
+		&:hover:not(:disabled) {
+			background: var(--jmeet-meeting-stage-bg);
+			color: var(--jmeet-meeting-text-primary);
+		}
+	}
+
+	.jmeet-prejoin-page .jmeet-button:focus-visible {
+		outline-color: var(--jmeet-meeting-primary);
+	}
+
+	// ─── 设备检查页：左预览（1fr）+ 右 aside（300px）双栏 ───
+	.jmeet-prejoin-content {
+		display: grid;
+		flex: 1;
+		grid-template-columns: minmax(0, 1fr) 300px;
+		gap: 16px;
+		align-items: stretch;
+		box-sizing: border-box;
+		width: min(100% - 32px, 1120px);
+		margin: 0 auto;
+	}
+
+	// 去卡片化平面白面（原 jmeet-card 描边卡）
+	.jmeet-prejoin-preview {
+		box-sizing: border-box;
+		min-width: 0;
+		padding: 20px;
+		border-radius: 8px;
+		background: var(--jmeet-meeting-surface);
+	}
+
+	.jmeet-prejoin-preview-heading {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		margin-bottom: 16px;
+
+		p {
+			margin: 0 0 2px;
+			color: var(--jmeet-meeting-text-tertiary);
+			font-size: 11px;
+		}
+
+		h2 {
+			margin: 0;
+			color: var(--jmeet-meeting-text-primary);
+			font-size: 15px;
+			font-weight: 600;
+		}
+	}
+
+	.jmeet-prejoin-ready {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		color: var(--jmeet-meeting-success);
+		font-size: 12px;
+
+		i {
+			width: 7px;
+			height: 7px;
+			border-radius: 50%;
+			background: var(--jmeet-meeting-success);
+		}
+	}
+
+	.jmeet-prejoin-video {
+		position: relative;
+		aspect-ratio: 16 / 9;
+		overflow: hidden;
+		border-radius: 8px;
+		background: var(--jmeet-meeting-tile-bg); // 无信号暗底
+
+		ov-video-element {
+			display: block;
+			width: 100%;
+			height: 100%;
+			isolation: isolate; // 压住视频内部 z 序，控件叠层在其上
+		}
+	}
+
+	// 视频表面黑系渐变豁免（同会中瓦片名字条口径）：底部 scrim 须为黑色系
+	.jmeet-prejoin-video-gradient {
+		position: absolute;
+		inset: auto 0 0;
+		height: 38%;
+		pointer-events: none;
+		background: linear-gradient(to top, rgb(0 0 0 / 60%), rgb(0 0 0 / 0%)); // design-system-allow-hardcoded: video bottom scrim — black-family exempt, same as stream tile
+	}
+
+	.jmeet-prejoin-video-controls {
+		position: absolute;
+		right: 0;
+		bottom: 16px;
+		left: 0;
+		z-index: 5;
+		display: flex;
+		align-items: flex-start;
+		justify-content: center;
+		gap: 12px;
+	}
+
+	.jmeet-prejoin-device {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		gap: 6px;
+		color: rgb(255 255 255 / 92%); // design-system-allow-hardcoded: overlay label on video — white-family exempt, same as stream tile
+		font-size: 11px;
+
+		&.off {
+			color: color-mix(in srgb, var(--jmeet-meeting-danger) 70%, var(--jmeet-meeting-surface));
+		}
+	}
+
+	// 设备选择器统一按钮（组件视图封装内，须 !important 压过其 scoped 规则——巨石同款处置）
+	.jmeet-prejoin-device .unified-device-button {
+		display: flex;
+		overflow: hidden;
+		height: 44px;
+		border: 1px solid rgb(255 255 255 / 60%); // design-system-allow-hardcoded: overlay control on video — white-family exempt
+		border-radius: 8px;
+		background: rgb(255 255 255 / 92%) !important; // design-system-allow-hardcoded: overlay control on video — white-family exempt
+		backdrop-filter: blur(8px);
+		box-shadow: 0 6px 16px rgb(15 23 42 / 18%); // design-system-allow-hardcoded: overlay control elevation on video
+
+		button {
+			height: 44px !important;
+			min-width: 44px !important;
+			border-radius: 0 !important;
+			background: transparent !important;
+			box-shadow: none !important;
+		}
+
+		.toggle-section .anticon {
+			color: var(--jmeet-meeting-primary) !important;
+		}
+
+		.toggle-section.device-disabled .anticon {
+			color: var(--jmeet-meeting-danger) !important;
+		}
+
+		.dropdown-section {
+			min-width: 34px !important;
+			width: 34px !important;
+			border-left: 1px solid rgb(15 23 42 / 10%); // design-system-allow-hardcoded: overlay control divider on video
+		}
+
+		.dropdown-section .anticon {
+			color: var(--jmeet-meeting-text-tertiary) !important;
+		}
+
+		.dropdown-section:hover .anticon {
+			color: var(--jmeet-meeting-text-primary) !important;
+		}
+	}
+
+	.jmeet-prejoin-background {
+		display: grid;
+		width: 44px;
+		height: 44px;
+		place-items: center;
+		padding: 0;
+		border: 1px solid rgb(255 255 255 / 60%); // design-system-allow-hardcoded: overlay control on video — white-family exempt
+		border-radius: 8px;
+		background: rgb(255 255 255 / 92%); // design-system-allow-hardcoded: overlay control on video — white-family exempt
+		backdrop-filter: blur(8px);
+		color: var(--jmeet-meeting-text-tertiary);
+		cursor: pointer;
+		box-shadow: 0 6px 16px rgb(15 23 42 / 18%); // design-system-allow-hardcoded: overlay control elevation on video
+
+		.anticon {
+			width: 18px;
+			height: 18px;
+			margin: 0;
+			font-size: 18px; // icon/decoration sizing
+		}
+
+		&:hover {
+			color: var(--jmeet-meeting-primary);
+		}
+
+		&:disabled {
+			opacity: 0.55;
+			cursor: not-allowed;
+		}
+	}
+
+	// 设备摘要行：42px 行节奏，图标 + 两行文字（small 标签 / strong 结论）
+	.jmeet-prejoin-device-summary {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 10px;
+		margin-top: 16px;
+
+		> div {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			min-height: 42px;
+			padding: 4px 12px;
+			border-radius: 8px;
+			background: var(--jmeet-meeting-stage-bg);
+		}
+
+		.anticon {
+			flex-shrink: 0;
+			color: var(--jmeet-meeting-primary);
+		}
+
+		span {
+			display: flex;
+			min-width: 0;
+			flex-direction: column;
+		}
+
+		small {
+			color: var(--jmeet-meeting-text-tertiary);
+			font-size: 11px;
+			line-height: 1.35;
+		}
+
+		strong {
+			color: var(--jmeet-meeting-text-primary);
+			font-size: 12px;
+			line-height: 1.35;
+		}
+
+		.warning .anticon {
+			color: var(--jmeet-meeting-danger);
+		}
+
+		.warning strong {
+			color: var(--jmeet-meeting-danger);
+		}
+	}
+
+	// 诊断区：网络行 + 两个检测按钮 + 结论行，同样 42px 行节奏
+	.jmeet-prejoin-diagnostic {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto auto;
+		gap: 8px;
+		margin-top: 10px;
+
+		> .jmeet-button {
+			min-height: 42px;
+			border-radius: 8px;
+		}
+	}
+
+	// 网络行 / 结论行共用解剖（good=success 软底，fair=中性灰，poor/offline=danger 软底）
+	.jmeet-prejoin-network {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		min-height: 42px;
+		padding: 4px 12px;
+		border-radius: 8px;
+		background: var(--jmeet-meeting-success-soft);
+		color: var(--jmeet-meeting-success);
+
+		> .anticon {
+			flex-shrink: 0;
+			width: 18px;
+			height: 18px;
+			font-size: 18px; // icon/decoration sizing
+		}
+
+		span {
+			display: flex;
+			min-width: 0;
+			flex-direction: column;
+		}
+
+		small {
+			color: var(--jmeet-meeting-text-tertiary);
+			font-size: 11px;
+			line-height: 1.35;
+		}
+
+		strong {
+			font-size: 12px;
+			line-height: 1.35;
+		}
+
+		&.warning {
+			background: var(--jmeet-meeting-stage-bg);
+			color: var(--jmeet-meeting-text-secondary);
+		}
+
+		&.error {
+			background: var(--jmeet-meeting-danger-soft);
+			color: var(--jmeet-meeting-danger);
+		}
+	}
+
+	// 右 aside 300px 白面：就绪标题 + 身份行 + 加入态 + 通栏主按钮 + 隐私提示
+	.jmeet-prejoin-join {
+		display: flex;
+		box-sizing: border-box;
+		flex-direction: column;
+		min-width: 0;
+		padding: 24px 20px 20px;
+		border-radius: 8px;
+		background: var(--jmeet-meeting-surface);
+	}
+
+	.jmeet-prejoin-join-heading {
+		display: flex;
+		flex: 0 0 auto;
+		gap: 12px;
+		padding-bottom: 16px;
+		border-bottom: 1px solid var(--jmeet-meeting-divider);
+
+		h2 {
+			margin: 0 0 2px;
+			color: var(--jmeet-meeting-text-primary);
+			font-size: 15px;
+			font-weight: 600;
+		}
+
+		p {
+			margin: 0;
+			color: var(--jmeet-meeting-text-secondary);
+			font-size: 12px;
+			line-height: 1.4;
+		}
+	}
+
+	.jmeet-prejoin-heading-icon {
+		display: grid;
+		width: 40px;
+		height: 40px;
+		flex: 0 0 auto;
+		place-items: center;
+		border-radius: 8px;
+		background: var(--jmeet-meeting-primary-soft);
+		color: var(--jmeet-meeting-primary);
+
+		.anticon {
+			width: 20px;
+			height: 20px;
+			font-size: 20px; // icon/decoration sizing
+		}
+	}
+
+	.jmeet-prejoin-identity {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin-top: 16px;
+		padding: 8px 12px;
+		border-radius: 8px;
+		background: var(--jmeet-meeting-stage-bg);
+
+		.jmeet-prejoin-avatar {
+			display: grid;
+			width: 36px;
+			height: 36px;
+			place-items: center;
+			border-radius: 50%;
+			background: var(--jmeet-meeting-primary-soft);
+			color: var(--jmeet-meeting-primary);
+			font-weight: 600;
+		}
+
+		> div:nth-child(2) {
+			display: flex;
+			min-width: 0;
+			flex: 1;
+			flex-direction: column;
+
+			small {
+				color: var(--jmeet-meeting-text-tertiary);
+				font-size: 11px;
+			}
+
+			strong {
+				overflow: hidden;
+				color: var(--jmeet-meeting-text-primary);
+				font-size: 13px;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+
+		> span {
+			display: inline-flex;
+			align-items: center;
+			gap: 3px;
+			flex-shrink: 0;
+			color: var(--jmeet-meeting-success);
+			font-size: 11px;
+
+			.anticon {
+				width: 14px;
+				height: 14px;
+				font-size: 14px; // icon/decoration sizing
+			}
+		}
+	}
+
+	// 加入态两行（摄像头/麦克风开闭）：flat 行 + divider 分隔，off=danger 同会中工具条口径
+	.jmeet-prejoin-status {
+		display: grid;
+		margin-top: 12px;
+		margin-bottom: 20px;
+
+		> div {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			min-height: 42px;
+			padding: 0 12px;
+			color: var(--jmeet-meeting-text-secondary);
+			font-size: 12px;
+		}
+
+		> div + div {
+			border-top: 1px solid var(--jmeet-meeting-divider);
+		}
+
+		.anticon {
+			width: 18px;
+			height: 18px;
+			font-size: 18px; // icon/decoration sizing
+			color: var(--jmeet-meeting-danger);
+
+			&.on {
+				color: var(--jmeet-meeting-success);
+			}
+		}
+	}
+
+	.jmeet-prejoin-error {
+		display: flex;
+		gap: 8px;
+		margin-top: 0;
+		margin-bottom: 16px;
+		padding: 10px 12px;
+		border-radius: 8px;
+		background: var(--jmeet-meeting-danger-soft);
+		color: var(--jmeet-meeting-danger);
+		font-size: 12px;
+
+		.anticon {
+			flex-shrink: 0;
+			width: 16px;
+			height: 16px;
+			font-size: 16px; // icon/decoration sizing
+		}
+	}
+
+	// 通栏「加入会议」主按钮：贴 aside 底（flex 剩余空间用 auto margin 吸收）
+	.jmeet-prejoin-submit {
+		width: 100%;
+		min-height: 44px;
+		margin-top: auto;
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	.jmeet-prejoin-privacy {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 5px;
+		margin: 10px 0 0;
+		color: var(--jmeet-meeting-text-tertiary);
+		font-size: 11px;
+		text-align: center;
+
+		.anticon {
+			width: 13px;
+			height: 13px;
+			font-size: 13px; // icon/decoration sizing
+		}
+	}
+
+	.jmeet-prejoin-loading {
+		display: grid;
+		flex: 1;
+		place-items: center;
+	}
+
+	.jmeet-prejoin-loading-content {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		gap: 12px;
+		color: var(--jmeet-meeting-text-secondary);
+		font-size: 13px;
+	}
+
+	// nz-spin dot 以 font-size 缩放（antd 显式设 dot font-size，宿主级继承不可达）
+	.jmeet-prejoin-loading-spinner .ant-spin-dot {
+		font-size: 36px; // icon/decoration sizing
+	}
+
+	// ─── 会议访问页：居中列 560 ───
+	// L1（lobby 修复轮）：block 向 auto margin 在页面 flex 列中吸收上下自由空间——卡片在
+	// 顶栏之下垂直居中（display:contents 的 shell 不产生盒子，卡片本身就是 page 的 flex 子级，
+	// auto margin 必然生效）。录制卡在场时贴页底（自由空间全部被卡片的两端 auto margin 吸收）。
+	.jmeet-lobby-card {
+		box-sizing: border-box;
+		width: min(100% - 32px, 560px);
+		margin-block: auto;
+		margin-inline: auto;
+		padding: 24px 28px;
+		border-radius: 8px;
+		background: var(--jmeet-meeting-surface);
+	}
+
+	// 状态头（图标 + 标题 + 副标题），下缘 divider 分段
+	.jmeet-lobby-heading {
+		display: flex;
+		gap: 14px;
+		padding-bottom: 18px;
+		border-bottom: 1px solid var(--jmeet-meeting-divider);
+
+		.jmeet-text--section-title {
+			font-size: 16px;
+			line-height: 1.3;
+		}
+
+		p {
+			margin: 4px 0 0;
+		}
+	}
+
+	.jmeet-lobby-heading-icon {
+		display: grid;
+		width: 42px;
+		height: 42px;
+		flex: 0 0 auto;
+		place-items: center;
+		border-radius: 8px;
+		background: var(--jmeet-meeting-primary-soft);
+		color: var(--jmeet-meeting-primary);
+
+		.anticon {
+			width: 22px;
+			height: 22px;
+			font-size: 22px; // icon/decoration sizing
+		}
+	}
+
+	.jmeet-lobby-form {
+		display: flex;
+		flex-direction: column;
+		padding-top: 18px;
+	}
+
+	.jmeet-lobby-label {
+		margin: 0 0 7px;
+		color: var(--jmeet-meeting-text-primary);
+		font-size: 13px;
+		font-weight: 500;
+	}
+
+	.jmeet-lobby-field {
+		width: 100%;
+	}
+
+	// 姓名 / E2EE 密钥输入框（修复轮补录：原组件 scss 的 .jmeet-lobby-input* 四段在
+	// 批次 3a 收缩时漏收，曾整体丢失退化为浏览器原生样式）。色全部会议域令牌：
+	// 边框/聚焦边/焦点环（primary 8% color-mix，原式样）/错误红边/文字/白底。
+	// 高度取 42px 与两页行节奏对齐（原 32px 对齐的是会中控件高度，此处刻意上调）。
+	.jmeet-lobby-input {
+		position: relative;
+		display: flex;
+		align-items: center;
+		width: 100%;
+
+		input {
+			flex: 1;
+			box-sizing: border-box;
+			width: 100%;
+			min-height: 42px;
+			padding: 0 40px 0 12px;
+			border: 1px solid var(--jmeet-meeting-border);
+			border-radius: 8px;
+			background: var(--jmeet-meeting-surface);
+			color: var(--jmeet-meeting-text-primary);
+			font: inherit;
+			font-size: 13px;
+			transition: border-color 160ms ease, box-shadow 160ms ease;
+
+			&::placeholder {
+				color: var(--jmeet-meeting-text-tertiary);
+			}
+
+			&:focus {
+				outline: none;
+				border-color: var(--jmeet-meeting-primary);
+				box-shadow: 0 0 0 3px color-mix(in srgb, var(--jmeet-meeting-primary) 8%, transparent);
+			}
+		}
+
+		&.has-error input {
+			border-color: var(--jmeet-meeting-danger);
+		}
+	}
+
+	.jmeet-lobby-input-suffix {
+		position: absolute;
+		right: 12px;
+		color: var(--jmeet-meeting-text-tertiary);
+		pointer-events: none;
+	}
+
+	.jmeet-lobby-input-error {
+		margin: 6px 0 0;
+		color: var(--jmeet-meeting-danger);
+		font-size: 11px;
+	}
+
+	.jmeet-lobby-input-hint {
+		margin: 6px 0 0;
+		color: var(--jmeet-meeting-text-tertiary);
+		font-size: 11px;
+	}
+
+	// 身份块（头像 + 两行文字 + 已验证徽标）：舞台底平面行
+	.jmeet-lobby-identity {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		min-height: 56px;
+		padding: 8px 12px;
+		border-radius: 8px;
+		background: var(--jmeet-meeting-stage-bg);
+	}
+
+	.jmeet-lobby-avatar {
+		display: grid;
+		width: 38px;
+		height: 38px;
+		flex: 0 0 auto;
+		place-items: center;
+		border-radius: 50%;
+		background: var(--jmeet-meeting-primary-soft);
+		color: var(--jmeet-meeting-primary);
+		font-weight: 600;
+	}
+
+	.jmeet-lobby-identity-info {
+		display: flex;
+		min-width: 0;
+		flex: 1;
+		flex-direction: column;
+		gap: 2px;
+
+		strong {
+			overflow: hidden;
+			color: var(--jmeet-meeting-text-primary);
+			font-size: 13px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+
+	.jmeet-lobby-verified {
+		display: inline-flex;
+		flex-shrink: 0;
+		align-items: center;
+		gap: 4px;
+		color: var(--jmeet-meeting-success);
+		font-size: 11px;
+
+		.anticon {
+			width: 14px;
+			height: 14px;
+			font-size: 14px; // icon/decoration sizing
+		}
+	}
+
+	// 通栏提交主按钮
+	.jmeet-lobby-submit {
+		width: 100%;
+		min-height: 44px;
+		margin-top: 20px;
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	.jmeet-lobby-hint {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 5px;
+		margin: 10px 0 0;
+		color: var(--jmeet-meeting-text-tertiary);
+		font-size: 11px;
+
+		.anticon {
+			width: 13px;
+			height: 13px;
+			font-size: 13px; // icon/decoration sizing
+		}
+	}
+
+	.jmeet-lobby-error {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		margin: 14px 0 0;
+		padding: 10px 12px;
+		border-radius: 8px;
+		background: var(--jmeet-meeting-danger-soft);
+		color: var(--jmeet-meeting-danger);
+		font-size: 12px;
+
+		.anticon {
+			flex-shrink: 0;
+			width: 16px;
+			height: 16px;
+			font-size: 16px; // icon/decoration sizing
+		}
+	}
+
+	// 房间关闭 / 无权限：居中状态块（无卡片描边）
+	.jmeet-lobby-closed {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		gap: 12px;
+		padding: 32px 8px 16px;
+		text-align: center;
+		color: var(--jmeet-meeting-text-secondary);
+
+		> .anticon {
+			width: 34px;
+			height: 34px;
+			font-size: 34px; // icon/decoration sizing
+			color: var(--jmeet-meeting-danger);
+		}
+
+		p {
+			margin: 0;
+			font-size: 13px;
+			line-height: 1.5;
+		}
+	}
+
+	// 等待主持人：居中状态块 + 三点呼吸
+	.jmeet-lobby-waiting {
+		display: flex;
+		min-height: 240px;
+		align-items: center;
+		flex-direction: column;
+		justify-content: center;
+		padding: 32px 12px;
+		text-align: center;
+
+		h3 {
+			margin: 0 0 8px;
+			color: var(--jmeet-meeting-text-primary);
+			font-size: 16px;
+			font-weight: 600;
+		}
+
+		p {
+			margin: 0;
+			color: var(--jmeet-meeting-text-secondary);
+			font-size: 13px;
+		}
+	}
+
+	.jmeet-lobby-waiting-icon {
+		display: grid;
+		width: 52px;
+		height: 52px;
+		margin-bottom: 16px;
+		place-items: center;
+		border-radius: 12px;
+		background: var(--jmeet-meeting-primary-soft);
+		color: var(--jmeet-meeting-primary);
+
+		.anticon {
+			width: 26px;
+			height: 26px;
+			font-size: 26px; // icon/decoration sizing
+		}
+	}
+
+	.jmeet-lobby-waiting-pulse {
+		display: flex;
+		gap: 6px;
+		margin-top: 20px;
+
+		span {
+			width: 6px;
+			height: 6px;
+			border-radius: 50%;
+			background: var(--jmeet-meeting-primary);
+			animation: jmeet-prejoin-breathe 1.2s ease-in-out infinite;
+		}
+
+		span:nth-child(2) {
+			animation-delay: 0.15s;
+		}
+
+		span:nth-child(3) {
+			animation-delay: 0.3s;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.jmeet-lobby-waiting-pulse span {
+			animation: none;
+		}
+	}
+
+	// 邀请行（lobby 修复轮 F1+L2）：原"左装饰标签（不可点）+ 右 ghost 钮"双动作结构合并为
+	// 整行单一动作——"邀请其他成员"即复制邀请链接（邀请访客的方式），原生 button 键盘可达，
+	// 行内两端文案保留（lead=动作语义 / action=动作方式），空间不再散开（一个命中目标）。
+	.jmeet-lobby-invite {
+		margin-top: 20px;
+		padding-top: 16px;
+		border-top: 1px solid var(--jmeet-meeting-divider);
+	}
+
+	.jmeet-lobby-invite-trigger {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		box-sizing: border-box;
+		width: 100%;
+		min-height: 42px;
+		padding: 8px 12px;
+		border: none;
+		border-radius: 8px;
+		background: transparent;
+		color: var(--jmeet-meeting-text-secondary);
+		font: inherit;
+		font-size: 12px;
+		cursor: pointer;
+		transition: background-color 160ms ease, color 160ms ease;
+
+		&:hover {
+			background: var(--jmeet-meeting-stage-bg);
+			color: var(--jmeet-meeting-text-primary);
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--jmeet-meeting-primary);
+			outline-offset: 2px;
+		}
+
+		.jmeet-lobby-invite-lead,
+		.jmeet-lobby-invite-action {
+			display: flex;
+			align-items: center;
+			gap: 7px;
+		}
+
+		.anticon {
+			width: 16px;
+			height: 16px;
+			font-size: 16px; // icon/decoration sizing
+			color: var(--jmeet-meeting-primary);
+		}
+	}
+
+	.jmeet-lobby-recordings {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 20px;
+		box-sizing: border-box;
+		width: min(100% - 32px, 560px);
+		margin: 0 auto;
+		padding: 14px 20px;
+		border-radius: 8px;
+		background: var(--jmeet-meeting-surface);
+
+		> div {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			min-width: 0;
+
+			> .anticon {
+				flex-shrink: 0;
+				color: var(--jmeet-meeting-primary);
+			}
+		}
+
+		span {
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+			color: var(--jmeet-meeting-text-tertiary);
+			font-size: 11px;
+		}
+
+		strong {
+			color: var(--jmeet-meeting-text-primary);
+			font-size: 13px;
+		}
+
+		> .jmeet-button {
+			flex-shrink: 0;
+		}
+	}
+
+	// ─── 响应式：container 名（prejoin / lobby）由两页组件 :host 声明 ───
+
+	// 设备检查双栏 → 单列（≤880px，规格指定）
+	@container prejoin (width <= 880px) {
+		.jmeet-prejoin-content {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	@container prejoin (width <= 600px) {
+		.jmeet-prejoin-device > span {
+			display: none;
+		}
+
+		.jmeet-prejoin-device-summary {
+			grid-template-columns: minmax(0, 1fr);
+		}
+
+		.jmeet-prejoin-diagnostic {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	@container lobby (width <= 600px) {
+		.jmeet-lobby-card {
+			padding: 20px 18px;
+		}
+
+		.jmeet-lobby-recordings {
+			align-items: stretch;
+			flex-direction: column;
+
+			> .jmeet-button {
+				justify-content: center;
+			}
+		}
+	}
+
+	// 共用顶栏收窄（两页 container 名不同，媒体查询一次覆盖；顶栏贴视口全宽）
+	@media (width <= 600px) {
+		.jmeet-prejoin-brand {
+			padding: 6px 12px;
+		}
+
+		.jmeet-prejoin-mark {
+			width: 32px;
+			height: 32px;
+		}
+	}
+
+	// 呼吸关键帧：随 mixin 发射进 body.meeting-ui / :host（浏览器对嵌套 @keyframes 提升到顶层）
+	@keyframes jmeet-prejoin-breathe {
+		0%,
+		100% {
+			opacity: 0.25;
+			transform: scale(0.85);
+		}
+
+		50% {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+}
+
+// SPA 发射点：styles.scss 经 _index load-css 时在此把会前两页样式发射到 body.meeting-ui。
+// webcomponent 侧由 app.material.scss 的 :host 显式发射，不依赖这里。
+body.meeting-ui {
+	@include emit-prejoin-styles;
+}

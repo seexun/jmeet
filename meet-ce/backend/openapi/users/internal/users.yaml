@@ -1,0 +1,38 @@
+/users/me:
+    get:
+        operationId: getMe
+        summary: Get authenticated user
+        description: >
+            Retrieves the details of the authenticated user.
+        tags:
+            - Internal API - Users
+        security:
+            - accessTokenHeader: []
+        responses:
+            '200':
+                $ref: './responses/success/get-me.yaml'
+            '401':
+                $ref: '../../shared/responses/errors/unauthorized.yaml'
+/users/change-password:
+    post:
+        operationId: changeUserPassword
+        summary: Change user password
+        description: >
+            Allows the authenticated user to change their password.
+        tags:
+            - Internal API - Users
+        security:
+            - accessTokenHeader: []
+        requestBody:
+            $ref: './requests/change-password.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/change-password.yaml'
+            '400':
+                $ref: './responses/errors/invalid-password.yaml'
+            '401':
+                $ref: '../../shared/responses/errors/unauthorized.yaml'
+            '422':
+                $ref: '../../shared/responses/errors/validation.yaml'
+            '500':
+                $ref: '../../shared/responses/errors/internal-server.yaml'

@@ -1,0 +1,49 @@
+<div class="room-member-dialog-page">
+	<h2 class="dialog-title">
+		<nz-icon [nzType]="(isEditMode() ? 'edit' : 'person_add') | nzIconType" class="dialog-icon" />
+		<span class="title-copy">
+			<span class="title-text">
+				{{
+					isEditMode()
+						? ('ROOM_MEMBERS.ADD.TITLE_EDIT' | translate)
+						: ('ROOM_MEMBERS.ADD.TITLE_ADD' | translate)
+				}}
+			</span>
+			<span class="title-subtitle jmeet-text--caption">
+				{{
+					isEditMode()
+						? ('ROOM_MEMBERS.ADD.SUBTITLE_EDIT' | translate)
+						: ('ROOM_MEMBERS.ADD.SUBTITLE_ADD' | translate)
+				}}
+			</span>
+		</span>
+	</h2>
+
+	<div class="dialog-content">
+		@if (isLoading()) {
+			<jmeet-loading-skeleton variant="card" [rows]="5" />
+		} @else if (loadFailed()) {
+			<p class="dialog-error jmeet-text--body-secondary">{{ 'ROOM_MEMBERS.ERRORS.ROOM_DATA_LOAD_FAILED' | translate }}</p>
+		} @else if (roomRoles()) {
+			<ov-member-form
+				[roomRoles]="roomRoles()!"
+				[roomOwner]="roomOwner()"
+				[initialData]="memberInitData()"
+				[lockIdentity]="isEditMode()"
+				[isSaving]="isSaving()"
+				(memberSubmitted)="onMemberSubmitted($event)"
+				(memberTypeChanged)="onMemberTypeChanged($event)"
+				(cancelled)="onCancelled()"
+			/>
+		}
+	</div>
+
+	@if (loadFailed()) {
+		<div class="jmeet-form-actions dialog-actions">
+			<button type="button" class="jmeet-button jmeet-button--outline" (click)="onClose()">
+				<nz-icon nzType="close" />
+				{{ 'ROOM_MEMBERS.COMMON.CANCEL' | translate }}
+			</button>
+		</div>
+	}
+</div>

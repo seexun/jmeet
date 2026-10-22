@@ -1,0 +1,49 @@
+:host {
+	.connection-quality-badge {
+		position: absolute;
+		bottom: 8px;
+		right: 8px;
+		z-index: var(--jmeet-z-tile-hud);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: transparent; // EP ov-secondary-action 色钩子退役：令牌库内零定义（渲染本即透明），保持现渲染
+		border-radius: 0; // EP ov-video-radius 圆角钩子退役：同上（渲染本即直角）
+		width: 28px;
+		height: 28px;
+
+		.anticon {
+			font-size: 18px;
+			width: 18px;
+			height: 18px;
+		}
+
+		&.quality-excellent .anticon,
+		&.quality-good .anticon {
+			color: var(--jmeet-meeting-success);
+		}
+
+		&.quality-poor .anticon {
+			color: var(--jmeet-meeting-warning);
+		}
+
+		&.quality-lost .anticon {
+			color: var(--jmeet-meeting-danger);
+		}
+
+		&.transparent {
+			position: static;
+			background-color: transparent;
+			backdrop-filter: none;
+			border-radius: 50%;
+			width: 24px;
+			height: 24px;
+
+			.anticon {
+				font-size: 16px;
+				width: 16px;
+				height: 16px;
+			}
+		}
+	}
+}

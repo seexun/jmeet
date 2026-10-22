@@ -1,0 +1,136 @@
+<jmeet-page-header>
+	<span page-title>{{ 'OVERVIEW.WORKSPACE_TITLE' | translate }}</span>
+	<div page-actions>
+		<jmeet-status-tag
+			[label]="
+				healthLoading()
+					? ('OVERVIEW.SERVICE_CHECKING' | translate)
+					: ((systemHealth()?.status === 'operational' ? 'OVERVIEW.SERVICE_NORMAL' : 'OVERVIEW.SERVICE_DEGRADED') | translate)
+			"
+			[variant]="healthLoading() ? 'processing' : systemHealth()?.status === 'operational' ? 'success' : 'error'"
+		/>
+		<button
+			type="button"
+			class="jmeet-button jmeet-button--outline jmeet-button--icon"
+			(click)="loadSystemHealth()"
+			[disabled]="healthLoading()"
+			[attr.aria-label]="'OVERVIEW.REFRESH_SERVICE_STATUS' | translate"
+			>
+			<nz-icon nzType="reload" />
+		</button>
+		<button type="button" class="jmeet-button jmeet-button--primary" (click)="navigateTo('rooms/new')">
+			<nz-icon nzType="plus" />
+			{{ 'OVERVIEW.START_MEETING' | translate }}
+		</button>
+	</div>
+</jmeet-page-header>
+
+@if (!healthLoading() && systemHealth()?.status === 'degraded') {
+	<section class="jmeet-card jmeet-card--warning" role="status" aria-live="polite">
+		<strong>{{ 'OVERVIEW.HEALTH_ALERT_TITLE' | translate }}</strong>
+		<p class="jmeet-text--body-secondary">{{ 'OVERVIEW.HEALTH_ALERT_DESC' | translate }}</p>
+	</section>
+}
+
+@if (isLoading()) {
+	<jmeet-loading-skeleton variant="stat" [rows]="3" />
+} @else {
+	<div class="jmeet-stat-grid">
+		<jmeet-stat-card [label]="'OVERVIEW.STAT_ROOMS' | translate" [value]="stats().totalRooms" icon="meeting_room" />
+		<jmeet-stat-card [label]="'OVERVIEW.STAT_LIVE' | translate" [value]="stats().activeRooms" icon="sensors" />
+		<jmeet-stat-card [label]="'OVERVIEW.STAT_RECORDINGS' | translate" [value]="stats().completeRecordings" icon="video_library" />
+	</div>
+}
+
+<section class="jmeet-quick-actions" [attr.aria-label]="'OVERVIEW.QUICK_ACTIONS' | translate">
+	<button type="button" class="jmeet-quick-action" (click)="navigateTo('rooms/new')">
+		<span class="jmeet-quick-action__icon"><nz-icon nzType="video-camera" /></span>
+		<span class="jmeet-quick-action__copy">
+			<strong>{{ 'OVERVIEW.START_MEETING' | translate }}</strong>
+			<small>{{ 'OVERVIEW.START_MEETING_DESC' | translate }}</small>
+		</span>
+	</button>
+
+	<div class="jmeet-quick-action join-meeting-action">
+		<span class="jmeet-quick-action__icon"><nz-icon nzType="pushpin" /></span>
+		<span class="jmeet-quick-action__copy">
+			<strong>{{ 'OVERVIEW.JOIN_MEETING' | translate }}</strong>
+			<label class="jmeet-text--body-secondary" for="meeting-code">{{ 'OVERVIEW.MEETING_CODE_LABEL' | translate }}</label>
+			<div class="join-control">
+				<input
+					id="meeting-code"
+					type="text"
+					[value]="meetingCode()"
+					(input)="meetingCode.set($any($event.target).value)"
+					(keydown.enter)="joinMeeting()"
+					[placeholder]="'OVERVIEW.MEETING_CODE_PLACEHOLDER' | translate"
+					autocomplete="off"
+				/>
+				<button
+					type="button"
+					class="jmeet-button jmeet-button--primary jmeet-button--icon"
+					(click)="joinMeeting()"
+					[disabled]="!meetingCode().trim()"
+					[attr.aria-label]="'OVERVIEW.JOIN_MEETING' | translate"
+					>
+					<nz-icon nzType="arrow-right" />
+				</button>
+			</div>
+		</span>
+	</div>
+
+	<button type="button" class="jmeet-quick-action" (click)="navigateTo('rooms/new')">
+		<span class="jmeet-quick-action__icon"><nz-icon nzType="calendar" /></span>
+		<span class="jmeet-quick-action__copy">
+			<strong>{{ 'OVERVIEW.SCHEDULE_MEETING' | translate }}</strong>
+			<small>{{ 'OVERVIEW.SCHEDULE_MEETING_DESC' | translate }}</small>
+		</span>
+	</button>
+
+	<button type="button" class="jmeet-quick-action" (click)="navigateTo('recordings')">
+		<span class="jmeet-quick-action__icon"><nz-icon nzType="play-square" /></span>
+		<span class="jmeet-quick-action__copy">
+			<strong>{{ 'OVERVIEW.MANAGE_RECORDINGS' | translate }}</strong>
+			<small>{{ 'OVERVIEW.MEETING_OVERVIEW_DESC' | translate }}</small>
+		</span>
+	</button>
+</section>
+
+<section class="jmeet-card" aria-labelledby="schedule-title">
+	<div class="jmeet-page-header">
+		<div class="jmeet-page-header__main">
+			<h2 id="schedule-title" class="jmeet-text--section-title">{{ 'OVERVIEW.TODAY_SCHEDULE' | translate }}</h2>
+			<p class="jmeet-text--body-secondary">{{ todayLabel() }}</p>
+		</div>
+		<div class="jmeet-page-header__actions">
+			<button type="button" class="jmeet-button jmeet-button--ghost" (click)="navigateTo('rooms')">
+				{{ 'OVERVIEW.ALL_MEETINGS' | translate }}
+				<nz-icon nzType="right" />
+			</button>
+		</div>
+	</div>
+
+	@if (isLoading()) {
+		<jmeet-loading-skeleton variant="list" [rows]="3" />
+	} @else if (stats().activeRooms > 0) {
+		<div class="schedule-active">
+			<jmeet-status-tag [label]="'OVERVIEW.IN_PROGRESS' | translate" variant="processing" />
+			<div>
+				<h3 class="jmeet-text--section-title">{{ 'OVERVIEW.ACTIVE_MEETING_TITLE' | translate }}</h3>
+				<p class="jmeet-text--body-secondary">
+					{{ stats().activeRooms }} {{ 'OVERVIEW.ACTIVE_MEETING_UNIT' | translate }} · {{ 'OVERVIEW.ACTIVE_MEETING_DESC' | translate }}
+				</p>
+			</div>
+			<button type="button" class="jmeet-button jmeet-button--primary" (click)="navigateTo('rooms')">
+				{{ 'OVERVIEW.ENTER_MEETING' | translate }}
+			</button>
+		</div>
+	} @else {
+		<jmeet-empty-state
+			[title]="'OVERVIEW.NO_MEETINGS_TODAY' | translate"
+			[description]="'OVERVIEW.NO_MEETINGS_DESC' | translate"
+			[actionLabel]="'OVERVIEW.SCHEDULE_MEETING' | translate"
+			(action)="navigateTo('rooms/new')"
+		/>
+	}
+</section>

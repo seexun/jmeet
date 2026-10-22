@@ -1,0 +1,47 @@
+:host {
+	display: block;
+}
+
+// Icon container per standard §23: framed, light brand background.
+.jmeet-empty-state__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	border-radius: var(--jmeet-radius-lg);
+	background: var(--jmeet-color-action-primary-light);
+	color: var(--jmeet-color-action-primary);
+
+	.anticon {
+		width: 20px;
+		height: 20px;
+		font-size: var(--jmeet-font-size-xl);
+	}
+}
+
+// Compact variant for inline panel-level empties (session pickers, sub-sections).
+.jmeet-empty-state--compact {
+	padding: var(--jmeet-space-4) var(--jmeet-space-2);
+	gap: var(--jmeet-space-2);
+
+	.jmeet-empty-state__icon {
+		width: 28px;
+		height: 28px;
+		border-radius: var(--jmeet-radius-md);
+		background: transparent;
+		color: var(--jmeet-color-text-secondary);
+
+		.anticon {
+			width: 18px;
+			height: 18px;
+			font-size: var(--jmeet-font-size-lg);
+		}
+	}
+
+	.jmeet-empty-state__title {
+		color: var(--jmeet-color-text-secondary);
+		font-size: var(--jmeet-font-size-sm);
+		font-weight: var(--jmeet-font-weight-regular);
+	}
+}

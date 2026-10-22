@@ -1,0 +1,81 @@
+// Import Sass meta helpers so we can inline shared CSS partials from one place.
+@use 'sass:meta';
+// Import the shared runtime theme mixin consumed by both SPA and webcomponent.
+@use '_runtime-theme.scss';
+@import 'ng-zorro-antd/ng-zorro-antd.min.css';
+
+// Inline shared animation utilities in the main app stylesheet.
+@include meta.load-css('_animations.scss');
+// Inline shared utility classes in the main app stylesheet.
+@include meta.load-css('_utilities.scss');
+// Apply the shared runtime theme to the document root and its dark-mode variant.
+@include runtime-theme.emit-runtime-theme('html');
+// Load the public component contract in dependency order.
+@include meta.load-css('../projects/shared-meet-components/styles/_components-typography.scss');
+@include meta.load-css('../projects/shared-meet-components/styles/_components-cards.scss');
+@include meta.load-css('../projects/shared-meet-components/styles/_components-forms.scss');
+@include meta.load-css('../projects/shared-meet-components/styles/_components-buttons.scss');
+@include meta.load-css('../projects/shared-meet-components/styles/layout/_shell.scss');
+@include meta.load-css('../projects/shared-meet-components/styles/layout/_page.scss');
+@include meta.load-css('../projects/shared-meet-components/styles/components/_tags.scss');
+@include meta.load-css('../projects/shared-meet-components/styles/components/_tables.scss');
+// 控制台蓝图模式层（批次 3）：跨页通用骨架模式（设置单面：锚点导航+吸底保存条等），
+// 页面私有样式不得重复定义这些能力；任务 3 re-home 的通用能力归宿 partial。
+@include meta.load-css('../projects/shared-meet-components/styles/components/_console-patterns.scss');
+// 管理端域样式层（批次 3 任务 3）：原 _settings-*.scss 切片巨石（8108 行）+ _display-patterns
+// 已按消费域 re-home 拆分为下列 partial 后物理删除；此处顺序即原切片级联顺序的等价重排
+// （同名类跨文件冲突已逐一推演，见 task-3 报告 §二）。
+@include meta.load-css('../projects/shared-meet-components/styles/components/_console-page-patterns.scss');
+@include meta.load-css('../projects/shared-meet-components/styles/components/_users-patterns.scss');
+@include meta.load-css('../projects/shared-meet-components/styles/components/_rooms-patterns.scss');
+@include meta.load-css('../projects/shared-meet-components/styles/components/_room-members-patterns.scss');
+@include meta.load-css('../projects/shared-meet-components/styles/components/_recordings-patterns.scss');
+@include meta.load-css('../projects/shared-meet-components/styles/components/_auth-patterns.scss');
+@include meta.load-css('../projects/shared-meet-components/styles/components/_nz-theme.scss');
+// EP 皮肤（用户裁决：管理台向 Element Plus 视觉靠拢）——body:has(ov-workspace-shell) 作用域重定义语义令牌；会中零影响
+@include meta.load-css('../projects/shared-meet-components/styles/components/_ep-skin.scss');
+// 会议域令牌与骨架样式（--jmeet-meeting-*，body.meeting-ui 作用域）
+@include meta.load-css('../projects/shared-meet-components/styles/meeting/_index.scss');
+
+// Light theme by default
+html,
+body {
+	height: 100%;
+	overflow: hidden;
+	transition:
+		background-color 0.2s ease-in-out,
+		color 0.2s ease-in-out;
+}
+
+body {
+	margin: 0;
+	// Consume the design-token font stack (semantic layer) so retokening the
+	// primitive font-family propagates here; do not hardcode text font stacks.
+	font-family: var(--jmeet-typography-font-family);
+	background-color: var(--jmeet-color-surface-page);
+	color: var(--jmeet-color-text-on-page);
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+button,
+a,
+[role='button'] {
+	-webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+	outline: 2px solid var(--jmeet-color-action-primary);
+	outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		scroll-behavior: auto !important;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}

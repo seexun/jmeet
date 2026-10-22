@@ -1,0 +1,10 @@
+name: extraFields
+in: query
+description: >
+    Comma-separated list of additional room fields to include in the response that are excluded by default to reduce payload size.
+    <br/><br/>
+    These fields are included even if not listed in `fields` query parameter or `X-Fields` header.
+required: false
+schema:
+    type: string
+example: 'extraFields=config,roles'

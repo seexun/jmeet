@@ -1,0 +1,217 @@
+// ── Poster variant ──────────────────────────────────────────────────────────
+
+:host.poster {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.encryption-error-poster {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: color-mix(in srgb, var(--jmeet-color-text-primary) 96%, transparent);
+	border-radius: var(--ov-video-radius);
+	z-index: var(--jmeet-z-overlay);
+}
+
+.encryption-error-content {
+	text-align: center;
+	padding: 1.5rem;
+	max-width: 280px;
+	color: var(--jmeet-color-surface-card);
+
+	svg {
+		color: var(--jmeet-color-action-danger, var(--jmeet-color-action-danger));
+		margin-bottom: 0.75rem;
+		filter: drop-shadow(0 4px 12px color-mix(in srgb, var(--jmeet-color-action-danger) 25%, transparent));
+		opacity: 0.9;
+	}
+
+	h3 {
+		font-size: 0.95rem;
+		font-weight: 600;
+		margin: 0 0 0.4rem 0;
+		color: var(--jmeet-color-surface-card);
+		letter-spacing: 0.02em;
+	}
+
+	p {
+		font-size: 0.8rem;
+		margin: 0;
+		line-height: 1.5;
+		color: var(--jmeet-color-text-secondary);
+	}
+}
+
+.poster {
+	height: 100%;
+	width: 100%;
+	background: var(--jmeet-color-surface-page);
+	position: absolute;
+	z-index: var(--jmeet-z-media-overlay);
+	border-radius: var(--ov-video-radius);
+	overflow: hidden;
+	// Enables cqh units on children so the avatar circle can scale with tile height
+	container-type: size;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: radial-gradient(circle at 50% 120%, color-mix(in srgb, var(--jmeet-color-action-primary) 8%, transparent) 0%, transparent 62%);
+		pointer-events: none;
+	}
+}
+
+.initial {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
+	margin: auto;
+	inset: 0;
+	// Scales with the tile height: 40 % of height, clamped between 36 px (tiny tile) and 80 px (normal)
+	height: clamp(36px, 40cqh, 80px);
+	width: clamp(36px, 40cqh, 80px);
+	border-radius: var(--ov-video-radius);
+	box-shadow:
+		0 8px 24px color-mix(in srgb, var(--jmeet-color-text-primary) 12%, transparent),
+		0 0 0 1px color-mix(in srgb, var(--jmeet-color-action-primary) 8%, transparent);
+	transition: box-shadow 0.3s ease;
+	color: var(--jmeet-color-avatar-text);
+
+	&.speaking {
+		box-shadow:
+			0 8px 24px color-mix(in srgb, var(--jmeet-color-text-primary) 12%, transparent),
+			0 0 0 1px color-mix(in srgb, var(--jmeet-color-action-primary) 8%, transparent),
+			0 0 0 3px var(--ov-accent-action-color);
+		animation: posterSpeakingPulse 1.5s ease-in-out infinite;
+	}
+}
+
+.poster-text {
+	font-weight: 500;
+	// Scales proportionally with the circle: ~half the circle's cqh percentage, clamped to match
+	font-size: clamp(0.9rem, 16cqh, 2rem);
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	opacity: 0.95;
+}
+
+// ── Panel variant ───────────────────────────────────────────────────────────
+
+:host.panel {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+// EP 紧凑行规格：28px 头像（成员面板 40px 行内）
+.panel-avatar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	color: var(--ov-text-primary-color);
+	font-weight: 500;
+	position: relative;
+	overflow: hidden;
+	box-shadow: 0 0 0 2px transparent;
+	transition: box-shadow 0.2s ease-in-out;
+
+	.anticon {
+		font-size: 15px;
+		width: 15px;
+		height: 15px;
+	}
+
+	.panel-initial {
+		font-size: 13px;
+		font-weight: 600;
+		text-transform: uppercase;
+		color: var(--jmeet-color-avatar-text);
+		line-height: 1;
+	}
+
+	&.speaking {
+		box-shadow: 0 0 0 2px var(--ov-accent-action-color);
+		animation: panelSpeakingPulse 1.5s ease-in-out infinite;
+	}
+}
+
+// ── Animations ──────────────────────────────────────────────────────────────
+
+@keyframes posterSpeakingPulse {
+	0%,
+	100% {
+		box-shadow:
+			0 8px 32px color-mix(in srgb, var(--jmeet-color-text-primary) 40%, transparent),
+			0 0 0 1px color-mix(in srgb, var(--jmeet-color-surface-card) 5%, transparent),
+			0 0 0 3px var(--ov-accent-action-color);
+	}
+	50% {
+		box-shadow:
+			0 8px 32px color-mix(in srgb, var(--jmeet-color-text-primary) 40%, transparent),
+			0 0 0 1px color-mix(in srgb, var(--jmeet-color-surface-card) 5%, transparent),
+			0 0 0 6px var(--ov-accent-action-color);
+	}
+}
+
+@keyframes panelSpeakingPulse {
+	0%,
+	100% {
+		box-shadow: 0 0 0 2px var(--ov-accent-action-color);
+	}
+	50% {
+		box-shadow: 0 0 0 4px var(--ov-accent-action-color);
+	}
+}
+
+// ── Responsive ──────────────────────────────────────────────────────────────
+
+@media (max-width: 768px) {
+	.panel-avatar {
+		width: 32px;
+		height: 32px;
+
+		.anticon {
+			font-size: 18px;
+			width: 18px;
+			height: 18px;
+		}
+
+		.panel-initial {
+			font-size: 14px;
+		}
+	}
+}
+
+// ── Accessibility ───────────────────────────────────────────────────────────
+
+@media (prefers-reduced-motion: reduce) {
+	.initial.speaking,
+	.panel-avatar.speaking {
+		animation: none;
+	}
+}
+
+@media (prefers-contrast: high) {
+	.panel-avatar {
+		border: 2px solid var(--ov-surface-background, var(--jmeet-color-surface-card));
+	}
+}

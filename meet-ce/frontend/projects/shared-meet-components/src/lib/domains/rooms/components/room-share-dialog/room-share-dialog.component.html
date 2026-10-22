@@ -1,0 +1,113 @@
+<div class="room-share-dialog-page">
+	<h2 class="dialog-title">{{ 'ROOMS.SHARE_DIALOG.TITLE' | translate }}</h2>
+
+	<div class="dialog-content">
+		<p class="section-label jmeet-form-label">{{ 'ROOMS.SHARE_DIALOG.ACCESS_TYPE' | translate }}</p>
+
+		<nz-radio-group
+			[ngModel]="selectedAccessType()"
+			(ngModelChange)="onAccessTypeChange($event)"
+			class="share-options"
+		>
+			<label nz-radio class="share-option" nzValue="user">
+				<span class="share-option-copy">
+					<strong>
+						@if (data.access.user.enabled) {
+							{{ 'ROOMS.SHARE_DIALOG.USERS' | translate }}
+						} @else {
+							{{ 'ROOMS.SHARE_DIALOG.USER_MEMBERS' | translate }}
+						}
+					</strong>
+					<span>
+						@if (data.access.user.enabled) {
+							{{ 'ROOMS.SHARE_DIALOG.USERS_ENABLED_DESC' | translate }}
+						} @else if (data.canManageRoom) {
+							{{ 'ROOMS.SHARE_DIALOG.USER_MEMBERS_DESC_MANAGE_PREFIX' | translate }}
+							<a class="enable-link" (click)="editRoomAccess(); $event.preventDefault(); $event.stopPropagation()">{{
+								'ROOMS.SHARE_DIALOG.EDIT_THE_ROOM' | translate
+							}}</a>
+							{{ 'ROOMS.SHARE_DIALOG.USER_MEMBERS_DESC_MANAGE_SUFFIX' | translate }}
+						} @else {
+							{{ 'ROOMS.SHARE_DIALOG.USER_MEMBERS_DESC_NO_MANAGE' | translate }}
+						}
+					</span>
+				</span>
+			</label>
+
+			<label
+				nz-radio
+				class="share-option"
+				nzValue="anonymous-speaker"
+				[nzDisabled]="!data.access.anonymous.speaker.enabled"
+			>
+				<span class="share-option-copy">
+					<strong>{{ 'ROOMS.SHARE_DIALOG.ANONYMOUS_SPEAKER' | translate }}</strong>
+					<span>
+						@if (data.access.anonymous.speaker.enabled) {
+							{{ 'ROOMS.SHARE_DIALOG.ANONYMOUS_SPEAKER_ENABLED_DESC' | translate }}
+						} @else if (data.canManageRoom) {
+							{{ 'ROOMS.SHARE_DIALOG.DISABLED_MANAGE_PREFIX' | translate }}
+							<a class="enable-link" (click)="editRoomAccess(); $event.preventDefault(); $event.stopPropagation()">{{
+								'ROOMS.SHARE_DIALOG.EDIT_THE_ROOM' | translate
+							}}</a>
+							{{ 'ROOMS.SHARE_DIALOG.DISABLED_MANAGE_SUFFIX' | translate }}
+						} @else {
+							{{ 'ROOMS.SHARE_DIALOG.DISABLED_NO_MANAGE' | translate }}
+						}
+					</span>
+				</span>
+			</label>
+
+			<label
+				nz-radio
+				class="share-option"
+				nzValue="anonymous-moderator"
+				[nzDisabled]="!data.access.anonymous.moderator.enabled"
+			>
+				<span class="share-option-copy">
+					<strong>{{ 'ROOMS.SHARE_DIALOG.ANONYMOUS_MODERATOR' | translate }}</strong>
+					<span>
+						@if (data.access.anonymous.moderator.enabled) {
+							{{ 'ROOMS.SHARE_DIALOG.ANONYMOUS_MODERATOR_ENABLED_DESC' | translate }}
+						} @else if (data.canManageRoom) {
+							{{ 'ROOMS.SHARE_DIALOG.DISABLED_MANAGE_PREFIX' | translate }}
+							<a class="enable-link" (click)="editRoomAccess(); $event.preventDefault(); $event.stopPropagation()">{{
+								'ROOMS.SHARE_DIALOG.EDIT_THE_ROOM' | translate
+							}}</a>
+							{{ 'ROOMS.SHARE_DIALOG.DISABLED_MANAGE_SUFFIX' | translate }}
+						} @else {
+							{{ 'ROOMS.SHARE_DIALOG.DISABLED_NO_MANAGE' | translate }}
+						}
+					</span>
+				</span>
+			</label>
+		</nz-radio-group>
+
+		@if (data.canManageRoom) {
+			<p class="share-hint jmeet-text--body-secondary">
+				{{ 'ROOMS.SHARE_DIALOG.GUEST_INFO_PREFIX' | translate }}<strong>{{ 'ROOMS.SHARE_DIALOG.GUEST_INFO_IDENTIFIED_GUEST' | translate }}</strong>{{ 'ROOMS.SHARE_DIALOG.GUEST_INFO_MIDDLE' | translate }}<strong>{{ 'ROOMS.SHARE_DIALOG.GUEST_INFO_ROOM_MEMBERS' | translate }}</strong>{{ 'ROOMS.SHARE_DIALOG.GUEST_INFO_SUFFIX' | translate }}
+			</p>
+		}
+
+		@if (roomUrl()) {
+			<div class="link-field">
+				<label class="jmeet-form-label">{{ 'ROOMS.SHARE_DIALOG.ACCESS_LINK' | translate }}</label>
+				<input class="link-input" [value]="roomUrl()" readonly />
+			</div>
+		}
+	</div>
+
+	<div class="jmeet-form-actions dialog-actions">
+		<button type="button" class="jmeet-button jmeet-button--outline close-button" (click)="nzModalRef.close()">
+			{{ 'ROOMS.COMMON.CLOSE' | translate }}
+		</button>
+		<button
+			type="button"
+			class="jmeet-button jmeet-button--primary copy-button"
+			[disabled]="!roomUrl()"
+			(click)="copyToClipboard()"
+			>
+			{{ (copied() ? 'ROOMS.SHARE_DIALOG.COPIED' : 'ROOMS.SHARE_DIALOG.COPY_LINK') | translate }}
+		</button>
+	</div>
+</div>

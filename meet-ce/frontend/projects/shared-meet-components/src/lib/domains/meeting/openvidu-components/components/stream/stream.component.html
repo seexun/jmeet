@@ -1,0 +1,169 @@
+@if (stream(); as stream) {
+	<div
+		[class.OV_stream]="true"
+		[class.OV_stream_video]="true"
+		[class.no-size]="!showVideo()"
+		[class.local]="stream.participant.isLocal"
+		[class.remote]="!stream.participant.isLocal"
+		[class.speaking]="
+			showAudioDetection() &&
+			stream.participant.isSpeaking &&
+			stream.isCameraStream &&
+			stream.participant.isCameraEnabled
+		"
+		[class.screen-source]="stream.isScreenStream"
+		[class.camera-source]="stream.isCameraStream"
+		[id]="'stream-' + stream.source + '-' + stream.streamId"
+		(mousemove)="mouseHover($event)"
+		#streamContainer
+	>
+		@if (
+			showParticipantName() ||
+			(!stream.participant.hasEncryptionError &&
+				(!stream.participant.isMicrophoneEnabled || stream.isMutedForcibly || stream.isPinned))
+		) {
+			<!-- 格内左下角渐变名字条（§5.2②）：名字 + 麦克风/置顶态；绑定表达式与旧胶囊/状态胶囊逐字一致 -->
+			<div id="participant-name-container" class="stream-name-strip" [class.fullscreen]="isFullscreen()">
+				<div class="participant-name-container">
+					@if (
+						!stream.participant.hasEncryptionError &&
+						(!stream.participant.isMicrophoneEnabled || stream.isMutedForcibly || stream.isPinned)
+					) {
+						<div class="status-icons">
+							@if (!stream.participant.isMicrophoneEnabled) {
+								<nz-icon nzType="audio-muted" id="mic-off" />
+							}
+							@if (stream.isMutedForcibly) {
+								<nz-icon nzType="audio-muted" id="muted-forcibly" />
+							}
+							@if (stream.isPinned) {
+								<nz-icon nzType="pushpin" id="pinned" />
+							}
+						</div>
+					}
+					@if (showParticipantName()) {
+						<span id="participant-name">
+							{{ stream.participant.name || ('PANEL.PARTICIPANTS.GUEST' | translate) }}
+							@if (stream.participant.isLocal && stream.isCameraStream) {
+								<span class="you-suffix">（{{ 'STREAM.YOU' | translate }}）</span>
+							}
+						</span>
+						@if (stream.isScreenStream) {
+							<span class="participant-screen-label"> ({{ (stream.participant.isLocal ? 'STREAM.YOUR_SCREEN_LABEL' : 'STREAM.SCREEN_LABEL') | translate }})</span>
+						}
+					}
+				</div>
+			</div>
+		}
+
+		@if (stream.isCameraStream) {
+			<ov-connection-quality-indicator [participant]="stream.participant" />
+		}
+
+		@if (
+			showAudioDetection() &&
+			stream.participant.isSpeaking &&
+			stream.isCameraStream &&
+			stream.participant.isCameraEnabled
+		) {
+			<div id="audio-wave-container">
+				<ov-audio-wave />
+			</div>
+		}
+
+		<ov-video-element
+			[videoTrack]="stream.videoTrack?.track"
+			[isLocal]="stream.participant.isLocal"
+			[avatar]="avatarView()"
+			[zoomState]="stream.zoom"
+		/>
+
+		@if (showVideoControls() && mouseHovering() && !stream.participant.hasEncryptionError) {
+			<div class="stream-video-controls" (mouseenter)="keepControlsVisible()" (mouseleave)="releaseControls()">
+				<div class="flex-container">
+					@if (stream.isScreenStream && stream.zoom; as zoom) {
+						<div class="control-group" [class.zoom-group]="zoom.isZoomed">
+							@if (zoom.isZoomed) {
+								<button
+									id="reset-zoom-btn"
+									(click)="zoom.reset()"
+									nz-tooltip
+									[nzTooltipTitle]="'STREAM.RESET_ZOOM' | translate"
+								>
+									<nz-icon nzType="expand" />
+								</button>
+								<button
+									id="zoom-out-btn"
+									(click)="zoom.zoomOut()"
+									[disabled]="!zoom.canZoomOut"
+									nz-tooltip
+									[nzTooltipTitle]="'STREAM.ZOOM_OUT' | translate"
+								>
+									<nz-icon nzType="minus" />
+								</button>
+								<span id="zoom-level" class="zoom-level">{{ zoom.level() * 100 }}%</span>
+							}
+							<button
+								id="zoom-in-btn"
+								(click)="zoom.zoomIn()"
+								[disabled]="!zoom.canZoomIn"
+								nz-tooltip
+								[nzTooltipTitle]="'STREAM.ZOOM_IN' | translate"
+							>
+								<nz-icon [nzType]="(zoom.isZoomed ? 'add' : 'zoom_in') | nzIconType" />
+							</button>
+						</div>
+					}
+					<button
+						[id]="stream.isPinned ? 'unpin-btn' : 'pin-btn'"
+						(click)="toggleVideoPinned()"
+						nz-tooltip
+						[nzTooltipTitle]="stream.isPinned ? ('STREAM.UNPIN' | translate) : ('STREAM.PIN' | translate)"
+					>
+						@if (stream.isPinned) {
+							<nz-icon nzType="pushpin" nzType="pushpin" />
+						} @else {
+							<nz-icon nzType="pushpin" id="pinned" />
+						}
+					</button>
+					@if (!stream.participant.isLocal && stream.audioTrack) {
+						<button
+							id="mute-btn"
+							(click)="toggleMuteForcibly()"
+							[class.muted-btn]="stream.isMutedForcibly"
+							nz-tooltip
+							[nzTooltipTitle]="
+								stream.isMutedForcibly
+									? ('STREAM.UNMUTE_SOUND' | translate)
+									: ('STREAM.MUTE_SOUND' | translate)
+							"
+						>
+							@if (stream.isMutedForcibly) {
+								<nz-icon nzType="audio-muted" id="muted-forcibly" />
+							} @else {
+								<nz-icon nzType="sound" id="muted-forcibly" />
+							}
+						</button>
+					}
+					@if (stream.participant.isLocal && stream.isCameraStream) {
+						<button
+							id="float-btn"
+							[disabled]="stream.isPinned"
+							(click)="toggleFloat()"
+							nz-tooltip
+							[nzTooltipTitle]="
+								stream.isFloating ? ('STREAM.DOCK' | translate) : ('STREAM.FLOAT' | translate)
+							"
+						>
+							@if (stream.isFloating) {
+								<nz-icon nzType="appstore" id="dock-icon" />
+							} @else {
+								<nz-icon nzType="pic-right" id="float-icon" />
+							}
+						</button>
+					}
+				</div>
+			</div>
+		}
+	</div>
+}

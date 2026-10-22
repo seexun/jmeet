@@ -1,0 +1,8 @@
+in: query
+name: nameCaseInsensitive
+required: false
+description: Whether user name filtering should ignore case. Defaults to false.
+schema:
+    type: boolean
+    default: false
+example: true

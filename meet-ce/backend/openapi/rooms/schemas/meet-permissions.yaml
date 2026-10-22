@@ -1,0 +1,58 @@
+type: object
+properties:
+    canRecord:
+        type: boolean
+        example: true
+        description: Can start/stop recording the meeting.
+    canRetrieveRecordings:
+        type: boolean
+        example: true
+        description: Can list and play recordings.
+    canDeleteRecordings:
+        type: boolean
+        example: false
+        description: Can delete recordings.
+    canJoinMeeting:
+        type: boolean
+        example: true
+        description: Can join the meeting.
+    canShareAccessLinks:
+        type: boolean
+        example: false
+        description: Can share access links to invite others.
+    canMakeModerator:
+        type: boolean
+        example: false
+        description: Can promote other participants to moderator role.
+    canKickParticipants:
+        type: boolean
+        example: false
+        description: Can remove other participants from the meeting.
+    canEndMeeting:
+        type: boolean
+        example: false
+        description: Can end the meeting for all participants.
+    canPublishVideo:
+        type: boolean
+        example: true
+        description: Can publish video in the meeting.
+    canPublishAudio:
+        type: boolean
+        example: true
+        description: Can publish audio in the meeting.
+    canShareScreen:
+        type: boolean
+        example: false
+        description: Can share screen in the meeting.
+    canReadChat:
+        type: boolean
+        example: true
+        description: Can read chat messages in the meeting.
+    canWriteChat:
+        type: boolean
+        example: true
+        description: Can send chat messages in the meeting.
+    canChangeVirtualBackground:
+        type: boolean
+        example: true
+        description: Can change the virtual background.

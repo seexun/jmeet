@@ -1,0 +1,58 @@
+:host { display: block; height: var(--jmeet-meeting-topbar-height); }
+
+.jmeet-meeting-topbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 100%;
+	padding: 0 16px;
+	border-bottom: 1px solid var(--jmeet-meeting-border);
+	background: var(--jmeet-meeting-surface);
+	color: var(--jmeet-meeting-text-secondary);
+	font-size: 12px;
+
+	&__left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+	&__title {
+		color: var(--jmeet-meeting-text-primary);
+		font-size: 13px;
+		font-weight: 600;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	&__right { display: flex; align-items: center; gap: 14px; }
+	&__elapsed { font-variant-numeric: tabular-nums; }
+
+	&__rec {
+		display: inline-flex; align-items: center; gap: 4px;
+		border: 0; background: var(--jmeet-meeting-danger-soft);
+		color: var(--jmeet-meeting-danger);
+		padding: 2px 8px; border-radius: 4px; cursor: pointer; font-size: 11px;
+
+		// REC 呼吸指示（录制进行态）：令牌化——只动透明度，色相沿用 __rec 的 danger；
+		// html 侧 .blink 类由此获得钩子，reduced-motion 下静止
+		.blink { animation: jmeet-topbar-rec-breathe 1.2s ease-in-out infinite alternate; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		&__rec .blink { animation: none; }
+	}
+	&__net, &__secure { display: inline-flex; align-items: center; gap: 4px; }
+	&__net.quality-poor, &__net.quality-lost { color: var(--jmeet-meeting-danger); }
+	&__secure { color: var(--jmeet-meeting-text-tertiary); }
+
+	&__layout { display: flex; gap: 2px; }
+	.layout-switch-btn {
+		display: grid; place-items: center; width: 28px; height: 28px;
+		border: 0; border-radius: 6px; background: transparent;
+		color: var(--jmeet-meeting-text-tertiary); cursor: pointer;
+		&:hover { background: var(--jmeet-meeting-primary-soft); }
+		&.active { background: var(--jmeet-meeting-primary-soft); color: var(--jmeet-meeting-primary); }
+	}
+	.layout-switch-icon { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.4; }
+}
+
+@keyframes jmeet-topbar-rec-breathe {
+	from { opacity: 1; }
+	to { opacity: 0.45; }
+}

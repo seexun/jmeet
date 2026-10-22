@@ -1,0 +1,19 @@
+<header class="jmeet-page-header">
+	<div class="jmeet-page-header__row">
+		<ng-template #title><ng-content select="[page-title]" /></ng-template>
+		@if (level() === 2) {
+			<h2 class="jmeet-text--section-title"><ng-container [ngTemplateOutlet]="title" /></h2>
+		} @else {
+			<h1 class="jmeet-text--page-title"><ng-container [ngTemplateOutlet]="title" /></h1>
+		}
+		<div class="jmeet-page-header__meta">
+			@if (description()) {
+				<p class="jmeet-text--body-tertiary">{{ description() }}</p>
+			}
+			<ng-content select="[page-description]" />
+		</div>
+	</div>
+	<div class="jmeet-page-header__actions">
+		<ng-content select="[page-actions]" />
+	</div>
+</header>

@@ -1,0 +1,10 @@
+// 会议域深绘（批次 5 §5.4）：更多选项菜单内容件——菜单项皮由工具栏 overlay 钩子
+//（toolbar-media-buttons ::ng-deep .more-options-menu）统一供给，本组件只保留特有语义：
+// 全体静音入口图标主色。全 --jmeet-meeting-*。
+:host {
+	display: contents;
+}
+
+#mute-all-button .anticon {
+	color: var(--jmeet-meeting-primary);
+}

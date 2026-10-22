@@ -1,0 +1,17 @@
+{
+	email {$ACME_EMAIL}
+}
+
+{$MEET_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy meet:6080
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+	}
+}
+
+{$LIVEKIT_DOMAIN} {
+	reverse_proxy livekit:7880
+}

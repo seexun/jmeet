@@ -1,0 +1,22 @@
+description: Successfully logged in
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                    example: User 'admin' logged in successfully
+                accessToken:
+                    type: string
+                    description: >
+                        The access token to authenticate the user in subsequent requests.
+                refreshToken:
+                    type: string
+                    description: >
+                        The refresh token to obtain a new access token when the current one expires.
+                mustChangePassword:
+                    type: boolean
+                    example: true
+                    description: >
+                        Indicates whether the user must change their password after login. Only present if password change is required.

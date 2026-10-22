@@ -1,0 +1,83 @@
+// ============================================================
+// EP 皮肤（用户裁决：管理台向 Element Plus 视觉风格靠拢）
+// ------------------------------------------------------------
+// 作用域：body:has(ov-workspace-shell) / body:has(ov-admin-shell)
+// ——管理台与工作台路由壳渲染时生效；会中（room 路由）与登录页
+// 不渲染这两个壳，零影响。
+// 机制：在该作用域重定义 --jmeet-color-* 语义令牌为 EP 色板
+// （Element Plus 官方色值），全部消费 --jmeet-color-* 的组件自动换装。
+// 会中会议域令牌（meeting 命名空间，硬编码）完全解耦，不受影响。
+// 回滚：删除本文件及 styles.scss 的引入即可整体回滚。
+// ============================================================
+
+/* EP 色板（Element Plus 官方值）：
+   primary #409EFF（dark-2 #337ecc / light-3 #79bbff / light-9 #ECF5FF）
+   success #67C23A（light #F0F9EB） warning #E6A23C（light #FDF6EC）
+   danger #F56C6C（light #FEF0F0） info #909399
+   text #303133 / #606266 / #909399 / #C0C4CC
+   border #DCDFE6 / #E4E7ED / #EBEEF5  fill #F5F7FA / #F2F6FC
+   用户裁决偏离：主操作色不用官方 #409EFF，统一为 #1F8FFF
+   （三轮反馈：链接档与按钮实底先后同判"#409EFF 偏浅"） */
+
+body:has(ov-workspace-shell),
+body:has(ov-admin-shell) {
+	// —— 动作色：EP 蓝主色系（主色档经用户三轮裁决统一为 #1F8FFF：#409EFF 偏浅、
+	//    #337ECC 发暗；实底按钮/开关/复选框与链接档同值，全局主操作一个蓝）——
+	--jmeet-color-action-primary: #356fe5;
+	--jmeet-color-action-primary-dark: #3064ce;  // #356fe5 加深 10%（EP shade 口径）
+	--jmeet-color-action-link: #356fe5;  // 超链接/文字操作档：与主色档同值（2026-10-21 用户裁决：链接与按钮同色）
+	--jmeet-color-action-primary-light: #ecf5ff;
+	--jmeet-color-action-primary-rgb: 53, 111, 229;  // #356fe5 的 RGB 形（focus ring 取色，须与主色档同步）
+	--jmeet-color-action-info: #909399;
+	--jmeet-color-action-secondary: #303133;
+	--jmeet-color-action-secondary-light: #f4f4f5;
+	--jmeet-color-action-accent-light: #79bbff;
+	--jmeet-color-text-on-accent: #337ecc;
+	--jmeet-color-action-danger: #f56c6c;
+	--jmeet-color-action-danger-light: #fef0f0;
+	--jmeet-color-action-danger-text: #f56c6c;
+	--jmeet-color-action-success: #67c23a;
+	--jmeet-color-action-success-light: #f0f9eb;
+	--jmeet-color-action-success-text: #67c23a;
+	--jmeet-color-action-warning: #e6a23c;
+	--jmeet-color-action-warning-light: #fdf6ec;
+	--jmeet-color-action-warning-text: #e6a23c;
+	// —— 派生令牌收口（按钮两套系统同色的关键）——
+	// 基础令牌只发射在 html：自定义属性在声明元素处即完成 var() 替换，后代继承的是
+	// 已替换串。上面的 EP 色相重定义管不到链式令牌（jmeet 实底主按钮底/输入框聚焦
+	// 描边/图标激活/焦点环/按钮圆角会冻结为默认 #006EFF、8px），此处按 EP 值重新
+	// 锚定，两套按钮系统（jmeet-button / nz-button）才真正同色同形。
+	--jmeet-button-primary-bg: var(--jmeet-color-action-primary);
+	--jmeet-button-border-radius: var(--jmeet-radius-md);
+	--jmeet-input-border-color-focus: var(--jmeet-color-action-primary);
+	--jmeet-color-icon-active: var(--jmeet-color-action-primary);
+	--jmeet-focus-ring: 0 0 0 3px rgb(var(--jmeet-color-action-primary-rgb) / 8%);
+	// —— 徽章：管理员 EP 蓝 ——
+	--jmeet-color-badge-admin: #1f8fff;  // 随主色档（当前无消费点，令牌族保持同色）
+	// —— 文字色：EP 四档 ——
+	--jmeet-color-text-primary: #303133;
+	--jmeet-color-text-secondary: #606266;
+	--jmeet-color-text-tertiary: #909399;
+	--jmeet-color-text-hint: #a8abb2;
+	--jmeet-color-text-disabled: #c0c4cc;
+	// —— 边框三档：EP 边框色 ——
+	--jmeet-color-border: #dcdfe6;
+	--jmeet-color-border-light: #ebeef5;
+	--jmeet-color-border-strong: #d4d7de;
+	// —— 表面：页面底 EP 淡蓝灰 ——
+	--jmeet-color-surface-page: #f2f6fc;
+	// —— 圆角：EP 小圆角语言 4px（按钮与输入控件按用户裁决调圆至 8px，2026-10-21） ——
+	--jmeet-radius-md: 4px;
+	--jmeet-radius-lg: 4px;
+	--jmeet-button-border-radius: 8px;  // 全部 jmeet 按钮统一 8px
+
+	.ant-btn,
+	.ant-input,
+	.ant-select-selector,
+	.ant-picker {
+		// nz 全局层对 .ant-input 圆角带 !important，此处同级反制
+		border-radius: 8px !important;
+	}
+	// —— 品牌渐变：EP 蓝渐变（侧栏 logo 座）——
+	--jmeet-gradient-brand: linear-gradient(135deg, #409eff, #79bbff);
+}

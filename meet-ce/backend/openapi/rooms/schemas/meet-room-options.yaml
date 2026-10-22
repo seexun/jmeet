@@ -1,0 +1,82 @@
+type: object
+properties:
+    roomName:
+        type: [string, 'null']
+        maxLength: 50
+        example: 'room'
+        default: 'Room'
+        description: |
+            The display name of the room, used to identify it in a user-friendly way. This value does not need to be unique.
+
+            Maximum length: 50 characters. If not provided, the default value "Room" will be used.
+    autoDeletionDate:
+        type: [number, 'null']
+        example: 1900000000000
+        description: |
+            The timestamp (in milliseconds since the Unix epoch) specifying when the room will be automatically deleted.
+            This must be at least one hour in the future.
+
+            After this time, the room is closed to new participants and scheduled for deletion. 
+            It will be removed after the last participant leaves (graceful deletion).
+
+            If not set, the room remains active until manually deleted.
+    autoDeletionPolicy:
+        type: object
+        description: >
+            Policy for automatic deletion of the room and its contents. This includes
+            settings for how the room should be handled when certain conditions are met.
+        properties:
+            withMeeting:
+                type: string
+                enum:
+                    - force
+                    - when_meeting_ends
+                default: when_meeting_ends
+                example: when_meeting_ends
+                description: |
+                    Policy for automatic deletion when the room has an active meeting. Options are:
+                    - force: The meeting will be ended, and the room will be deleted without waiting for participants to leave.
+                    - when_meeting_ends: The room will be deleted when the meeting ends.
+            withRecordings:
+                type: string
+                enum:
+                    - force
+                    - close
+                default: close
+                example: close
+                description: |
+                    Policy for automatic deletion when the room has recordings. Options are:
+                    - force: The room and its recordings will be deleted.
+                    - close: The room will be closed instead of deleted, maintaining its recordings.
+    # maxParticipants:
+    #     type: integer
+    #     example: 10
+    #     description: >
+    #         The maximum number of participants allowed in the room. If the number of participants exceeds
+    #         this limit, new participants will not be allowed to join.
+    config:
+        $ref: './meet-room-config.yaml#/MeetRoomConfig'
+        description: >
+            The config for the room. These config will be used to configure the room's settings.
+    roles:
+        $ref: ./meet-room-roles-config.yaml
+        description: |
+            Configuration for role permissions.
+
+            By default (if not specified), default permissions will be used for both moderator and speaker roles:
+            - Moderator: Full permissions to manage the room and meeting.
+            - Speaker: Permissions to publish audio and video streams.
+
+            You can customize this by providing partial permissions for each role (only specify the permissions you want to override).
+    access:
+        $ref: ./meet-room-access-config.yaml
+        description: |
+            Configuration for room access.
+
+            By default (if not specified), anonymous access is enabled for both moderator and speaker roles, and for recording access.
+            However, user access is disabled by default.
+            You can customize this behavior by disabling access for specific scopes and roles
+            (`user`, `anonymous.moderator`, `anonymous.speaker`, `anonymous.recording`) using `enabled: false`.
+
+            Permissions for anonymous guests are determined by the room's role permissions. For users (who are not admins or members of the room),
+            permissions will be the same as the speaker role.

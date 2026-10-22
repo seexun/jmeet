@@ -1,0 +1,122 @@
+<div class="room-details-step fade-in">
+<p class="jmeet-text--body-secondary wizard-step-description">{{ 'ROOMS.WIZARD.DETAILS.DESCRIPTION' | translate }}</p>
+
+<form [formGroup]="roomDetailsForm" class="jmeet-settings-form room-details-form">
+		<div class="form-item">
+			<label class="jmeet-form-label" for="wizard-room-name">{{
+				'ROOMS.WIZARD.DETAILS.ROOM_NAME' | translate
+			}}</label>
+			<input
+				id="wizard-room-name"
+				nz-input
+				formControlName="roomName"
+				[placeholder]="'ROOMS.WIZARD.DETAILS.ROOM_NAME_PLACEHOLDER' | translate"
+			/>
+			@if (
+				roomDetailsForm.get('roomName')?.hasError('maxlength') &&
+				(roomDetailsForm.get('roomName')?.touched || roomDetailsForm.get('roomName')?.dirty)
+			) {
+				<p class="field-error">{{ 'ROOMS.WIZARD.DETAILS.ROOM_NAME_MAXLENGTH' | translate }}</p>
+			}
+			<p class="field-hint">{{ 'ROOMS.WIZARD.DETAILS.ROOM_NAME_HINT' | translate }}</p>
+		</div>
+
+		<div class="form-item">
+			<label class="jmeet-form-label" for="wizard-deletion-date">{{
+				'ROOMS.WIZARD.DETAILS.AUTO_DELETION_DATE' | translate
+			}}</label>
+			<div class="date-field-row">
+				<nz-date-picker
+					class="date-picker-field"
+					[nzId]="'wizard-deletion-date'"
+					formControlName="autoDeletionDate"
+					[nzDisabledDate]="disabledDate"
+					[nzAllowClear]="false"
+					[nzPlaceHolder]="'ROOMS.WIZARD.DETAILS.SELECT_DELETION_DATE' | translate"
+				/>
+				@if (hasDateSelected) {
+					<button
+						type="button"
+						class="jmeet-button jmeet-button--ghost jmeet-button--icon clear-date-button"
+						[disabled]="roomDetailsForm.get('autoDeletionDate')?.disabled"
+						(click)="clearDeletionDate()"
+						nz-tooltip
+						[nzTooltipTitle]="'ROOMS.WIZARD.DETAILS.CLEAR_DATE_SELECTION' | translate"
+					>
+						<nz-icon nzType="close" />
+					</button>
+				}
+			</div>
+			<p class="field-hint">{{ 'ROOMS.WIZARD.DETAILS.AUTO_DELETION_DATE_HINT' | translate }}</p>
+		</div>
+
+		@if (hasDateSelected) {
+			<div class="time-selection-container">
+				<div class="time-selection-row">
+					<div class="form-item">
+						<label class="jmeet-form-label">{{ 'ROOMS.WIZARD.DETAILS.HOUR' | translate }}</label>
+						<nz-select [nzId]="'wizard-deletion-hour'" formControlName="autoDeletionHour" class="time-field">
+							@for (hour of hours; track hour.value) {
+								<nz-option [nzValue]="hour.value" [nzLabel]="hour.display" />
+							}
+						</nz-select>
+					</div>
+
+					<div class="form-item">
+						<label class="jmeet-form-label">{{ 'ROOMS.WIZARD.DETAILS.MINUTE' | translate }}</label>
+						<nz-select [nzId]="'wizard-deletion-minute'" formControlName="autoDeletionMinute" class="time-field">
+							@for (minute of minutes; track minute.value) {
+								<nz-option [nzValue]="minute.value" [nzLabel]="minute.display" />
+							}
+						</nz-select>
+					</div>
+				</div>
+
+				@if (!roomDetailsForm.hasError('minFutureDateTime')) {
+					<div class="time-hint">
+						<nz-icon nzType="clear" class="hint-icon" />
+						<span>{{ 'ROOMS.WIZARD.DETAILS.DELETED_AT_PREFIX' | translate }}{{ getFormattedDateTime() }}</span>
+					</div>
+				} @else {
+					<p class="field-error">{{ 'ROOMS.WIZARD.DETAILS.MIN_FUTURE_DATETIME_ERROR' | translate }}</p>
+				}
+
+				<div class="auto-deletion-policies">
+					<div class="jmeet-settings-section-heading">
+						<nz-icon nzType="safety-certificate" class="section-icon" />
+						<div>
+							<h2 class="jmeet-text--section-title">{{ 'ROOMS.WIZARD.DETAILS.AUTO_DELETION_POLICIES' | translate }}</h2>
+							<p class="jmeet-text--body-secondary">{{ 'ROOMS.WIZARD.DETAILS.AUTO_DELETION_POLICIES_DESC' | translate }}</p>
+						</div>
+					</div>
+
+					<div class="policies-row">
+						<div class="form-item">
+							<label class="jmeet-form-label">{{
+								'ROOMS.WIZARD.DETAILS.WITH_ACTIVE_MEETING_POLICY' | translate
+							}}</label>
+							<nz-select formControlName="autoDeletionPolicyWithMeeting" class="policy-field">
+								@for (option of meetingPolicyOptions; track option.value) {
+									<nz-option [nzValue]="option.value" [nzLabel]="option.label | translate" />
+								}
+							</nz-select>
+							<p class="field-hint">{{ getMeetingPolicyDescription() | translate }}</p>
+						</div>
+
+						<div class="form-item">
+							<label class="jmeet-form-label">{{
+								'ROOMS.WIZARD.DETAILS.WITH_RECORDINGS_POLICY' | translate
+							}}</label>
+							<nz-select formControlName="autoDeletionPolicyWithRecordings" class="policy-field">
+								@for (option of recordingPolicyOptions; track option.value) {
+									<nz-option [nzValue]="option.value" [nzLabel]="option.label | translate" />
+								}
+							</nz-select>
+							<p class="field-hint">{{ getRecordingPolicyDescription() | translate }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</form>
+</div>

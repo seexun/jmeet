@@ -1,0 +1,58 @@
+<jmeet-meeting-panel [title]="panelTitle() | translate" (closed)="closeCurrent()">
+	<ov-toolbar-panel-buttons
+		panel-tabs
+		[isConnectionLost]="false"
+		[isActivitiesOpened]="isActivitiesPanelOpened()"
+		[isParticipantsOpened]="isParticipantsPanelOpened()"
+		[isChatOpened]="isChatPanelOpened()"
+		[unreadMessages]="unreadCount()"
+		[showActivitiesPanelButton]="hasActivitiesPanel()"
+		[showParticipantsPanelButton]="hasParticipantsPanel()"
+		[showChatPanelButton]="hasChatPanel()"
+		[recordingStatus]="recordingStatus()"
+		[totalParticipants]="totalParticipants()"
+		[toolbarAdditionalPanelButtonsTemplate]="templateRegistry.toolbarAdditionalPanelButtons() ?? undefined"
+		(toggleActivitiesPanel)="toggleActivitiesPanel($event ?? '')"
+		(toggleParticipantsPanel)="toggleParticipants()"
+		(toggleChatPanel)="toggleChat()"
+	/>
+
+	<!-- CHAT panel -->
+	@if (isChatPanelOpened()) {
+		<ng-container *ngTemplateOutlet="templateRegistry.chatPanel() ?? null" />
+	}
+
+	@if (isCaptionsPanelOpened()) {
+		<ng-container *ngTemplateOutlet="templateRegistry.captionsPanel() ?? null" />
+	}
+
+	<!-- PARTICIPANTS panel -->
+	@if (isParticipantsPanelOpened()) {
+		<ng-container *ngTemplateOutlet="templateRegistry.participantsPanel() ?? null" />
+	}
+
+	<!-- Background effects panel -->
+	@if (isBackgroundEffectsPanelOpened()) {
+		<ng-container *ngTemplateOutlet="templateRegistry.backgroundEffectsPanel() ?? null" />
+	}
+
+	<!-- Settings panel -->
+	@if (isSettingsPanelOpened()) {
+		<ng-container *ngTemplateOutlet="templateRegistry.settingsPanel() ?? null" />
+	}
+
+	<!-- Activities panel -->
+	@if (isActivitiesPanelOpened()) {
+		<ng-container *ngTemplateOutlet="templateRegistry.activitiesPanel() ?? null" />
+	}
+
+	<!-- Media quality panel -->
+	@if (isMediaQualityPanelOpened()) {
+		<ng-container *ngTemplateOutlet="templateRegistry.mediaQualityPanel() ?? null" />
+	}
+
+	<!-- External additional panels  -->
+	@if (templateRegistry.additionalPanels() && isExternalPanelOpened()) {
+		<ng-container *ngTemplateOutlet="templateRegistry.additionalPanels()" />
+	}
+</jmeet-meeting-panel>

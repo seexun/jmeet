@@ -1,0 +1,15 @@
+description: Room member updated successfully
+content:
+    application/json:
+        schema:
+            allOf:
+                - $ref: '../../schemas/meet-room-member.yaml'
+                - type: object
+                  properties:
+                      _extraFields:
+                          type: array
+                          description: >
+                              List of extra fields that can be included in the response based on the `X-ExtraFields` header.
+                          items:
+                              type: string
+                              example: effectivePermissions

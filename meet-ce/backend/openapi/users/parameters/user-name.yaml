@@ -1,0 +1,10 @@
+name: name
+in: query
+required: false
+description: >
+    Filter users by name.
+    By default, name uses prefix and case-sensitive matching.
+    Use nameMatchMode and nameCaseInsensitive to customize matching behavior.
+schema:
+    type: string
+example: 'Alice'

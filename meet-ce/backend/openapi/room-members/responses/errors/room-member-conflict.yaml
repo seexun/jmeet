@@ -1,0 +1,16 @@
+description: Room member conflict error
+content:
+    application/json:
+        schema:
+            $ref: '../../../shared/schemas/error.yaml'
+        examples:
+            member_already_exists:
+                summary: Member already exists
+                value:
+                    error: 'Room Member Error'
+                    message: 'User "alice_smith" is already a member of room "room_123"'
+            member_cannot_be_owner_or_admin:
+                summary: Member cannot be owner or admin
+                value:
+                    error: 'Room Member Error'
+                    message: 'User "alice_smith" cannot be added as a member of room "room_123" because they are the room owner or an admin'

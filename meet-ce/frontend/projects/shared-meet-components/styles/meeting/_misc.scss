@@ -1,0 +1,432 @@
+// 会议域杂项骨架（收尾批 re-home）：会中页横幅/加载态/水印 + 离会页整页。
+// 来源：meeting.component.scss（207 行）与 end-meeting.component.scss（197 行）——
+// 页面私有样式超出行数门禁（meeting 蓝图 40 行），且组件视图封装规则跨组件不可见，
+// 按全局层优先上收至此。类名不变；组件 scss 仅留 :host。SPA 发射到 body.meeting-ui，
+// WC 由 app.material.scss 经 :host 显式发射（shadow DOM 拿不到外层 body 类）。
+// 会议域 hex 唯一出处仍是 _tokens.scss（契约锁定），本文件只消费 --jmeet-meeting-* /
+// 全局语义令牌，EP/遗留硬编码色已顺手换令牌（color-mix 保 alpha 语义）。
+@use '../design-tokens' as design-tokens;
+
+@mixin emit-meeting-misc {
+	// ── 会中页（domains/meeting/pages/meeting）────────────────────────────
+
+	// 纪要状态横幅（转写中/失败提示）
+	.minutes-status-banner {
+		position: absolute;
+		top: var(--jmeet-space-3, 12px);
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 2;
+		display: flex;
+		gap: var(--jmeet-space-2, 8px);
+		max-width: min(640px, calc(100% - 32px));
+		padding: var(--jmeet-space-2, 8px) var(--jmeet-space-3, 12px);
+		border: 1px solid var(--jmeet-color-border);
+		border-radius: var(--jmeet-radius-md, 8px);
+		background: var(--jmeet-color-surface-elevated);
+		color: var(--jmeet-color-text-primary);
+		font-size: var(--jmeet-typography-font-size-sm, 14px);
+		pointer-events: none;
+
+		div {
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+		}
+
+		span {
+			color: var(--jmeet-color-text-secondary);
+		}
+
+		.minutes-error {
+			color: var(--jmeet-color-action-danger-text);
+		}
+
+		// 横幅本体 pointer-events:none 不挡会议画面，仅关闭按钮恢复可点击
+		&__close {
+			pointer-events: auto;
+			display: grid;
+			place-items: center;
+			flex-shrink: 0;
+			align-self: flex-start;
+			width: 24px;
+			height: 24px;
+			margin: -2px -4px 0 0;
+			border: 0;
+			border-radius: 6px;
+			background: transparent;
+			color: var(--jmeet-color-text-secondary);
+			font-size: 12px;
+			cursor: pointer;
+
+			&:hover {
+				background: var(--jmeet-color-surface-hover);
+				color: var(--jmeet-color-text-primary);
+			}
+
+			&:focus-visible {
+				outline: none;
+				box-shadow: var(--jmeet-focus-ring);
+			}
+		}
+	}
+
+	// 会前加载容器（meeting 路由懒加载 OV SDK 期间的全屏占位）。
+	// （原 .prejoin-error-container 系死选择器——meeting 模板只用 loading-container，收尾批修复轮删除。）
+	.prejoin-loading-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+	}
+
+	// nz-spin dot scales with font-size (1em); match the former 30px mat-spinner.
+	// 全局层不再需要 ::ng-deep（原组件视图封装的库内逃逸），直接命中库选择器。
+	.prejoin-spin .ant-spin-dot {
+		font-size: 30px; // icon/decoration sizing
+	}
+
+	// 分组讨论状态横幅（规格 §5.4 状态附属③，批次 5 契约锚定）：EP 蓝 rgba 已换
+	// primary color-mix 保 alpha 语义——primary 8% 座 + 20% 下缘 divider，
+	// strong 13px/600 + span 12px 次级（会中状态横幅族：录制横幅 danger 6% 同构）。
+	.breakout-status-banner {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 8px 16px;
+		background: color-mix(in srgb, var(--jmeet-meeting-primary) 8%, transparent);
+		border-bottom: 1px solid color-mix(in srgb, var(--jmeet-meeting-primary) 20%, transparent);
+		font-size: 13px;
+
+		div {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+
+			strong {
+				font-size: 13px;
+				font-weight: 600;
+			}
+
+			span {
+				font-size: 12px;
+				color: var(--jmeet-meeting-text-secondary);
+			}
+		}
+	}
+
+	// 本地录制横幅（红系 rgba 已换 danger color-mix）
+	.local-recording-banner {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 8px 16px;
+		background: color-mix(in srgb, var(--jmeet-meeting-danger) 6%, transparent);
+		border-bottom: 1px solid color-mix(in srgb, var(--jmeet-meeting-danger) 25%, transparent);
+		font-size: 13px;
+
+		.rec-dot {
+			color: var(--jmeet-meeting-danger);
+			animation: rec-blink 1.6s infinite;
+		}
+
+		div {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+
+			strong {
+				font-size: 13px;
+			}
+
+			span {
+				font-size: 12px;
+				color: var(--jmeet-meeting-text-secondary);
+			}
+		}
+	}
+
+	// 呼吸关键帧：随 mixin 发射进 body.meeting-ui / :host（浏览器对嵌套 @keyframes 提升到顶层）
+	@keyframes rec-blink {
+		0%,
+		100% {
+			opacity: 1;
+		}
+
+		50% {
+			opacity: 0.35;
+		}
+	}
+
+	// ── 身份水印层（§防泄漏合规特性，修复波 C1 找回）──
+	// 原规则随巨石 _meeting-controls.scss 删除而静默失效；此处按 --jmeet-meeting-* /
+	// 语义令牌改写找回，几何意图不变：fixed 3×2 旋转文字铺满会中，不吃指针事件。
+	// re-home 后经 body.meeting-ui / :host 作用域命中（span 与容器都在 meeting 模板内）。
+	.identity-watermark-layer {
+		position: fixed;
+		inset: 0;
+		z-index: var(--jmeet-meeting-z-watermark, 995);
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		pointer-events: none;
+		overflow: hidden;
+
+		span {
+			place-self: center center;
+			transform: rotate(-24deg);
+			color: color-mix(in srgb, var(--jmeet-color-text-tertiary) 16%, transparent);
+			font-size: var(--jmeet-font-size-secondary);
+			font-weight: var(--jmeet-font-weight-medium);
+			letter-spacing: 0.04em;
+			white-space: nowrap;
+			text-shadow: 0 1px 2px color-mix(in srgb, var(--jmeet-color-text-primary) 22%, transparent);
+		}
+	}
+
+	// ── 主持人离线横幅（倒计时 + 认领按钮，修复波 C1 找回）──
+	// 会议域 danger 令牌（与 topbar REC 同组合：danger-soft 底 + danger 文字/描边），
+	// 几何沿用原规则：顶部居中、flex 行、窄屏换行按钮全宽。
+	.host-unavailable-banner {
+		position: fixed;
+		z-index: var(--jmeet-z-toast);
+		top: 16px;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		max-width: min(680px, calc(100vw - 32px));
+		padding: 12px 16px;
+		border: 1px solid var(--jmeet-meeting-danger);
+		border-radius: 10px;
+		background: var(--jmeet-meeting-danger-soft);
+		color: var(--jmeet-meeting-danger);
+		box-shadow: 0 8px 24px color-mix(in srgb, var(--jmeet-color-text-primary) 18%, transparent);
+
+		div {
+			display: flex;
+			flex: 1;
+			flex-direction: column;
+			line-height: 1.4;
+		}
+
+		button {
+			min-height: 44px;
+			white-space: nowrap;
+		}
+	}
+
+	@media (width <= 600px) {
+		.host-unavailable-banner {
+			align-items: flex-start;
+			flex-wrap: wrap;
+
+			button {
+				width: 100%;
+			}
+		}
+	}
+
+	// ── 离会页（domains/meeting/pages/end-meeting）────────────────────────
+	// 整页骨架原样 re-home（无 lint 违规，全令牌化），ov-* 布局混入随行。
+
+	.disconnected-container {
+		@include design-tokens.ov-theme-transition;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 100dvh;
+		box-sizing: border-box;
+		padding: var(--jmeet-space-6);
+		height: 100%;
+		background: var(--jmeet-color-surface-page);
+	}
+
+	.disconnect-content {
+		@include design-tokens.ov-card;
+
+		max-width: 520px;
+		width: 100%;
+		text-align: center;
+		padding: var(--jmeet-layout-space-xxl);
+		background: var(--jmeet-color-surface-elevated);
+		box-sizing: border-box;
+		border: 1px solid var(--jmeet-color-border);
+		border-radius: var(--jmeet-radius-lg);
+		box-shadow: var(--jmeet-shadow-card);
+		animation: fade-in 0.6s ease-out;
+
+		@include design-tokens.ov-mobile-down {
+			padding: var(--jmeet-layout-space-xl);
+			margin: var(--jmeet-layout-space-md);
+			max-width: calc(100vw - 2 * var(--jmeet-layout-space-md));
+		}
+	}
+
+	.disconnect-icon-container {
+		margin-bottom: var(--jmeet-layout-space-xl);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+		animation: scale-in 0.8s ease-out 0.2s both;
+
+		.logo-image {
+			width: 50px;
+			height: auto;
+			object-fit: contain;
+			display: block;
+			transition: all var(--jmeet-motion-normal);
+
+			@include design-tokens.ov-mobile-down {
+				width: 40px;
+			}
+		}
+
+		.jmeet-wordmark {
+			color: var(--jmeet-color-text-primary);
+			font-size: var(--jmeet-font-size-xxl);
+			font-weight: var(--jmeet-font-weight-medium);
+			letter-spacing: -0.4px;
+
+			strong {
+				color: var(--jmeet-color-action-primary);
+				font-weight: var(--jmeet-font-weight-bold);
+			}
+		}
+
+		&::before {
+			content: '';
+			position: absolute;
+			width: 80px;
+			height: 80px;
+			background: var(--jmeet-color-action-primary-light);
+			border-radius: var(--jmeet-shape-radius-circle);
+			z-index: var(--jmeet-z-behind);
+
+			@include design-tokens.ov-mobile-down {
+				width: 64px;
+				height: 64px;
+			}
+		}
+	}
+
+	.disconnect-message {
+		margin-bottom: var(--jmeet-layout-space-xl);
+
+		.disconnect-title {
+			font-size: var(--jmeet-typography-font-size-xxl);
+			font-weight: var(--jmeet-typography-font-weight-semibold);
+			color: var(--jmeet-color-text-primary);
+			margin: 0 0 var(--jmeet-layout-space-sm) 0;
+			line-height: var(--jmeet-typography-line-height-tight);
+
+			@include design-tokens.ov-mobile-down {
+				font-size: var(--jmeet-typography-font-size-xl);
+			}
+		}
+
+		.disconnect-subtitle {
+			font-size: var(--jmeet-typography-font-size-md);
+			color: var(--jmeet-color-text-secondary);
+			margin: 0;
+			line-height: var(--jmeet-typography-line-height-normal);
+			max-width: 400px;
+			margin-left: auto;
+			margin-right: auto;
+
+			@include design-tokens.ov-mobile-down {
+				font-size: var(--jmeet-typography-font-size-sm);
+			}
+		}
+	}
+
+	.disconnect-footer {
+		padding-top: var(--jmeet-layout-space-lg);
+		border-top: 1px solid var(--jmeet-color-border-light);
+
+		.footer-text {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: var(--jmeet-layout-space-xs);
+			font-size: var(--jmeet-typography-font-size-sm);
+			color: var(--jmeet-color-text-hint);
+			margin: 0;
+			font-weight: var(--jmeet-typography-font-weight-medium);
+		}
+
+		@include design-tokens.ov-mobile-down {
+			.footer-text {
+				font-size: var(--jmeet-typography-font-size-xs);
+				flex-direction: column;
+				gap: var(--jmeet-layout-space-xs);
+			}
+		}
+
+		.quick-actions {
+			@include design-tokens.ov-flex-center;
+
+			margin-top: var(--jmeet-layout-space-md);
+
+			.quick-action-button {
+				@include design-tokens.ov-button-base;
+				@include design-tokens.ov-theme-transition;
+
+				display: flex;
+				align-items: center;
+				gap: var(--jmeet-layout-space-sm);
+				color: var(--jmeet-color-text-secondary);
+			}
+		}
+	}
+
+	@media (prefers-contrast: high) {
+		.disconnect-footer {
+			border-top-width: 2px;
+		}
+
+		.disconnect-icon-container::before {
+			border: 2px solid var(--jmeet-color-action-primary);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.disconnect-content,
+		.disconnect-icon-container {
+			animation: none;
+		}
+
+		.logo-image {
+			transition: none;
+		}
+	}
+
+	// 品牌标识：与工作台侧栏一致的「logo + 产品名」组合
+	.disconnect-brand {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+
+		&__logo {
+			width: 34px;
+			height: 34px;
+			object-fit: contain;
+		}
+
+		&__name {
+			color: var(--jmeet-color-text-primary);
+			font-size: var(--jmeet-font-size-lg);
+			font-weight: var(--jmeet-font-weight-bold);
+		}
+	}
+}
+
+// SPA 发射点：styles.scss 经 _index load-css 时在此把杂项骨架发射到 body.meeting-ui。
+// webcomponent 侧由 app.material.scss 的 :host 显式发射，不依赖这里。
+body.meeting-ui {
+	@include emit-meeting-misc;
+}

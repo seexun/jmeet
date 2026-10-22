@@ -1,0 +1,6 @@
+name: userAccess
+in: query
+required: false
+description: Include rooms with user access enabled (available to all users).
+schema:
+    type: boolean

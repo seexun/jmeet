@@ -1,0 +1,596 @@
+// ============================================================
+// 管理端控制台蓝图模式层（统一设计语言 批次 3 起）。
+// 定位：跨页通用骨架模式的全局归宿——页面私有样式不得重复定义这些能力，
+// 批次 3 任务 3 删除 _settings-* 切片巨石时 re-home 的通用能力并入本文件。
+// 命名：沿用 jmeet-* 前缀不重命名（规格 §8 约定）。
+// 视觉：全令牌化禁 hex；平面表面无描边无阴影（阴影仅悬浮件）。
+// ============================================================
+
+// ── 设置页蓝图：锚点导航并入单一表面 + 吸底保存条（规格 §3.2 / 原型②）───────
+// 结构（vocabulary，页面模板直接消费）：
+//   <div class="jmeet-settings-form jmeet-settings-form--surface">
+//     <div class="jmeet-settings-form__main">            两列主区（锚点列 + 表单体）
+//       <aside class="jmeet-settings-form__anchor">      左列锚点导航（sticky 吸顶）
+//         <nav class="jmeet-settings-form__anchor-nav">
+//           <button class="jmeet-settings-form__anchor-link [--active]">
+//         </nav>
+//       </aside>
+//       <div class="jmeet-settings-form__body">          右侧行式表单（22px 节奏）
+//         <header class="jmeet-form-card__header">       标题带（沿用既有全局类）
+//         <section class="jmeet-settings-form__section"> 分节（节间 1px divider）
+//           <div class="jmeet-settings-form__row">        行：88px label + 控件 + 行内说明
+//             <label class="jmeet-settings-form__label">
+//             <控件>
+//             <p class="jmeet-settings-form__hint">
+//       </div>
+//     </div>
+//     <footer class="jmeet-settings-form__savebar">      吸底保存条——模式层只保证 save-only
+//                                                        （保存 primary 常驻）；需要重置的页
+//                                                        自行投影 ghost 重置钮（现状仅
+//                                                        config-intelligence / config-appearance），
+//                                                        模式层不内置 reset 能力（2026-10-12
+//                                                        收尾批人类裁定：save-only 接受，不造）。
+//   </div>
+// 说明：基础 .jmeet-settings-form（layout/_page.scss）保持页级栈语义不动，
+// 既有 12 处消费零改动；单面形态经 --surface 修饰类叠加，两态共存。
+// 吸底实现：保存条是表面（flex 列容器）的直接子项，随页面滚动在表面盒内
+// sticky bottom——直接做网格子项不行（网格项只能在自身网格区内滑动，永不出位）。
+.jmeet-settings-form--surface {
+	display: flex;
+	flex-direction: column;
+	gap: 0; // 基础类带 24px 栈间距，单面必须归零（保存条与主区贴体）
+	background: var(--jmeet-color-surface-card);
+	border-radius: var(--jmeet-card-border-radius);
+}
+
+// 两列主区：锚点列 + 表单体；列宽 160px（规格 §3.2）
+.jmeet-settings-form__main {
+	display: grid;
+	grid-template-columns: 160px minmax(0, 1fr);
+	align-items: stretch;
+	min-width: 0;
+	min-height: 0;
+}
+
+// 左列锚点导航：并入单一表面，随页头吸顶常驻（规格 §3.2「sticky 顶随页头」）。
+// 列宽 160px；右缘 1px 轻 divider 与表单体分界；sticky 由格内 __anchor-nav 承担，
+// 格本体随网格拉伸铺满列高，保证 divider 全高不断线（sticky 元素自身不拉伸）。
+.jmeet-settings-form__anchor {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	padding: var(--jmeet-space-4) var(--jmeet-space-3);
+	border-right: 1px solid var(--jmeet-color-border-light);
+	border-radius: var(--jmeet-card-border-radius) 0 0 0;
+}
+
+.jmeet-settings-form__anchor-nav {
+	position: sticky;
+	top: 0;
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-space-1);
+}
+
+.jmeet-settings-form__anchor-link {
+	padding: var(--jmeet-space-2) var(--jmeet-space-3);
+	border: 0;
+	border-radius: var(--jmeet-radius-sm);
+	background: transparent;
+	color: var(--jmeet-color-text-secondary);
+	font: inherit;
+	font-size: var(--jmeet-font-size-sm);
+	line-height: 22px;
+	text-align: left;
+	cursor: pointer;
+	transition:
+		background-color var(--jmeet-motion-fast),
+		color var(--jmeet-motion-fast);
+
+	&:hover {
+		background: var(--jmeet-color-surface-hover);
+		color: var(--jmeet-color-text-primary);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--jmeet-color-action-primary);
+		outline-offset: 1px;
+	}
+}
+
+// 激活项：soft 底 + 主色字（与壳导航激活态同源语义别名，brand 换肤联动）
+.jmeet-settings-form__anchor-link--active {
+	background: var(--jmeet-color-action-primary-light);
+	color: var(--jmeet-color-action-primary-dark);
+	font-weight: var(--jmeet-font-weight-medium);
+}
+
+// 右侧表单体：标题带 + 分节；分区跳转目标预留 scroll-margin（吸顶不遮）
+.jmeet-settings-form__body {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	padding: var(--jmeet-space-4) var(--jmeet-space-6);
+}
+
+// 分节 divider：节与节之间 1px 轻分隔（规格 §3.2），首节贴标题带不带顶线
+.jmeet-settings-form__section {
+	min-width: 0;
+	scroll-margin-top: var(--jmeet-space-4);
+
+	& + .jmeet-settings-form__section {
+		margin-top: var(--jmeet-space-4);
+		padding-top: var(--jmeet-space-4);
+		border-top: 1px solid var(--jmeet-color-border-light);
+	}
+}
+
+// 行式表单 22px 节奏：label 88px 列 + 控件 + 行内说明（说明文字行内化，
+// 替代表单下方 hint 堆叠）；行间 1px 轻分隔，首行免。
+.jmeet-settings-form__row {
+	display: grid;
+	grid-template-columns: 88px auto minmax(0, 1fr);
+	align-items: center;
+	gap: var(--jmeet-space-3);
+	min-width: 0;
+	line-height: 22px;
+	padding-block: var(--jmeet-space-2);
+	border-top: 1px solid var(--jmeet-color-border-light);
+
+	// 首行免：裸行首位，或节标题（h2）之后的第一个行——标题自身就是分隔，
+	// 紧贴标题再画一道线会形成密集双线（2026-10-22 用户反馈）
+	&:first-child,
+	h2.jmeet-text--section-title + & {
+		border-top: 0;
+	}
+}
+
+.jmeet-settings-form__label {
+	margin: 0;
+	color: var(--jmeet-color-text-primary);
+	font-size: var(--jmeet-font-size-sm);
+	font-weight: var(--jmeet-font-weight-medium);
+}
+
+// 宽标签档：设置名超 88px 基线档（≥6 汉字）的行使用，标签列放宽到 120px；
+// 窄屏仍归并单列（下方媒体查询的同名覆盖按源序胜出）
+.jmeet-settings-form__row--label-wide {
+	grid-template-columns: 120px auto minmax(0, 1fr);
+}
+
+// 堆叠行形态（EP 设置行）：名称+说明左列上下堆叠，控件右列跨两行居中。
+// 模板子元素顺序固定为 label → hint → 控件，控件经 :last-child 落位 control 区。
+.jmeet-settings-form__row--stacked {
+	grid-template-columns: minmax(0, 1fr) auto;
+	grid-template-areas:
+		'name control'
+		'hint control';
+
+	.jmeet-settings-form__label {
+		grid-area: name;
+	}
+
+	.jmeet-settings-form__hint {
+		grid-area: hint;
+	}
+
+	> :last-child {
+		grid-area: control;
+		justify-self: end;
+	}
+}
+
+.jmeet-settings-form__hint {
+	margin: 0;
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-xs);
+	line-height: 18px;
+}
+
+// 吸底保存条：save-only——保存常驻可见（重置按钮为页级自投影，见上），sticky bottom
+// 于表面内（滚动时钉在视口下缘，滚到末尾落位），白面 + 上缘 1px divider；操作右置。
+// 告警条（.jmeet-alert）内的动作按钮语义同样接受现状：按钮样式随消费页自定，
+// 模式层不为告警条统一约定按钮语义（2026-10-12 收尾批人类裁定，记录级）。
+.jmeet-settings-form__savebar {
+	position: sticky;
+	bottom: 0;
+	z-index: 2;
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: var(--jmeet-space-2);
+	padding: var(--jmeet-space-3) var(--jmeet-space-6);
+	border-top: 1px solid var(--jmeet-color-border-light);
+	border-radius: 0 0 var(--jmeet-card-border-radius) var(--jmeet-card-border-radius);
+	background: var(--jmeet-color-surface-card);
+}
+
+// 窄屏：锚点列并入顶部横向导航，divider 转横向；吸底保存条语义不变
+@media (width <= 768px) {
+	.jmeet-settings-form__main {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.jmeet-settings-form__anchor {
+		padding: var(--jmeet-space-3);
+		border-right: 0;
+		border-bottom: 1px solid var(--jmeet-color-border-light);
+		border-radius: var(--jmeet-card-border-radius) var(--jmeet-card-border-radius) 0 0;
+	}
+
+	.jmeet-settings-form__anchor-nav {
+		position: static;
+		flex-flow: row wrap;
+	}
+
+	.jmeet-settings-form__body {
+		padding: var(--jmeet-space-4);
+	}
+
+	.jmeet-settings-form__row {
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--jmeet-space-1);
+	}
+
+	.jmeet-settings-form__row--stacked {
+		grid-template-areas:
+			'name'
+			'hint'
+			'control';
+
+		> :last-child {
+			justify-self: start;
+		}
+	}
+}
+
+// ── 表单蓝图词汇（批次 3 任务 3 re-home：原 _form-layout.scss，其唯一全局入口
+// _settings-identity-config:8 的 @use 随切片删除断裂，全文并入本件）──────────
+// Form content follows the reference sample detail page: a visible label,
+// a control, its help text, and an action area inside the same card.
+.jmeet-field {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	min-width: 0;
+
+
+}
+
+.jmeet-field-label {
+	display: block;
+	margin: 0;
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-secondary);
+	font-weight: var(--jmeet-font-weight-regular);
+	line-height: 20px;
+}
+
+.jmeet-form-card {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	min-width: 0;
+}
+
+.jmeet-form-card__header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 16px;
+	padding-bottom: 16px;
+	border-bottom: 1px solid var(--jmeet-color-border);
+
+	h2 {
+		margin: 0;
+		font-size: var(--jmeet-font-size-md);
+		font-weight: var(--jmeet-font-weight-bold);
+		line-height: 24px;
+	}
+
+	p {
+		margin: 4px 0 0;
+		color: var(--jmeet-color-text-secondary);
+		font-size: var(--jmeet-font-size-secondary);
+		line-height: 20px;
+	}
+}
+
+.jmeet-form-section {
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+
+	+ .jmeet-form-section {
+		padding-top: 20px;
+		border-top: 1px solid var(--jmeet-color-border);
+	}
+
+	h3 {
+		margin: 0 0 4px;
+		color: var(--jmeet-color-text-primary);
+		font-size: var(--jmeet-font-size-sm);
+		font-weight: var(--jmeet-font-weight-semibold);
+		line-height: 22px;
+	}
+
+	> p {
+		margin: 0 0 16px;
+		color: var(--jmeet-color-text-secondary);
+		font-size: var(--jmeet-font-size-secondary);
+		line-height: 20px;
+	}
+}
+
+.jmeet-form-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px 24px;
+}
+
+.jmeet-form-row {
+	display: grid;
+	grid-template-columns: 160px minmax(0, 1fr);
+	align-items: start;
+	gap: 12px;
+	min-width: 0;
+
+	> label,
+	> .jmeet-field-label {
+		padding-top: 6px;
+	}
+
+	.jmeet-field {
+		gap: 4px;
+	}
+
+	.jmeet-field > p {
+		margin: 0;
+		font-size: var(--jmeet-font-size-xs);
+		line-height: 18px;
+		color: var(--jmeet-color-text-secondary);
+	}
+}
+
+.jmeet-form-card__actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin: 0;
+	padding-top: 16px;
+	border-top: 1px solid var(--jmeet-color-border);
+}
+
+.jmeet-form-card .jmeet-form-section > h3 {
+	margin-bottom: 16px;
+}
+
+.jmeet-inline-notice {
+	padding: 12px 16px;
+	border: 1px solid var(--jmeet-color-border);
+	border-radius: 8px;
+	background: var(--jmeet-color-action-primary-light);
+	font-size: var(--jmeet-font-size-secondary);
+	line-height: 20px;
+}
+
+
+
+// 1100px 以下单列收排；空网格槽位隐藏
+@media (width <= 1100px) {
+	.jmeet-form-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.jmeet-form-grid > div:empty {
+		display: none;
+	}
+}
+
+@media (width <= 600px) {
+	.jmeet-form-row {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 6px;
+	}
+
+	.jmeet-form-row > label,
+	.jmeet-form-row > .jmeet-field-label {
+		padding-top: 0;
+	}
+
+	.jmeet-form-card__header {
+		flex-wrap: wrap;
+	}
+}
+
+// ── 展示型组件模式（批次 3 任务 3 re-home：原 _display-patterns.scss 业务消费段；
+// 仅 style-guide 演示消费的 steps/timeline/upload/drawer/avatar/tag-cat 已下沉演示页）──
+.jmeet-desc {
+	display: grid;
+	grid-template-columns: 120px 1fr;
+	border: 1px solid var(--jmeet-color-border-light);
+	border-radius: var(--jmeet-radius-sm);
+
+	> :nth-last-child(-n + 2) {
+		border-bottom: 0;
+	}
+}
+
+// 13px 无对应字号 token，按模板规格保留字面值
+.jmeet-desc-label {
+	padding: 10px 12px;
+	border-bottom: 1px solid var(--jmeet-color-border-light);
+	background: var(--jmeet-color-surface-hover);
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-secondary);
+}
+
+.jmeet-desc-value {
+	padding: 10px 12px;
+	border-bottom: 1px solid var(--jmeet-color-border-light);
+	color: var(--jmeet-color-text-primary);
+	font-size: var(--jmeet-font-size-sm);
+}
+
+.jmeet-alerts {
+	display: grid;
+	gap: var(--jmeet-space-2);
+}
+
+.jmeet-alert {
+	padding: 10px 12px;
+	border-left: 3px solid transparent;
+	border-radius: var(--jmeet-radius-sm);
+	font-size: var(--jmeet-font-size-sm);
+
+	&--info {
+		border-left-color: var(--jmeet-color-action-primary);
+		background: var(--jmeet-color-action-primary-light);
+		color: var(--jmeet-color-action-primary-dark);
+	}
+
+	&--success {
+		border-left-color: var(--jmeet-color-action-success);
+		background: var(--jmeet-color-action-success-light);
+		color: var(--jmeet-color-action-success-text);
+	}
+
+	&--warning {
+		border-left-color: var(--jmeet-color-action-warning);
+		background: var(--jmeet-color-action-warning-light);
+		color: var(--jmeet-color-action-warning-text);
+	}
+
+	&--danger {
+		border-left-color: var(--jmeet-color-action-danger);
+		background: var(--jmeet-color-action-danger-light);
+		color: var(--jmeet-color-action-danger-text);
+	}
+}
+
+.jmeet-progress {
+	flex: 1;
+	height: 6px;
+	overflow: hidden;
+	border-radius: 999px;
+	background: var(--jmeet-color-neutral-soft, var(--jmeet-color-surface-hover));
+}
+
+.jmeet-progress-fill {
+	height: 100%;
+	border-radius: inherit;
+	background: var(--jmeet-gradient-brand);
+
+	&--60 {
+		width: 60%;
+	}
+
+	&--30 {
+		width: 30%;
+	}
+}
+
+.jmeet-progress-label {
+	min-width: 32px;
+	color: var(--jmeet-color-text-tertiary);
+	font-size: var(--jmeet-font-size-xs);
+}
+
+// ── EP 左标签表单模式：flex 行 + 70px 右对齐标签，管理台表单页统一排版 ──
+// 从样式标准页 §4 提升为全局（原 .sg-form-item/.sg-form-label）；
+// 表单控件行一律用它，禁用 nz-form-item 内嵌 label。
+.jmeet-form-item {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-space-3);  // 12px 表单控件间距
+}
+
+// 标签样式必须限定在横向表单容器内：裸 .jmeet-form-label 会泄漏到纵向表单，
+// 在 flex column 里 flex-basis 70px 变成标签高度，把控件顶开（预定会议/资料页等）。
+.jmeet-form-item .jmeet-form-label {
+	// 70px 标签列宽为基准规格字面值，无对应 token
+	flex: 0 0 70px;
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-sm);
+	text-align: right;
+}
+
+// 窄屏（<=600px）：标签上置为块级左对齐，控件占满整行
+// （600px 介于断点 token mobile 480 与 tablet 768 之间，为基准规格指定值）
+@media (width <= 600px) {
+	.jmeet-form-item {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.jmeet-form-item .jmeet-form-label {
+		flex: none;
+		text-align: left;
+	}
+}
+
+// ── 跨域通用工具（批次 3 任务 3 re-home，自各切片收口）────────────────────
+
+// 表单控件下方说明行（原 _settings-meeting-control；change-password/login/embedded 等跨域消费）
+.field-hint {
+	margin: -4px 0 4px;
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-xs);
+	line-height: 1.45;
+}
+
+// 卡片标题 h3 基准（原 _settings-meeting-control 的 .sip-trunk-panel h3, .jmeet-card h3 全局规则）
+.sip-trunk-panel h3,
+.jmeet-card h3 {
+	margin: 0 0 12px;
+	font-size: var(--jmeet-font-size-sm);
+	font-weight: var(--jmeet-font-weight-semibold);
+}
+
+// 行内状态图标基准（原 _settings-meeting-control；sip/recordings/shared 跨域消费）
+.status-icon {
+	vertical-align: middle;
+	margin-right: 6px;
+	font-size: var(--jmeet-font-size-lg);
+	width: 18px;
+	height: 18px;
+}
+
+// 操作行提示（原 _settings-identity-config；config/embedded/users 跨域消费）
+.operations-hint {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-space-2);
+}
+
+// 信息横条间距（原 _settings-meeting-control；embedded/users 跨域消费）
+.info-banner {
+	margin-top: var(--jmeet-space-2);
+}
+
+// 列表行操作钮组（原 _settings-admin-users；含 meeting 域 participants-panel 消费）
+.action-buttons {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+
+// ── 设置分组卡（批次 3 任务 3 re-home：原 _settings-dialogs 尾部；任务 2 挂账义务）──
+.jmeet-settings-group {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-space-4);
+
+	// 组卡片头部嵌在 section.jmeet-card 内（非直接子级），用后代选择器统一归零其
+	// 页头默认 margin-bottom（--jmeet-space-6），卡头与内容的间距由组内 gap 提供。
+	.jmeet-page-header {
+		margin-bottom: 0;
+	}
+}
+
+.jmeet-settings-group--dirty {
+	border-color: var(--jmeet-color-action-warning);
+}

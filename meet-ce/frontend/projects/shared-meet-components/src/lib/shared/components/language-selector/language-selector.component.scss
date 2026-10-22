@@ -1,0 +1,15 @@
+.language-option {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+
+	.check-icon {
+		font-size: var(--jmeet-font-size-lg);
+		width: 18px;
+		height: 18px;
+	}
+
+	&.selected .lang-option-name {
+		font-weight: var(--jmeet-font-weight-semibold);
+	}
+}

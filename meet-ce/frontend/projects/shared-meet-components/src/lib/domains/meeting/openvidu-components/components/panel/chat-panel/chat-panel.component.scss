@@ -1,0 +1,736 @@
+// ── 批次2 聊天面板深绘（规格 §5.4：dock 第③槽内容腾讯化）────────────────────
+// 形态：消息流行式（头像 24px + 名字/时间行 + 内容折行；自己的消息名字主色；
+// 系统级行=场次分隔线居中弱化三级字色）+ 输入区贴 dock 底（stage 底条 + 白底输入框
+// 圆角 8 focus 环 primary 8% + 主色发送钮）+ 表情面板网格化 + 滚动区 flex:1。
+// 纪律：深绘面全部消费 --jmeet-meeting-*（warning 等值令牌批次 5 落地，--jmeet-meeting-warning*；
+// 头像白字走 --jmeet-meeting-surface）。
+// 模板结构/类名零变更（行式形态全由样式承载），TS/信号绑定/i18n/元素 id 零变更。
+
+// 面板根：flex 列骨架。dock 模式下与全局层（session.component.scss）同形；
+// 窄屏 drawer 形态全局规则不覆盖，此处兜底——否则消息流不卷动、composer 无法贴底。
+.panel-container {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	height: 100%;
+	min-height: 0;
+	overflow: hidden;
+}
+
+.encryption-warning {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 8px 12px;
+	margin: 8px 12px 0;
+	background-color: var(--jmeet-meeting-warning-soft);
+	border: 1px solid color-mix(in srgb, var(--jmeet-meeting-warning) 20%, transparent);
+	border-radius: var(--jmeet-radius-md);
+	color: var(--jmeet-meeting-warning);
+	font-size: 13px;
+	flex-shrink: 0;
+
+	.anticon {
+		font-size: 18px;
+		width: 18px;
+		height: 18px;
+		flex-shrink: 0;
+	}
+
+	p {
+		margin: 0;
+		line-height: 1.4;
+		width: fit-content;
+	}
+}
+
+.chat-notice {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	margin: 8px 12px 0;
+	padding: 6px 10px;
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-meeting-primary-soft);
+	color: var(--jmeet-meeting-text-secondary);
+	flex-shrink: 0;
+}
+
+.chat-notice-icon {
+	font-size: 16px;
+	width: 16px;
+	height: 16px;
+	color: var(--jmeet-meeting-primary);
+	flex-shrink: 0;
+}
+
+.chat-notice-text {
+	margin: 0;
+	font-size: 12px;
+	line-height: 1.4;
+	font-weight: 500;
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+// ── 消息滚动区：flex:1 吃满剩余高度，紧凑节奏 ─────────────────────────────
+.messages-container {
+	overflow: hidden auto;
+	padding: 8px 12px 12px;
+	background: var(--jmeet-meeting-surface);
+	flex: 1 1 auto;
+	min-height: 0;
+}
+
+// 系统级行（跨场次"上一场会议"分隔）：居中 + 三级字色弱化，两侧细线
+.chat-session-divider {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	margin: 10px 0 6px;
+	color: var(--jmeet-meeting-text-tertiary);
+	font-size: var(--jmeet-font-size-xs);
+	white-space: nowrap;
+
+	&::before,
+	&::after {
+		content: '';
+		flex: 1 1 auto;
+		height: 1px;
+		background: var(--jmeet-meeting-divider);
+	}
+
+	span {
+		line-height: 1.4;
+		font-variant-numeric: tabular-nums;
+	}
+}
+
+// ── 输入区：贴 dock 底条形（stage 底 + 上缘 divider），无浮挂外边距 ─────────
+.composer {
+	position: relative;
+	margin: 0;
+	padding: 8px 12px 10px;
+	background: var(--jmeet-meeting-stage-bg);
+	border-top: 1px solid var(--jmeet-meeting-divider);
+	flex-shrink: 0;
+}
+
+// qq 表情面板：网格化（8 列），白面浮层（悬浮件阴影白名单档）
+.emoji-picker {
+	display: grid;
+	grid-template-columns: repeat(8, minmax(0, 1fr));
+	gap: 2px;
+	max-height: 176px;
+	overflow-y: auto;
+	padding: 8px;
+	margin-bottom: 8px;
+	border: 1px solid var(--jmeet-meeting-border);
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-meeting-surface);
+	box-shadow: 0 8px 20px color-mix(in srgb, var(--jmeet-meeting-text-primary) 8%, transparent);
+}
+
+.emoji-item {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	aspect-ratio: 1;
+	min-height: 32px;
+	border: none;
+	border-radius: var(--jmeet-radius-sm);
+	background: transparent;
+	cursor: pointer;
+	padding: 0;
+	transition: background-color 160ms ease;
+
+	&:hover,
+	&:focus-visible {
+		background: var(--jmeet-meeting-primary-soft);
+		outline: none;
+	}
+
+	&:active {
+		transform: scale(0.94);
+	}
+}
+
+.emoji-glyph {
+	font-size: 22px;
+	line-height: 1;
+}
+
+// 工具钮行（商业标准布局，输入区收敛轮）：附件/表情独立于输入框上方一行，
+// 输入框独占全宽——300px dock 里 textarea 不再与三钮挤行（148px→约230px）
+.input-tools {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 0 2px 6px;
+	margin: 0;
+}
+
+// 输入框行：白底圆角 8，focus 环 primary 8%；自适应 textarea + 图标发送钮
+.input-container {
+	min-height: 44px;
+	display: flex;
+	align-items: flex-end;
+	gap: 4px;
+	padding: 3px 3px 3px 4px;
+	margin: 0;
+	border-radius: var(--jmeet-radius-md);
+	color: var(--jmeet-meeting-text-primary);
+	background: var(--jmeet-meeting-surface);
+	transition: box-shadow 160ms ease;
+}
+
+// 用户裁决：文本输入聚焦环全局移除（聊天输入框不再显示 3px 光环）
+
+.emoji-toggle {
+	appearance: none;
+	width: 30px !important;
+	height: 30px !important;
+	flex-shrink: 0;
+	padding: 0;
+	border: none;
+	border-radius: var(--jmeet-radius-sm);
+	background: transparent;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--jmeet-meeting-text-secondary) !important;
+	cursor: pointer;
+
+	.anticon {
+		font-size: 18px;
+		width: 18px;
+		height: 18px;
+		line-height: 18px;
+	}
+
+	&:hover,
+	&.active {
+		color: var(--jmeet-meeting-primary) !important;
+		background: var(--jmeet-meeting-primary-soft) !important;
+	}
+}
+
+// 自适应输入框：行内吃满图标发送钮之外的宽度，纵向长文时增高（单行 38px 起步）
+.input-container textarea {
+	flex: 1 1 auto;
+	min-width: 0;
+	width: auto;
+	min-height: 38px;
+	max-height: 96px;
+	margin: 0;
+	background-color: transparent;
+	display: block;
+	border: none;
+	padding: 8px 4px;
+	overflow-wrap: break-word;
+	overflow-wrap: anywhere;
+	white-space: pre-wrap;
+	resize: none;
+	outline: none;
+	font-size: 14px;
+	line-height: 1.45;
+	box-shadow: none;
+	font-family: inherit;
+	color: var(--jmeet-meeting-text-primary);
+
+	// 用户裁决：聚焦环全局移除——nz-input 默认聚焦蓝边/蓝环（.ant-input-focused/
+	// :focus）压制，容器白底自承载
+	&:focus,
+	&.ant-input-focused {
+		border: none;
+		box-shadow: none !important;
+	}
+
+	&::placeholder {
+		color: var(--jmeet-meeting-text-tertiary);
+	}
+}
+
+// ── 消息流：QQ/微信气泡样式（用户裁决）────────────────────────────────
+// 别人：头像左 + 白面描边气泡；自己：primary 底白字气泡 + 头像右。
+// 名字/时间在气泡上方小字行（自己不显名）；靠头像侧的气泡角收小。
+.message {
+	position: relative;
+	padding: 4px 0;
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+
+	&.left {
+		justify-content: flex-start;
+	}
+
+	// 自己的消息整行反转：气泡靠右、头像居右
+	&.right {
+		flex-direction: row-reverse;
+		justify-content: flex-start;
+	}
+}
+
+.msg-avatar {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	color: var(--jmeet-meeting-surface); // design-system-allow-hardcoded: avatar initial on colored bg
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1;
+	user-select: none;
+}
+
+.msg-detail {
+	max-width: 82%;
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	min-width: 0;
+}
+
+// 自己侧：名字行/气泡整体右对齐（头像已在行反转后落到右侧）
+.message.right .msg-detail {
+	align-items: flex-end;
+}
+
+.msg-detail p {
+	margin: 0;
+}
+
+// 名字/时间元信息行：名字二级字色，时间三级字色（紧凑行距）
+.participant-name-container {
+	display: flex;
+	align-items: baseline;
+	gap: 6px;
+	padding: 0 4px;
+	max-width: 100%;
+}
+
+.participant-name-container p {
+	margin: 0;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 1.3;
+	color: var(--jmeet-meeting-text-secondary);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+// 自己的消息不显名（QQ 惯例），私聊/提及标记仍保留在行内
+.message.right .participant-name-container p {
+	color: var(--jmeet-meeting-primary);
+}
+
+.message-time {
+	font-size: 11px;
+	line-height: 1.3;
+	color: var(--jmeet-meeting-text-tertiary);
+	flex-shrink: 0;
+	font-variant-numeric: tabular-nums;
+}
+
+// 气泡：白面描边（别人）/ primary 底白字（自己），靠头像侧的角收小
+.chat-message {
+	position: relative;
+	border-radius: 10px;
+	padding: 7px 11px;
+	color: var(--jmeet-meeting-text-primary);
+	width: fit-content;
+	max-width: 100%;
+	font-size: 14px;
+	line-height: 1.5;
+	overflow-wrap: anywhere;
+	word-break: normal;
+	background: var(--jmeet-meeting-surface);
+	border: 1px solid var(--jmeet-meeting-border);
+
+	p {
+		margin: 0;
+	}
+
+	p {
+		font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', inherit;
+	}
+}
+
+// 别人：靠头像侧（左下）角收小
+.message.left .chat-message {
+	border-bottom-left-radius: 4px;
+}
+
+// 自己：primary 底白字，靠头像侧（右下）角收小
+.message.right .chat-message {
+	background: var(--jmeet-meeting-primary);
+	border-color: var(--jmeet-meeting-primary);
+	border-bottom-right-radius: 4px;
+	color: var(--jmeet-meeting-surface);
+
+	:link,
+	:visited {
+		color: var(--jmeet-meeting-surface);
+		text-decoration-color: color-mix(in srgb, var(--jmeet-meeting-surface) 60%, transparent);
+	}
+}
+
+// 附件消息不套彩底（微信/QQ 文件消息形态）：文件卡白面自承载、图片圆角自承载——
+// 彩色气泡叠白卡层次混乱（用户实测），带附件时消息体回归白面
+.message .chat-message:has(.attachment-file-card),
+.message .chat-message:has(.attachment-image),
+.message .chat-message:has(.attachment-pending),
+.message .chat-message:has(.attachment-failed) {
+	background: var(--jmeet-meeting-surface);
+	border-color: var(--jmeet-meeting-border);
+	color: var(--jmeet-meeting-text-primary);
+	padding: 4px;
+
+	:link,
+	:visited {
+		color: var(--jmeet-meeting-primary);
+	}
+}
+
+// 图片消息：去边框让图片自承载圆角
+.message .chat-message:has(.attachment-image) {
+	border-color: transparent;
+	padding: 0;
+
+	.attachment-image {
+		display: block;
+		border-radius: 10px;
+	}
+}
+
+// 被提及的消息：soft 警示底高亮（覆盖别人气泡的白面，例外保留）
+.message.mention-hit .chat-message {
+	background: color-mix(in srgb, var(--jmeet-meeting-warning) 14%, transparent);
+	border-color: color-mix(in srgb, var(--jmeet-meeting-warning) 30%, transparent);
+}
+
+// 发送按钮：36px 图标钮（会议域 primary 底白图标，hover/active 走深档）——
+// 文字钮在 300px dock 里挤占输入框宽度，图标化后输入框独占商业标准宽度
+#send-btn {
+	width: 36px !important;
+	height: 36px !important;
+	min-height: 36px !important;
+	padding: 0 !important;
+	border: none !important;
+	border-radius: var(--jmeet-radius-md) !important;
+	background-color: var(--jmeet-meeting-primary) !important;
+	flex-shrink: 0;
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	color: var(--jmeet-meeting-surface) !important;
+	transition: background-color 160ms ease;
+
+	.anticon {
+		font-size: 16px;
+		width: 16px;
+		height: 16px;
+		line-height: 16px;
+	}
+
+	&:hover {
+		background-color: var(--jmeet-meeting-primary-hover) !important;
+	}
+
+	&:active {
+		background-color: var(--jmeet-meeting-primary-active) !important;
+		transform: scale(0.96);
+	}
+
+	&:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 3px color-mix(in srgb, var(--jmeet-meeting-primary) 8%, transparent);
+	}
+
+	&:disabled {
+		background-color: color-mix(in srgb, var(--jmeet-meeting-primary) 35%, var(--jmeet-meeting-stage-bg)) !important;
+		cursor: not-allowed;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.emoji-item,
+	#send-btn {
+		transition: none;
+	}
+
+	.emoji-item:active,
+	#send-btn:active {
+		transform: none;
+	}
+}
+
+::ng-deep a:any-link {
+	color: var(--jmeet-meeting-primary);
+	font-weight: 500;
+}
+
+// 空面板引导（无消息时）
+.chat-empty {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: var(--jmeet-space-2);
+	padding: 48px 16px;
+	text-align: center;
+
+	.chat-empty-icon {
+		width: 48px;
+		height: 48px;
+		font-size: 48px;
+		color: var(--jmeet-meeting-text-tertiary);
+		background: var(--jmeet-meeting-primary-soft);
+		border-radius: var(--jmeet-radius-md);
+		padding: 10px;
+	}
+
+	.chat-empty-title {
+		margin: 8px 0 0;
+		color: var(--jmeet-meeting-text-primary);
+		font-weight: 600;
+	}
+
+	.chat-empty-desc {
+		margin: 0;
+		color: var(--jmeet-meeting-text-secondary);
+		font-size: 13px;
+	}
+}
+
+// 附件消息：上传中占位
+.attachment-pending {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	color: var(--jmeet-meeting-text-secondary);
+	font-size: 12px;
+	padding: 6px 10px;
+}
+
+.attachment-spinner {
+	font-size: 14px;
+}
+
+// 附件消息：上传失败(悬停 title 显示原因,可重试/移除)——会议域 danger 档
+.attachment-failed {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	color: var(--jmeet-meeting-danger);
+	font-size: 12px;
+	padding: 6px 10px;
+	border: 1px solid color-mix(in srgb, var(--jmeet-meeting-danger) 50%, transparent);
+	border-radius: var(--jmeet-radius-md);
+
+	button {
+		background: none;
+		border: none;
+		color: var(--jmeet-meeting-primary);
+		cursor: pointer;
+		padding: 0 2px;
+		font-size: 12px;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+// 附件消息：图片缩略图
+.attachment-image {
+	max-width: 200px;
+	max-height: 200px;
+	border-radius: var(--jmeet-radius-md);
+	cursor: zoom-in;
+	display: block;
+	object-fit: contain;
+	background: color-mix(in srgb, var(--jmeet-meeting-text-primary) 6%, transparent);
+}
+
+// 附件消息：文件卡片(文件名纯文本插值,防 XSS)
+.attachment-file-card {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-width: 220px;
+	max-width: 280px;
+	padding: 10px 12px;
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-meeting-stage-bg);
+	border: 1px solid var(--jmeet-meeting-border);
+
+	.attachment-file-icon {
+		font-size: 22px;
+		color: var(--jmeet-meeting-primary);
+		flex-shrink: 0;
+	}
+
+	.attachment-file-info {
+		flex: 1;
+		min-width: 0;
+
+		.attachment-file-name {
+			margin: 0;
+			font-size: 13px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.attachment-file-size {
+			font-size: 11px;
+			color: var(--jmeet-meeting-text-secondary);
+		}
+	}
+
+	.attachment-download-btn {
+		background: none;
+		border: none;
+		color: var(--jmeet-meeting-primary);
+		cursor: pointer;
+		padding: 4px;
+		flex-shrink: 0;
+	}
+}
+
+// 图片预览：NzModal 承载（挂 body）——dock 面板动画 transform 会捕获后代
+// position:fixed 使其退化为面板内定位（图片显示不全，用户实测）。
+// modal 壳透明化，stage 铺满视口感 + 深色暗幕；关闭/下载白字操作。
+::ng-deep .image-preview-modal {
+	.ant-modal-content {
+		background: transparent;
+		box-shadow: none;
+		padding: 0;
+	}
+
+	.ant-modal-body {
+		padding: 0;
+	}
+}
+
+.image-preview-stage {
+	position: fixed;
+	inset: 0;
+	z-index: 2000;
+	background: color-mix(in srgb, var(--jmeet-meeting-text-primary) 72%, transparent);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 12px;
+
+	img {
+		max-width: min(90vw, 1200px);
+		max-height: 80vh;
+		object-fit: contain;
+	}
+
+	.image-preview-close {
+		position: absolute;
+		top: 16px;
+		right: 16px;
+		color: var(--jmeet-meeting-surface);
+	}
+
+	.image-preview-download {
+		color: var(--jmeet-meeting-surface);
+		font-size: 13px;
+		cursor: pointer;
+		text-decoration: underline;
+	}
+}
+
+/* 私聊对象选择器(面板头部；dock 形态头部隐藏，此规则服务窄屏浮出形态) */
+.recipient-select {
+	max-width: 120px;
+	font-size: 12px;
+
+	&.ant-select-single .ant-select-selector {
+		padding: 0 4px;
+	}
+}
+
+/* 消息名旁的私聊/提及标记 */
+.dm-flag,
+.mention-flag {
+	margin-left: 6px;
+	padding: 0 6px;
+	border-radius: 8px;
+	font-size: 11px;
+	line-height: 16px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.dm-flag {
+	background: color-mix(in srgb, var(--jmeet-meeting-primary) 12%, transparent);
+	color: var(--jmeet-meeting-primary);
+}
+
+.mention-flag {
+	background: color-mix(in srgb, var(--jmeet-meeting-warning) 18%, transparent);
+	color: var(--jmeet-meeting-warning-text);
+}
+
+/* @提及候选列表(composer 上方)：白面浮层 + 主色高亮 */
+.mention-suggestions {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	margin-bottom: 6px;
+	padding: 4px;
+	border: 1px solid var(--jmeet-meeting-border);
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-meeting-surface);
+	box-shadow: 0 4px 12px color-mix(in srgb, var(--jmeet-meeting-text-primary) 8%, transparent);
+
+	button {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		padding: 4px 8px;
+		border: none;
+		border-radius: var(--jmeet-radius-sm);
+		background: transparent;
+		cursor: pointer;
+		font-size: 13px;
+		text-align: left;
+
+		&:hover {
+			background: color-mix(in srgb, var(--jmeet-meeting-primary) 8%, transparent);
+		}
+
+		.mention-at {
+			color: var(--jmeet-meeting-primary);
+			font-weight: 600;
+		}
+	}
+}

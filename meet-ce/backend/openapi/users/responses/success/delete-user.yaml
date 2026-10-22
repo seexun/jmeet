@@ -1,0 +1,10 @@
+description: User deleted successfully
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+        example:
+            message: User 'alice_smith' deleted successfully

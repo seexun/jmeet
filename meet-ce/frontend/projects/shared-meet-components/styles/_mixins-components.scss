@@ -1,0 +1,169 @@
+// Component Mixins - Specific mixins for UI components like cards, buttons, headers
+// This file contains mixins for specific component patterns
+
+@use './_mixins-layout.scss' as layout;
+@use './_mixins-responsive.scss' as responsive;
+
+// Mixin for consistent cards
+// 规格 §3.2 平面表面：白底 + 圆角，无描边无阴影——层次由页面底与表面的明度差承担。
+// 注意 --jmeet-card-shadow 令牌组定义保留（tokens/_components.scss，-hover 变体消费者在用）。
+@mixin ov-card {
+	@include layout.ov-theme-transition;
+
+	background: var(--jmeet-card-background);
+	border-radius: var(--jmeet-card-border-radius);
+	padding: var(--jmeet-card-padding);
+	transition:
+		background-color var(--jmeet-motion-normal),
+		color var(--jmeet-motion-normal);
+}
+
+// Mixin for the shared dialog body frame used by console dialogs.
+@mixin ov-dialog-container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	min-width: 0;
+	max-width: 100%;
+	box-sizing: border-box;
+	padding: 4px 4px 0;
+}
+
+// Mixin for consistent buttons
+@mixin ov-button-base {
+	@include layout.ov-theme-transition;
+
+	border-radius: var(--jmeet-button-border-radius);
+	font-weight: var(--jmeet-button-font-weight);
+	transition:
+		var(--jmeet-button-transition),
+		background-color var(--jmeet-motion-normal),
+		color var(--jmeet-motion-normal);
+	padding: var(--jmeet-button-padding-vertical) var(--jmeet-button-padding-horizontal);
+}
+
+// Mixin for page headers
+@mixin ov-get-started-header {
+	@include ov-page-header;
+
+	text-align: center;
+	margin-bottom: var(--jmeet-layout-space-lg);
+
+	h1 {
+		font-weight: var(--jmeet-typography-font-weight-light);
+	}
+}
+
+@mixin ov-page-header {
+	text-align: left;
+	margin-bottom: var(--jmeet-layout-space-md);
+
+	h1 {
+		margin: 0;
+		font-size: var(--jmeet-typography-font-size-xxl);
+		font-weight: var(--jmeet-typography-font-weight-semibold);
+		color: var(--jmeet-color-text-primary);
+		line-height: var(--jmeet-typography-line-height-tight);
+	}
+
+	.title {
+		display: flex;
+		margin: 0 0 var(--jmeet-layout-space-xs) 0;
+	}
+
+	.subtitle {
+		margin: 0 0 0 var(--jmeet-layout-space-sm);
+		color: var(--jmeet-color-text-secondary);
+		font-size: var(--jmeet-typography-font-size-sm);
+		line-height: var(--jmeet-typography-line-height-normal);
+	}
+
+	.anticon {
+		margin: 0 var(--jmeet-layout-space-xs) 0 0;
+		align-self: center;
+		font-size: var(--jmeet-icon-control-lg);
+		width: var(--jmeet-icon-control-lg);
+		height: var(--jmeet-icon-control-lg);
+	}
+}
+
+@mixin ov-page-content {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-layout-space-lg);
+}
+
+@mixin ov-warning-panel {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-layout-space-sm);
+	animation: slide-in 0.3s ease-out;
+
+	.warning-card {
+		display: flex;
+		align-items: flex-start;
+		gap: var(--jmeet-layout-space-sm);
+		padding: var(--jmeet-layout-space-md) var(--jmeet-layout-space-lg);
+		border-radius: var(--jmeet-shape-radius-sm);
+		background: color-mix(in srgb, var(--jmeet-color-action-warning) 8%, transparent);
+		border: 1px solid color-mix(in srgb, var(--jmeet-color-action-warning) 20%, transparent);
+
+		.warning-icon {
+			@include layout.ov-icon(md);
+
+			color: var(--jmeet-color-action-warning);
+			flex-shrink: 0;
+			margin-top: 2px;
+		}
+
+		.warning-content {
+			flex: 1;
+
+			.warning-title {
+				margin: 0 0 var(--jmeet-layout-space-xs) 0;
+				font-size: var(--jmeet-typography-font-size-sm);
+				font-weight: var(--jmeet-typography-font-weight-semibold);
+				color: var(--jmeet-color-action-warning);
+			}
+
+			.warning-text {
+				margin: 0;
+				font-size: var(--jmeet-typography-font-size-sm);
+				line-height: var(--jmeet-typography-line-height-relaxed);
+				color: var(--jmeet-color-text-primary);
+			}
+
+			.restrictions-list {
+				margin: 0;
+				padding-left: var(--jmeet-layout-space-md);
+				font-size: var(--jmeet-typography-font-size-sm);
+				line-height: var(--jmeet-typography-line-height-relaxed);
+				color: var(--jmeet-color-text-primary);
+
+				li {
+					margin-bottom: var(--jmeet-layout-space-xs);
+
+					&:last-child {
+						margin-bottom: 0;
+					}
+				}
+
+				.restriction-detail {
+					display: block;
+					color: var(--jmeet-color-text-secondary);
+					margin-top: var(--jmeet-layout-space-xs);
+				}
+			}
+		}
+	}
+}
+
+@mixin ov-section-card {
+	@include ov-card;
+
+	.section-icon {
+		@include layout.ov-icon(lg);
+
+		color: var(--jmeet-color-text-secondary);
+	}
+}

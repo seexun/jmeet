@@ -1,0 +1,272 @@
+// 隐藏参与者指示（规格 §5.4 状态附属②，批次 5 深绘）：smart 布局放不下的与会者瓦片。
+// 容器 = 舞台瓦片语言（tile-bg 底 + 瓦片圆角，§5.2② 同源）；人数徽标 = 头像 chip 语言
+//（primary-soft 座主色字，平面化无阴影）；名字 chip 与 topbar 横排统一指示 = captions
+// 白面 pill（surface + meeting border，hover 主色，captions 记录角标同语言）。
+// 暗瓦片浅字走 meeting-surface（悬浮字幕层同惯例）；结构/容器查询/断点布局零变更，
+// 全 --jmeet-meeting-*（EP 直连与全局色阴影混色退役，契约零直连锁定）。
+.hidden-participants-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	background: var(--jmeet-meeting-tile-bg);
+	border-radius: var(--jmeet-meeting-tile-radius);
+	position: relative;
+	overflow: hidden;
+	transition: background-color 0.2s ease-in-out;
+	container-type: size;
+	container-name: hidden-indicator;
+}
+.hidden-participants-container.horizontal {
+	background-color: transparent;
+}
+
+.count-badge {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 50px;
+	height: 50px;
+	background: var(--jmeet-meeting-primary-soft);
+	border-radius: 50%;
+	font-size: 22px;
+	font-weight: 700;
+	color: var(--jmeet-meeting-primary);
+	flex-shrink: 0;
+	position: relative;
+
+	.badge-icon {
+		display: block;
+	}
+
+	.badge-number {
+		display: none;
+		position: absolute;
+		font-size: inherit;
+	}
+}
+
+.count-info {
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+	flex-wrap: wrap;
+
+	.participant-count-value {
+		font-size: 24px;
+		font-weight: 700;
+		color: var(--jmeet-meeting-surface);
+	}
+
+	.participant-count-label {
+		font-size: 14px;
+		font-weight: 500;
+		color: var(--jmeet-meeting-surface);
+		opacity: 0.72;
+		letter-spacing: 0.3px;
+	}
+}
+
+.participant-names {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 16px;
+	background-color: var(--jmeet-meeting-surface);
+	border-radius: var(--jmeet-radius-md);
+	border: 1px solid var(--jmeet-meeting-border);
+	max-width: 100%;
+
+	.names-icon {
+		font-size: 18px;
+		width: 18px;
+		height: 18px;
+		color: var(--jmeet-meeting-text-secondary);
+		flex-shrink: 0;
+	}
+
+	.names-text {
+		font-size: 14px;
+		font-weight: 500;
+		color: var(--jmeet-meeting-text-primary);
+		letter-spacing: 0.2px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}
+
+.horizontal-content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	padding: 0 16px;
+
+	// topbar 横排统一指示：白面 pill + meeting 描边，hover 主色（captions 记录角标同语言）
+	.unified-indicator {
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 8px 20px;
+		background-color: var(--jmeet-meeting-surface);
+		border: 1px solid var(--jmeet-meeting-border);
+		border-radius: var(--jmeet-radius-md);
+		color: var(--jmeet-meeting-text-secondary);
+		max-width: 100%;
+		transition:
+			color var(--jmeet-motion-fast, 150ms) ease,
+			border-color var(--jmeet-motion-fast, 150ms) ease;
+
+		&:hover {
+			border-color: var(--jmeet-meeting-primary);
+			color: var(--jmeet-meeting-primary);
+		}
+	}
+
+	.indicator-icon {
+		font-size: 20px;
+		width: 20px;
+		height: 20px;
+		flex-shrink: 0;
+	}
+
+	.text-container {
+		display: flex;
+		align-items: baseline;
+		gap: 6px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.participant-count-value {
+		font-size: 15px;
+		font-weight: 600;
+		color: var(--jmeet-meeting-text-primary);
+		letter-spacing: 0.3px;
+	}
+
+	.participant-count-label {
+		font-size: 14px;
+		font-weight: 500;
+		letter-spacing: 0.3px;
+	}
+
+	.names-text {
+		font-size: 14px;
+		font-weight: 400;
+		opacity: 0.9;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}
+
+.vertical-content {
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	padding: clamp(4px, 3cqh, 20px) clamp(4px, 2cqw, 16px);
+	gap: clamp(4px, 2cqh, 16px);
+
+	.count-section {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: clamp(4px, 1.5cqh, 12px);
+		flex: 1;
+		justify-content: center;
+		width: 100%;
+	}
+
+	.participant-names {
+		justify-content: center;
+		gap: 6px;
+		padding: clamp(4px, 1.5cqh, 8px) clamp(8px, 3cqw, 12px);
+		max-width: 90%;
+
+		.names-icon {
+			font-size: clamp(14px, 3cqw, 16px);
+			width: clamp(14px, 3cqw, 16px);
+			height: clamp(14px, 3cqw, 16px);
+		}
+
+		.names-text {
+			font-size: clamp(11px, 2cqh, 13px);
+			text-align: center;
+			flex: 1;
+			min-width: 0;
+		}
+	}
+}
+
+@container hidden-indicator (max-height: 145px) {
+	.vertical-content {
+		.count-info {
+			display: none;
+		}
+		.count-section {
+			gap: 0;
+		}
+		.participant-names {
+			display: none !important;
+		}
+		.count-badge {
+			.badge-icon {
+				display: none;
+			}
+			.badge-number {
+				display: block;
+			}
+		}
+	}
+}
+
+@container hidden-indicator (max-width: 145px) {
+	.vertical-content {
+		.count-info {
+			display: none;
+		}
+		.count-section {
+			gap: 0;
+		}
+		.participant-names {
+			display: none !important;
+		}
+		.count-badge {
+			.badge-icon {
+				display: none;
+			}
+			.badge-number {
+				display: block;
+			}
+		}
+	}
+}
+
+@container hidden-indicator (max-width: 145px) {
+	.vertical-content {
+		padding: 4px;
+	}
+}
+
+@media (max-width: 768px), (max-height: 500px) {
+	.count-badge {
+		min-width: 40px;
+		height: 40px;
+		font-size: 18px;
+	}
+
+	.count-info {
+		.participant-count-value {
+			font-size: 20px;
+		}
+	}
+}

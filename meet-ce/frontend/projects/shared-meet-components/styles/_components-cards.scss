@@ -1,0 +1,54 @@
+// Public surfaces.
+// 平面表面（统一设计语言 §3.2/§8 决策：保类名换样式）：白底 + 8px 圆角，
+// 无描边无阴影——层次由页面底（gray-50）与表面（白）的明度差承担。
+// 状态语义（选中/警告/危险）改由 soft 底承担，原 border 在平面上不可见。
+.jmeet-card {
+	box-sizing: border-box;
+	min-width: 0;
+	padding: var(--jmeet-card-padding);
+	border-radius: var(--jmeet-card-border-radius);
+	background: var(--jmeet-card-background);
+	color: var(--jmeet-color-text-primary);
+	transition:
+		background-color var(--jmeet-motion-fast),
+		box-shadow var(--jmeet-motion-fast);
+}
+
+// API 兼容保留：基础面已无阴影，--outline 不再携带视觉差异
+.jmeet-card--outline {
+	box-shadow: none;
+}
+
+// 浮层语义例外：悬浮件保留阴影
+.jmeet-card--elevated {
+	background: var(--jmeet-color-surface-elevated);
+	box-shadow: var(--jmeet-shadow-surface-md);
+}
+
+// 可交互卡：hover 浅影浮起（既有阴影令牌供给），焦点环保留
+.jmeet-card--interactive {
+	cursor: pointer;
+
+	&:hover {
+		box-shadow: var(--jmeet-card-shadow-hover);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--jmeet-color-action-primary);
+		outline-offset: 2px;
+	}
+}
+
+// 选中态：主色 soft 底
+.jmeet-card--selected {
+	background: var(--jmeet-color-action-primary-light);
+}
+
+// 语义状态：soft 底
+.jmeet-card--warning {
+	background: var(--jmeet-color-action-warning-light);
+}
+
+.jmeet-card--danger {
+	background: var(--jmeet-color-action-danger-light);
+}

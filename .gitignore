@@ -1,0 +1,60 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+**/**/*.angular
+**/**/dist
+/tmp
+/out-tsc
+**/**/*.tgz
+
+
+# dependencies
+**/**/node_modules
+**/**/target
+
+# pnpm
+.pnpm-store
+.pnpm-debug.log
+pnpm-debug.log*
+
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.history/*
+
+
+.editorconfig
+*.browserslistrc
+.git/*
+
+
+**/**/test-results
+**/backend/public/
+
+**/*/coverage
+**/**/test-results
+**/**/openvidu-meet.bundle.min.js
+
+**/**/docs/webcomponent-attributes.md
+**/**/docs/webcomponent-commands.md
+**/**/docs/webcomponent-events.md
+
+**/**/meet-pro
+**/**/test_localstorage_state.json
+
+# meet-screenshots / meet-videos skill output (default --out dirs at repo root)
+/screenshots/
+/videos/
+
+# Local deployment secrets (keep the example templates in Git)
+/deployment/.env.public
+/deployment/.env.intranet
+.superpowers/

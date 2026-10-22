@@ -1,0 +1,272 @@
+<section class="jmeet-card jmeet-list-panel users-directory-panel">
+	<!-- 批次2 任务4：工具行换轨 jmeet-filter-bar（模板级等价替换——两组投影进 __tools 单行，
+	     右推由全局 .users-toolbar-actions{margin-left:auto} 供给，底部分隔与表格同面相连） -->
+	<jmeet-filter-bar>
+		<div class="jmeet-filter-row__filters users-toolbar-filters">
+			@if (showSearchBox()) {
+				<div class="users-search-field" id="search-field">
+					<span class="users-search-prefix" aria-hidden="true">
+						<nz-icon nzType="search" />
+					</span>
+					<input
+						nz-input
+						[formControl]="nameFilterControl"
+						[placeholder]="'USERS.LIST.SEARCH_BY_NAME' | translate"
+						id="search-input"
+						(keydown.enter)="applySearch(); $event.preventDefault()"
+					/>
+					@if (nameFilterControl.value) {
+						<button
+							type="button"
+							class="users-search-clear jmeet-button jmeet-button--ghost jmeet-button--icon"
+							(click)="clearSearch()"
+							[attr.aria-label]="'USERS.COMMON.CLEAR_SEARCH' | translate"
+							id="clear-name-btn"
+						>
+							<nz-icon nzType="close" />
+						</button>
+					}
+				</div>
+			}
+
+			<div class="users-role-field" id="role-filter-field">
+				<nz-select
+					[ngModel]="selectedRole()"
+					(ngModelChange)="setRoleFilter($any($event))"
+					id="role-filter-select"
+					class="users-role-select jmeet-filter-item"
+				>
+					<nz-option nzValue="all" [nzLabel]="'USERS.LIST.ROLE_FILTER_ALL' | translate"></nz-option>
+					<nz-option nzValue="admin" [nzLabel]="'USERS.LIST.ROLE_FILTER_ADMIN' | translate"></nz-option>
+					<nz-option nzValue="room_manager" [nzLabel]="'USERS.LIST.ROLE_FILTER_ROOM_MANAGER' | translate"></nz-option>
+					<nz-option nzValue="room_member" [nzLabel]="'USERS.LIST.ROLE_FILTER_ROOM_MEMBER' | translate"></nz-option>
+				</nz-select>
+			</div>
+
+			@if (selectedRole() !== 'all') {
+				<div class="jmeet-filter-chips">
+					<button
+						type="button"
+						class="jmeet-filter-chip"
+						(click)="setRoleFilter('all')"
+						id="role-filter-chip"
+					>
+						{{
+							'USERS.LIST.ROLE_FILTER_' +
+								(selectedRole() === 'admin'
+									? 'ADMIN'
+									: selectedRole() === 'room_manager'
+										? 'ROOM_MANAGER'
+										: 'ROOM_MEMBER') | translate
+						}}
+						<nz-icon nzType="close" />
+					</button>
+				</div>
+			}
+
+			<button
+				type="button"
+				class="jmeet-button jmeet-button--outline jmeet-button--icon"
+				(click)="refreshUsers()"
+				[disabled]="loading()"
+				[attr.aria-label]="'USERS.COMMON.REFRESH_USERS' | translate"
+				nz-tooltip [nzTooltipTitle]="'USERS.COMMON.REFRESH_USERS' | translate"
+				id="refresh-btn"
+			>
+				<nz-icon nzType="reload" [class.spinning]="loading()" />
+			</button>
+		</div>
+		<div class="jmeet-filter-row__filters users-toolbar-actions">
+			@if (showSelection() && selectedUsers().size > 0) {
+				<span class="users-selection-count" id="selection-count">
+					{{ 'USERS.LIST.SELECTED_COUNT' | translate }}: {{ selectedUsers().size }}
+				</span>
+				<button nz-button (click)="clearSelection()" [disabled]="loading()" id="clear-selection-btn">
+					{{ 'USERS.LIST.CLEAR_SELECTION' | translate }}
+				</button>
+				<button
+					nz-button
+					nzDanger
+					(click)="bulkDeleteSelected()"
+					[disabled]="loading()"
+					id="bulk-delete-btn"
+				>
+					{{ 'USERS.LIST.DELETE_SELECTED_USERS' | translate }} ({{ selectedUsers().size }})
+				</button>
+			}
+
+			<button nz-button nzType="primary" (click)="createUser()" id="create-user-btn">
+				{{ 'USERS.LIST.CREATE_USER' | translate }}
+			</button>
+		</div>
+	</jmeet-filter-bar>
+
+	@if (loading()) {
+		<jmeet-loading-skeleton variant="list" [rows]="6" />
+	} @else if (!loading() && users().length === 0 && !showEmptyFilterMessage()) {
+		<jmeet-empty-state
+			[title]="'USERS.LIST.EMPTY_TITLE' | translate"
+			[description]="'USERS.LIST.EMPTY_SUBTITLE' | translate"
+			[actionLabel]="'USERS.LIST.CREATE_FIRST_USER' | translate"
+			(action)="createUser()"
+		/>
+	} @else if (users().length === 0 && showEmptyFilterMessage()) {
+		<jmeet-empty-state
+			[title]="'USERS.LIST.EMPTY_FILTER_TITLE' | translate"
+			[description]="'USERS.LIST.EMPTY_FILTER_SUBTITLE' | translate"
+			[actionLabel]="'USERS.COMMON.CLEAR_SEARCH' | translate"
+			(action)="clearSearch()"
+		/>
+	} @else {
+		<!-- 批次2 迁移：nz-table → jmeet-data-table + 原生 table（对齐 rooms/recording/room-members 列表页用法）；
+		     列定义/排序/分页/选择语义逐项保留，表格 chrome 由全局 _tables.scss 供给 -->
+		<jmeet-data-table>
+			<table class="users-table" id="users-table">
+				<thead>
+					<tr>
+						@if (showSelection()) {
+							<th class="select-header" id="select-header">
+								<label
+									nz-checkbox
+									[nzChecked]="allSelected()"
+									[nzIndeterminate]="someSelected()"
+									(nzCheckedChange)="toggleAllSelection()"
+									id="select-all-checkbox"
+								></label>
+							</th>
+						}
+						<th class="sortable" (click)="toggleSort('name')" tabindex="0" (keydown.enter)="toggleSort('name')" (keydown.space)="toggleSort('name'); $event.preventDefault()" id="user-name-header">
+							{{ 'USERS.LIST.COLUMN_USER' | translate }}
+							@if (currentSortField() === 'name') {
+								<nz-icon [nzType]="(currentSortOrder() === 'asc' ? 'arrow_upward' : 'arrow_downward') | nzIconType" class="sort-arrow" />
+							}
+						</th>
+						<th id="login-name-header">{{ 'USERS.LIST.COLUMN_LOGIN' | translate }}</th>
+						<th id="role-header">{{ 'USERS.LIST.COLUMN_ROLE' | translate }}</th>
+						<th class="sortable" (click)="toggleSort('registrationDate')" tabindex="0" (keydown.enter)="toggleSort('registrationDate')" (keydown.space)="toggleSort('registrationDate'); $event.preventDefault()" id="registration-date-header">
+							{{ 'USERS.LIST.COLUMN_MEMBER_SINCE' | translate }}
+							@if (currentSortField() === 'registrationDate') {
+								<nz-icon [nzType]="(currentSortOrder() === 'asc' ? 'arrow_upward' : 'arrow_downward') | nzIconType" class="sort-arrow" />
+							}
+						</th>
+						<th id="actions-header">{{ 'USERS.LIST.COLUMN_ACTIONS' | translate }}</th>
+					</tr>
+				</thead>
+				<tbody>
+					@for (user of pagedUsers(); track user.userId) {
+						<tr
+							[class.selected-row]="isUserSelected(user)"
+							(click)="onUserClick(user)"
+							id="table-row-{{ user.userId }}"
+						>
+							@if (showSelection()) {
+								<td class="select-cell" id="select-cell-{{ user.userId }}">
+									@if (canSelectUser(user)) {
+										<label
+											nz-checkbox
+											[nzChecked]="isUserSelected(user)"
+											(nzCheckedChange)="toggleUserSelection(user)"
+											(click)="$event.stopPropagation()"
+											id="select-user-{{ user.userId }}"
+										></label>
+									}
+								</td>
+							}
+							<td class="user-cell" id="user-name-cell-{{ user.userId }}">
+								<span
+									class="user-avatar"
+									[style.background-color]="avatarColor(user.name)"
+									aria-hidden="true"
+								>{{ avatarInitial(user.name) }}</span>
+								<span class="user-name" id="user-name-{{ user.userId }}">{{ user.name }}</span>
+							</td>
+							<td id="login-name-cell-{{ user.userId }}">
+								<span class="col-login" nz-tooltip [nzTooltipTitle]="user.loginName">{{
+									user.loginName
+								}}</span>
+							</td>
+							<td id="role-cell-{{ user.userId }}">
+								<span id="role-label-{{ user.userId }}">
+									<jmeet-status-tag
+										[label]="UsersUiUtils.getRoleTranslationKey(user.role) | translate"
+										[variant]="roleVariant(user.role)"
+									/>
+								</span>
+							</td>
+							<td id="registration-date-cell-{{ user.userId }}">
+								@if (user.registrationDate) {
+									<span class="date-line" id="registration-date-{{ user.userId }}">{{
+										user.registrationDate | date: 'yyyy-MM-dd HH:mm'
+									}}</span>
+								} @else {
+									<span class="no-data" id="no-registration-date-{{ user.userId }}">-</span>
+								}
+							</td>
+							<td class="actions-cell" id="actions-cell-{{ user.userId }}">
+								<div class="action-buttons" id="action-buttons-{{ user.userId }}">
+									<button
+										type="button"
+										class="jmeet-action-link"
+										(click)="$event.stopPropagation(); updateRole(user)"
+										[disabled]="
+											loading() || UsersUiUtils.isProtectedUser(user, currentUserId(), rootAdminId())
+										"
+										id="update-role-btn-{{ user.userId }}"
+									>
+										{{ 'USERS.LIST.UPDATE_ROLE' | translate }}
+									</button>
+									<button
+										type="button"
+										class="jmeet-action-link"
+										nz-dropdown
+										[nzDropdownMenu]="userActions"
+										(click)="$event.stopPropagation()"
+										[disabled]="loading()"
+										id="more-user-actions-{{ user.userId }}"
+									>
+										{{ 'COMMON.MORE_ACTIONS' | translate }}<nz-icon nzType="down" />
+									</button>
+									<nz-dropdown-menu #userActions="nzDropdownMenu">
+										<ul nz-menu>
+											<li
+												nz-menu-item
+												[nzDisabled]="loading() || UsersUiUtils.isProtectedUser(user, currentUserId(), rootAdminId())"
+												(click)="resetPassword(user)"
+												id="reset-password-btn-{{ user.userId }}"
+											>
+												{{ 'USERS.LIST.RESET_PASSWORD' | translate }}
+											</li>
+											<li nz-menu-divider></li>
+											<li
+												nz-menu-item
+												class="delete-action"
+												[nzDisabled]="loading() || UsersUiUtils.isProtectedUser(user, currentUserId(), rootAdminId())"
+												(click)="deleteUser(user)"
+												id="delete-user-btn-{{ user.userId }}"
+											>
+												{{ 'USERS.LIST.DELETE_USER' | translate }}
+											</li>
+										</ul>
+									</nz-dropdown-menu>
+								</div>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</jmeet-data-table>
+
+		<!-- 全量拉取+客户端分页：页码器接后端真实总数（totalCount 直通），每页默认 10 条；
+		     数据量大时回改服务端分页 -->
+		@if (totalCount() > 0) {
+			<div class="users-table-footer">
+				<jmeet-pagination
+					[length]="totalCount()"
+					[pageIndex]="pageIndex()"
+					[pageSize]="pageSize()"
+					(pageChange)="onPageChange($event)"
+				/>
+			</div>
+		}
+	}
+</section>

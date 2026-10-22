@@ -1,0 +1,9 @@
+name: X-Fields
+in: header
+description: >
+    Comma-separated list of **Room Member** fields to include in the response.
+    Use this header as an alternative to the `fields` query parameter.
+required: false
+schema:
+    type: string
+example: 'accessUrl,baseRole'

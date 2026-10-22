@@ -1,0 +1,10 @@
+name: roomName
+in: query
+required: false
+description: >
+    Filter rooms by name.
+    By default, roomName uses prefix and case-sensitive matching.
+    Use roomNameMatchMode and roomNameCaseInsensitive to customize matching behavior.
+schema:
+    type: string
+example: 'room'

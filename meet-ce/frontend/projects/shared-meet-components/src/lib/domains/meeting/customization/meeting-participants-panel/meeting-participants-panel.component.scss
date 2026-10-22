@@ -1,0 +1,202 @@
+// 会议域深绘（批次 2 §5.4）：成员面板——白底圆角 8 搜索行（focus 环 primary 8%）、
+// 11px 三级字色分组头（主持人/参会者）、42px 成员行（行形态在 participant-panel-item 层）、
+// 底部操作行（全体静音/邀请 soft 底，贴 dock 底）。模板/TS 零变更，全 --jmeet-meeting-*。
+// 骨架：dock 形态由 session.component.scss 全局层供给 flex 列，此处为窄屏 drawer 兜底
+//（同聊天面板先例），底部操作行因此能贴 dock 底。
+.panel-container {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	height: 100%;
+	min-height: 0;
+	overflow: hidden;
+}
+
+.participants-panel-header {
+	justify-content: space-between;
+}
+
+.panel-heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.panel-heading .panel-title { margin-left: 0; }
+
+// 计数 chip：浅主色底、4px 圆角（dock 形态头部隐藏，仅 drawer 形态可见）
+.member-count {
+	display: inline-grid;
+	min-width: 20px;
+	height: 20px;
+	padding: 0 6px;
+	place-items: center;
+	border-radius: var(--jmeet-radius-sm);
+	background: var(--jmeet-meeting-primary-soft);
+	color: var(--jmeet-meeting-primary);
+	font-size: var(--jmeet-font-size-xs);
+	font-weight: var(--jmeet-font-weight-semibold);
+}
+
+.panel-header-actions {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	margin-left: auto;
+}
+
+.panel-action-button {
+	color: var(--jmeet-meeting-primary);
+}
+
+// 搜索行：白底圆角 8 单条（搜索图标前置），focus 环 primary 8%（同聊天输入框语言）
+.participants-search {
+	position: relative;
+	display: flex;
+	align-items: center;
+	height: 36px;
+	margin: 8px 12px;
+	padding: 0 8px 0 30px;
+	border: 1px solid var(--jmeet-meeting-border);
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-meeting-surface);
+	transition: box-shadow 160ms ease, border-color 160ms ease;
+
+	.search-icon {
+		position: absolute;
+		left: 10px;
+		width: 14px;
+		height: 14px;
+		font-size: 14px;
+		color: var(--jmeet-meeting-text-tertiary);
+		pointer-events: none;
+	}
+
+	input {
+		flex: 1 1 auto;
+		min-width: 0;
+		height: 100%;
+		padding: 0;
+		border: none;
+		background: transparent;
+		box-shadow: none;
+		outline: none;
+		font-size: 13px;
+		color: var(--jmeet-meeting-text-primary);
+
+		&::placeholder {
+			color: var(--jmeet-meeting-text-tertiary);
+		}
+
+		&:focus {
+			outline: none;
+			box-shadow: none;
+		}
+	}
+
+	&:focus-within {
+		border-color: color-mix(in srgb, var(--jmeet-meeting-primary) 40%, transparent);
+	}
+}
+
+// 分组头：主持人/参会者——11px 三级字色、大写、加粗、字距展开（列表分区小标）
+.member-section-label {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	padding: 4px 12px 2px;
+	color: var(--jmeet-meeting-text-tertiary);
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 16px;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
+
+	.section-sort-hint {
+		font-weight: 400;
+		letter-spacing: 0;
+		text-transform: none;
+	}
+}
+
+// 底部操作行：贴 dock 底条形（白面 + 上缘 1px meeting divider），soft 底按钮
+.participants-footer {
+	flex-shrink: 0;
+	display: flex;
+	gap: 8px;
+	margin: 0;
+	padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+	background: var(--jmeet-meeting-surface);
+	border-top: 1px solid var(--jmeet-meeting-divider);
+
+	button {
+		flex: 1;
+		min-height: 36px;
+		border: none;
+		border-radius: var(--jmeet-radius-md);
+		font-size: 13px;
+		font-weight: 500;
+		transition: background-color 160ms ease, color 160ms ease;
+	}
+
+	// 全体静音：中性 soft 底（stage）
+	.mute-all-button {
+		background: var(--jmeet-meeting-stage-bg);
+		color: var(--jmeet-meeting-text-primary);
+
+		&:hover:not(:disabled) {
+			background: var(--jmeet-meeting-control-hover); // 混色沉淀令牌（遗留清扫·快赢②，border 55% 混 surface 等值）
+			color: var(--jmeet-meeting-text-primary);
+		}
+
+		.anticon { width: 14px; height: 14px; font-size: 14px; }
+	}
+
+	// 邀请：主色 soft 底（primary-soft）+ 主色字
+	.invite-button {
+		background: var(--jmeet-meeting-primary-soft);
+		color: var(--jmeet-meeting-primary);
+
+		&:hover:not(:disabled) {
+			background: var(--jmeet-meeting-primary-soft-hover); // 混色沉淀令牌（遗留清扫·快赢②，primary 14% 混 surface 等值）
+			color: var(--jmeet-meeting-primary);
+		}
+
+		.anticon { width: 14px; height: 14px; font-size: 14px; }
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.member-count, .participants-footer button { transition: none; }
+}
+
+// 空态邀请引导：仅有本地成员时填充面板下部空白
+.members-empty-hint {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	margin: 24px 16px;
+	padding: 22px 16px;
+	border: 1px dashed var(--jmeet-meeting-border);
+	border-radius: var(--jmeet-radius-md);
+	text-align: center;
+
+	.members-empty-hint-icon {
+		width: 28px;
+		height: 28px;
+		font-size: 28px;
+		color: var(--jmeet-meeting-text-tertiary);
+	}
+
+	.members-empty-hint-text {
+		margin: 0;
+		color: var(--jmeet-meeting-text-secondary);
+		font-size: var(--jmeet-font-size-secondary);
+	}
+
+	.members-empty-invite-btn {
+		min-height: 32px;
+	}
+}

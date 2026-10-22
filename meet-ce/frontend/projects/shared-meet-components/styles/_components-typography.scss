@@ -1,0 +1,75 @@
+// Public typography utilities shared by the SPA and web component.
+.jmeet-text--page-title {
+	margin: 0;
+	color: var(--jmeet-color-text-primary);
+	font-family: var(--jmeet-typography-font-family);
+	font-size: 1.375rem; // 22px（TS-Admin 页面标题）
+	font-weight: var(--jmeet-font-weight-extrabold);
+	line-height: var(--jmeet-typography-line-height-tight);
+	letter-spacing: -0.02em;
+}
+
+.jmeet-text--section-title {
+	margin: 0;
+	color: var(--jmeet-color-text-primary);
+	font-family: var(--jmeet-typography-font-family);
+	font-size: var(--jmeet-font-size-md);
+	font-weight: var(--jmeet-font-weight-bold);
+	line-height: var(--jmeet-typography-line-height-tight);
+}
+
+.jmeet-text--card-title {
+	margin: 0;
+	color: var(--jmeet-color-text-primary);
+	font-family: var(--jmeet-typography-font-family);
+	font-size: var(--jmeet-font-size-md);
+	font-weight: var(--jmeet-font-weight-bold);
+	line-height: var(--jmeet-typography-line-height-tight);
+	letter-spacing: -0.01em;
+}
+
+.jmeet-text--body {
+	color: var(--jmeet-color-text-primary);
+	font-family: var(--jmeet-typography-font-family);
+	font-size: var(--jmeet-typography-font-size-sm);
+	font-weight: var(--jmeet-typography-font-weight-regular);
+	line-height: var(--jmeet-typography-line-height-normal);
+}
+
+.jmeet-text--body-secondary {
+	color: var(--jmeet-color-text-secondary);
+	font-family: var(--jmeet-typography-font-family);
+	font-size: var(--jmeet-typography-font-size-sm);
+	font-weight: var(--jmeet-typography-font-weight-regular);
+	line-height: var(--jmeet-typography-line-height-normal);
+}
+
+.jmeet-text--body-tertiary {
+	color: var(--jmeet-color-text-tertiary);
+	font-family: var(--jmeet-typography-font-family);
+	font-size: var(--jmeet-typography-font-size-sm);
+	font-weight: var(--jmeet-typography-font-weight-regular);
+	line-height: var(--jmeet-typography-line-height-normal);
+}
+
+.jmeet-text--label {
+	color: var(--jmeet-color-text-secondary);
+	font-family: var(--jmeet-typography-font-family);
+	font-size: var(--jmeet-typography-font-size-sm);
+	font-weight: var(--jmeet-typography-font-weight-semibold);
+	line-height: var(--jmeet-typography-line-height-normal);
+}
+
+.jmeet-text--caption {
+	color: var(--jmeet-color-text-secondary);
+	font-family: var(--jmeet-typography-font-family);
+	font-size: var(--jmeet-typography-font-size-xs);
+	font-weight: var(--jmeet-typography-font-weight-regular);
+	line-height: var(--jmeet-typography-line-height-normal);
+}
+
+.jmeet-text--code {
+	font-family: ui-monospace, 'Cascadia Code', SFMono-Regular, Consolas, monospace;
+	font-size: var(--jmeet-typography-font-size-sm);
+	line-height: var(--jmeet-typography-line-height-normal);
+}

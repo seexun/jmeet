@@ -1,0 +1,18 @@
+type: object
+description: >
+    Roles for the room. Defines the complete permissions for moderator and speaker roles.
+properties:
+    moderator:
+        type: object
+        properties:
+            permissions:
+                $ref: ./meet-permissions.yaml
+                description: >
+                    The complete set of permissions for the moderator role. These define what moderators can do in the meeting.
+    speaker:
+        type: object
+        properties:
+            permissions:
+                $ref: ./meet-permissions.yaml
+                description: >
+                    The complete set of permissions for the speaker role. These define what speakers can do in the meeting.

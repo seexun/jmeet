@@ -1,0 +1,15 @@
+type: object
+properties:
+    isTruncated:
+        type: boolean
+        description: >
+            Indicates if there are more items to retrieve.
+            If true, use the `nextPageToken` to fetch the next set of items.
+    nextPageToken:
+        type: [string, 'null']
+        description: The token to retrieve the next page of items.
+    maxItems:
+        type: integer
+        description: >
+            Maximum number of items returned in a single response page.
+            Corresponds to the `maxItems` query parameter in the request.

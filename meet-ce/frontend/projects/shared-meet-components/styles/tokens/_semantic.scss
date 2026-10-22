@@ -1,0 +1,152 @@
+// ============================================================
+// 语义 Token 层（Semantic Layer）
+// ------------------------------------------------------------
+// 把原始值翻译成"用途"：组件只允许消费语义变量（如 action-primary），
+// 不允许直接引用 blue-600 这类原始色——保证"换一个语义"时全站联动。
+// 三条规则：
+//   1. 本层只能引用 primitives 或其他语义变量；
+//   2. 新增语义前先查标准文档是否已有对应概念；
+//   3. 品牌方可通过 brand-primary 系列变量在运行时覆盖主色。
+// ============================================================
+// Semantic tokens describe purpose and may only reference primitives or other semantic tokens.
+@mixin emit-light-semantic-tokens {
+// —— 动作色：主操作/危险/警告/成功/信息，按钮与链接的唯一取色来源 ——
+// ── 动作色组：交互元素唯一取色来源 ──────────────────────────
+	--jmeet-color-action-primary: var(--jmeet-color-blue-600);
+	--jmeet-color-action-link: var(--jmeet-color-action-primary);  // 超链接/文字操作专用档（默认同主色；EP 皮肤压深至 dark-2 保证白底可读）
+	--jmeet-color-action-danger: var(--jmeet-color-red-600);  // 危险操作
+	--jmeet-color-action-danger-light: var(--jmeet-color-red-50);  // 危险浅底（FDE8E8）
+	--jmeet-color-action-success-light: var(--jmeet-color-green-50);  // 成功浅底（E8F5EE）
+	--jmeet-color-action-success-text: var(--jmeet-color-green-600);  // 成功 soft 底文字（187741，对 E8F5EE 对比 4.99）
+	--jmeet-color-action-warning-light: var(--jmeet-color-amber-50);  // 警告浅底（FFF4E6）
+	--jmeet-color-action-warning-text: var(--jmeet-color-amber-600);  // 警告 soft 底文字（B45309，对 FFF4E6 对比 4.6）
+	--jmeet-color-action-danger-text: var(--jmeet-color-red-750);  // 危险 soft 底文字（C5221F，对 FDE8E8 对比 4.94）
+// —— 表面色：页面底（浅灰）、卡片（白）、hover、浮层（elevated）——
+// ── 表面色组：页面/卡片/浮层的背景层次 ──────────────────────
+	--jmeet-color-surface-page: var(--jmeet-color-gray-50);  // 页面底 F2F3F5
+	--jmeet-color-surface-card: var(--jmeet-color-gray-0);  // 卡片白
+// —— 文本色：一级正文 / 次级说明 / 三级弱化 / 禁用，四级对比度均需达 AA ——
+// ── 文字色组：四级对比度需满足 WCAG AA（§33）─────────────────
+	--jmeet-color-text-primary: var(--jmeet-color-gray-900);  // 一级正文 1F2329
+	--jmeet-color-action-primary-light: var(--jmeet-color-blue-50);  // 选中/信息浅底
+	--jmeet-color-action-primary-dark: var(--jmeet-color-blue-700);  // 按压深色
+	--jmeet-color-action-secondary: var(--jmeet-color-gray-900);  // 深色实心按钮（§18 Secondary）
+	--jmeet-color-action-secondary-light: var(--jmeet-color-gray-200);
+	--jmeet-color-action-accent-light: var(--jmeet-color-blue-400);
+	--jmeet-color-action-warning: var(--jmeet-color-amber-600);  // 警告 B45309
+	--jmeet-color-action-success: var(--jmeet-color-green-600);  // 成功 187741
+	--jmeet-color-action-info: var(--jmeet-color-blue-600);  // 信息=主色
+	--jmeet-color-action-primary-rgb: var(--jmeet-color-blue-600-rgb);
+	--jmeet-color-surface-variant: var(--jmeet-color-gray-25);  // 次级表面 FAFAFA
+	--jmeet-color-surface-hover: var(--jmeet-color-gray-100);  // 全站 hover F5F7FA
+	--jmeet-color-surface-elevated: var(--jmeet-color-gray-0);  // 浮层白
+	--jmeet-color-surface-container: var(--jmeet-color-gray-25);
+	--jmeet-color-text-secondary: var(--jmeet-color-gray-500);  // 次级 5A6068
+	--jmeet-color-text-tertiary: var(--jmeet-color-gray-400);  // 三级/描述 8A9099
+	--jmeet-color-text-hint: var(--jmeet-color-gray-500);
+	--jmeet-color-text-disabled: var(--jmeet-color-gray-400);  // 禁用文字
+	--jmeet-color-text-on-primary: var(--jmeet-color-gray-0);  // 主色上的文字（白）
+	--jmeet-color-text-on-secondary: var(--jmeet-color-gray-0);  // 深色按钮上的文字
+	--jmeet-color-text-on-accent: var(--jmeet-color-blue-650);
+	--jmeet-color-text-on-surface: var(--jmeet-color-gray-900);
+	--jmeet-color-text-on-page: var(--jmeet-color-gray-900);
+
+// —— 边框三档：常规 / 轻（卡片内分隔）/ 强（hover 强调）——
+// ── 边框三档 + 键盘焦点环（§33 可达性）──────────────────────
+	--jmeet-color-border: var(--jmeet-color-gray-450);  // 常规边框 E6E8EB
+	--jmeet-color-border-light: var(--jmeet-color-gray-350);  // 轻边框（卡内分隔）
+	--jmeet-color-border-strong: var(--jmeet-color-gray-300);  // 强调边框（hover）
+// —— 徽章专用色：所有者（琥珀）/ 管理员（品牌蓝）/ 主持人（钢蓝）——
+	--jmeet-color-badge-owner: var(--jmeet-color-amber-750);
+	--jmeet-color-badge-admin: var(--jmeet-color-blue-600);
+	--jmeet-color-badge-moderator: var(--jmeet-color-steel-500);
+	--jmeet-color-avatar-text: var(--jmeet-color-gray-700);
+	--jmeet-color-icon-default: var(--jmeet-color-text-secondary);
+	--jmeet-color-icon-active: var(--jmeet-color-action-primary);
+
+// —— 焦点环：主色低透明度外圈，键盘可达性（标准 §33）依赖它 ——
+	// 经 action-primary-rgb 语义别名取色（别名 = blue-600-rgb 现值），批次 5 显式收口：
+	// "primary 8% 3px" 是声明而非巧合。品牌换肤组不含 -rgb 别名，焦点环不随换肤（原行为）。
+	--jmeet-focus-ring: 0 0 0 3px rgb(var(--jmeet-color-action-primary-rgb) / 8%);  // 键盘焦点环（§33）
+// —— 表面阴影契约：sm 为卡片常驻阴影，md/lg 用于浮层与抽屉 ——
+	--jmeet-shadow-surface-sm: var(--jmeet-shadow-card);  // 卡片常驻阴影
+	--jmeet-shadow-surface-md: var(--jmeet-shadow-light-md);  // 抽屉/下拉
+	--jmeet-shadow-surface-lg: var(--jmeet-shadow-light-lg);  // 模态/大浮层
+	--jmeet-shadow-surface-hover: var(--jmeet-shadow-hover);  // 可交互卡片 hover 浮起
+
+// —— 布局间距语义映射：组件里用 space 语义而非像素 ——
+// ── 布局/圆角/字体/动效：primitives 的语义化别名 ────────────
+	--jmeet-layout-space-xs: var(--jmeet-space-1);
+	--jmeet-layout-space-sm: var(--jmeet-space-2);
+	--jmeet-layout-space-md: var(--jmeet-space-4);
+	--jmeet-layout-space-lg: var(--jmeet-space-6);
+	--jmeet-layout-space-xl: var(--jmeet-space-8);
+	--jmeet-layout-space-xxl: var(--jmeet-space-12);
+
+// —— 圆角语义映射 ——
+	--jmeet-shape-radius-xs: var(--jmeet-radius-xs);
+	--jmeet-shape-radius-sm: var(--jmeet-radius-sm);
+	--jmeet-shape-radius-md: var(--jmeet-radius-md);
+	--jmeet-shape-radius-lg: var(--jmeet-radius-lg);
+	--jmeet-shape-radius-dialog: var(--jmeet-radius-dialog);  // 对话框面（规格 §3.2：白面 10px）
+	--jmeet-shape-radius-xl: var(--jmeet-radius-xl);
+	--jmeet-shape-radius-circle: var(--jmeet-radius-circle);
+
+// —— 字体语义映射：组件统一消费 typography-* 变量 ——
+	--jmeet-typography-font-family: var(--jmeet-font-family);
+	--jmeet-typography-font-size-xxs: var(--jmeet-font-size-xxs);
+	--jmeet-typography-font-size-xs: var(--jmeet-font-size-xs);
+	--jmeet-typography-font-size-sm: var(--jmeet-font-size-sm);
+	--jmeet-typography-font-size-md: var(--jmeet-font-size-md);
+	--jmeet-typography-font-size-lg: var(--jmeet-font-size-lg);
+	--jmeet-typography-font-size-xl: var(--jmeet-font-size-xl);
+	--jmeet-typography-font-size-xxl: var(--jmeet-font-size-xxl);
+	--jmeet-typography-font-size-hero: var(--jmeet-font-size-hero);
+	--jmeet-typography-font-weight-light: var(--jmeet-font-weight-light);
+	--jmeet-typography-font-weight-regular: var(--jmeet-font-weight-regular);
+	--jmeet-typography-font-weight-medium: var(--jmeet-font-weight-medium);
+	--jmeet-typography-font-weight-semibold: var(--jmeet-font-weight-semibold);
+	--jmeet-typography-font-weight-bold: var(--jmeet-font-weight-bold);
+	--jmeet-typography-line-height-tight: var(--jmeet-line-height-tight);
+	--jmeet-typography-line-height-normal: var(--jmeet-line-height-normal);
+	--jmeet-typography-line-height-relaxed: var(--jmeet-line-height-relaxed);
+
+// —— 动效语义映射：fast=悬停/菜单，normal=抽屉/面板 ——
+	--jmeet-motion-fast: var(--jmeet-transition-fast);
+	--jmeet-motion-normal: var(--jmeet-transition-normal);
+	--jmeet-motion-slow: var(--jmeet-transition-slow);
+
+// —— 控件高度契约：全部控件 36px 基准 ——
+	--jmeet-control-height-default: var(--jmeet-control-height);
+	--jmeet-layout-container-max-width: var(--jmeet-container-max-width);
+	--jmeet-layout-container-padding: var(--jmeet-container-padding);
+	--jmeet-layout-grid-gap: var(--jmeet-grid-gap);
+	--jmeet-layout-toolbar-height: var(--jmeet-toolbar-height);  // 顶栏 56
+	--jmeet-layout-shell-sidenav-width: var(--jmeet-shell-sidenav-width);  // 侧栏 240
+// —— 图标语义映射：sm=18（按钮/侧栏），md=24（独立图标）——
+	--jmeet-icon-control-sm: var(--jmeet-icon-size-sm);
+	--jmeet-icon-control-md: var(--jmeet-icon-size-md);
+	--jmeet-icon-control-lg: var(--jmeet-icon-size-lg);
+	--jmeet-icon-control-xl: var(--jmeet-icon-size-xl);
+
+// —— 状态层透明度映射 ——
+	--jmeet-state-hover-opacity: var(--jmeet-hover-opacity);
+	--jmeet-state-focus-opacity: var(--jmeet-focus-opacity);
+	--jmeet-state-selected-opacity: var(--jmeet-selected-opacity);
+	--jmeet-state-disabled-opacity: var(--jmeet-disabled-opacity);  // 禁用透明度
+// —— 断点语义映射（标准 §29）——
+	--jmeet-layout-breakpoint-mobile: var(--jmeet-breakpoint-mobile);
+	--jmeet-layout-breakpoint-tablet: var(--jmeet-breakpoint-tablet);
+	--jmeet-layout-breakpoint-desktop: var(--jmeet-breakpoint-desktop);
+	--jmeet-layout-breakpoint-wide: var(--jmeet-breakpoint-wide);
+}
+
+// Hosts can set these brand tokens at runtime; fallbacks retain the JMeet defaults.
+// 品牌覆盖：宿主应用可通过 --jmeet-color-brand-primary 在运行时换主色，
+// 未设置时回落到 JMeet 默认蓝。三个变量必须成组覆盖，否则深浅态会脱节。
+@mixin emit-brand-semantic-overrides {
+	--jmeet-color-action-primary: var(--jmeet-color-brand-primary, var(--jmeet-color-blue-600));
+	--jmeet-color-action-primary-light: var(--jmeet-color-brand-primary-light, var(--jmeet-color-blue-50));  // 选中/信息浅底
+	--jmeet-color-action-primary-dark: var(--jmeet-color-brand-primary-dark, var(--jmeet-color-blue-700));  // 按压深色
+	--jmeet-color-action-link: var(--jmeet-color-action-primary);  // 链接档随品牌主色联动（EP 皮肤单独压深，不在此覆盖）
+}

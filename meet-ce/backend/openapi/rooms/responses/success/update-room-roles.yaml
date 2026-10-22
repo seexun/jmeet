@@ -1,0 +1,5 @@
+description: Success response for updating room roles configuration. Returns the updated roles.
+content:
+    application/json:
+        schema:
+            $ref: '../../schemas/meet-room-roles.yaml'

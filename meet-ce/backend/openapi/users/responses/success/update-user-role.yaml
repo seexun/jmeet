@@ -1,0 +1,5 @@
+description: Successfully updated user role. Returns the updated user.
+content:
+    application/json:
+        schema:
+            $ref: '../../schemas/meet-user.yaml'

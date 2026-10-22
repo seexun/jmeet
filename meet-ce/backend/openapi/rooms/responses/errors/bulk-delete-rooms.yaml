@@ -1,0 +1,78 @@
+description: >
+    **Mixed results**. Some rooms were successfully processed for deletion while others were not.
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                deleted:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                            successCode:
+                                type: string
+                                enum:
+                                    - room_deleted
+                                    - room_with_active_meeting_deleted
+                                    - room_with_active_meeting_scheduled_to_be_deleted
+                                    - room_and_recordings_deleted
+                                    - room_closed
+                                    - room_with_active_meeting_and_recordings_deleted
+                                    - room_with_active_meeting_closed
+                                    - room_with_active_meeting_and_recordings_scheduled_to_be_deleted
+                                    - room_with_active_meeting_scheduled_to_be_closed
+                                description: A code representing the success scenario
+                            message:
+                                type: string
+                                description: A message providing additional context about the success
+                            room:
+                                $ref: '../../schemas/meet-room.yaml'
+                    description: List of rooms that were successfully processed for deletion
+                failed:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                            roomId:
+                                type: string
+                            error:
+                                type: string
+                                description: Name of the error
+                            message:
+                                type: string
+                                description: Description of the error
+                    description: List of rooms that failed to process while deleting
+        examples:
+            partial_deletion_with_errors:
+                summary: Some rooms were successfully processed for deletion, others failed
+                value:
+                    message: '2 room(s) failed to process while deleting'
+                    deleted:
+                        - roomId: room-123
+                          successCode: room_deleted
+                          message: Room 'room-123' deleted successfully
+                        - roomId: room-456
+                          successCode: room_with_active_meeting_deleted
+                          message: Room 'room-456' with active meeting deleted successfully
+                    failed:
+                        - roomId: room-789
+                          error: Room Error
+                          message: Room 'room-789' not found
+                        - roomId: room-101
+                          error: room_has_active_meeting
+                          message: Room 'room-101' cannot be deleted because it has an active meeting
+            no_deletion_performed:
+                summary: No rooms were successfully processed for deletion
+                value:
+                    message: '2 room(s) failed to process for deletion'
+                    deleted: []
+                    failed:
+                        - roomId: room-123
+                          error: Room Error
+                          message: Room 'room-123' not found
+                        - roomId: room-456
+                          error: room_has_active_meeting
+                          message: Room 'room-456' cannot be deleted because it has an active meeting

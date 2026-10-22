@@ -1,0 +1,48 @@
+description: Successfully retrieved the list of users
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                users:
+                    type: array
+                    items:
+                        $ref: '../../schemas/meet-user.yaml'
+                pagination:
+                    $ref: '../../../shared/schemas/meet-pagination.yaml'
+        examples:
+            multiple_users:
+                summary: Response with multiple users
+                value:
+                    users:
+                        - userId: '8f9c3e5a-2b7d-4c8e-9a1f-3d6e8b2c4f7a'
+                          name: 'Admin'
+                          registrationDate: 1620000000000
+                          role: 'admin'
+                          roleUpdatedAt: 1620000000000
+                        - userId: 'c2d4e6f8-1a3b-4c5d-8e9f-0a1b2c3d4e5f'
+                          name: 'Alice Smith'
+                          registrationDate: 1620050000000
+                          role: 'room_manager'
+                          roleUpdatedAt: 1620050000000
+                        - userId: 'bob_jones'
+                          name: 'Bob Jones'
+                          registrationDate: 1620100000000
+                          role: 'room_member'
+                          roleUpdatedAt: 1620100000000
+                    pagination:
+                        nextPageToken: 'eyJvZmZzZXQiOjEwfQ=='
+                        isTruncated: true
+                        maxItems: 3
+            single_page:
+                summary: Response with all users in a single page
+                value:
+                    users:
+                        - userId: '8f9c3e5a-2b7d-4c8e-9a1f-3d6e8b2c4f7a'
+                          name: 'Admin'
+                          registrationDate: 1620000000000
+                          role: 'admin'
+                          roleUpdatedAt: 1620000000000
+                    pagination:
+                        isTruncated: false
+                        maxItems: 10

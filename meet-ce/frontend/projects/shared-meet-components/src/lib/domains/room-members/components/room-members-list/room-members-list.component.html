@@ -1,0 +1,397 @@
+@if (!loading() && members().length === 0 && !showEmptyFilterMessage()) {
+	<jmeet-empty-state
+		[title]="'ROOM_MEMBERS.LIST.EMPTY_TITLE' | translate"
+		[description]="'ROOM_MEMBERS.LIST.EMPTY_SUBTITLE' | translate"
+		[actionLabel]="'ROOM_MEMBERS.COMMON.ADD_MEMBER' | translate"
+		(action)="addMember()"
+	>
+		<nz-icon nzType="usergroup-delete" empty-icon />
+	</jmeet-empty-state>
+} @else {
+	<section class="jmeet-card jmeet-list-panel room-members-directory-panel">
+		<jmeet-filter-bar>
+			@if (showSearchBox()) {
+				<div class="jmeet-filter-field room-members-search-field" id="members-search-field">
+					<input
+						nz-input
+						[formControl]="controls.nameFilter"
+						[placeholder]="'ROOM_MEMBERS.LIST.SEARCH_BY_NAME' | translate"
+						[attr.aria-label]="'ROOM_MEMBERS.LIST.SEARCH_MEMBERS' | translate"
+						id="members-search-input"
+						(keydown.enter)="triggerSearch()"
+					/>
+					@if (filterState().nameFilter) {
+						<button
+							type="button"
+							class="jmeet-button jmeet-button--ghost jmeet-button--icon"
+							(click)="clearNameFilter()"
+							nz-tooltip
+							[nzTooltipTitle]="'ROOM_MEMBERS.LIST.CLEAR_SEARCH' | translate"
+							id="members-clear-name-btn"
+						>
+							<nz-icon nzType="close" />
+						</button>
+					}
+					<button
+						type="button"
+						class="jmeet-button jmeet-button--ghost jmeet-button--icon room-members-search-modifier"
+						[class.active]="filterState().nameCaseInsensitive"
+						(click)="toggleCaseInsensitive()"
+						nz-tooltip
+						[nzTooltipTitle]="'ROOM_MEMBERS.LIST.MATCH_CASE_INSENSITIVE' | translate"
+						id="members-case-insensitive-btn"
+					>
+						<span class="modifier-label">{{
+							'ROOM_MEMBERS.LIST.CASE_INSENSITIVE_LABEL' | translate
+						}}</span>
+					</button>
+					<button
+						type="button"
+						class="jmeet-button jmeet-button--ghost jmeet-button--icon room-members-search-modifier"
+						[class.active]="filterState().nameMatchMode !== TextMatchMode.PREFIX"
+						nz-dropdown
+						[nzDropdownMenu]="matchModeMenu"
+						nz-tooltip
+						[nzTooltipTitle]="
+							('ROOM_MEMBERS.LIST.MATCH_MODE_PREFIX' | translate) + currentMatchMode().label
+						"
+						id="members-match-mode-btn"
+					>
+						<nz-icon [nzType]="(currentMatchMode().icon) | nzIconType" />
+					</button>
+					<button
+						type="button"
+						class="jmeet-button jmeet-button--ghost jmeet-button--icon"
+						(click)="triggerSearch()"
+						[disabled]="loading() || !controls.nameFilter.value"
+						nz-tooltip
+						[nzTooltipTitle]="'ROOM_MEMBERS.COMMON.SEARCH' | translate"
+						id="members-search-btn"
+					>
+						<nz-icon nzType="search" />
+					</button>
+				</div>
+
+				<nz-dropdown-menu #matchModeMenu="nzDropdownMenu">
+					<ul nz-menu>
+						@for (option of nameMatchModeOptions; track option.value) {
+							<li
+								nz-menu-item
+								[class.active]="filterState().nameMatchMode === option.value"
+								(click)="setMatchMode(option.value)"
+								id="members-match-mode-option-{{ option.value }}"
+							>
+								<nz-icon [nzType]="(option.icon) | nzIconType" />
+								<span>{{ option.label }}</span>
+							</li>
+						}
+					</ul>
+				</nz-dropdown-menu>
+			}
+
+			<div class="jmeet-settings-toolbar-actions room-members-toolbar-actions">
+				@if (showSelection() && selectedMembers().size > 0) {
+					<button
+						type="button"
+						class="jmeet-button jmeet-button--danger"
+						(click)="bulkDeleteSelected()"
+						[disabled]="loading()"
+						id="members-bulk-delete-btn"
+					>
+						<nz-icon nzType="user-delete" />
+						{{ 'ROOM_MEMBERS.LIST.REMOVE_SELECTED_MEMBERS' | translate }} ({{ selectedMembers().size }})
+					</button>
+				}
+
+				@if (showFilters()) {
+					<button
+						type="button"
+						class="jmeet-button jmeet-button--ghost jmeet-button--icon"
+						[class.has-filters]="activeFilterChips().length > 0"
+						(click)="toggleFilterPanel()"
+						nz-tooltip
+						[nzTooltipTitle]="'ROOM_MEMBERS.LIST.FILTER_MEMBERS' | translate"
+						id="members-filters-btn"
+					>
+						<nz-icon nzType="setting" />
+					</button>
+				}
+
+				<button
+					type="button"
+					class="jmeet-button jmeet-button--ghost jmeet-button--icon"
+					(click)="refreshMembers()"
+					[disabled]="loading()"
+					nz-tooltip
+					[nzTooltipTitle]="'ROOM_MEMBERS.LIST.REFRESH_MEMBERS' | translate"
+					id="members-refresh-btn"
+				>
+					<nz-icon nzType="reload" />
+				</button>
+
+				<button
+					type="button"
+					class="jmeet-button jmeet-button--primary"
+					(click)="addMember()"
+					[disabled]="loading()"
+					id="members-add-member-btn"
+				>
+					<nz-icon nzType="user-add" />
+					{{ 'ROOM_MEMBERS.COMMON.ADD_MEMBER' | translate }}
+				</button>
+			</div>
+		</jmeet-filter-bar>
+
+		@if (showFilters() && showFilterPanel()) {
+			<div class="room-members-filter-panel" id="members-filters-panel">
+				<div class="jmeet-filter-field">
+					<span class="jmeet-text--body-secondary">{{ 'ROOM_MEMBERS.LIST.FILTER_BY_ROLE' | translate }}</span>
+					<div class="jmeet-field" id="members-base-role-filter-field">
+						<label class="jmeet-field-label" for="members-base-role-filter-select" id="members-base-role-filter-select-label"
+							>{{ 'ROOM_MEMBERS.LIST.ROLE' | translate }}</label
+						>
+						<nz-select [formControl]="controls.baseRole" [nzId]="'members-base-role-filter-select'">
+							@for (option of baseRoleOptions; track option.value) {
+								<nz-option
+									[nzValue]="option.value"
+									[nzLabel]="option.label"
+									id="members-base-role-option-{{ option.value }}"
+								/>
+							}
+						</nz-select>
+					</div>
+				</div>
+
+				<div class="jmeet-filter-field">
+					<span class="jmeet-text--body-secondary">{{ 'ROOM_MEMBERS.LIST.FILTER_BY_TYPE' | translate }}</span>
+					<div class="jmeet-field" id="members-type-filter-field">
+						<label class="jmeet-field-label" for="members-type-filter-select" id="members-type-filter-select-label"
+							>{{ 'ROOM_MEMBERS.LIST.TYPE' | translate }}</label
+						>
+						<nz-select [formControl]="controls.type" [nzId]="'members-type-filter-select'">
+							@for (option of typeOptions; track option.value) {
+								<nz-option [nzValue]="option.value" [nzLabel]="option.label" id="members-type-option-{{ option.value }}" />
+							}
+						</nz-select>
+					</div>
+				</div>
+			</div>
+		}
+
+		<!-- Active Filter Chips -->
+		@if (activeFilterChips().length > 0) {
+			<div class="ov-active-filters" id="members-active-filters">
+				<span class="active-filters-label">{{ 'ROOM_MEMBERS.LIST.FILTERS_LABEL' | translate }}</span>
+				@for (chip of activeFilterChips(); track chip.key) {
+					<button class="filter-chip" (click)="removeFilter(chip.key)" id="members-filter-chip-{{ chip.key }}">
+						<span>{{ chip.label }}</span>
+						<nz-icon nzType="close" />
+					</button>
+				}
+				<button class="clear-all-chip" (click)="clearFilters()" id="members-clear-all-chip">
+					<nz-icon nzType="filter" />
+					<span>{{ 'ROOM_MEMBERS.LIST.CLEAR_ALL' | translate }}</span>
+				</button>
+			</div>
+		}
+
+		@if (loading()) {
+			<jmeet-loading-skeleton variant="list" [rows]="6" />
+		} @else if (members().length === 0 && showEmptyFilterMessage()) {
+			<jmeet-empty-state
+				[title]="'ROOM_MEMBERS.LIST.EMPTY_FILTER_TITLE' | translate"
+				[description]="'ROOM_MEMBERS.LIST.EMPTY_FILTER_SUBTITLE' | translate"
+				[actionLabel]="'ROOM_MEMBERS.LIST.CLEAR_FILTERS' | translate"
+				(action)="clearFilters()"
+			>
+				<nz-icon nzType="filter" empty-icon />
+			</jmeet-empty-state>
+		} @else {
+			<jmeet-data-table>
+				<table class="members-table" id="members-table">
+					<thead>
+						<tr id="members-table-header-row">
+							@if (showSelection()) {
+								<th class="select-header" id="members-select-header">
+									<label
+										nz-checkbox
+										[nzChecked]="allSelected()"
+										[nzIndeterminate]="someSelected()"
+										(click)="$event.stopPropagation()"
+										(nzCheckedChange)="toggleAllSelection()"
+										[nzDisabled]="loading()"
+										id="members-select-all-checkbox"
+									></label>
+								</th>
+							}
+
+							<th class="sortable member-name-header" (click)="toggleSort('name')" tabindex="0" (keydown.enter)="toggleSort('name')" (keydown.space)="toggleSort('name'); $event.preventDefault()" id="members-name-header">
+								{{ 'ROOM_MEMBERS.LIST.COLUMN_MEMBER' | translate }}
+								@if (currentSortField() === 'name') {
+									<nz-icon [nzType]="(currentSortOrder() === 'asc' ? 'arrow_upward' : 'arrow_downward') | nzIconType" class="sort-arrow" />
+								}
+							</th>
+
+							<th id="members-role-header">{{ 'ROOM_MEMBERS.LIST.COLUMN_ROLE' | translate }}</th>
+
+							<th id="members-type-header">{{ 'ROOM_MEMBERS.LIST.COLUMN_TYPE' | translate }}</th>
+
+							<th class="sortable" (click)="toggleSort('membershipDate')" tabindex="0" (keydown.enter)="toggleSort('membershipDate')" (keydown.space)="toggleSort('membershipDate'); $event.preventDefault()" id="members-date-header">
+								{{ 'ROOM_MEMBERS.LIST.COLUMN_ADDED' | translate }}
+								@if (currentSortField() === 'membershipDate') {
+									<nz-icon [nzType]="(currentSortOrder() === 'asc' ? 'arrow_upward' : 'arrow_downward') | nzIconType" class="sort-arrow" />
+								}
+							</th>
+
+							<th class="actions-header" id="members-actions-header">
+								{{ 'ROOM_MEMBERS.LIST.COLUMN_ACTIONS' | translate }}
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						@for (member of pagedMembers(); track member.memberId) {
+							<tr
+								[class.selected-row]="isMemberSelected(member)"
+								id="members-table-row-{{ member.memberId }}"
+								(click)="onMemberClick(member)"
+							>
+								@if (showSelection()) {
+									<td class="select-cell" id="members-select-cell-{{ member.memberId }}">
+										<label
+											nz-checkbox
+											[nzChecked]="isMemberSelected(member)"
+											(click)="$event.stopPropagation()"
+											(nzCheckedChange)="toggleMemberSelection(member)"
+											[nzDisabled]="loading()"
+											id="select-member-{{ member.memberId }}"
+										></label>
+									</td>
+								}
+
+								<td class="member-cell" id="member-name-cell-{{ member.memberId }}">
+									<div class="member-info" id="member-info-{{ member.memberId }}">
+										<div
+											class="member-avatar"
+											[class]="RoomMemberUiUtils.getRoleClass(member.baseRole)"
+											id="member-avatar-{{ member.memberId }}"
+										>
+											<span>{{ RoomMemberUiUtils.getMemberInitials(member) }}</span>
+										</div>
+										<div class="member-details">
+											<span class="member-name" id="member-name-{{ member.memberId }}">{{
+												member.name
+											}}</span>
+											@if (canViewUserProfiles() && RoomMemberUiUtils.isUserMember(member)) {
+												<a
+													class="member-id-link"
+													[routerLink]="['/admin/users', member.memberId]"
+													nz-tooltip
+													[nzTooltipTitle]="'ROOM_MEMBERS.LIST.VIEW_USER_PROFILE' | translate"
+													(click)="$event.stopPropagation()"
+													id="member-id-link-{{ member.memberId }}"
+												>
+													{{ member.memberId }}
+												</a>
+											} @else {
+												<span class="member-id" id="member-id-{{ member.memberId }}">{{
+													member.memberId
+												}}</span>
+											}
+										</div>
+									</div>
+								</td>
+
+								<td id="members-role-cell-{{ member.memberId }}">
+									<jmeet-status-tag
+										[label]="RoomMemberUiUtils.getRoleLabel(member.baseRole) | translate"
+										[variant]="roleVariant(member.baseRole)"
+									/>
+								</td>
+
+								<td id="members-type-cell-{{ member.memberId }}">
+									<div class="member-type" id="member-type-{{ member.memberId }}">
+										<nz-icon [nzType]="(RoomMemberUiUtils.getMemberTypeIcon(member)) | nzIconType" class="type-icon" />
+										<span>{{ RoomMemberUiUtils.getMemberTypeLabel(member) | translate }}</span>
+									</div>
+								</td>
+
+								<td id="members-date-cell-{{ member.memberId }}">
+									@if (member.membershipDate) {
+										<div class="date-info" id="members-date-info-{{ member.memberId }}">
+											<span class="date">{{ member.membershipDate | date: 'mediumDate' }}</span>
+											<span class="time">{{ member.membershipDate | date: 'shortTime' }}</span>
+										</div>
+									} @else {
+										<span class="no-data">-</span>
+									}
+								</td>
+
+								<td class="actions-cell" id="members-actions-cell-{{ member.memberId }}">
+									<div class="action-buttons" id="member-action-buttons-{{ member.memberId }}">
+										<button
+											type="button"
+											class="jmeet-action-link"
+											(click)="$event.stopPropagation(); editMember(member)"
+											[disabled]="loading()"
+											id="edit-member-btn-{{ member.memberId }}"
+										>
+											{{ 'ROOM_MEMBERS.LIST.EDIT_MEMBER' | translate }}
+										</button>
+										<button
+											type="button"
+											class="jmeet-action-link"
+											nz-dropdown
+											[nzDropdownMenu]="memberActionsMenu"
+											(click)="$event.stopPropagation()"
+											[disabled]="loading()"
+											id="more-member-actions-{{ member.memberId }}"
+										>
+											{{ 'COMMON.MORE_ACTIONS' | translate }}<nz-icon nzType="down" />
+										</button>
+										<nz-dropdown-menu #memberActionsMenu="nzDropdownMenu">
+											<ul nz-menu>
+												<li
+													nz-menu-item
+													(click)="copyMemberLink(member)"
+													[nzDisabled]="loading()"
+													id="copy-member-link-btn-{{ member.memberId }}"
+												>
+													<nz-icon nzType="link" />
+													<span>{{ 'ROOM_MEMBERS.LIST.COPY_ACCESS_LINK' | translate }}</span>
+												</li>
+												<li nz-menu-divider id="member-actions-divider-{{ member.memberId }}"></li>
+												<li
+													nz-menu-item
+													class="delete-action"
+													(click)="deleteMember(member)"
+													[nzDisabled]="loading()"
+													id="delete-member-btn-{{ member.memberId }}"
+												>
+													<nz-icon nzType="user-delete" />
+													<span>{{ 'ROOM_MEMBERS.LIST.REMOVE_MEMBER' | translate }}</span>
+												</li>
+											</ul>
+										</nz-dropdown-menu>
+									</div>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</jmeet-data-table>
+
+			<!-- 全量拉取+客户端分页：页码器接全量成员数（游标拉全后=真实总数），每页默认 10 条；
+			     数据量大时回改服务端分页 -->
+			@if (members().length > 0) {
+				<div class="room-members-table-footer" id="members-pagination-container">
+					<jmeet-pagination
+						[length]="members().length"
+						[pageIndex]="pageIndex()"
+						[pageSize]="pageSize()"
+						(pageChange)="onPageChange($event)"
+					/>
+				</div>
+			}
+		}
+	</section>
+}

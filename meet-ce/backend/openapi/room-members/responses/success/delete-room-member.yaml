@@ -1,0 +1,10 @@
+description: Successfull deletion of the room member
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+            example:
+                message: Member 'abc123' deleted successfully from room 'room-123'

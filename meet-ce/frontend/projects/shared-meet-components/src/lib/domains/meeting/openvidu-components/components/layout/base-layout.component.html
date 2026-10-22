@@ -1,0 +1,80 @@
+<div class="container" [class.withMargin]="localParticipant()?.isFloating">
+	<div id="layout" class="layout" #layout>
+		<!-- Top slot: Render elements that should appear at the top -->
+		@for (template of layoutAdditionalElementsTopTemplates(); track template) {
+			<ng-container *ngTemplateOutlet="template" />
+		}
+
+		@if (localParticipant(); as participant) {
+			@for (stream of participant.streams(); track trackParticipantElement($index, stream)) {
+				<div
+					#localLayoutElement
+					class="local_participant OV_root OV_publisher"
+					[class.OV_floating]="stream.isFloating"
+					[class.OV_big]="stream.isPinned"
+					[class.OV_screen]="stream.isScreenStream"
+					[id]="'participant-' + stream.participant.identity"
+					cdkDrag
+					cdkDragBoundary="#layout-container"
+					[cdkDragDisabled]="!stream.isFloating"
+					[cdkDragFreeDragPosition]="stream.isFloating ? currentDragPosition() : ZERO_DRAG_POSITION"
+				>
+					<ng-container *ngTemplateOutlet="streamTemplate(); context: { $implicit: stream }" />
+					@if (stream.isFloating) {
+						<div class="resize-handle resize-se"
+							(pointerdown)="onResizeStart($event, 'se')"
+							(mousedown)="$event.stopPropagation()"
+							(touchstart)="$event.stopPropagation(); $event.preventDefault()"></div>
+						<div class="resize-handle resize-sw"
+							(pointerdown)="onResizeStart($event, 'sw')"
+							(mousedown)="$event.stopPropagation()"
+							(touchstart)="$event.stopPropagation(); $event.preventDefault()"></div>
+						<div class="resize-handle resize-ne"
+							(pointerdown)="onResizeStart($event, 'ne')"
+							(mousedown)="$event.stopPropagation()"
+							(touchstart)="$event.stopPropagation(); $event.preventDefault()"></div>
+						<div class="resize-handle resize-nw"
+							(pointerdown)="onResizeStart($event, 'nw')"
+							(mousedown)="$event.stopPropagation()"
+							(touchstart)="$event.stopPropagation(); $event.preventDefault()"></div>
+					}
+				</div>
+			}
+		}
+
+		<!-- Default slot: Render additional layout elements (backward compatibility and default position) -->
+		@for (template of layoutAdditionalElementsDefaultTemplates(); track template) {
+			<ng-container *ngTemplateOutlet="template" />
+		}
+
+		@for (stream of remoteCameraStreams(); track trackParticipantElement($index, stream)) {
+			<div
+				class="remote-participant OV_root OV_publisher"
+				[id]="'participant-' + stream.participant.identity"
+				[class.OV_big]="stream.isPinned"
+			>
+				<ng-container *ngTemplateOutlet="streamTemplate(); context: { $implicit: stream }" />
+			</div>
+		}
+		@for (stream of remoteScreenStreams(); track trackParticipantElement($index, stream)) {
+			<div
+				class="remote-participant OV_root OV_publisher OV_screen"
+				[id]="'participant-' + stream.participant.identity"
+				[class.OV_big]="stream.isPinned"
+			>
+				<ng-container *ngTemplateOutlet="streamTemplate(); context: { $implicit: stream }" />
+			</div>
+		}
+
+		<!-- Bottom slot: Render elements that should appear at the bottom -->
+		@for (template of layoutAdditionalElementsBottomTemplates(); track template) {
+			<ng-container *ngTemplateOutlet="template" />
+		}
+	</div>
+
+</div>
+
+<!-- Built-in default stream template — used when no #stream is provided via content projection or TemplateRegistry. -->
+<ng-template #defaultStream let-stream>
+	<ov-stream [stream]="stream" />
+</ng-template>

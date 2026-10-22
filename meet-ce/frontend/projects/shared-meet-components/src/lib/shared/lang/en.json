@@ -1,0 +1,120 @@
+{
+  "COMMON": {
+    "ACTIONS": "Actions",
+    "MORE_ACTIONS": "More",
+    "PROMPT": {
+      "CANCEL": "Cancel",
+      "CONFIRM": "Confirm"
+    },
+    "PAGINATOR": {
+      "ITEMS_PER_PAGE": "Items per page",
+      "NEXT_PAGE": "Next page",
+      "PREVIOUS_PAGE": "Previous page",
+      "FIRST_PAGE": "First page",
+      "LAST_PAGE": "Last page",
+      "RANGE": "{start} – {end} of {length}",
+      "RANGE_EMPTY": "0 of 0"
+    },
+    "PAGINATION": {
+      "TOTAL_PREFIX": "",
+      "TOTAL_SUFFIX": " items",
+      "SIZE_LABEL": "Items per page",
+      "SIZE_SUFFIX": " / page",
+      "PREV": "Previous page",
+      "NEXT": "Next page",
+      "JUMPER_PREFIX": "Go to",
+      "JUMPER_SUFFIX": ""
+    },
+    "CONFIRMATIONS": {
+      "USER_TITLE": "Delete User",
+      "USERS_TITLE": "Delete Users",
+      "USER_MESSAGE": "Permanently delete user <b>{{name}}</b> ({{userId}})? This action cannot be undone.",
+      "USERS_MESSAGE": "Permanently delete <b>{{count}} selected users</b>? This action cannot be undone.",
+      "USER_WARNING_TITLE": "Important consequences",
+      "USER_WARNING": "Owned rooms will transfer to the root admin. Users currently in a meeting will be removed immediately.",
+      "MEMBER_TITLE": "Remove Member",
+      "MEMBERS_TITLE": "Remove Members",
+      "MEMBER_MESSAGE": "Remove <b>{{name}}</b> from this room?",
+      "MEMBERS_MESSAGE": "Remove <b>{{count}} selected members</b> from this room?",
+      "MEMBER_WARNING_TITLE": "Active meeting warning",
+      "MEMBER_WARNING": "Members currently in the meeting will be removed immediately.",
+      "RECORDING_TITLE": "Delete Recording",
+      "RECORDINGS_TITLE": "Delete Recordings",
+      "RECORDING_MESSAGE": "Permanently delete recording <b>{{recordingId}}</b>? This action cannot be undone.",
+      "RECORDINGS_MESSAGE": "Permanently delete <b>{{count}} selected recordings</b>? This action cannot be undone.",
+      "DELETE": "Delete",
+      "REMOVE": "Remove",
+      "CANCEL": "Cancel"
+    }
+  },
+  "ERROR": {
+    "DEFAULT_TITLE": "Error",
+    "BACK": "Back",
+    "BACK_TO_CONSOLE": "Back to Console",
+    "ACCEPT": "Accept",
+    "OOPS": "Oops!",
+    "SOMETHING_WRONG": "Something went wrong"
+  },
+  "NAVIGATION_ERROR": {
+    "EMBEDDED_ERROR": {
+      "TITLE": "Unable to load JMeet",
+      "MESSAGE": "JMeet could not be loaded. Please check the embedding configuration."
+    },
+    "CLOSED_ROOM": {
+      "TITLE": "Closed room",
+      "MESSAGE": "Meetings in this room are not available while it is closed"
+    },
+    "ANONYMOUS_ACCESS_DISABLED": {
+      "TITLE": "Anonymous access disabled",
+      "MESSAGE": "The anonymous access for your role has been disabled in this room (and its recordings)"
+    },
+    "ANONYMOUS_RECORDING_ACCESS_DISABLED": {
+      "TITLE": "Anonymous access disabled",
+      "MESSAGE": "The anonymous access for this recording has been disabled"
+    },
+    "INVALID_ROOM_SECRET": {
+      "TITLE": "Invalid link",
+      "MESSAGE": "The link you used to access this room (or its recordings) is not valid. Please ask a moderator to share the correct link using the available share buttons"
+    },
+    "INVALID_RECORDING_SECRET": {
+      "TITLE": "Invalid link",
+      "MESSAGE": "The link you used to access this recording is not valid"
+    },
+    "INVALID_ROOM": {
+      "TITLE": "Invalid room",
+      "MESSAGE": "The room (or its recordings) you are trying to access does not exist or has been deleted"
+    },
+    "INVALID_RECORDING": {
+      "TITLE": "Invalid recording",
+      "MESSAGE": "The recording you are trying to access does not exist or has been deleted"
+    },
+    "INVALID_MEMBER": {
+      "TITLE": "Invalid member",
+      "MESSAGE": "You are no longer a member of this room or the member information is incorrect"
+    },
+    "FORBIDDEN_ROOM_ACCESS": {
+      "TITLE": "Forbidden room access",
+      "MESSAGE": "You are not authorized to access this room (nor its recordings)"
+    },
+    "FORBIDDEN_ROOM_RECORDINGS_ACCESS": {
+      "TITLE": "Forbidden recordings access",
+      "MESSAGE": "You are not authorized to access the recordings in this room"
+    },
+    "FORBIDDEN_RECORDING_ACCESS": {
+      "TITLE": "Forbidden recording access",
+      "MESSAGE": "You are not authorized to access this recording"
+    },
+    "ROOM_ACCESS_REVOKED": {
+      "TITLE": "Room access revoked",
+      "MESSAGE": "Your permissions in this room have been changed, and you no longer have access (nor its recordings). Please contact a moderator for more information"
+    },
+    "TOO_MANY_REQUESTS": {
+      "TITLE": "Too many requests",
+      "MESSAGE": "You have made too many requests in a short period of time. Please wait a moment and try again"
+    },
+    "INTERNAL_ERROR": {
+      "TITLE": "Internal error",
+      "MESSAGE": "An unexpected error occurred, please try again later"
+    }
+  }
+}
