@@ -1,0 +1,158 @@
+// Public button variants.
+.jmeet-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--jmeet-layout-space-sm);
+	min-height: var(--jmeet-control-height-default);
+	box-sizing: border-box;
+	padding: var(--jmeet-button-padding-vertical) var(--jmeet-button-padding-horizontal);
+	border: 1px solid transparent;
+	border-radius: var(--jmeet-button-border-radius);
+
+	// 与 ng-zorro .ant-btn 标准一致：可点击按钮悬停显示小手；
+	// 禁用态由下方 :disabled 规则覆盖为 not-allowed
+	cursor: pointer;
+	font-family: var(--jmeet-typography-font-family);
+	font-size: var(--jmeet-typography-font-size-sm);
+	font-weight: var(--jmeet-button-font-weight);
+	line-height: 20px;
+	letter-spacing: 0;
+	transition:
+		background-color var(--jmeet-button-transition),
+		border-color var(--jmeet-button-transition),
+		color var(--jmeet-button-transition),
+		box-shadow var(--jmeet-button-transition);
+
+	&:focus-visible {
+		outline: 2px solid var(--jmeet-color-action-primary);
+		outline-offset: 2px;
+	}
+
+	&:disabled,
+	&[aria-busy='true'] {
+		cursor: not-allowed;
+		box-shadow: none;
+		opacity: var(--jmeet-state-disabled-opacity);
+		pointer-events: none;
+	}
+}
+
+.jmeet-button--primary {
+	background: var(--jmeet-button-primary-bg);
+	color: var(--jmeet-color-text-on-primary);
+	box-shadow: none;
+
+	&:hover:not(:disabled, [aria-busy='true']) {
+		background: var(--jmeet-color-action-primary-dark);
+	}
+
+	&:active:not(:disabled, [aria-busy='true']) {
+		background: color-mix(in srgb, var(--jmeet-color-action-primary) 82%, var(--jmeet-color-surface-card));
+	}
+
+	// 禁用主按钮：EP 惯例为「浅蓝实底 + 白字」（el-button primary disabled），
+	// 保持主按钮家族辨识度；禁用控件豁免 WCAG 对比度要求。
+	// （旧方案「15% 浅蓝底 + 主色字」读起来像第三种按钮风格）
+	&:disabled,
+	&[aria-busy='true'] {
+		background: color-mix(in srgb, var(--jmeet-color-action-primary) 45%, var(--jmeet-color-surface-card));
+		color: var(--jmeet-color-text-on-primary);
+		opacity: 1;
+	}
+}
+
+.jmeet-button--secondary {
+	border-color: var(--jmeet-color-border);
+	background: var(--jmeet-color-surface-card);
+	color: var(--jmeet-color-text-secondary);
+
+	&:hover:not(:disabled, [aria-busy='true']) {
+		background: var(--jmeet-color-surface-hover);
+	}
+
+	&:active:not(:disabled, [aria-busy='true']) {
+		background: var(--jmeet-color-action-primary-light);
+	}
+}
+
+.jmeet-button--outline {
+	border-color: var(--jmeet-color-border);
+	background: var(--jmeet-color-surface-card);
+	color: var(--jmeet-color-text-primary);
+
+	&:hover:not(:disabled, [aria-busy='true']) {
+		border-color: var(--jmeet-color-border-strong);
+		background: var(--jmeet-color-surface-hover);
+	}
+
+	&:active:not(:disabled, [aria-busy='true']) {
+		background: var(--jmeet-color-action-primary-light);
+	}
+}
+
+.jmeet-button--ghost {
+	background: transparent;
+	color: var(--jmeet-color-text-secondary);
+
+	&:hover:not(:disabled, [aria-busy='true']) {
+		background: var(--jmeet-color-surface-hover);
+		color: var(--jmeet-color-text-primary);
+	}
+
+	&:active:not(:disabled, [aria-busy='true']) {
+		background: var(--jmeet-color-action-primary-light);
+	}
+}
+
+.jmeet-button--danger {
+	background: var(--jmeet-color-action-danger);
+	color: var(--jmeet-color-text-on-primary);
+
+	&:hover:not(:disabled, [aria-busy='true']) {
+		background: color-mix(in srgb, var(--jmeet-color-action-danger) 88%, var(--jmeet-color-surface-card));
+	}
+
+	&:active:not(:disabled, [aria-busy='true']) {
+		background: color-mix(in srgb, var(--jmeet-color-action-danger) 76%, var(--jmeet-color-surface-card));
+	}
+}
+
+// Button icons: uniform 18px so they never outweigh the 14px label (standard §31).
+// Pure icon buttons (--icon) use 16px: EP 风格的轻量图形按钮（24px 视觉过重）。
+.jmeet-button:not(.jmeet-button--icon) .anticon {
+	width: 18px;
+	height: 18px;
+	font-size: 18px; // icon/decoration sizing
+	line-height: 1;
+}
+
+.jmeet-button--icon .anticon {
+	width: 16px;
+	height: 16px;
+	font-size: 16px; // icon/decoration sizing
+	line-height: 1;
+}
+
+.jmeet-button--icon {
+	width: var(--jmeet-control-height-default);
+	min-width: var(--jmeet-control-height-default);
+	padding: 0;
+}
+
+.jmeet-button--sm {
+	min-height: var(--jmeet-button-height-sm);
+	padding: 2px var(--jmeet-layout-space-sm);
+	font-size: var(--jmeet-typography-font-size-xs);
+	line-height: 18px;
+}
+
+.jmeet-button--md {
+	min-height: var(--jmeet-control-height-default);
+}
+
+.jmeet-button--lg {
+	min-height: var(--jmeet-button-height-lg);
+	padding: var(--jmeet-layout-space-md) var(--jmeet-layout-space-lg);
+	font-size: var(--jmeet-typography-font-size-md);
+}

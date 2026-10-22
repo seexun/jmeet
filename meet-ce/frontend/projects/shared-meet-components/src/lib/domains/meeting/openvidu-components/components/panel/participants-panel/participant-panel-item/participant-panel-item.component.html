@@ -1,0 +1,71 @@
+<div class="participant-list">
+	<div class="participant-list-item">
+		@if (_participant) {
+			<!-- Main participant container with improved structure -->
+			<div
+				class="participant-container"
+				[attr.data-participant-id]="_participant.sid"
+				[attr.data-participant-name]="participantDisplayName()"
+			>
+				<!-- Avatar section -->
+				<ov-participant-avatar
+					variant="panel"
+					[nickname]="_participant.name ?? ''"
+					[color]="_participant.colorProfile"
+					[isSpeaking]="showAudioDetection() && _participant.isSpeaking"
+					[hasEncryptionError]="_participant.hasEncryptionError"
+					[attr.aria-label]="'Avatar for ' + participantDisplayName()"
+				/>
+
+				<!-- Content section with name and status -->
+				<div class="participant-content">
+					<!-- Name row with better space management -->
+					<div class="participant-name-row">
+						<div class="participant-name">
+							<span class="participant-name-text">{{ participantDisplayName() }}</span>
+							@if (isLocalParticipant()) {
+								<span class="you-suffix" aria-label="({{ 'PANEL.PARTICIPANTS.YOU' | translate | lowercase }})"
+									>({{ 'PANEL.PARTICIPANTS.YOU' | translate | lowercase }})</span
+								>
+							}
+							<!-- Role badge inline with name -->
+							<div class="participant-badges">
+								<ng-container *ngTemplateOutlet="participantBadgeTemplate()" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Action buttons section -->
+				@if (!_participant.hasEncryptionError) {
+					<div class="participant-action-buttons">
+						<!-- 状态图标组（用户裁决：单行化——状态移至行最右侧；麦克风三态语义色） -->
+						<div class="participant-status-icons" [class.muted-force]="_participant.isMutedForcibly">
+							@if (isCameraOff()) {
+								<nz-icon nzType="video-camera" class="camera-off-indicator" nz-tooltip
+									[nzTooltipTitle]="'PANEL.PARTICIPANTS.CAM_OFF' | translate" />
+							}
+							@if (isMicrophoneOff()) {
+								<nz-icon nzType="audio-muted" class="mic-off-indicator" nz-tooltip
+									[nzTooltipTitle]="_participant.isMutedForcibly
+										? ('PANEL.PARTICIPANTS.MUTED_BY_HOST' | translate)
+										: ('PANEL.PARTICIPANTS.MIC_OFF' | translate)" />
+							}
+							@if (isScreenSharing()) {
+								<nz-icon nzType="desktop" class="screen-share-indicator" nz-tooltip
+									[nzTooltipTitle]="'PANEL.PARTICIPANTS.SHARING_SCREEN' | translate" />
+							}
+						</div>
+
+						<!-- External item elements with improved structure -->
+						@if (hasExternalElements()) {
+							<div class="external-elements">
+								<ng-container *ngTemplateOutlet="participantPanelItemElementsTemplate()" />
+							</div>
+						}
+					</div>
+				}
+			</div>
+		}
+	</div>
+</div>

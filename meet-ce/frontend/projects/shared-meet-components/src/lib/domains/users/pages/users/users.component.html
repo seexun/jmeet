@@ -1,0 +1,28 @@
+<!-- Loading State -->
+@if (isInitializing() && showInitialLoader()) {
+	<jmeet-loading-skeleton variant="card" [rows]="6" />
+}
+
+@if (!isInitializing()) {
+	<div class="jmeet-stack-sections users-admin-page" id="users-page-container" [ovScrollPersist]="scrollToRestore">
+		<jmeet-page-header>
+			<span page-title>{{ 'USERS.LIST.PAGE_TITLE' | translate }}</span>
+		</jmeet-page-header>
+
+		<ov-users-lists
+			id="users-list"
+			[users]="users()"
+			[totalCount]="totalCount()"
+			[currentUserId]="currentUserId()"
+			[rootAdminId]="rootAdminId()"
+			[loading]="isLoading()"
+			[showSearchBox]="true"
+			[showSelection]="true"
+			[initialFilters]="initialFilters()"
+			(userAction)="onUserAction($event)"
+			(userClicked)="onUserClick($event)"
+			(refresh)="refreshUsers($event)"
+			(filterChange)="onFiltersChange($event)"
+		/>
+	</div>
+}

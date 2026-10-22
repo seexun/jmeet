@@ -1,0 +1,228 @@
+<!-- Camera button -->
+@if (showCameraButtonDirect()) {
+	<button
+		type="button"
+		id="camera-btn"
+		class="tm-btn"
+		[class.tm-btn--off]="!isCameraEnabled()"
+		[class.tm-btn--changing]="cameraMuteChanging()"
+		(click)="onCameraToggle()"
+		[disabled]="isConnectionLost() || !hasVideoDevices() || cameraMuteChanging()"
+		nz-tooltip
+		[nzTooltipTitle]="
+			!hasVideoDevices()
+				? ''
+				: isCameraEnabled()
+					? ('TOOLBAR.STOP_VIDEO' | translate)
+					: ('TOOLBAR.START_VIDEO' | translate)
+		"
+	>
+		<span class="tm-btn__icon">
+			<nz-icon
+				[nzType]="(isCameraEnabled() ? 'videocam' : 'videocam_off') | nzIconType"
+				[id]="isCameraEnabled() ? 'videocam' : 'videocam_off'"
+			/>
+		</span>
+		<span class="tm-btn__label">{{ (isCameraEnabled() ? 'TOOLBAR.SHORT.STOP_VIDEO' : 'TOOLBAR.SHORT.START_VIDEO') | translate }}</span>
+	</button>
+}
+
+<!-- Microphone button -->
+@if (showMicrophoneButtonDirect()) {
+	<button
+		type="button"
+		id="mic-btn"
+		class="tm-btn"
+		[class.tm-btn--off]="!isMicrophoneEnabled()"
+		[class.tm-btn--changing]="microphoneMuteChanging()"
+		(click)="onMicrophoneToggle()"
+		[disabled]="isConnectionLost() || !hasAudioDevices() || microphoneMuteChanging()"
+		nz-tooltip
+		[nzTooltipTitle]="
+			!hasAudioDevices()
+				? ''
+				: isMicrophoneEnabled()
+					? ('TOOLBAR.MUTE_AUDIO' | translate)
+					: ('TOOLBAR.UNMUTE_AUDIO' | translate)
+		"
+	>
+		<span class="tm-btn__icon">
+			<nz-icon
+				[nzType]="(isMicrophoneEnabled() ? 'mic' : 'mic_off') | nzIconType"
+				[id]="isMicrophoneEnabled() ? 'mic' : 'mic_off'"
+			/>
+		</span>
+		<span class="tm-btn__label">{{ (isMicrophoneEnabled() ? 'TOOLBAR.SHORT.MUTE' : 'TOOLBAR.SHORT.UNMUTE') | translate }}</span>
+	</button>
+}
+
+<!-- Screenshare button - Only visible on tablet+ or when active -->
+@if (showScreenshareButtonDirect()) {
+	@if (isFirefoxBrowser()) {
+		<button
+			type="button"
+			id="screenshare-btn"
+			class="tm-btn"
+			[class.tm-btn--active]="isScreenShareEnabled()"
+			[disabled]="isConnectionLost()"
+			nz-tooltip
+			nzTooltipTitle="{{
+				isScreenShareEnabled() ? ('TOOLBAR.DISABLE_SCREEN' | translate) : ('TOOLBAR.ENABLE_SCREEN' | translate)
+			}}"
+			(click)="onScreenShareToggle()"
+		>
+			<span class="tm-btn__icon"><nz-icon nzType="desktop" /></span>
+			<span class="tm-btn__label">{{ 'TOOLBAR.SHORT.SHARE_SCREEN' | translate }}</span>
+		</button>
+	} @else {
+		<button
+			type="button"
+			id="screenshare-btn"
+			class="tm-btn"
+			[class.tm-btn--active]="isScreenShareEnabled()"
+			nz-dropdown
+			[nzDropdownMenu]="isScreenShareEnabled() ? screenshareMenu : null"
+			nzTrigger="click"
+			nz-placement="bottomLeft"
+			[nzOverlayClassName]="'screenshare-menu device-menu'"
+			[disabled]="isConnectionLost()"
+			nz-tooltip
+			nzTooltipTitle="{{
+				isScreenShareEnabled() ? ('TOOLBAR.DISABLE_SCREEN' | translate) : ('TOOLBAR.ENABLE_SCREEN' | translate)
+			}}"
+			(click)="!isScreenShareEnabled() && onScreenShareToggle()"
+		>
+			<span class="tm-btn__icon"><nz-icon nzType="desktop" /></span>
+			<span class="tm-btn__label">{{ 'TOOLBAR.SHORT.SHARE_SCREEN' | translate }}</span>
+		</button>
+
+		<!-- Screenshare button menu -->
+		<nz-dropdown-menu #screenshareMenu="nzDropdownMenu">
+			<ul nz-menu>
+				<li nz-menu-item (click)="onScreenTrackReplace()" id="replace-screen-button">
+					<nz-icon nzType="pic-right" />
+					<span>{{ 'STREAM.REPLACE_SCREEN' | translate }}</span>
+				</li>
+				<li nz-menu-divider class="divider"></li>
+				<li nz-menu-item (click)="onScreenShareToggle()" id="disable-screen-button">
+					<nz-icon nzType="desktop" />
+					<span>{{ 'TOOLBAR.DISABLE_SCREEN' | translate }}</span>
+				</li>
+			</ul>
+		</nz-dropdown-menu>
+	}
+}
+
+<!-- Additional buttons injection from parent component (desktop/tablet only) -->
+@if (showAdditionalButtonsOutside() && additionalButtonsPosition() === 'beforeMenu') {
+	<ng-container
+		*ngTemplateOutlet="toolbarAdditionalButtonsTemplate(); context: { $implicit: additionalButtonsPosition() }"
+	/>
+}
+
+<!-- More options button -->
+@if (showMoreOptionsButtonDirect()) {
+	<button
+		type="button"
+		id="more-options-btn"
+		class="tm-btn"
+		nz-dropdown
+		[nzDropdownMenu]="settingsMenu"
+		nzTrigger="click"
+		nz-placement="bottomRight"
+		[nzOverlayClassName]="'more-options-menu more-options-menu-panel'"
+		[nzVisible]="moreOptionsMenuOpen"
+		(nzVisibleChange)="onMoreOptionsVisibleChange($event)"
+		[disabled]="isConnectionLost()"
+		nz-tooltip
+		nzTooltipTitle="{{ 'TOOLBAR.MORE_OPTIONS' | translate }}"
+	>
+		<span class="tm-btn__icon"><nz-icon nzType="more" /></span>
+		<span class="tm-btn__label">{{ 'TOOLBAR.MORE_OPTIONS' | translate }}</span>
+	</button>
+	<nz-dropdown-menu #settingsMenu="nzDropdownMenu">
+		<ul nz-menu>
+			<!-- Additional buttons injection inside menu (mobile only) -->
+			@if (showAdditionalButtonsInsideMenu() && additionalButtonsPosition() === 'beforeMenu') {
+				<ng-container
+					*ngTemplateOutlet="
+						toolbarAdditionalButtonsTemplate();
+						context: { $implicit: additionalButtonsPosition() }
+					"
+				/>
+			}
+
+			<!-- 视图与效果分组 -->
+			<li class="menu-group-label">{{ 'TOOLBAR.GROUP_VIEW' | translate }}</li>
+
+			<!-- Fullscreen button -->
+			@if (showFullscreenButton()) {
+				<li nz-menu-item id="fullscreen-btn" (click)="onFullscreenToggle()">
+					<nz-icon [nzType]="(isFullscreenActive() ? 'fullscreen_exit' : 'fullscreen') | nzIconType" />
+					<span>{{
+						isFullscreenActive() ? ('TOOLBAR.EXIT_FULLSCREEN' | translate) : ('TOOLBAR.FULLSCREEN' | translate)
+					}}</span>
+				</li>
+			}
+
+			<!-- Virtual background button -->
+			@if (showBackgroundEffectsButton()) {
+				<li nz-menu-item id="virtual-bg-btn" [nzDisabled]="!isCameraEnabled()" (click)="onBackgroundEffectsToggle()">
+					<nz-icon nzType="bg-colors" />
+					<span>{{ 'TOOLBAR.BACKGROUND' | translate }}</span>
+				</li>
+			}
+
+			<!-- Additional buttons injection inside menu (mobile only) -->
+			@if (showAdditionalButtonsInsideMenu() && additionalButtonsPosition() === 'afterMenu') {
+				<ng-container
+					*ngTemplateOutlet="
+						toolbarAdditionalButtonsTemplate();
+						context: { $implicit: additionalButtonsPosition() }
+					"
+				/>
+			}
+
+			<!-- Divider before settings -->
+			@if (showSettingsButton()) {
+				<li nz-menu-divider class="divider"></li>
+			}
+
+			<!-- Settings button -->
+			@if (showSettingsButton()) {
+				<li nz-menu-item id="toolbar-settings-btn" (click)="onSettingsToggle()">
+					<nz-icon nzType="setting" />
+					<span>{{ 'TOOLBAR.SETTINGS' | translate }}</span>
+				</li>
+			}
+		</ul>
+	</nz-dropdown-menu>
+}
+
+<!-- Additional buttons injection from parent component (desktop/tablet only) -->
+@if (showAdditionalButtonsOutside() && additionalButtonsPosition() === 'afterMenu') {
+	<ng-container *ngTemplateOutlet="toolbarAdditionalButtonsTemplate()" />
+}
+
+<!-- Panel entries (members/chat) projected from toolbar: dock-collapsed entries stay
+     between more options and the red leave button (leave stays rightmost). -->
+<ng-content select="[toolbarPanelEntry]" />
+
+<!-- Leave session button -->
+@if (showLeaveButton()) {
+	<button
+		type="button"
+		id="leave-btn"
+		class="tm-btn"
+		(click)="onLeaveClick()"
+		nz-tooltip
+		nzTooltipTitle="{{ 'TOOLBAR.LEAVE' | translate }}"
+	>
+		<span class="tm-btn__icon"><nz-icon nzType="poweroff" /></span>
+		<span class="tm-btn__label">{{ 'TOOLBAR.LEAVE' | translate }}</span>
+	</button>
+}
+
+@if (toolbarLeaveButtonTemplate()) {
+	<ng-container *ngTemplateOutlet="toolbarLeaveButtonTemplate()" />
+}

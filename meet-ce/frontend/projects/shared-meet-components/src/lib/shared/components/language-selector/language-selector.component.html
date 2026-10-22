@@ -1,0 +1,31 @@
+<button
+	type="button"
+	class="jmeet-button jmeet-button--ghost jmeet-button--icon"
+	nz-dropdown
+	[nzDropdownMenu]="langMenu"
+	nz-tooltip
+	[nzTooltipTitle]="'NAV.LANGUAGE' | translate"
+	aria-label="Select language"
+	id="language-selector-btn"
+>
+	<nz-icon nzType="translation" />
+</button>
+
+<nz-dropdown-menu #langMenu="nzDropdownMenu">
+	<ul nz-menu class="language-menu">
+		@for (lang of languages(); track lang.lang) {
+			<li
+				nz-menu-item
+				(click)="onLangSelected(lang.lang)"
+				[attr.id]="'lang-opt-' + lang.lang"
+				[class.selected]="selectedLanguage().lang === lang.lang"
+				class="language-option"
+			>
+				@if (selectedLanguage().lang === lang.lang) {
+					<nz-icon nzType="check" class="check-icon" />
+				}
+				<span class="lang-option-name">{{ lang.name }}</span>
+			</li>
+		}
+	</ul>
+</nz-dropdown-menu>

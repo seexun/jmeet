@@ -1,0 +1,8 @@
+description: Room closed
+content:
+    application/json:
+        schema:
+            $ref: '../../../shared/schemas/error.yaml'
+        example:
+            error: 'Room Error'
+            message: Room 'room_123' is closed and cannot be joined

@@ -1,0 +1,386 @@
+:host {
+	display: block;
+	height: 100%;
+}
+
+.meet-toolbar {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	min-height: 100%;
+}
+
+.toolbar-spacer {
+	flex: 1 1 auto;
+}
+
+.toolbar-breadcrumb {
+	margin-left: 0;
+	min-width: 0;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.toolbar-breadcrumb--fallback {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-space-3);
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-sm);
+
+	[aria-current] { color: var(--jmeet-color-text-primary); }
+}
+
+@media (width <= 767px) {
+	.toolbar-breadcrumb {
+		display: none;
+	}
+}
+
+.sidebar-toggle {
+	margin-right: var(--jmeet-space-1);
+}
+
+#side-navigation {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-space-1);
+	height: 100%;
+	box-sizing: border-box;
+	padding: 0 var(--jmeet-space-3) var(--jmeet-space-4);
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.sidebar-brand {
+	flex: 0 0 var(--jmeet-layout-topbar-height);
+	box-sizing: border-box;
+	margin: 0 calc(-1 * var(--jmeet-space-3)) var(--jmeet-space-2);
+
+	.toolbar-brand-name {
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}
+
+@media (768px <= width <= 1024px) {
+	#side-navigation {
+		padding-inline: var(--jmeet-space-2);
+	}
+
+	.sidebar-brand {
+		margin-inline: calc(-1 * var(--jmeet-space-2));
+	}
+}
+
+.nav-footer {
+	margin-top: auto;
+	padding-top: var(--jmeet-space-4);
+}
+
+.version {
+	margin: 0;
+	color: var(--jmeet-color-text-hint);
+	font-size: var(--jmeet-font-size-xs);
+}
+
+.toolbar-brand {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-space-2);
+	color: var(--jmeet-color-text-primary);
+	white-space: nowrap;
+}
+
+.toolbar-brand-logo {
+	max-width: 120px;
+	max-height: 32px;
+	object-fit: contain;
+}
+
+.toolbar-brand-mark {
+	display: inline-flex;
+	width: 32px;
+	height: 32px;
+	align-items: center;
+	justify-content: center;
+	border-radius: var(--jmeet-radius-md);
+	background: var(--jmeet-gradient-brand);
+
+	span {
+		width: 16px;
+		height: 12px;
+		border-radius: var(--jmeet-radius-sm);
+		background: var(--jmeet-color-text-on-primary);
+	}
+}
+
+.toolbar-brand-name {
+	font-size: var(--jmeet-font-size-sm);
+	font-weight: var(--jmeet-font-weight-extrabold);
+}
+
+.portal-label {
+	padding-left: var(--jmeet-space-3);
+	border-left: 1px solid var(--jmeet-color-border);
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-font-size-xs);
+}
+
+.toolbar-actions,
+.profile-entry {
+	gap: var(--jmeet-space-2);
+	display: flex;
+	align-items: center;
+}
+
+.profile-name {
+	max-width: 140px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: var(--jmeet-font-size-sm);
+}
+
+.toolbar-actions {
+	gap: var(--jmeet-space-1);
+}
+
+.portal-switch {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--jmeet-space-2);
+	margin-right: var(--jmeet-space-2);
+	text-decoration: none;
+}
+
+.profile-entry {
+	min-height: 44px;
+	padding: 0 var(--jmeet-space-3) 0 var(--jmeet-space-2);
+	border-radius: var(--jmeet-radius-md);
+	color: var(--jmeet-color-text-primary);
+	text-decoration: none;
+
+	&:hover {
+		background: var(--jmeet-color-surface-hover);
+	}
+}
+
+.profile-avatar {
+	display: grid;
+	width: 32px;
+	height: 32px;
+	place-items: center;
+	border-radius: 50%;
+	background: var(--jmeet-color-action-primary-light);
+	color: var(--jmeet-color-action-primary);
+	font-size: var(--jmeet-font-size-xs);
+	font-weight: var(--jmeet-font-weight-bold);
+}
+
+.notification-button {
+	position: relative;
+
+	// 铃铛与徽章的比例：铃铛 18px 略大于普通 icon 按钮（16px），
+	// 徽章缩为 14px 胶囊（xxs 字号），数字不再比铃铛抢眼
+	.anticon {
+		width: 18px;
+		height: 18px;
+		font-size: 18px;
+	}
+}
+
+.notification-badge {
+	position: absolute;
+	top: -2px;
+	right: -4px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 14px;
+	height: 14px;
+	padding: 0 3px;
+	border: 2px solid var(--jmeet-color-surface-card);
+	border-radius: 999px;
+	background: var(--jmeet-color-action-danger);
+	color: var(--jmeet-color-text-on-primary);
+	font-size: var(--jmeet-font-size-xxs);
+	font-weight: var(--jmeet-font-weight-bold);
+	line-height: 1;
+}
+
+@media (max-width: 600px) {
+	.toolbar-brand-name,
+	.profile-name,
+	.portal-label,
+	.portal-switch span {
+		display: none;
+	}
+}
+
+// ── 站内通知弹层 ──
+// 弹层挂在 body 根部（nz-dropdown overlay），需 ::ng-deep + overlay class 限定作用域
+::ng-deep .notification-menu {
+	.notification-menu-panel {
+		width: 360px;
+		max-width: calc(100vw - 32px);
+		background: var(--jmeet-color-surface-card);
+		border: 1px solid var(--jmeet-color-border);
+		border-radius: 12px;
+		box-shadow: var(--jmeet-shadow-surface-lg);
+		overflow: hidden;
+	}
+
+	.notification-heading {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 12px 14px;
+		border-bottom: 1px solid var(--jmeet-color-border-light);
+
+		strong {
+			font-size: 14px;
+			color: var(--jmeet-color-text-primary);
+		}
+
+		.unread-count {
+			padding: 1px 8px;
+			border-radius: 999px;
+			background: color-mix(in srgb, var(--jmeet-color-action-primary) 12%, transparent);
+			color: var(--jmeet-color-action-primary);
+			font-size: 12px;
+			font-weight: var(--jmeet-font-weight-medium);
+		}
+
+		.heading-actions {
+			display: flex;
+			gap: 12px;
+			margin-left: auto;
+
+			.heading-action {
+				border: 0;
+				background: none;
+				padding: 0;
+				font-size: 12px;
+				color: var(--jmeet-color-action-primary);
+				cursor: pointer;
+
+				&:disabled {
+					color: var(--jmeet-color-text-disabled);
+					cursor: not-allowed;
+				}
+
+				&:hover:not(:disabled) { text-decoration: underline; }
+			}
+		}
+	}
+
+	.notification-list {
+		list-style: none;
+		margin: 0;
+		padding: 6px;
+		max-height: 420px;
+		overflow-y: auto;
+	}
+
+	.notification-item {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr) auto;
+		align-items: flex-start;
+		gap: 10px;
+		padding: 10px;
+		border-radius: 8px;
+		cursor: pointer;
+		transition: background-color 160ms ease;
+
+		&:hover { background: var(--jmeet-color-surface-hover); }
+
+		.item-icon {
+			display: grid;
+			place-items: center;
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			font-size: 15px;
+			margin-top: 2px;
+			// 状态色：逾期红 / 临期橙 / 常规蓝灰
+			&.kind-overdue {
+				background: color-mix(in srgb, var(--jmeet-color-action-danger) 14%, transparent);
+				color: var(--jmeet-color-action-danger);
+			}
+			&.kind-due {
+				background: color-mix(in srgb, var(--jmeet-color-action-warning) 16%, transparent);
+				color: var(--jmeet-color-action-warning);
+			}
+			&.kind-info {
+				background: color-mix(in srgb, var(--jmeet-color-action-primary) 12%, transparent);
+				color: var(--jmeet-color-action-primary);
+			}
+		}
+
+		.item-body {
+			display: grid;
+			gap: 2px;
+			min-width: 0;
+
+			.item-title {
+				font-size: 13px;
+				font-weight: 500;
+				color: var(--jmeet-color-text-secondary);
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
+			.item-message {
+				font-size: 13px;
+				color: var(--jmeet-color-text-primary);
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				line-clamp: 2;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+			}
+
+			.item-time {
+				font-size: 11px;
+				color: var(--jmeet-color-text-tertiary);
+			}
+		}
+
+		.unread-dot {
+			width: 8px;
+			height: 8px;
+			margin-top: 6px;
+			border-radius: 50%;
+			background: var(--jmeet-color-action-primary);
+		}
+
+		&.unread .item-title {
+			font-weight: 600;
+			color: var(--jmeet-color-text-primary);
+		}
+	}
+
+	.notification-footer {
+		padding: 8px;
+		text-align: center;
+		border-top: 1px solid var(--jmeet-color-border-light);
+
+		a {
+			font-size: 12px;
+			color: var(--jmeet-color-action-primary);
+			text-decoration: none;
+
+			&:hover { text-decoration: underline; }
+		}
+	}
+
+	.notification-empty {
+		padding: 28px 16px;
+		text-align: center;
+		color: var(--jmeet-color-text-tertiary);
+		font-size: 13px;
+	}
+}

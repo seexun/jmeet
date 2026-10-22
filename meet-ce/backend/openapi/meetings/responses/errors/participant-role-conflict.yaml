@@ -1,0 +1,16 @@
+description: Participant role moderation conflict
+content:
+    application/json:
+        schema:
+            $ref: '../../../shared/schemas/error.yaml'
+        examples:
+            cannot_promote:
+                summary: Participant is not eligible for promotion
+                value:
+                    error: 'Participant Error'
+                    message: 'Participant "alice_smith" in room "room_123" cannot be promoted to moderator because they are not eligible for promotion'
+            cannot_demote:
+                summary: Participant is not eligible for demotion
+                value:
+                    error: 'Participant Error'
+                    message: 'Participant "alice_smith" in room "room_123" cannot be demoted because they are not a promoted moderator'

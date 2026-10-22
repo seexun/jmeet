@@ -1,0 +1,41 @@
+<div class="panel-container" id="participants-container">
+	<div class="panel-header-container">
+		<h3 class="panel-title">{{ 'PANEL.PARTICIPANTS.TITLE' | translate }}</h3>
+		<button
+			class="panel-close-button jmeet-button jmeet-button--ghost jmeet-button--icon"
+			nz-tooltip
+			nzTooltipTitle="{{ 'PANEL.CLOSE' | translate }}"
+			(click)="close()"
+		>
+			<nz-icon nzType="close" />
+		</button>
+	</div>
+
+	<div class="scrollable">
+		@if (localParticipant()) {
+			<div class="local-participant-container">
+				<ng-container
+					*ngTemplateOutlet="participantPanelItemTemplate(); context: { $implicit: localParticipant() }"
+				/>
+				<nz-divider class="participants-divider" />
+			</div>
+		}
+		<ng-container *ngTemplateOutlet="participantPanelAfterLocalParticipantTemplate()" />
+
+		@if (remoteParticipants().length > 0) {
+			<div class="remote-participants-container" id="remote-participants-container">
+				@for (participant of remoteParticipants(); track participant.sid) {
+					<div id="remote-participant-item">
+						<ng-container
+							*ngTemplateOutlet="participantPanelItemTemplate(); context: { $implicit: participant }"
+						/>
+					</div>
+				}
+			</div>
+		}
+	</div>
+</div>
+
+<ng-template #defaultParticipantPanelItem let-participant>
+	<ov-participant-panel-item [participant]="participant" id="default-participant-panel-item" />
+</ng-template>

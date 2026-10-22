@@ -1,0 +1,78 @@
+// Layout Mixins - Container, responsive layouts, and structural patterns
+// This file contains mixins for layout patterns and containers
+
+// Mixin for smooth theme transitions
+@mixin ov-theme-transition {
+	transition:
+		background-color var(--jmeet-motion-normal),
+		color var(--jmeet-motion-normal),
+		border-color var(--jmeet-motion-normal),
+		box-shadow var(--jmeet-motion-normal);
+}
+
+// Mixin for responsive containers
+@mixin ov-container {
+	max-width: var(--jmeet-layout-container-max-width);
+	margin: 0 auto;
+	padding: var(--jmeet-layout-space-lg) var(--jmeet-layout-space-xl) var(--jmeet-layout-space-xl) var(--jmeet-layout-space-xl);
+	height: calc(100% - (64px + var(--jmeet-layout-space-lg))); // Full height minus header and footer
+}
+
+// Mixin for truncated text
+@mixin ov-text-truncate {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+// Mixin for flex centering
+@mixin ov-flex-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+// Mixin for responsive grid
+@mixin ov-grid-responsive($min-column-width: 300px) {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax($min-column-width, 1fr));
+	gap: var(--jmeet-layout-grid-gap);
+}
+
+// Mixin for consistent hover states
+@mixin ov-hover-lift($distance: -2px) {
+	transition:
+		border-color var(--jmeet-motion-normal),
+		box-shadow var(--jmeet-motion-normal);
+
+	&:hover {
+		box-shadow: var(--jmeet-shadow-surface-hover);
+	}
+}
+
+// Mixin for icons with consistent sizes
+@mixin ov-icon($size: md) {
+	margin: initial;
+
+	@if $size == xs {
+		font-size: var(--jmeet-icon-control-sm);
+		width: var(--jmeet-icon-control-sm);
+		height: var(--jmeet-icon-control-sm);
+	} @else if $size == sm {
+		font-size: var(--jmeet-icon-control-sm);
+		width: var(--jmeet-icon-control-sm);
+		height: var(--jmeet-icon-control-sm);
+	} @else if $size == md {
+		font-size: var(--jmeet-icon-control-md);
+		width: var(--jmeet-icon-control-md);
+		height: var(--jmeet-icon-control-md);
+	} @else if $size == lg {
+		font-size: var(--jmeet-icon-control-lg);
+		width: var(--jmeet-icon-control-lg);
+		height: var(--jmeet-icon-control-lg);
+	} @else if $size == xl {
+		font-size: var(--jmeet-icon-control-xl);
+		width: var(--jmeet-icon-control-xl);
+		height: var(--jmeet-icon-control-xl);
+	}
+}

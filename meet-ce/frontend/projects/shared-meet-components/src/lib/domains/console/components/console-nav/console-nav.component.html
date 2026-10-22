@@ -1,0 +1,126 @@
+<jmeet-app-shell [sidebarOpen]="sidebarOpen()" (backdropClick)="closeSidebar()">
+	<header topbar class="meet-toolbar" id="main-toolbar">
+		@if (isDrawerTier()) {
+			<button
+				type="button"
+				class="jmeet-button jmeet-button--ghost jmeet-button--icon sidebar-toggle"
+				(click)="toggleSidebar()"
+				[attr.aria-expanded]="sidebarOpen()"
+				[attr.aria-label]="'NAV.MENU' | translate"
+				>
+				<nz-icon nzType="menu" />
+			</button>
+		}
+
+		@if (breadcrumbs().length > 0) {
+			<ov-breadcrumb class="toolbar-breadcrumb" [items]="breadcrumbs()" />
+		} @else if (activeNavLabel() !== portalLabel()) {
+			<div class="toolbar-breadcrumb toolbar-breadcrumb--fallback">
+				<span>{{ portalLabel() | translate }}</span><span aria-hidden="true">/</span>
+				<span aria-current="page">{{ activeNavLabel() | translate }}</span>
+			</div>
+		} @else {
+			<div class="toolbar-breadcrumb toolbar-breadcrumb--fallback">
+				<span aria-current="page">{{ portalLabel() | translate }}</span>
+			</div>
+		}
+
+		<span class="toolbar-spacer"></span>
+
+		<div class="toolbar-actions">
+			@if (portalSwitchRoute() && portalSwitchLabel()) {
+				<a class="portal-switch jmeet-button jmeet-button--outline jmeet-button--md" [routerLink]="portalSwitchRoute()">
+					<nz-icon nzType="swap" aria-hidden="true" />
+					<span>{{ portalSwitchLabel()! | translate }}</span>
+				</a>
+			}
+			<a class="profile-entry" id="profile-btn" [routerLink]="profileRoute()" [attr.aria-label]="'NAV.PROFILE' | translate">
+				<span class="profile-avatar" aria-hidden="true">@if (userInitial()) { {{ userInitial() }} } @else { <nz-icon nzType="user" /> }</span>
+				<span class="profile-name">{{ userName() }}</span>
+			</a>
+			<button
+				class="jmeet-button jmeet-button--ghost jmeet-button--icon"
+				nz-dropdown
+				[nzDropdownMenu]="moreMenu"
+				nzTrigger="click"
+				[attr.aria-haspopup]="'menu'"
+				[attr.aria-expanded]="moreMenuOpen()"
+				(nzVisibleChange)="moreMenuOpen.set($event)"
+				[attr.aria-label]="'NAV.MORE' | translate"
+				id="more-menu-btn"
+				>
+				<nz-icon nzType="more" />
+			</button>
+			<nz-dropdown-menu #moreMenu="nzDropdownMenu">
+				<ul nz-menu>
+					<li nz-menu-item>
+						<a [routerLink]="profileRoute()" id="profile-menu-item">
+							<nz-icon nzType="user" />
+							<span>{{ 'NAV.PROFILE' | translate }}</span>
+						</a>
+					</li>
+					<li nz-menu-item (click)="onLogoutClicked.emit()" id="logout-menu-item">
+						<nz-icon nzType="logout" />
+						<span>{{ 'NAV.LOGOUT' | translate }}</span>
+					</li>
+				</ul>
+			</nz-dropdown-menu>
+		</div>
+	</header>
+
+	<nav sidebar id="side-navigation">
+		<div id="app-logo" class="sidebar-brand" [attr.aria-label]="branding.displayName()">
+			<img
+				class="toolbar-brand-logo toolbar-brand-logo--default"
+				[src]="branding.logoUrl() || assets.logo"
+				[alt]="branding.displayName()"
+			/>
+			<span class="toolbar-brand-name">{{ branding.displayName() }}</span>
+		</div>
+
+		@for (section of groupedNavLinks(); track section.group) {
+			@if (section.group) {
+				<p class="jmeet-nav-group-title">{{ section.group | translate }}</p>
+			}
+		@for (link of section.links; track link.label) {
+			@if (link.href) {
+				<a
+					class="jmeet-nav-item"
+					[href]="link.href"
+					target="_blank"
+					rel="noopener noreferrer"
+					[attr.aria-label]="link.label | translate"
+					[title]="link.label | translate"
+					[id]="'nav-link-external-' + link.href!.replace(/[^a-z0-9]/gi, '')"
+					>
+					<nz-icon [nzType]="(link.icon) | nzIconType" [class]="link.iconClass" />
+					<span>{{ link.label | translate }}</span>
+				</a>
+			} @else {
+				<a
+					class="jmeet-nav-item"
+					[attr.aria-label]="link.label | translate"
+					[title]="link.label | translate"
+					[routerLink]="link.route"
+					routerLinkActive="jmeet-nav-item--active"
+					[routerLinkActiveOptions]="{ exact: false }"
+					(click)="onNavLinkClicked(link)"
+					[id]="'nav-link-' + link.route!.replace('/', '')"
+					>
+					<nz-icon [nzType]="(link.icon) | nzIconType" [class]="link.iconClass" />
+					<span>{{ link.label | translate }}</span>
+				</a>
+			}
+		}
+		}
+		<div class="nav-footer">
+			<p class="version" id="version-info">{{ version }}</p>
+		</div>
+	</nav>
+
+	<main content id="main-content">
+		<div class="jmeet-content-container">
+			<router-outlet />
+		</div>
+	</main>
+</jmeet-app-shell>

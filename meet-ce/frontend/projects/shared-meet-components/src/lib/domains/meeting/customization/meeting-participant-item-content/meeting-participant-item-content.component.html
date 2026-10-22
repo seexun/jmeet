@@ -1,0 +1,92 @@
+@let ctx = displayProperties();
+
+<div class="participant-item-container">
+	<ov-participant-panel-item [participant]="participant()">
+		<!-- Participant Badge -->
+		<ng-container *ovParticipantPanelParticipantBadge>
+			@if (meetingContextService.isHandRaised(participant().identity)) {
+				<span class="raised-hand-badge" nz-tooltip nzTooltipTitle="已举手"><nz-icon nzType="like" /></span>
+			}
+			@if (isSpotlighted()) {
+				<span class="spotlight-badge" nz-tooltip nzTooltipTitle="全场焦点">焦点</span>
+			}
+			@if (meetingContextService.primaryHostIdentity() === participant().identity) {
+				<span class="primary-host-badge" nz-tooltip nzTooltipTitle="会议主主持人">主持人</span>
+			} @else if (ctx.showBadge) {
+				@let badge = participant().getBadge();
+				<span
+					[class]="RoomMemberUiUtils.getParticipantBadgeClass(badge)"
+					[attr.id]="'participant-badge-' + participant().sid"
+				>
+					<nz-icon [nzType]="(RoomMemberUiUtils.getParticipantBadgeIcon(badge)) | nzIconType" nz-tooltip
+						[nzTooltipTitle]="RoomMemberUiUtils.getParticipantBadgeTooltip(badge) | translate" />
+				</span>
+			} @else if (ctx.showVerifiedIdentity) {
+				<span class="verified-identity" nz-tooltip [nzTooltipTitle]="participant().getIdentityLabel()">
+					<nz-icon nzType="safety-certificate" />
+				</span>
+			}
+		</ng-container>
+
+		<!-- Moderation Controls -->
+		@if (ctx.showModerationControls) {
+			<div
+				*ovParticipantPanelItemElements
+				class="moderation-controls"
+				[attr.id]="'moderation-controls-' + participant().sid"
+			>
+				<!-- 常见操作提为行内钮（用户裁决）：静音/关闭摄像头/全场焦点；低频管理留更多菜单 -->
+				@if (ctx.showMuteButton) {
+					<button
+						(click)="onMuteParticipantClick()"
+						[disabled]="mutePending()"
+						nz-tooltip
+						[nzTooltipTitle]="'PARTICIPANT_ITEM.MUTE_TOOLTIP' | translate"
+						class="moderation-btn"
+						[attr.id]="'mute-participant-btn-' + participant().sid"
+					>
+						<nz-icon nzType="audio-muted" />
+					</button>
+				}
+				@if (ctx.showStopCameraButton) {
+					<button nz-tooltip nzTooltipTitle="关闭摄像头" class="moderation-btn" (click)="onStopCameraClick()">
+						<nz-icon nzType="video-camera" />
+					</button>
+				}
+				@if (canManageSpotlight()) {
+					<button
+						nz-tooltip
+						[nzTooltipTitle]="isSpotlighted() ? '取消全场焦点' : '设为全场焦点'"
+						class="moderation-btn"
+						[disabled]="spotlightPending()"
+						(click)="onToggleSpotlightClick()"
+					>
+						<nz-icon nzType="star" />
+					</button>
+				}
+				<button nz-dropdown [nzDropdownMenu]="memberActions" nzTrigger="click" nz-placement="bottomRight" [nzOverlayClassName]="'member-actions-menu'" nz-tooltip nzTooltipTitle="更多管理" class="more-actions-btn" [attr.aria-label]="'管理成员 ' + participant().name">
+					<nz-icon nzType="more" />
+				</button>
+				<nz-dropdown-menu #memberActions="nzDropdownMenu">
+				<ul nz-menu>
+					@if (canManageSpotlight()) {
+						<button nz-menu-item (click)="onRenameClick()" [disabled]="renamePending()">
+							<nz-icon nzType="edit" />
+							<span>重命名</span>
+						</button>
+					}
+					@if (ctx.showStopScreenShareButton) { <button nz-menu-item (click)="onStopScreenShareClick()"><nz-icon nzType="desktop" /><span>停止共享</span></button> }
+					@if (ctx.showRequestUnmuteButton) { <button nz-menu-item (click)="onRequestUnmuteClick()" [disabled]="mutePending()"><nz-icon nzType="customer-service" /><span>邀请发言</span></button> }
+					@if (ctx.showMakeModeratorButton) { <button nz-menu-item (click)="onMakeModeratorClick()"><nz-icon nzType="user-add" /><span>设为主持人</span></button> }
+					@if (ctx.showUnmakeModeratorButton) { <button nz-menu-item (click)="onUnmakeModeratorClick()"><nz-icon nzType="user-delete" /><span>取消主持人</span></button> }
+					@if (ctx.showTransferHostButton) { <button nz-menu-item (click)="onTransferHostClick()"><nz-icon nzType="user-switch" /><span>移交主持人</span></button> }
+					@if (ctx.showKickButton) {
+						<button nz-menu-item class="danger-menu-item" (click)="onKickParticipantClick()"><nz-icon nzType="user-delete" /><span>移出会议</span></button>
+						<button nz-menu-item class="danger-menu-item" (click)="onBlockParticipantClick()"><nz-icon nzType="user-delete" /><span>移出并禁止加入</span></button>
+					}
+				</ul>
+				</nz-dropdown-menu>
+			</div>
+		}
+	</ov-participant-panel-item>
+</div>

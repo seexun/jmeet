@@ -1,0 +1,55 @@
+<!-- Dock 顶部的面板 tab 条：图标 + 文字 + 徽标；能打开的面板才显示对应 tab -->
+@if (showActivitiesPanelButton()) {
+	<button
+		type="button"
+		id="activities-panel-btn"
+		class="tpb-tab"
+		(click)="onToggleActivities()"
+		[attr.aria-label]="'TOOLBAR.ACTIVITIES' | translate"
+		[disabled]="isConnectionLost()"
+		[class.active]="isActivitiesOpened()"
+	>
+		<nz-icon nzType="appstore" />
+		<span class="tpb-tab__label">{{ 'TOOLBAR.ACTIVITIES' | translate }}</span>
+	</button>
+}
+
+@if (showParticipantsPanelButton()) {
+	<button
+		type="button"
+		id="participants-panel-btn"
+		class="tpb-tab"
+		(click)="onToggleParticipants()"
+		[attr.aria-label]="'TOOLBAR.PARTICIPANTS' | translate"
+		[disabled]="isConnectionLost()"
+		[class.active]="isParticipantsOpened()"
+	>
+		<nz-icon nzType="user" aria-hidden="false" />
+		<span class="tpb-tab__label">{{ 'TOOLBAR.PARTICIPANTS' | translate }}</span>
+		@if (totalParticipants() > 1) {
+			<span class="tpb-badge tpb-badge--neutral">{{ totalParticipants() }}</span>
+		}
+	</button>
+}
+
+@if (showChatPanelButton()) {
+	<button
+		type="button"
+		id="chat-panel-btn"
+		class="tpb-tab"
+		(click)="onToggleChat()"
+		[attr.aria-label]="'TOOLBAR.CHAT' | translate"
+		[disabled]="isConnectionLost()"
+		[class.active]="isChatOpened()"
+	>
+		<nz-icon nzType="message" aria-hidden="false" />
+		<span class="tpb-tab__label">{{ 'TOOLBAR.CHAT' | translate }}</span>
+		@if (unreadMessages() > 0) {
+			<span class="tpb-badge">{{ unreadMessages() }}</span>
+		}
+	</button>
+}
+
+@if (toolbarAdditionalPanelButtonsTemplate()) {
+	<ng-container *ngTemplateOutlet="toolbarAdditionalPanelButtonsTemplate()" />
+}

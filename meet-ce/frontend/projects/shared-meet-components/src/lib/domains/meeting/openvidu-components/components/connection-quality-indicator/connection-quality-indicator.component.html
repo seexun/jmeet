@@ -1,0 +1,16 @@
+@if (showBadge()) {
+	<div
+		id="connection-quality-badge"
+		class="connection-quality-badge"
+		[class.transparent]="transparent()"
+		[class.quality-excellent]="connectionQuality() === 'excellent'"
+		[class.quality-good]="connectionQuality() === 'good'"
+		[class.quality-poor]="connectionQuality() === 'poor'"
+		[class.quality-lost]="connectionQuality() === 'lost'"
+		nz-tooltip
+		[nzTooltipTitle]="tooltipText()"
+		nzTooltipPlacement="top"
+	>
+		<nz-icon [nzType]="(icon()) | nzIconType" />
+	</div>
+}

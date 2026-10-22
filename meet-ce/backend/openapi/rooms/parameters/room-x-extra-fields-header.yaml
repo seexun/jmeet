@@ -1,0 +1,11 @@
+name: X-ExtraFields
+in: header
+description: >
+    Comma-separated list of extra **Room** fields to include fully in the response.
+    By default, large or nested properties (e.g., `config`, `roles`) are excluded to reduce payload size.
+
+    These fields are included even if not listed in the `X-Fields` header.
+required: false
+schema:
+    type: string
+example: 'config,roles'

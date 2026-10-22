@@ -1,0 +1,23 @@
+@use '_design-tokens.scss';
+
+.pro-badge {
+	position: absolute;
+	top: var(--jmeet-layout-space-xs);
+	right: var(--jmeet-layout-space-xs);
+	background: linear-gradient(45deg, var(--jmeet-color-action-warning), var(--jmeet-color-action-primary));
+	color: white;
+	border-radius: var(--jmeet-shape-radius-sm);
+	padding: var(--jmeet-layout-space-xs) var(--jmeet-layout-space-sm);
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-layout-space-xs);
+	font-size: var(--jmeet-typography-font-size-xxs);
+	font-weight: var(--jmeet-typography-font-weight-semibold);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	z-index: var(--jmeet-z-raised);
+
+	.anticon {
+		@include design-tokens.ov-icon(xs);
+	}
+}

@@ -1,0 +1,154 @@
+<div class="audio-device-selector" [class.compact]="compact()">
+	<!-- Unified Device Button (Compact Mode) -->
+	@if (compact()) {
+		@if (hasAudioDevices()) {
+			<div class="unified-device-button">
+				<!-- Main toggle button -->
+				<button
+					class="toggle-section"
+				[disabled]="!hasAudioDevices() || microphoneStatusChanging"
+				[class.device-enabled]="isMicrophoneEnabled"
+				[class.device-disabled]="!isMicrophoneEnabled"
+				(click)="toggleMic($event)"
+				nz-tooltip
+				[nzTooltipTitle]="
+					!hasAudioDevices()
+						? ''
+						: isMicrophoneEnabled
+							? ('TOOLBAR.MUTE_AUDIO' | translate)
+							: ('TOOLBAR.UNMUTE_AUDIO' | translate)
+				"
+					id="microphone-button"
+					[attr.aria-label]="(isMicrophoneEnabled ? 'TOOLBAR.MUTE_AUDIO' : 'TOOLBAR.UNMUTE_AUDIO') | translate"
+					[attr.aria-pressed]="isMicrophoneEnabled"
+				>
+					<nz-icon [nzType]="(isMicrophoneEnabled ? 'mic' : 'mic_off') | nzIconType" [id]="isMicrophoneEnabled ? 'mic' : 'mic_off'" aria-hidden="true" />
+				</button>
+
+				<!-- Dropdown section -->
+				@if (isMicrophoneEnabled) {
+					<button
+						id="audio-dropdown"
+						class="dropdown-section"
+						nz-dropdown
+						[nzDropdownMenu]="microphoneMenu"
+						nzTrigger="click"
+						nz-placement="bottomLeft"
+						[nzOverlayClassName]="'device-menu'"
+						[disabled]="microphoneStatusChanging"
+						[attr.aria-label]="'TOOLBAR.SELECT_MIC' | translate"
+					>
+						<nz-icon nzType="down" aria-hidden="true" />
+					</button>
+				}
+			</div>
+		} @else {
+			<!-- No Microphone Available -->
+			<div id="no-audio-device-message" class="no-device-message">
+				<nz-icon nzType="warning" class="warning-icon" />
+				<span>{{ 'PREJOIN.NO_AUDIO_DEVICE' | translate }}</span>
+			</div>
+		}
+	} @else {
+		<!-- Normal Mode - Input Style Selector -->
+		<div class="normal-device-selector">
+			<!-- Input-style Device Selector -->
+			<div class="device-input-selector" [class.disabled]="!hasAudioDevices() || !isMicrophoneEnabled">
+				<!-- When microphone is enabled -->
+				@if (isMicrophoneEnabled) {
+					<div class="device-input-selector">
+						<nz-icon nzType="audio" class="device-icon" />
+						<nz-select
+							id="audio-dropdown"
+							class="device-select"
+							[ngModel]="microphoneSelected()?.device"
+							(ngModelChange)="onMicrophoneIdSelected($event)"
+							[nzDisabled]="microphoneStatusChanging || microphones().length <= 1"
+						>
+							@for (microphone of microphones(); track microphone.device) {
+								<nz-option [nzValue]="microphone.device" [nzLabel]="microphone.label" />
+							}
+						</nz-select>
+					</div>
+				} @else {
+					@if (hasAudioDevices()) {
+						<!-- When microphone is disabled -->
+						<div class="device-input-selector disabled">
+							<div class="selector-button disabled">
+								<nz-icon nzType="audio-muted" class="device-icon" />
+								<span class="selected-device-name">
+								{{ !hasAudioDevices() ? ('PREJOIN.NO_AUDIO_DEVICE' | translate) : 'Microphone disabled' }}
+								</span>
+							</div>
+						</div>
+					} @else {
+						<!-- No Microphone Available -->
+						<div id="no-audio-device-message" class="no-device-message">
+							<nz-icon nzType="warning" class="warning-icon" />
+							<span>{{ 'PREJOIN.NO_AUDIO_DEVICE' | translate }}</span>
+						</div>
+					}
+				}
+			</div>
+		</div>
+	}
+
+	<!-- Device Selection Menu (Shared) -->
+	<nz-dropdown-menu #microphoneMenu="nzDropdownMenu">
+		<ul nz-menu>
+			@for (microphone of microphones(); track microphone.device) {
+				<li
+					nz-menu-item
+					id="option-{{ microphone.label }}"
+					(click)="onMicrophoneSelected({ value: microphone })"
+					[class.selected]="microphone.device === microphoneSelected()?.device"
+				>
+					<nz-icon nzType="check" class="menu-check-icon"
+						[class.is-selected]="microphone.device === microphoneSelected()?.device" />
+					<span>{{ microphone.label }}</span>
+				</li>
+			}
+		</ul>
+	</nz-dropdown-menu>
+	@if (!compact()) {
+		<section class="noise-suppression" aria-labelledby="ai-noise-title">
+			<div class="noise-copy">
+				<nz-icon nzType="customer-service" aria-hidden="true" />
+				<div>
+					<strong id="ai-noise-title">AI 降噪</strong>
+					<small>
+						@if (noiseSuppression.state() === 'active') { 已在本机处理，不上传原始音频 }
+						@else if (noiseSuppression.state() === 'loading') { 正在加载本地降噪模型… }
+						@else if (noiseSuppression.state() === 'fallback') { AI 处理不可用，已回退基础降噪 }
+						@else if (noiseSuppression.state() === 'unsupported') { 当前浏览器不支持，继续使用基础降噪 }
+						@else { 抑制键盘、风扇和环境噪声 }
+					</small>
+				</div>
+			</div>
+			<nz-switch
+				[ngModel]="aiNoiseSuppressionEnabled"
+				(ngModelChange)="toggleAiNoiseSuppression($event)"
+				[nzDisabled]="noiseSuppression.pending() || !hasAudioDevices() || musicModeEnabled"
+				aria-label="启用 AI 降噪"
+			/>
+		</section>
+		<section class="noise-suppression" aria-labelledby="music-mode-title">
+			<div class="noise-copy">
+				<nz-icon nzType="sound" aria-hidden="true" />
+				<div>
+					<strong id="music-mode-title">音乐模式（高保真）</strong>
+					<small>
+						@if (musicModeEnabled) { 已关闭降噪与回声消除，双声道高码率传输 }
+						@else { 适合乐器演奏与音乐分享；与 AI 降噪互斥，请佩戴耳机使用 }
+					</small>
+				</div>
+			</div>
+			<nz-switch
+				[ngModel]="musicModeEnabled"
+				(ngModelChange)="toggleMusicMode($event)"
+				[nzDisabled]="musicModePending || !hasAudioDevices()"
+				aria-label="启用音乐模式"
+			/>
+		</section>
+	}
+</div>

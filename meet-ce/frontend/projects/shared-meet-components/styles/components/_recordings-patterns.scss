@@ -1,0 +1,1227 @@
+// ============================================================
+// 录制域页面样式（批次 3 任务 3 re-home）——录制列表/详情/回放/分享对话框。
+// 来源：_settings-recordings（搜索框块=批次2 义务承接）+ _settings-rooms 的 recordings-* 段
+// + _settings-dialogs 的 recording-share；原切片已物理删除。
+// ============================================================
+
+@use '../console-mixins' as design-tokens;
+
+.recordings-search-field {
+	position: relative;
+	display: flex;
+	align-items: center;
+
+	.recordings-search-prefix {
+		position: absolute;
+		left: 10px;
+		z-index: 1; /* 定位输入框（relative+白底）后绘制会盖住前缀图标，须抬层 */
+		pointer-events: none;
+		display: flex;
+		color: var(--jmeet-color-text-tertiary);
+		pointer-events: none;
+
+		.anticon {
+			width: 16px;
+			height: 16px;
+			font-size: var(--jmeet-font-size-md);
+		}
+	}
+
+	input {
+		width: 100%;
+		padding-left: 32px;
+		padding-right: 28px;
+	}
+
+	.recordings-search-clear {
+		position: absolute;
+		right: 4px;
+		width: 24px;
+		height: 24px;
+	}
+}
+
+.recording-detail-workspace-page {
+	overflow: hidden auto;
+
+	.jmeet-page-header {
+		margin-bottom: 22px;
+	}
+
+	.recording-detail-title {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 10px;
+
+		.title-mark {
+			display: grid;
+			width: 40px;
+			height: 40px;
+			flex-shrink: 0;
+			place-items: center;
+			border-radius: var(--jmeet-shape-radius-md);
+			background: color-mix(in srgb, var(--jmeet-color-action-primary) 8%, transparent);
+			color: var(--jmeet-color-action-primary);
+
+			.anticon {
+				@include design-tokens.ov-icon(sm);
+			}
+		}
+	}
+
+	.recording-detail-name {
+		margin: 0;
+		font-size: var(--jmeet-font-size-page-title);
+		font-weight: var(--jmeet-typography-font-weight-semibold);
+		color: var(--jmeet-color-text-primary);
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--jmeet-layout-space-sm);
+		align-items: center;
+
+		.action-btn {
+			@include design-tokens.ov-button-base;
+
+			display: flex;
+			align-items: center;
+			gap: var(--jmeet-layout-space-xs);
+
+			.anticon {
+				@include design-tokens.ov-icon(sm);
+			}
+
+			span {
+				display: none;
+
+				@media (width >= 768px) {
+					display: inline;
+				}
+			}
+		}
+
+		.delete-btn {
+			@include design-tokens.ov-theme-transition;
+
+			color: var(--jmeet-color-action-danger);
+
+			&:hover:not(:disabled) {
+				background-color: color-mix(in srgb, var(--jmeet-color-action-danger) 10%, transparent);
+			}
+
+			&:disabled {
+				color: var(--jmeet-color-text-secondary);
+			}
+		}
+	}
+
+	// =====================
+	// Key Stats Row
+	// =====================
+
+	.stats-panel {
+		margin-top: var(--jmeet-layout-space-lg);
+		padding-top: var(--jmeet-layout-space-md);
+		padding-bottom: var(--jmeet-layout-space-md);
+
+		.stats-grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: var(--jmeet-layout-space-md);
+
+			@media (width >= 768px) {
+				grid-template-columns: repeat(4, 1fr);
+			}
+
+			.stat-item {
+				display: flex;
+				align-items: flex-start;
+				gap: var(--jmeet-layout-space-sm);
+				padding: var(--jmeet-layout-space-sm) 0;
+
+				.stat-icon {
+					@include design-tokens.ov-icon(md);
+
+					color: var(--jmeet-color-action-primary);
+					flex-shrink: 0;
+					margin-top: 2px;
+				}
+
+				.stat-body {
+					display: flex;
+					flex-direction: column;
+					gap: 2px;
+					min-width: 0;
+
+					.stat-label {
+						font-size: var(--jmeet-typography-font-size-xs);
+						font-weight: var(--jmeet-typography-font-weight-semibold);
+						color: var(--jmeet-color-text-secondary);
+						text-transform: uppercase;
+						letter-spacing: 0.05em;
+						margin: 0;
+					}
+
+					.stat-value {
+						font-size: var(--jmeet-typography-font-size-sm);
+						font-weight: var(--jmeet-typography-font-weight-medium);
+						color: var(--jmeet-color-text-primary);
+						margin: 0;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+					}
+
+					// Navigable room name link inside the stat
+					.room-link {
+						display: inline-flex;
+						align-items: center;
+						gap: 2px;
+						color: var(--jmeet-color-action-primary);
+						text-decoration: none;
+
+						@include design-tokens.ov-theme-transition;
+
+						.nav-icon {
+							@include design-tokens.ov-icon(xs);
+
+							opacity: 0.7;
+						}
+
+						&:hover {
+							text-decoration: underline;
+							opacity: 0.85;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// =====================
+	// Two-column body
+	// =====================
+
+	.body-columns {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: var(--jmeet-layout-space-md);
+		margin-top: var(--jmeet-layout-space-md);
+		align-items: start;
+
+		@media (width >= 900px) {
+			grid-template-columns: 2fr 1fr;
+		}
+
+		// ---- Info Panel ----
+		.info-panel {
+			// 规格 §3.2 详情蓝图：分区头 1px divider 分隔（与页头带/筛选条同语言）
+			.panel-section-header {
+				margin: 0 0 var(--jmeet-layout-space-sm);
+				padding-bottom: var(--jmeet-layout-space-sm);
+				border-bottom: 1px solid var(--jmeet-color-border-light);
+			}
+
+			.panel-section-header h2 {
+				display: flex;
+				align-items: center;
+				gap: var(--jmeet-layout-space-xs);
+				margin: 0;
+				font-size: var(--jmeet-typography-font-size-md);
+				font-weight: var(--jmeet-typography-font-weight-semibold);
+				color: var(--jmeet-color-text-primary);
+
+				.card-title-icon {
+					@include design-tokens.ov-icon(md);
+
+					color: var(--jmeet-color-action-primary);
+				}
+			}
+
+			.info-list {
+				display: flex;
+				flex-direction: column;
+
+				.info-row {
+					display: flex;
+					flex-direction: column;
+					gap: 4px;
+					padding: var(--jmeet-layout-space-xs) 0;
+					border-bottom: 1px solid var(--jmeet-color-border-light);
+
+					&:last-child {
+						border-bottom: none;
+					}
+
+					.info-label {
+						font-size: var(--jmeet-typography-font-size-xs);
+						font-weight: var(--jmeet-typography-font-weight-semibold);
+						color: var(--jmeet-color-text-secondary);
+						text-transform: uppercase;
+						letter-spacing: 0.05em;
+						margin: 0;
+					}
+
+					.info-value {
+						font-size: var(--jmeet-typography-font-size-sm);
+						color: var(--jmeet-color-text-primary);
+						margin: 0;
+						font-weight: var(--jmeet-typography-font-weight-regular);
+						line-height: var(--jmeet-typography-line-height-relaxed);
+						overflow-wrap: break-word;
+
+						&.monospace {
+							font-family: 'Courier New', monospace;
+							font-size: var(--jmeet-typography-font-size-xs);
+							color: var(--jmeet-color-text-primary);
+							word-break: break-all;
+							letter-spacing: 0.02em;
+						}
+
+						&.error-text {
+							color: var(--jmeet-color-action-danger);
+						}
+					}
+
+					.info-value-wrap {
+						display: flex;
+						align-items: center;
+						gap: var(--jmeet-layout-space-xs);
+
+						.copy-btn {
+							flex-shrink: 0;
+
+							.anticon {
+								@include design-tokens.ov-icon(xs);
+							}
+						}
+					}
+
+					&.encoding-row {
+						gap: var(--jmeet-layout-space-xs);
+
+						.encoding-details {
+							display: flex;
+							flex-direction: column;
+							gap: var(--jmeet-layout-space-xs);
+						}
+
+						.encoding-group {
+							display: flex;
+							flex-direction: column;
+							gap: 4px;
+							padding: var(--jmeet-layout-space-xs);
+							border-radius: var(--jmeet-shape-radius-sm);
+							background: var(--jmeet-color-surface-hover);
+
+							.info-label {
+								margin-bottom: 2px;
+							}
+
+							.info-value {
+								display: flex;
+								align-items: baseline;
+								gap: var(--jmeet-layout-space-xs);
+								margin: 0;
+							}
+						}
+
+						.encoding-kv-key {
+							font-size: var(--jmeet-typography-font-size-xs);
+							font-weight: var(--jmeet-typography-font-weight-regular);
+							color: color-mix(in srgb, var(--jmeet-color-text-secondary) 85%, transparent);
+							min-width: 78px;
+							letter-spacing: 0.01em;
+						}
+
+						.encoding-kv-value {
+							font-size: var(--jmeet-typography-font-size-sm);
+							font-weight: var(--jmeet-typography-font-weight-medium);
+							color: var(--jmeet-color-text-primary);
+						}
+					}
+				}
+			}
+
+			.divider {
+				margin: var(--jmeet-layout-space-md) 0;
+			}
+
+			.error-block {
+				display: flex;
+				flex-direction: column;
+				gap: var(--jmeet-layout-space-sm);
+				padding: var(--jmeet-layout-space-sm);
+				border-radius: var(--jmeet-shape-radius-md);
+				background: var(--jmeet-color-action-danger-light);
+
+				.error-header {
+					display: flex;
+					align-items: flex-start;
+					gap: var(--jmeet-layout-space-sm);
+
+					.error-icon-sm {
+						@include design-tokens.ov-icon(md);
+
+						color: var(--jmeet-color-action-danger);
+						flex-shrink: 0;
+					}
+
+					.error-content {
+						display: flex;
+						flex-direction: column;
+						gap: 2px;
+
+						.info-label {
+							font-size: var(--jmeet-typography-font-size-xs);
+							font-weight: var(--jmeet-typography-font-weight-semibold);
+							color: var(--jmeet-color-text-secondary);
+							text-transform: uppercase;
+							letter-spacing: 0.05em;
+							margin: 0;
+						}
+
+						.info-value {
+							font-size: var(--jmeet-typography-font-size-sm);
+							color: var(--jmeet-color-text-primary);
+							margin: 0;
+							font-weight: var(--jmeet-typography-font-weight-medium);
+
+							&.error-text {
+								color: var(--jmeet-color-action-danger);
+							}
+						}
+					}
+				}
+
+				.details-content {
+					padding-left: calc(var(--jmeet-layout-space-sm) + 24px);
+					display: flex;
+					flex-direction: column;
+					gap: 2px;
+
+					.info-label {
+						font-size: var(--jmeet-typography-font-size-xs);
+						font-weight: var(--jmeet-typography-font-weight-semibold);
+						color: var(--jmeet-color-text-secondary);
+						text-transform: uppercase;
+						letter-spacing: 0.05em;
+						margin: 0 0 2px;
+					}
+
+					.info-value {
+						font-size: var(--jmeet-typography-font-size-sm);
+						color: var(--jmeet-color-text-primary);
+						margin: 0;
+						font-weight: var(--jmeet-typography-font-weight-medium);
+
+						&.error-text {
+							color: var(--jmeet-color-action-danger);
+						}
+					}
+				}
+			}
+		}
+	}
+
+}
+
+.view-recording-workspace-page {
+	overflow-x: hidden;
+
+	.jmeet-empty-state {
+		min-height: 60vh;
+	}
+
+	.view-recording-back {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--jmeet-layout-space-xs);
+		padding-left: 0;
+		margin-bottom: var(--jmeet-layout-space-sm);
+		color: var(--jmeet-color-text-secondary);
+
+		.anticon {
+			@include design-tokens.ov-icon(sm);
+		}
+	}
+
+	.view-recording-title {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 10px;
+
+		.title-mark {
+			display: grid;
+			width: 40px;
+			height: 40px;
+			flex-shrink: 0;
+			place-items: center;
+			border-radius: var(--jmeet-shape-radius-md);
+			background: color-mix(in srgb, var(--jmeet-color-action-primary) 8%, transparent);
+			color: var(--jmeet-color-action-primary);
+
+			.anticon {
+				@include design-tokens.ov-icon(sm);
+			}
+		}
+	}
+
+	.view-recording-name {
+		margin: 0;
+		font-size: var(--jmeet-font-size-page-title);
+		font-weight: var(--jmeet-typography-font-weight-semibold);
+		color: var(--jmeet-color-text-primary);
+		line-height: var(--jmeet-typography-line-height-tight);
+	}
+
+	.view-recording-meta-row,
+	.view-recording-metadata {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--jmeet-layout-space-lg);
+		align-items: center;
+
+		.recording-date,
+		.recording-duration,
+		.view-recording-player-status {
+			@include design-tokens.ov-flex-center;
+
+			gap: var(--jmeet-layout-space-xs);
+			font-size: var(--jmeet-typography-font-size-sm);
+			color: var(--jmeet-color-text-secondary);
+
+			.anticon {
+				@include design-tokens.ov-icon(sm);
+			}
+		}
+
+		.status-icon {
+			&.complete {
+				color: var(--jmeet-color-action-success);
+			}
+
+			&.starting,
+			&.active,
+			&.ending {
+				color: var(--jmeet-color-action-warning);
+			}
+
+			&.failed {
+				color: var(--jmeet-color-action-danger);
+			}
+		}
+
+		.status-text {
+			font-weight: var(--jmeet-typography-font-weight-medium);
+		}
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--jmeet-layout-space-sm);
+		align-items: center;
+
+		.action-btn {
+			@include design-tokens.ov-button-base;
+
+			display: inline-flex;
+			align-items: center;
+			gap: var(--jmeet-layout-space-xs);
+
+			.anticon {
+				@include design-tokens.ov-icon(sm);
+			}
+
+			span {
+				display: none;
+
+				@media (width >= 768px) {
+					display: inline;
+				}
+			}
+		}
+
+		.download-btn {
+			color: var(--jmeet-color-action-info);
+		}
+
+		.delete-btn {
+			color: var(--jmeet-color-action-danger);
+
+			&:hover:not(:disabled) {
+				background-color: color-mix(in srgb, var(--jmeet-color-action-danger) 10%, transparent);
+			}
+
+			&:disabled {
+				color: var(--jmeet-color-text-secondary);
+			}
+		}
+	}
+
+	.details-link-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--jmeet-layout-space-xs);
+		padding-left: 0;
+		margin: 0 0 var(--jmeet-layout-space-md);
+		color: var(--jmeet-color-action-link);
+		font-size: var(--jmeet-typography-font-size-xs);
+
+		.anticon {
+			@include design-tokens.ov-icon(sm);
+		}
+	}
+
+	.view-recording-player-card {
+		overflow: hidden;
+		padding: 0;
+	}
+}
+
+.view-recording-workspace-page.view-recording-desktop {
+	@include design-tokens.ov-container;
+
+	max-width: 1000px;
+	padding-top: var(--jmeet-layout-space-xl);
+
+	.jmeet-page-header {
+		margin-bottom: var(--jmeet-layout-space-sm);
+	}
+
+	.view-recording-meta-row {
+		margin-top: var(--jmeet-layout-space-xs);
+	}
+
+	@include design-tokens.ov-mobile-down {
+		padding: var(--jmeet-layout-space-lg);
+		padding-top: var(--jmeet-layout-space-xl);
+
+		.actions {
+			flex-direction: column;
+			align-items: stretch;
+
+			.action-btn {
+				width: 100%;
+				justify-content: center;
+
+				span {
+					display: inline;
+				}
+			}
+		}
+	}
+}
+
+.view-recording-workspace-page.view-recording-mobile {
+	touch-action: manipulation;
+	min-height: 100vh;
+	background-color: var(--jmeet-color-surface-page);
+	display: flex;
+	flex-direction: column;
+
+	@include design-tokens.ov-tablet-up {
+		display: none;
+	}
+
+	.view-recording-mobile-header {
+		position: sticky;
+		top: 0;
+		z-index: calc(var(--jmeet-z-dropdown) + 10); /* 录制页移动端吸顶头：须保持在 nz 弹层(1000)之上 */
+		margin: 0;
+		padding: var(--jmeet-layout-space-sm) var(--jmeet-layout-space-md);
+		padding-top: max(var(--jmeet-layout-space-sm), env(safe-area-inset-top));
+		background-color: var(--jmeet-color-surface-page);
+		border-bottom: 1px solid var(--jmeet-color-border-light); // 吸顶头 1px 轻分隔（批次2 任务4 提前收口）
+
+		.jmeet-page-header__actions {
+			min-width: 0;
+		}
+
+		.jmeet-text--page-title {
+			display: flex;
+			align-items: center;
+			gap: var(--jmeet-layout-space-sm);
+			margin: 0;
+			font-size: inherit;
+			font-weight: inherit;
+		}
+	}
+
+	.view-recording-mobile-title {
+		display: flex;
+		align-items: center;
+		gap: var(--jmeet-layout-space-sm);
+		min-width: 0;
+		width: 100%;
+	}
+
+	.view-recording-title-block {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.view-recording-name {
+		display: block;
+		font-size: var(--jmeet-typography-font-size-md);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.view-recording-metadata {
+		gap: var(--jmeet-layout-space-md);
+		margin-top: 2px;
+
+		.recording-date,
+		.recording-duration {
+			font-size: var(--jmeet-typography-font-size-xs);
+
+			.anticon {
+				@include design-tokens.ov-icon(xs);
+			}
+		}
+	}
+
+	.view-recording-mobile-actions {
+		flex-shrink: 0;
+		gap: var(--jmeet-layout-space-xs);
+
+		.action-btn {
+			padding: 6px;
+
+			.anticon {
+				@include design-tokens.ov-icon(md);
+			}
+		}
+	}
+
+	.view-recording-status-bar {
+		@include design-tokens.ov-flex-center;
+
+		gap: var(--jmeet-layout-space-xs);
+		justify-content: center;
+		background: color-mix(in srgb, var(--jmeet-color-action-warning) 12%, transparent);
+		border-top: 1px solid var(--jmeet-color-action-warning);
+		padding: var(--jmeet-layout-space-xs) var(--jmeet-layout-space-md);
+		font-size: var(--jmeet-typography-font-size-xs);
+		color: var(--jmeet-color-action-warning);
+
+		.status-icon {
+			@include design-tokens.ov-icon(xs);
+		}
+
+		.status-text {
+			font-weight: var(--jmeet-typography-font-weight-medium);
+		}
+	}
+
+	.view-recording-details-link-bar {
+		display: flex;
+		justify-content: center;
+		border-top: 1px solid var(--jmeet-color-border);
+		padding: var(--jmeet-layout-space-xs) var(--jmeet-layout-space-md);
+
+		.details-link-btn {
+			margin: 0;
+		}
+	}
+
+	.view-recording-player-card {
+		flex: 1;
+		border: 0;
+		border-radius: 0;
+		box-shadow: none;
+	}
+}
+
+.recordings-workspace-page {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-space-4);
+}
+
+.recordings-directory-panel {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-space-4);
+
+	.ov-active-filters {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 8px;
+		margin-bottom: 14px;
+
+		.active-filters-label {
+			color: var(--jmeet-color-text-secondary);
+			font-size: var(--jmeet-font-size-xs);
+			font-weight: var(--jmeet-font-weight-semibold);
+		}
+
+		.filter-chip,
+		.clear-all-chip {
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
+			padding: 4px 10px;
+			border: 1px solid var(--jmeet-color-border-light);
+			border-radius: 999px;
+			background: var(--jmeet-color-surface-variant);
+			color: var(--jmeet-color-text-primary);
+			font-size: var(--jmeet-font-size-xs);
+			cursor: pointer;
+
+			.anticon {
+				width: 14px;
+				height: 14px;
+				font-size: var(--jmeet-font-size-sm);
+			}
+		}
+
+		.clear-all-chip {
+			color: var(--jmeet-color-action-link);
+		}
+	}
+
+	.cards-container {
+		@include design-tokens.ov-grid-responsive(280px);
+
+		min-width: 0;
+		gap: var(--jmeet-layout-space-md);
+		padding: var(--jmeet-layout-space-md) 0;
+	}
+
+	.recording-card {
+		@include design-tokens.ov-card;
+
+		display: flex;
+		flex-direction: column;
+		gap: var(--jmeet-layout-space-md);
+		position: relative;
+		min-width: 0;
+		box-sizing: border-box;
+		padding: var(--jmeet-card-padding);
+		font-size: var(--jmeet-font-size-sm);
+
+		&.selected-card {
+			// 批次5 选中语言统一（对齐 selectable-card soft 底蓝图）：soft 底承载选中，
+			// 不回潮「描边+阴影」双特征（契约锚定 .recording-card.selected-card）
+			background: var(--jmeet-color-action-primary-light);
+		}
+	}
+
+	.card-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--jmeet-layout-space-md);
+
+		.card-header-left {
+			display: flex;
+			align-items: flex-start;
+			flex: 1;
+			min-width: 0;
+			gap: var(--jmeet-layout-space-sm);
+		}
+	}
+
+	.detail-item {
+		display: flex;
+		align-items: flex-start;
+		gap: var(--jmeet-layout-space-sm);
+
+		.detail-icon {
+			@include design-tokens.ov-icon(sm);
+
+			margin-top: 2px;
+			flex-shrink: 0;
+			color: var(--jmeet-color-text-secondary);
+		}
+	}
+
+	.detail-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px 8px;
+	}
+
+	.recording-details .additional-details {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+		margin-top: 5px;
+	}
+
+	.card-actions {
+		display: flex;
+		justify-content: flex-end;
+		gap: 4px;
+		margin-top: var(--jmeet-layout-space-sm);
+		padding-top: var(--jmeet-layout-space-sm);
+		border-top: 1px solid var(--jmeet-color-border-light);
+	}
+
+	.action-button {
+		&.play-button .anticon {
+			color: var(--jmeet-color-action-success);
+		}
+
+		&.download-button .anticon {
+			color: var(--jmeet-color-action-info);
+		}
+
+		&.delete-button .anticon {
+			color: var(--jmeet-color-action-danger);
+		}
+	}
+
+	.room-info {
+		flex: 1;
+		min-width: 0;
+
+		.room-name {
+			@include design-tokens.ov-text-truncate;
+
+			margin-bottom: 2px;
+			font-weight: var(--jmeet-typography-font-weight-medium);
+		}
+
+		.room-id {
+			@include design-tokens.ov-text-truncate;
+
+			color: var(--jmeet-color-text-secondary);
+			font-size: var(--jmeet-typography-font-size-xs);
+		}
+	}
+
+	.date-info {
+		// 用户裁决：日期时间单行（行高 70→56 压实）
+		display: flex;
+		align-items: baseline;
+		gap: 6px;
+
+		.date {
+			color: var(--jmeet-color-text-primary);
+			font-size: var(--jmeet-typography-font-size-sm);
+		}
+
+		.time {
+			color: var(--jmeet-color-text-secondary);
+			font-size: var(--jmeet-typography-font-size-xs);
+		}
+	}
+
+	.no-data {
+		color: var(--jmeet-color-text-hint);
+		font-size: var(--jmeet-font-size-xs);
+	}
+
+	.action-buttons {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+	}
+
+	.delete-action {
+		color: var(--jmeet-color-action-danger) !important;
+	}
+
+	@include design-tokens.ov-mobile-down {
+		.cards-container {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+}
+
+.recordings-search-field {
+	/* 参考设计：搜索框固定 380~400px（2026-10-20） */
+	flex: 0 1 400px;
+	min-width: 220px;
+}
+
+/* 参考设计：按钮组紧跟搜索框排布，不推至最右（用户裁决 2026-10-20，消除宽屏中部空洞） */
+.recordings-toolbar-actions {
+	margin-left: 0;
+}
+
+// 桌面表格行选中高亮（与移动卡片 .selected-card 同源 soft 底）
+.recordings-table tr.selected-row > td {
+	background: var(--jmeet-color-action-primary-light);
+}
+
+// 会议名称 / 会议号两列（用户裁决 2026-10-20：分列展示，内部 roomId 不外显）
+.recordings-table .duration-cell span,
+.recordings-table .size-cell span,
+.recordings-table .start-date-cell span {
+	white-space: nowrap;
+}
+.recordings-table .room-name {
+	color: var(--jmeet-color-text-primary);
+	font-weight: var(--jmeet-typography-font-weight-medium);
+}
+
+.recordings-table .meeting-code-cell {
+	white-space: nowrap;
+
+	.meeting-code {
+		color: var(--jmeet-color-text-secondary);
+		font-size: var(--jmeet-typography-font-size-sm);
+	}
+}
+
+.recordings-table-footer {
+	padding-top: 8px;
+	border-top: 1px solid var(--jmeet-color-border-light);
+}
+
+.recording-share-dialog-page {
+	@include design-tokens.ov-theme-transition;
+
+	.dialog-title {
+		@include design-tokens.ov-flex-center;
+
+		justify-content: flex-start;
+		gap: var(--jmeet-layout-space-sm);
+		margin: 0;
+		padding: var(--jmeet-layout-space-lg) var(--jmeet-layout-space-xl);
+		font-size: var(--jmeet-font-size-md);
+		font-weight: var(--jmeet-font-weight-bold);
+		color: var(--jmeet-color-text-primary);
+
+		.title-icon {
+			@include design-tokens.ov-icon(md);
+
+			color: var(--jmeet-color-action-primary);
+		}
+	}
+
+	.dialog-content {
+		padding: var(--jmeet-layout-space-xl);
+		display: flex;
+		flex-direction: column;
+		gap: var(--jmeet-layout-space-lg);
+
+		@include design-tokens.ov-tablet-down {
+			min-width: 0;
+			padding: var(--jmeet-layout-space-lg);
+		}
+
+		@include design-tokens.ov-mobile-down {
+			min-width: 0;
+			padding: var(--jmeet-layout-space-md);
+		}
+	}
+
+	.content-section {
+		display: flex;
+		flex-direction: column;
+		gap: var(--jmeet-layout-space-lg);
+	}
+
+	.section-label {
+		margin: 0 0 var(--jmeet-layout-space-sm);
+	}
+
+	.error-message {
+		@include design-tokens.ov-flex-center;
+
+		justify-content: flex-start;
+		gap: var(--jmeet-layout-space-sm);
+		padding: var(--jmeet-layout-space-md);
+		background: color-mix(in srgb, var(--jmeet-color-action-danger) 10%, transparent);
+		border: 1px solid var(--jmeet-color-action-danger);
+		border-radius: var(--jmeet-shape-radius-md);
+		color: var(--jmeet-color-action-danger);
+
+		.error-icon {
+			@include design-tokens.ov-icon(sm);
+		}
+
+		.error-text {
+			font-size: var(--jmeet-typography-font-size-sm);
+			font-weight: var(--jmeet-typography-font-weight-medium);
+		}
+	}
+
+	.access-options {
+		display: flex;
+		flex-direction: column;
+		gap: var(--jmeet-layout-space-sm);
+	}
+
+	.access-option {
+		border: 1px solid var(--jmeet-color-border);
+		border-radius: var(--jmeet-shape-radius-sm);
+		padding: var(--jmeet-layout-space-md);
+		background: var(--jmeet-color-surface-card);
+
+		// nz-radio DOM 平移（原 Material radio）：投影内容外层 span 默认 8px 内边距归零，
+		// 内容与圆点的间距仍由 .option-content 的 margin-left 提供。
+		> .ant-radio {
+			flex-shrink: 0;
+		}
+
+		> .ant-radio + span {
+			flex: 1;
+			min-width: 0;
+			padding: 0;
+		}
+
+		&:hover:not(.access-disabled) {
+			background: var(--jmeet-color-surface-hover);
+			border-color: var(--jmeet-color-action-primary);
+		}
+
+		// 选中态类由 Material 旧状态类平移为 nz 的 .ant-radio-wrapper-checked。
+		&.ant-radio-wrapper-checked {
+			border-color: var(--jmeet-color-action-primary);
+			background: color-mix(in srgb, var(--jmeet-color-action-primary) 5%, transparent);
+		}
+
+		&.access-disabled {
+			background: var(--jmeet-color-surface-variant);
+			border-style: dashed;
+
+			.option-icon,
+			.option-title {
+				color: var(--jmeet-color-text-disabled);
+			}
+		}
+
+		.option-content {
+			@include design-tokens.ov-flex-center;
+
+			justify-content: flex-start;
+			gap: var(--jmeet-layout-space-md);
+			margin-left: var(--jmeet-layout-space-lg);
+
+			.option-icon {
+				@include design-tokens.ov-icon(md);
+
+				color: var(--jmeet-color-text-secondary);
+				flex-shrink: 0;
+			}
+
+			.option-details {
+				display: flex;
+				flex-direction: column;
+				gap: var(--jmeet-layout-space-xs);
+
+				.option-title {
+					font-size: var(--jmeet-typography-font-size-md);
+					font-weight: var(--jmeet-typography-font-weight-medium);
+					color: var(--jmeet-color-text-primary);
+				}
+			}
+		}
+	}
+
+	.generate-section {
+		@include design-tokens.ov-flex-center;
+
+		justify-content: center;
+
+		.generate-button {
+			@include design-tokens.ov-flex-center;
+
+			gap: var(--jmeet-layout-space-sm);
+
+			.anticon {
+				@include design-tokens.ov-icon(sm);
+			}
+		}
+	}
+
+	.url-section {
+		display: flex;
+		flex-direction: column;
+		gap: var(--jmeet-layout-space-md);
+
+		.url-field {
+			// 原 Material outline 字段（prefix/suffix）改为一行 flex：前缀图标 + nz-input + 复制按钮。
+			display: flex;
+			align-items: center;
+			gap: var(--jmeet-layout-space-sm);
+			width: 100%;
+
+			.url-input {
+				flex: 1;
+				min-width: 0;
+				font-family: 'Courier New', monospace;
+				font-size: var(--jmeet-typography-font-size-sm);
+				color: var(--jmeet-color-text-primary);
+			}
+
+			.url-prefix-icon {
+				@include design-tokens.ov-icon(sm);
+
+				color: var(--jmeet-color-text-secondary);
+			}
+
+			.copy-button {
+				color: var(--jmeet-color-text-secondary);
+
+				&:hover {
+					color: var(--jmeet-color-action-primary);
+					background: color-mix(in srgb, var(--jmeet-color-action-primary) 10%, transparent);
+				}
+
+				&.copied {
+					color: var(--jmeet-color-action-success);
+					background: color-mix(in srgb, var(--jmeet-color-action-success) 10%, transparent);
+				}
+			}
+		}
+	}
+
+	.url-actions {
+		@include design-tokens.ov-flex-center;
+
+		justify-content: center;
+		margin-top: var(--jmeet-layout-space-md);
+
+		.back-button {
+			@include design-tokens.ov-flex-center;
+
+			gap: var(--jmeet-layout-space-xs);
+			color: var(--jmeet-color-text-secondary);
+		}
+	}
+
+	.dialog-actions {
+		padding: var(--jmeet-layout-space-md) var(--jmeet-layout-space-xl) var(--jmeet-layout-space-lg);
+		border-top: 1px solid var(--jmeet-color-border-light);
+		justify-content: flex-end;
+
+		.close-button {
+			@include design-tokens.ov-flex-center;
+
+			gap: var(--jmeet-layout-space-xs);
+		}
+	}
+
+	@include design-tokens.ov-mobile-down {
+		.dialog-content {
+			min-width: 280px;
+		}
+
+		.access-option {
+			padding: var(--jmeet-layout-space-sm);
+
+			.option-content {
+				gap: var(--jmeet-layout-space-sm);
+
+				.option-details .option-title {
+					font-size: var(--jmeet-typography-font-size-sm);
+				}
+			}
+		}
+	}
+}
+

@@ -1,0 +1,11 @@
+// Console mixins-only entry - pure mixin forwarding for global console slices.
+// 批次 3 brand 垫片修复：_settings-* 切片此前经 @use _design-tokens 消费 mixin，
+// 该 forwarder 连带发射 _tokens-core/_tokens-themes 的顶层 :root 垫片（压过
+// styles.scss 的 emit-runtime-theme('html')，brand 运行时换肤全应用死）。
+// 本入口只 forward 切片实际消费的 mixin 源（_mixins-layout/_mixins-components/
+// _mixins-responsive），零 CSS 发射——tokens 层不再经切片链进入全局。
+// 注意：切片沿用 `as design-tokens` 命名空间（历史 100+ 调用点零改动），
+// 实际内容仅为 mixin，无任何令牌定义。
+@forward './mixins-layout';
+@forward './mixins-components';
+@forward './mixins-responsive';

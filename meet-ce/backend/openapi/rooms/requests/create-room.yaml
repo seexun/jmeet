@@ -1,0 +1,6 @@
+description: Room creation options
+required: true
+content:
+    application/json:
+        schema:
+            $ref: '../schemas/meet-room-options.yaml'

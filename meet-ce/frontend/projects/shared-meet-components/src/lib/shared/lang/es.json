@@ -1,0 +1,72 @@
+{
+  "ERROR": {
+    "DEFAULT_TITLE": "Error",
+    "BACK": "Atrás",
+    "BACK_TO_CONSOLE": "Volver a la consola",
+    "ACCEPT": "Aceptar",
+    "OOPS": "¡Vaya!",
+    "SOMETHING_WRONG": "Algo ha salido mal"
+  },
+  "NAVIGATION_ERROR": {
+    "EMBEDDED_ERROR": {
+      "TITLE": "No se pudo cargar JMeet",
+      "MESSAGE": "No se ha podido cargar JMeet. Comprueba la configuración de la integración."
+    },
+    "CLOSED_ROOM": {
+      "TITLE": "Sala cerrada",
+      "MESSAGE": "Las reuniones de esta sala no están disponibles mientras está cerrada"
+    },
+    "ANONYMOUS_ACCESS_DISABLED": {
+      "TITLE": "Acceso anónimo desactivado",
+      "MESSAGE": "El acceso anónimo para tu rol se ha desactivado en esta sala (y sus grabaciones)"
+    },
+    "ANONYMOUS_RECORDING_ACCESS_DISABLED": {
+      "TITLE": "Acceso anónimo desactivado",
+      "MESSAGE": "El acceso anónimo para esta grabación se ha desactivado"
+    },
+    "INVALID_ROOM_SECRET": {
+      "TITLE": "Enlace no válido",
+      "MESSAGE": "El enlace que has usado para acceder a esta sala (o sus grabaciones) no es válido. Pide a un moderador que comparta el enlace correcto usando los botones de compartir disponibles"
+    },
+    "INVALID_RECORDING_SECRET": {
+      "TITLE": "Enlace no válido",
+      "MESSAGE": "El enlace que has usado para acceder a esta grabación no es válido"
+    },
+    "INVALID_ROOM": {
+      "TITLE": "Sala no válida",
+      "MESSAGE": "La sala (o sus grabaciones) a la que intentas acceder no existe o ha sido eliminada"
+    },
+    "INVALID_RECORDING": {
+      "TITLE": "Grabación no válida",
+      "MESSAGE": "La grabación a la que intentas acceder no existe o ha sido eliminada"
+    },
+    "INVALID_MEMBER": {
+      "TITLE": "Miembro no válido",
+      "MESSAGE": "Ya no eres miembro de esta sala o la información del miembro es incorrecta"
+    },
+    "FORBIDDEN_ROOM_ACCESS": {
+      "TITLE": "Acceso a la sala prohibido",
+      "MESSAGE": "No tienes autorización para acceder a esta sala (ni a sus grabaciones)"
+    },
+    "FORBIDDEN_ROOM_RECORDINGS_ACCESS": {
+      "TITLE": "Acceso a las grabaciones prohibido",
+      "MESSAGE": "No tienes autorización para acceder a las grabaciones de esta sala"
+    },
+    "FORBIDDEN_RECORDING_ACCESS": {
+      "TITLE": "Acceso a la grabación prohibido",
+      "MESSAGE": "No tienes autorización para acceder a esta grabación"
+    },
+    "ROOM_ACCESS_REVOKED": {
+      "TITLE": "Acceso a la sala revocado",
+      "MESSAGE": "Tus permisos en esta sala han cambiado y ya no tienes acceso (ni a sus grabaciones). Ponte en contacto con un moderador para obtener más información"
+    },
+    "TOO_MANY_REQUESTS": {
+      "TITLE": "Demasiadas solicitudes",
+      "MESSAGE": "Has realizado demasiadas solicitudes en un breve periodo de tiempo. Espera un momento e inténtalo de nuevo"
+    },
+    "INTERNAL_ERROR": {
+      "TITLE": "Error interno",
+      "MESSAGE": "Se ha producido un error inesperado, inténtalo de nuevo más tarde"
+    }
+  }
+}

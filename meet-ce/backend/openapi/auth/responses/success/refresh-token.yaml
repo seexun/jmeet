@@ -1,0 +1,13 @@
+description: Successfully refreshed the access token
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                    example: Access token for user 'admin' successfully refreshed
+                accessToken:
+                    type: string
+                    description: >
+                        The new access token to authenticate the user in subsequent requests.

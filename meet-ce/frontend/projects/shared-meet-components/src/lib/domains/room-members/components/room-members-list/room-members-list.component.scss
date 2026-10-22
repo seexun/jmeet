@@ -1,0 +1,30 @@
+:host {
+	display: block;
+}
+
+.members-table {
+	min-width: 860px;
+
+	th.member-name-header,
+	td.member-cell {
+		min-width: 240px;
+	}
+
+	th.actions-header,
+	td.actions-cell {
+		min-width: 200px;
+	}
+
+	// th.sortable 手型/禁选中已上收全局 _tables.scss（批次2 任务4），箭头走全局 .sort-arrow
+}
+
+.room-members-search-field {
+	flex-direction: row; // .jmeet-filter-field 默认纵向排列，搜索框需要输入框与按钮同行
+	align-items: center;
+}
+
+.room-members-filter-panel {
+	nz-select {
+		width: 156px;
+	}
+}

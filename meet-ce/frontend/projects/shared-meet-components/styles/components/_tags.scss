@@ -1,0 +1,43 @@
+.jmeet-status-tag {
+	display: inline-flex;
+	align-items: center;
+	min-height: 24px;
+	padding: 0 10px;
+
+	// soft 底形态（标准 §17）：24px 高、6px 圆角、12px 字号——胶囊 999px 为 EP 时代
+	// 形态，随平面工作台退役；无描边，层次靠 soft 底明度差承载。
+	border-radius: 6px;
+	font-size: var(--jmeet-font-size-xs);
+	font-weight: var(--jmeet-font-weight-medium);
+	line-height: 1.2;
+	white-space: nowrap;
+}
+
+// soft 浅底徽标文字统一用同系深字档（base 色对浅底对比度不足 4.5:1；
+// 批次2 任务1 对比度终值 success-text/danger-text 在此生效）
+.jmeet-status-tag--success {
+	background: var(--jmeet-color-action-success-light);
+	color: var(--jmeet-color-action-success-text);
+}
+
+.jmeet-status-tag--processing {
+	background: var(--jmeet-color-action-primary-light);
+
+	// 12px 字对浅底 base 主色仅 4.0:1 不达 AA → 深档（与 nz-select 选中模式同构）
+	color: var(--jmeet-color-action-primary-dark);
+}
+
+.jmeet-status-tag--warning {
+	background: var(--jmeet-color-action-warning-light);
+	color: var(--jmeet-color-action-warning-text);
+}
+
+.jmeet-status-tag--error {
+	background: var(--jmeet-color-action-danger-light);
+	color: var(--jmeet-color-action-danger-text);
+}
+
+.jmeet-status-tag--default {
+	background: var(--jmeet-color-surface-hover);
+	color: var(--jmeet-color-text-secondary);
+}

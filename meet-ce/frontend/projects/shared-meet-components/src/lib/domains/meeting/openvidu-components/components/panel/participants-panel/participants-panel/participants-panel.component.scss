@@ -1,0 +1,24 @@
+.local-participant-container,
+.remote-participants-container {
+	margin: 0 4px;
+}
+
+// 成员滚动列表：meeting 白面 + flex 吃满面板剩余高度（dock ③ 槽节奏；
+// 定制 meeting-participants-panel 经 styleUrls 共用本规则）
+.scrollable {
+	flex: 1 1 auto;
+	min-height: 0;
+	overflow: auto;
+	padding: 4px 0 12px;
+	background: var(--jmeet-meeting-surface);
+}
+
+#remote-participant-item {
+	border-radius: var(--jmeet-radius-md);
+}
+
+// nz-divider keeps the same hairline rhythm as the former divider shell.
+// (antd draws the line via ::before with its own colorSplit token — no override needed.)
+nz-divider.participants-divider {
+	margin: 0;
+}

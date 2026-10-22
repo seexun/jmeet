@@ -1,0 +1,20 @@
+<div class="ov-page-container">
+	<header class="tab-shell-header">
+		<h1 class="jmeet-text--page-title">{{ pageTitle() | translate }}</h1>
+	</header>
+
+	<nav class="config-tab-bar" [attr.aria-label]="tabsAriaLabel()">
+		@for (tab of tabs(); track tab.path) {
+			<a
+				class="config-tab"
+				[routerLink]="tab.path"
+				routerLinkActive="active"
+				[routerLinkActiveOptions]="{ exact: true }"
+			>
+				{{ tab.label | translate }}
+			</a>
+		}
+	</nav>
+
+	<router-outlet />
+</div>

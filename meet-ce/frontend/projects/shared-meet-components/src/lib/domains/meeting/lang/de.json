@@ -1,0 +1,287 @@
+{
+	"ROOM": {
+		"JOINING": "Raum beitreten...",
+		"LANDSCAPE_WARNING": "Bitte drehen Sie Ihr Gerät für eine bessere Erfahrung in den Hochformatmodus",
+		"DISCONNECTED": "Sie haben den Raum verlassen",
+		"DISCONNECTED_SUBTITLE": "Die Sitzung wurde beendet"
+	},
+	"PREJOIN": {
+		"NICKNAME": "Spitzname",
+		"NO_VIDEO_DEVICE": "Video-Gerät nicht gefunden",
+		"NO_AUDIO_DEVICE": "Audio-Gerät nicht gefunden",
+		"JOIN": "Meeting beitreten",
+		"PREPARING": "Raum vorbereiten...",
+		"BACKGROUND": "Hintergrund-Effekte"
+	},
+	"TOOLBAR": {
+		"THEME_TOGGLE": "Hell/Dunkel umschalten",
+		"MUTE_AUDIO": "Stummschalten des Audios",
+		"UNMUTE_AUDIO": "Stummschaltung für Audio aufheben",
+		"STOP_VIDEO": "Dein Video stoppen",
+		"SELECT_CAMERA": "Kamera auswählen",
+		"SELECT_MIC": "Mikrofon auswählen",
+		"START_VIDEO": "Dein Video starten",
+		"ENABLE_SCREEN": "Bildschirmfreigabe aktivieren",
+		"DISABLE_SCREEN": "Bildschirmfreigabe deaktivieren",
+		"MORE_OPTIONS": "Weitere Optionen",
+		"FULLSCREEN": "Vollbild",
+		"EXIT_FULLSCREEN": "Vollbildmodus beenden",
+		"BACKGROUND": "Hintergrund-Effekte",
+		"START_RECORDING": "Aufzeichnung starten",
+		"STOP_RECORDING": "Aufzeichnung stoppen",
+		"SETTINGS": "Einstellungen",
+		"LEAVE": "Die Raum verlassen",
+		"PARTICIPANTS": "Teilnehmer",
+		"CHAT": "Chat",
+		"ACTIVITIES": "Aktivitäten",
+		"PANELS": "Panels",
+		"NO_TRACKS_PUBLISHED": "Teile Audio oder Video, um mit der Aufnahme zu beginnen.",
+		"VIEW_RECORDINGS": "Aufnahmen anzeigen"
+	},
+	"STREAM": {
+		"MUTE_SOUND": "Ton stummschalten",
+		"UNMUTE_SOUND": "Stummschaltung aufheben",
+		"ZOOM_IN": "Vergrößern",
+		"ZOOM_OUT": "Herauszoomen",
+		"RESET_ZOOM": "Zoom zurücksetzen",
+		"REPLACE_SCREEN": "Bildschirm austauschen",
+		"PIN": "Anheften",
+		"UNPIN": "Loslösen",
+		"FLOAT": "Abdocken",
+		"DOCK": "Andocken",
+		"SCREEN_LABEL": "Bildschirm",
+		"YOUR_SCREEN_LABEL": "Ihr Bildschirm"
+	},
+	"PANEL": {
+		"CLOSE": "Schließen",
+		"MEDIA_QUALITY": {
+			"TITLE": "Medienqualität"
+		},
+		"CAPTIONS": {
+			"TITLE": "Live-Untertitel",
+			"SUBTITLE": "Untertitel werden in Echtzeit aus der Konferenzsprache erzeugt und nur lokal angezeigt",
+			"EMPTY": "Noch keine Untertitel. Aktivieren Sie die Untertitel, dann erscheint Gesprochenes hier in Echtzeit.",
+			"INTERIM": "erkenne…"
+		},
+		"CHAT": {
+			"TITLE": "Chat",
+			"YOU": "Sie",
+			"SUBTITLE": "Nachrichten werden am Ende des Meetings entfernt",
+			"PLACEHOLDER": "Eine Nachricht senden...",
+			"SEND": "Senden",
+			"EMOJI": "Emoji",
+			"MESSAGE_SENT_NOTIFICATION": "Nachricht gesendet",
+			"OPEN_CHAT": "ÖFFNEN",
+			"ENCRYPTION_KEY_MISMATCH": "Es gibt Teilnehmer, die mit einem anderen Verschlüsselungsschlüssel verbunden sind. Sie werden deren Nachrichten nicht empfangen."
+		},
+		"ACTIVITIES": {
+			"TITLE": "Aktivitäten",
+			"COLLABORATION": "Zusammenarbeit",
+			"COLLABORATION_ARIA": "Meeting-Zusammenarbeitstools",
+			"RECORDING": "Aufnahme",
+			"WHITEBOARD": "Whiteboard",
+			"POLL": "Umfrage",
+			"MATERIALS": "Materialien",
+			"AGENDA": "Agenda"
+		},
+		"PARTICIPANTS": {
+			"NO_MATCH": "Keine passenden Mitglieder",
+			"SEARCH_PLACEHOLDER": "Mitglieder suchen",
+			"SECTION_HOSTS": "Hosts / Admins",
+			"SECTION_MEMBERS": "Teilnehmer",
+			"INVITE": "Mitglieder einladen",
+			"EMPTY_HINT": "Noch keine weiteren Mitglieder — lade dein Team ein",
+			"INVITE_NOW": "Einladungslink kopieren",
+			"GUEST": "Gast",
+			"MUTE_ALL": "Alle stummschalten",
+			"MANAGEMENT": "Mitglieder",
+			"TITLE": "Teilnehmer",
+			"CAMERA": "KAMERA",
+			"MICROPHONE": "MIKROFON",
+			"SCREEN": "BILDSCHIRM",
+			"NO_STREAMS": "KEINE",
+			"YOU": "Sie",
+			"MUTE": "Stummschalten",
+			"UNMUTE": "Stummschaltung aufheben",
+			"CONNECTION_QUALITY": {
+				"LABEL": "Verbindungsqualität",
+				"EXCELLENT": "Ausgezeichnet",
+				"GOOD": "Gut",
+				"POOR": "Schlecht",
+				"LOST": "Verloren"
+			},
+			"SHARING_SCREEN": "Bildschirm wird geteilt",
+			"MIC_OFF": "Mikrofon aus",
+			"CAM_OFF": "Kamera aus"
+		},
+		"SETTINGS": {
+			"TITLE": "Einstellungen",
+			"GENERAL": "Allgemein",
+			"VIDEO": "Video",
+			"AUDIO": "Audio",
+			"LANGUAGE": "Sprache",
+			"DISABLED_VIDEO": "Video deaktiviert",
+			"THEME": "Thema"
+		},
+		"BACKGROUND": {
+			"TITLE": "Hintergrund-Effekte",
+			"BLURRED_SECTION": "Keine Effekte und unscharfer Hintergrund",
+			"NO_EFFECTS": "Kein Hintergrundeffekt",
+			"BLURRED_EFFECT": "Unscharfer Hintergrund",
+			"CATEGORY_PROFESSIONAL": "Professionell",
+			"CATEGORY_HOME_OFFICE": "Homeoffice",
+			"CATEGORY_CREATIVE": "Kreativ",
+			"NOT_SUPPORTED": "Virtuelle Hintergründe werden in diesem Browser nicht unterstützt",
+			"NOT_SUPPORTED_DESCRIPTION": "Ihr Browser unterstützt keine Hintergrundeffekte. Diese Funktion erfordert GPU-Beschleunigung, die möglicherweise deaktiviert oder nicht verfügbar ist."
+		},
+		"RECORDING": {
+			"TITLE": "Aufnahme",
+			"SUBTITLE": "Zeichnen Sie Ihr Meeting für die Nachwelt auf",
+			"CONTENT_TITLE": "Ihr Videogespräch aufzeichnen",
+			"CONTENT_SUBTITLE": "Wenn die Aufzeichnung beendet ist, können Sie sie ganz einfach herunterladen",
+			"STATUS_STOPPED": "Nicht gestartet",
+			"STATUS_STARTING": "Wird gestartet",
+			"STATUS_STARTED": "Aufnahme läuft",
+			"STATUS_STOPPING": "Wird beendet",
+			"STATUS_FAILED": "Fehlgeschlagen",
+			"STATUS_READY": "Bereit",
+			"STARTING": "Aufzeichnung starten",
+			"STOPPING": "Aufnahme stoppen",
+			"DELETE": "Löschen",
+			"CANCEL": "Absagen",
+			"ACCEPT": "Akzeptieren",
+			"DELETE_QUESTION": "Möchten Sie die Aufzeichnung wirklich löschen?",
+			"NO_TRACKS_PUBLISHED": "Teile Audio oder Video, um mit der Aufnahme zu beginnen.",
+			"ERROR_STARTING": "Fehler beim Starten der Aufnahme"
+		}
+	},
+	"ERRORS": {
+		"SESSION": "Es ist ein Fehler beim Verbinden mit der Raum aufgetreten",
+		"CONNECTION": "Verbindung verloren",
+		"RECONNECT": "Ich versuche, die Verbindung zur Raum wiederherzustellen...",
+		"DISCONNECT": "Sie wurden getrennt",
+		"SIGNAL_CLOSE": "Die Verbindung zum Server wurde unerwartet geschlossen",
+		"SERVER_SHUTDOWN": "Der Server ist derzeit nicht verfügbar oder wird gewartet",
+		"PARTICIPANT_REMOVED": "Sie wurden aus diesem Raum entfernt",
+		"ROOM_DELETED": "Dieser Raum wurde gelöscht",
+		"DUPLICATE_IDENTITY": "Sie wurden getrennt, da Ihr Spitzname einem anderen Teilnehmer zugewiesen wurde",
+		"TOGGLE_CAMERA": "Es gab einen Fehler beim Umschalten der Kamera",
+		"TOGGLE_MICROPHONE": "Es ist ein Fehler beim Umschalten des Mikrofons aufgetreten",
+		"LOAD_RECORDING_TITLE": "Fehler beim Laden der Aufnahme",
+		"MEDIA_ERR_GENERIC": "Beim Laden des Videos ist ein Fehler aufgetreten.",
+		"MEDIA_ERR_NETWORK": "Ein Netzwerkfehler führte dazu, dass der Video-Download teilweise fehlschlug.",
+		"MEDIA_ERR_DECODE": "Die Videowiedergabe wurde aufgrund eines Korruptionsproblems oder weil das Video Funktionen verwendet, die Ihr Browser nicht unterstützt, abgebrochen.",
+		"MEDIA_ERR_SRC_NOT_SUPPORTED": "Fehler beim Streaming der Aufnahme: S3 konnte nicht erreicht werden.",
+		"E2EE_ERROR_TITLE": "Raum-Passwortfehler",
+		"E2EE_ERROR_CONTENT": "Dieser Teilnehmer verwendet einen anderen Sicherheitsschlüssel. Video kann nicht angezeigt werden.",
+		"GENERIC": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut."
+	},
+	"LOBBY": {
+		"E2EE_BADGE_TOOLTIP": "Ende-zu-Ende-verschlüsselt",
+		"E2EE_BADGE_TEXT": "Meetings in diesem Raum sind Ende-zu-Ende-verschlüsselt",
+		"JOIN_TITLE": "Meeting beitreten",
+		"ROOM_CLOSED_TITLE": "Raum geschlossen",
+		"ACCESS_RESTRICTED_TITLE": "Zugriff eingeschränkt",
+		"JOIN_SUBTITLE": "Treten Sie dem Meeting bei und beginnen Sie, sich zu verbinden",
+		"ROOM_CLOSED_SUBTITLE": "Dieser Raum ist nicht für Meetings verfügbar",
+		"ACCESS_RESTRICTED_SUBTITLE": "Sie haben keine Berechtigung, Meetings in diesem Raum beizutreten",
+		"NAME_LABEL": "Ihr Anzeigename",
+		"NAME_PLACEHOLDER": "Geben Sie Ihren Namen ein",
+		"NAME_REQUIRED_PREFIX": "Der Name ist ",
+		"E2EE_KEY_LABEL": "Verschlüsselungsschlüssel",
+		"E2EE_KEY_PLACEHOLDER": "Geben Sie den Raum-Verschlüsselungsschlüssel ein",
+		"E2EE_KEY_REQUIRED_PREFIX": "Der Verschlüsselungsschlüssel ist ",
+		"REQUIRED": "erforderlich",
+		"E2EE_KEY_HINT": "Dieses Meeting erfordert einen Verschlüsselungsschlüssel",
+		"JOIN_BUTTON": "Meeting beitreten",
+		"ROOM_CLOSED_MESSAGE": "Entschuldigung, dieser Raum ist geschlossen. Sie können dem Meeting derzeit nicht beitreten. Bitte wenden Sie sich an einen Raum-Manager für weitere Informationen.",
+		"NO_PERMISSION_MESSAGE": "Entschuldigung, Sie haben Zugriff auf diesen Raum, aber keine Berechtigung, Meetings beizutreten. Bitte wenden Sie sich an einen Raum-Manager für weitere Informationen.",
+		"RECORDINGS_TITLE": "Aufnahmen ansehen",
+		"RECORDINGS_SUBTITLE": "Frühere Aufnahmen durchsuchen und verwalten",
+		"RECORDINGS_DESCRIPTION": "Greifen Sie auf zuvor aufgezeichnete Meetings aus diesem Raum zu. Sie können vorhandene Aufnahmen ansehen, herunterladen oder verwalten.",
+		"RECORDINGS_BUTTON": "Aufnahmen durchsuchen",
+		"BACK": "Zurück",
+		"BACK_TO_ROOMS": "Zurück zu den Räumen"
+	},
+	"SHARE_ACCESS": {
+		"COPY_TOOLTIP": "Raum-Zugangslink kopieren",
+		"DEFAULT_TITLE": "Laden Sie andere mit diesem Raum-Zugangslink ein"
+	},
+	"SHARE_OVERLAY": {
+		"TITLE": "Zusammenarbeit starten",
+		"SUBTITLE": "Teilen Sie diesen Link, um andere ins Meeting zu holen"
+	},
+	"WAITING_PANEL": {
+		"TITLE": "Warten auf andere Teilnehmer",
+		"SUBTITLE": "Teilnehmer erscheinen hier, sobald sie dem Meeting beitreten.",
+		"ALONE_SUBTITLE": "Sie sind im Moment der oder die Einzige hier."
+	},
+	"DEVICE": {
+		"DEFAULT": "Systemstandard"
+	},
+	"CAPTIONS": {
+		"ARIA_FROM": "Untertitel von ",
+		"DISABLED_BY_ADMIN_TEXT": "Live-Untertitel (vom Administrator deaktiviert)",
+		"ENABLE": "Live-Untertitel aktivieren",
+		"DISABLE": "Live-Untertitel deaktivieren",
+		"DISABLED_BY_ADMIN_TOOLTIP": "Live-Untertitel wurden vom Administrator deaktiviert"
+	},
+	"COPY_LINK": {
+		"TOOLTIP": "Raum-Zugangslink kopieren",
+		"TEXT": "Raum-Zugangslink kopieren"
+	},
+	"LEAVE_BUTTON": {
+		"MENU_TOOLTIP": "Optionen zum Verlassen",
+		"LEAVE_OPTION": "Meeting verlassen",
+		"END_OPTION": "Meeting für alle beenden"
+	},
+	"MORE_OPTIONS": {
+		"DARK_MODE": "Dunkelmodus",
+		"LAYOUT_TOOLTIP": "Rasterlayout konfigurieren",
+		"ADJUST_LAYOUT": "Layout anpassen"
+	},
+	"LAYOUT_SETTINGS": {
+		"TITLE": "Layout-Einstellungen",
+		"MODE_ARIA": "Layout-Modus auswählen",
+		"MOSAIC": "Mosaik",
+		"MOSAIC_DESC": "Zeigt alle Teilnehmer in einem einheitlichen Raster",
+		"SMART_MOSAIC": "Smart-Mosaik",
+		"SMART_MOSAIC_DESC": "Zeigt eine begrenzte Anzahl aktiver Teilnehmer",
+		"COUNT_LABEL": "Anzahl der sichtbaren Teilnehmer",
+		"COUNT_HELPER": "Wählen Sie, wie viele entfernte Teilnehmer im Raster angezeigt werden",
+		"COUNT_ARIA": "Anzahl der anzuzeigenden Teilnehmer"
+	},
+	"PARTICIPANT_ITEM": {
+		"PROMOTE_TOOLTIP": "Zum Moderator hochstufen",
+		"DOWNGRADE_TOOLTIP": "Auf ursprüngliche Berechtigungen herabstufen",
+		"KICK_TOOLTIP": "Teilnehmer entfernen",
+		"BADGE_OWNER": "Eigentümer",
+		"BADGE_ADMIN": "Administrator",
+		"BADGE_MODERATOR": "Moderator"
+	},
+	"END_MEETING": {
+		"LEFT_TITLE": "Sie haben das Meeting verlassen",
+		"LEFT_MESSAGE": "Sie haben das Meeting erfolgreich verlassen",
+		"KICKED_TITLE": "Aus dem Meeting entfernt",
+		"KICKED_MESSAGE": "Sie wurden von einem Moderator aus dem Meeting entfernt",
+		"ENDED_TITLE": "Meeting beendet",
+		"ENDED_MESSAGE": "Das Meeting wurde von einem Moderator beendet",
+		"ENDED_BY_SELF_MESSAGE": "Sie haben das Meeting erfolgreich beendet",
+		"DISCONNECTED_TITLE": "Vom Meeting getrennt",
+		"NETWORK_MESSAGE": "Verbindung aufgrund von Netzwerkproblemen verloren",
+		"SERVER_SHUTDOWN_MESSAGE": "Verbindung aufgrund einer Serverabschaltung verloren",
+		"DUPLICATE_MESSAGE": "Diese Sitzung wurde geschlossen, weil Sie demselben Meeting von einem anderen Tab oder Gerät beigetreten sind",
+		"UNKNOWN_MESSAGE": "Ein unerwarteter Fehler ist aufgetreten, bitte versuchen Sie es später erneut",
+		"FOOTER": "Vielen Dank, dass Sie JMeet nutzen",
+		"BACK": "Zurück",
+		"BACK_TO_ROOMS": "Zurück zu den Räumen",
+		"ACCEPT": "Akzeptieren"
+	},
+	"MEETING_PAGE": {
+		"PREPARING": "Ihr Meeting wird vorbereitet...",
+		"PREPARE_ERROR": "Ihr Meeting konnte nicht vorbereitet werden.",
+		"INIT_ERROR_TITLE": "Fehler",
+		"INIT_ERROR_MESSAGE": "Beim Initialisieren der Meeting-Lobby ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
+		"INIT_ERROR_CONFIRM": "OK"
+	}
+}

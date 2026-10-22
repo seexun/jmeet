@@ -1,0 +1,60 @@
+# ⚠️ 此文件名被以下位置硬编码引用，禁止改名/移动：
+#   package.json (doc:api)、nodemon.docs.json、meet.sh、Dockerfile
+# 路径按域组织于本目录子文件夹；调整文件结构后运行 `pnpm run lint:api` 校验 $ref。
+openapi: 3.1.0
+info:
+    $ref: './shared/info.zh.yaml'
+servers:
+    - url: meet/api/v1
+      description: JMeet API
+tags:
+    $ref: './shared/tags.yaml'
+paths:
+    /users:
+        $ref: './users/users.yaml#/~1users'
+    /users/{userId}:
+        $ref: './users/users.yaml#/~1users~1{userId}'
+    /users/{userId}/password:
+        $ref: './users/users.yaml#/~1users~1{userId}~1password'
+    /users/{userId}/role:
+        $ref: './users/users.yaml#/~1users~1{userId}~1role'
+    /rooms:
+        $ref: './rooms/rooms.yaml#/~1rooms'
+    /rooms/{roomId}:
+        $ref: './rooms/rooms.yaml#/~1rooms~1{roomId}'
+    /rooms/{roomId}/config:
+        $ref: './rooms/rooms.yaml#/~1rooms~1{roomId}~1config'
+    /rooms/{roomId}/roles:
+        $ref: './rooms/rooms.yaml#/~1rooms~1{roomId}~1roles'
+    /rooms/{roomId}/access:
+        $ref: './rooms/rooms.yaml#/~1rooms~1{roomId}~1access'
+    /rooms/{roomId}/status:
+        $ref: './rooms/rooms.yaml#/~1rooms~1{roomId}~1status'
+    /rooms/{roomId}/schedule:
+        $ref: './rooms/rooms.yaml#/~1rooms~1{roomId}~1schedule'
+    /rooms/{roomId}/cancel:
+        $ref: './rooms/rooms.yaml#/~1rooms~1{roomId}~1cancel'
+    /rooms/{roomId}/members:
+        $ref: './room-members/room-members.yaml#/~1rooms~1{roomId}~1members'
+    /rooms/{roomId}/members/{memberId}:
+        $ref: './room-members/room-members.yaml#/~1rooms~1{roomId}~1members~1{memberId}'
+components:
+    securitySchemes:
+        $ref: './shared/security.yaml'
+    schemas:
+        MeetUser:
+            $ref: ./users/schemas/meet-user.yaml
+        MeetRoom:
+            $ref: ./rooms/schemas/meet-room.yaml
+        MeetRoomConfig:
+            $ref: './rooms/schemas/meet-room-config.yaml#/MeetRoomConfig'
+        MeetRoomRoles:
+            $ref: './rooms/schemas/meet-room-roles.yaml'
+        MeetRoomAccess:
+            $ref: './rooms/schemas/meet-room-access.yaml'
+        MeetRoomMember:
+            $ref: ./room-members/schemas/meet-room-member.yaml
+        MeetPermissions:
+            $ref: ./rooms/schemas/meet-permissions.yaml
+        Error:
+            $ref: ./shared/schemas/error.yaml

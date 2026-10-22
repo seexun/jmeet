@@ -1,0 +1,16 @@
+// 会议域深绘（批次 5 §5.4）：更多选项菜单定制项（视图布局设置入口 + 主题开关行）。
+// 盘点记录（2026-10-13）：本组件为库导出面，SPA 当前无模板实例化（活菜单内容由
+// meeting-toolbar-extra-buttons 承载、皮由 toolbar-media-buttons 的 ::ng-deep
+// .more-options-menu 钩子统一供给）；此处保持 meeting 命名空间，复活的皮已就位。
+// 菜单项行内布局：文字与开关两端对齐，开关垂直居中、尺寸舒适
+.theme-switch-item {
+	gap: 8px;
+
+	span {
+		flex: 1;
+	}
+
+	nz-switch {
+		margin-left: auto;
+	}
+}

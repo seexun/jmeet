@@ -1,0 +1,33 @@
+description: Room member update options
+required: true
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                baseRole:
+                    type: string
+                    enum:
+                        - moderator
+                        - speaker
+                    example: 'speaker'
+                    description: |
+                        The base role that defines the default permissions for this member. Options are:
+                        - moderator: By default, has full permissions to manage the room and meeting.
+                        - speaker: By default, has permissions to publish audio and video streams.
+
+                        Individual permissions can be overridden through the 'customPermissions' object.
+                customPermissions:
+                    type: object
+                    additionalProperties:
+                        type: boolean
+                    example:
+                        canShareScreen: false
+                        canRecord: true
+                    description: |
+                        An optional object containing custom permission overrides for the base role.
+                        Only include the permissions you want to override from the base role defaults.
+                        Each property should be a permission name (e.g., 'canRecord', 'canShareScreen') with a boolean value.
+
+                        For the complete list of all available permissions, see the full permissions schema:
+                        [MeetPermissions](#/schemas/MeetPermissions)

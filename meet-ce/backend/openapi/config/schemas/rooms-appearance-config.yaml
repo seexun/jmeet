@@ -1,0 +1,72 @@
+type: object
+properties:
+    appearance:
+        $ref: '#/MeetAppearanceConfig'
+        description: Config for rooms appearance.
+
+MeetAppearanceConfig:
+    type: object
+    properties:
+        themes:
+            type: array
+            description: Array of available themes for rooms
+            minItems: 1
+            maxItems: 1
+            items:
+                $ref: '#/MeetRoomTheme'
+    required:
+        - themes
+
+MeetRoomTheme:
+    type: object
+    properties:
+        name:
+            type: string
+            description: Display name of the theme
+            minLength: 1
+            maxLength: 50
+            example: "Default Theme"
+        enabled:
+            type: boolean
+            description: Whether the theme is enabled
+            example: true
+        baseTheme:
+            $ref: '#/MeetRoomThemeMode'
+            description: Base theme mode (light or dark)
+        backgroundColor:
+            type: string
+            description: Background color in hex format
+            pattern: '^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$'
+            example: "#FFFFFF"
+        primaryColor:
+            type: string
+            description: Primary color in hex format
+            pattern: '^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$'
+            example: "#FF0000"
+        secondaryColor:
+            type: string
+            description: Secondary color in hex format
+            pattern: '^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$'
+            example: "#00FF00"
+        accentColor:
+            type: string
+            description: Accent color in hex format
+            pattern: '^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$'
+            example: "#0000FF"
+        surfaceColor:
+            type: string
+            description: Surface color in hex format
+            pattern: '^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$'
+            example: "#CCCCCC"
+    required:
+        - name
+        - enabled
+        - baseTheme
+
+MeetRoomThemeMode:
+    type: string
+    enum:
+        - light
+        - dark
+    description: Theme mode for rooms appearance
+    example: dark

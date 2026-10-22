@@ -1,0 +1,17 @@
+<main class="forbidden-page">
+	<section class="forbidden-card" aria-labelledby="forbidden-title">
+		<div class="status-icon" aria-hidden="true">
+			<nz-icon nzType="lock" />
+		</div>
+		<p class="eyebrow">访问权限</p>
+		<h1 id="forbidden-title">无法进入管理后台</h1>
+		<p class="description">当前账号没有管理后台访问权限。如需调整成员、审计或系统设置，请联系企业管理员。</p>
+		<div class="actions">
+			<a class="primary-action" routerLink="/app">
+				<nz-icon nzType="arrow-left" aria-hidden="true" />
+				返回会议工作台
+			</a>
+			<a class="secondary-action" routerLink="/app/profile">查看当前账号</a>
+		</div>
+	</section>
+</main>

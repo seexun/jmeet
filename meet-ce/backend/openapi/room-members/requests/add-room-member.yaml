@@ -1,0 +1,68 @@
+description: Room member addition options
+required: true
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                userId:
+                    type: string
+                    example: 'alice_smith'
+                    description: |
+                        The unique identifier for a user. This field should be provided when adding a user as a member.
+
+                        If provided:
+                        - The member will be associated with the Meet user account identified by this userId.
+                        - The 'name' field must be left blank or an error will be fired. It will be automatically set based on the Meet user's profile name.
+                        - The memberId will be set to this userId value.
+
+                        If omitted, the member will be treated as an identified guest and 'name' must be provided.
+
+                        Important: You must provide either 'userId' (for users) or 'name' (for identified guests), but NOT both.
+                        If both are provided, a validation error will be returned.
+                name:
+                    type: string
+                    maxLength: 50
+                    example: 'Alice Smith'
+                    description: |
+                        The display name for the participant when joining the meeting with this member access. It is recommended to be unique for the members of the room to easily identify them in the meeting.
+
+                        This field is required only when adding an identified guest. The 'userId' field must be left blank or an error will be fired.
+
+                        Important: You must provide either 'userId' (for users) or 'name' (for identified guests), but NOT both.
+                        If both are provided, a validation error will be returned.
+                baseRole:
+                    type: string
+                    enum:
+                        - moderator
+                        - speaker
+                    example: 'speaker'
+                    description: |
+                        The base role that defines the default permissions for this member. Options are:
+                        - moderator: By default, has full permissions to manage the room and meeting.
+                        - speaker: By default, has permissions to publish audio and video streams.
+
+                        Individual permissions can be overridden through the customPermissions object.
+                customPermissions:
+                    type: object
+                    additionalProperties:
+                        type: boolean
+                    example:
+                        canShareScreen: false
+                        canRecord: true
+                    description: |
+                        An optional object containing custom permission overrides for the base role.
+                        Only include the permissions you want to override from the base role defaults.
+                        Each property should be a permission name (e.g., 'canRecord', 'canShareScreen') with a boolean value.
+
+                        For the complete list of all available permissions, see the full permissions schema:
+                        [MeetPermissions](#/schemas/MeetPermissions)
+            required:
+                - baseRole
+            description: |
+                Request body to add a new member to a room.
+
+                Important: You must provide either 'userId' (for users) or 'name' (for identified guests), but NOT both.
+                - If 'userId' is provided, the member will be linked to a user account and 'name' will be set from that account.
+                - If 'name' is provided, the member will be treated as an identified guest without a linked account.
+                - If both 'userId' and 'name' are provided or neither is provided, the request will fail with a validation error.

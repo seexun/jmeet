@@ -1,0 +1,72 @@
+{
+  "ERROR": {
+    "DEFAULT_TITLE": "Erreur",
+    "BACK": "Retour",
+    "BACK_TO_CONSOLE": "Retour à la console",
+    "ACCEPT": "Accepter",
+    "OOPS": "Oups !",
+    "SOMETHING_WRONG": "Une erreur s'est produite"
+  },
+  "NAVIGATION_ERROR": {
+    "EMBEDDED_ERROR": {
+      "TITLE": "Impossible de charger JMeet",
+      "MESSAGE": "JMeet n'a pas pu être chargé. Veuillez vérifier la configuration d'intégration."
+    },
+    "CLOSED_ROOM": {
+      "TITLE": "Salle fermée",
+      "MESSAGE": "Les réunions dans cette salle ne sont pas disponibles lorsqu'elle est fermée"
+    },
+    "ANONYMOUS_ACCESS_DISABLED": {
+      "TITLE": "Accès anonyme désactivé",
+      "MESSAGE": "L'accès anonyme pour votre rôle a été désactivé dans cette salle (et ses enregistrements)"
+    },
+    "ANONYMOUS_RECORDING_ACCESS_DISABLED": {
+      "TITLE": "Accès anonyme désactivé",
+      "MESSAGE": "L'accès anonyme à cet enregistrement a été désactivé"
+    },
+    "INVALID_ROOM_SECRET": {
+      "TITLE": "Lien invalide",
+      "MESSAGE": "Le lien que vous avez utilisé pour accéder à cette salle (ou à ses enregistrements) n'est pas valide. Veuillez demander à un modérateur de partager le lien correct à l'aide des boutons de partage disponibles"
+    },
+    "INVALID_RECORDING_SECRET": {
+      "TITLE": "Lien invalide",
+      "MESSAGE": "Le lien que vous avez utilisé pour accéder à cet enregistrement n'est pas valide"
+    },
+    "INVALID_ROOM": {
+      "TITLE": "Salle invalide",
+      "MESSAGE": "La salle (ou ses enregistrements) à laquelle vous essayez d'accéder n'existe pas ou a été supprimée"
+    },
+    "INVALID_RECORDING": {
+      "TITLE": "Enregistrement invalide",
+      "MESSAGE": "L'enregistrement auquel vous essayez d'accéder n'existe pas ou a été supprimé"
+    },
+    "INVALID_MEMBER": {
+      "TITLE": "Membre invalide",
+      "MESSAGE": "Vous n'êtes plus membre de cette salle ou les informations du membre sont incorrectes"
+    },
+    "FORBIDDEN_ROOM_ACCESS": {
+      "TITLE": "Accès à la salle interdit",
+      "MESSAGE": "Vous n'êtes pas autorisé à accéder à cette salle (ni à ses enregistrements)"
+    },
+    "FORBIDDEN_ROOM_RECORDINGS_ACCESS": {
+      "TITLE": "Accès aux enregistrements interdit",
+      "MESSAGE": "Vous n'êtes pas autorisé à accéder aux enregistrements de cette salle"
+    },
+    "FORBIDDEN_RECORDING_ACCESS": {
+      "TITLE": "Accès à l'enregistrement interdit",
+      "MESSAGE": "Vous n'êtes pas autorisé à accéder à cet enregistrement"
+    },
+    "ROOM_ACCESS_REVOKED": {
+      "TITLE": "Accès à la salle révoqué",
+      "MESSAGE": "Vos autorisations dans cette salle ont été modifiées, et vous n'y avez plus accès (ni à ses enregistrements). Veuillez contacter un modérateur pour plus d'informations"
+    },
+    "TOO_MANY_REQUESTS": {
+      "TITLE": "Trop de requêtes",
+      "MESSAGE": "Vous avez effectué trop de requêtes en peu de temps. Veuillez patienter un moment et réessayer"
+    },
+    "INTERNAL_ERROR": {
+      "TITLE": "Erreur interne",
+      "MESSAGE": "Une erreur inattendue s'est produite, veuillez réessayer plus tard"
+    }
+  }
+}

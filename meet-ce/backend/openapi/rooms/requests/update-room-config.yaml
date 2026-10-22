@@ -1,0 +1,17 @@
+description: New room config
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                config:
+                    $ref: '../schemas/meet-room-config.yaml#/MeetRoomConfig'
+        example:
+            config:
+                recording:
+                    enabled: true
+                    encoding: H264_720P_30
+                chat:
+                    enabled: true
+                virtualBackground:
+                    enabled: true

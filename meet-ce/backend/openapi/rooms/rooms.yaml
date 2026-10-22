@@ -1,0 +1,457 @@
+/rooms:
+    post:
+        operationId: createRoom
+        summary: Create a room
+        description: |
+            Creates a new JMeet room using the provided data and returns the room details along with the generated participant URLs.
+        tags:
+            - JMeet - Rooms
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+        parameters:
+            - $ref: './parameters/room-x-fields-header.yaml'
+            - $ref: './parameters/room-x-extra-fields-header.yaml'
+        requestBody:
+            $ref: './requests/create-room.yaml'
+        responses:
+            '201':
+                $ref: './responses/success/create-room.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+    get:
+        operationId: getRooms
+        summary: Get all rooms
+        description: |
+            Retrieves a paginated list of rooms in the system, optionally filtered by criteria.
+            By default, rooms are sorted by creation date, newest first.
+
+            > Only rooms accessible to the authenticated user are returned when using the `accessTokenHeader` authentication method.
+        tags:
+            - JMeet - Rooms
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+        parameters:
+            - $ref: './parameters/room-x-extra-fields-header.yaml'
+            - $ref: './parameters/room-x-fields-header.yaml'
+            - $ref: './parameters/room-name.yaml'
+            - $ref: './parameters/room-name-match-mode.yaml'
+            - $ref: './parameters/room-name-case-insensitive.yaml'
+            - $ref: './parameters/room-owner.yaml'
+            - $ref: './parameters/room-member.yaml'
+            - $ref: './parameters/room-user-access.yaml'
+            - $ref: './parameters/room-status.yaml'
+            - $ref: './parameters/room-fields.yaml'
+            - $ref: './parameters/room-extra-fields.yaml'
+            - $ref: '../shared/parameters/max-items.yaml'
+            - $ref: '../shared/parameters/next-page-token.yaml'
+            - $ref: './parameters/room-sort-field.yaml'
+            - $ref: '../shared/parameters/sort-order.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/get-rooms.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+    delete:
+        operationId: bulkDeleteRooms
+        summary: Bulk delete rooms
+        description: |
+            Deletes multiple JMeet rooms using the specified room IDs.
+            <br/><br/>
+            Deletion behavior depends on the `withMeeting` and `withRecordings` policies:
+              - Rooms may be deleted or closed immediately
+              - Deletion may be scheduled to occur after ongoing meetings end
+              - The operation may fail if deletion is not permitted
+
+            > Only rooms the authenticated user can manage are affected when using the `accessTokenHeader` authentication method.
+        tags:
+            - JMeet - Rooms
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+        parameters:
+            - $ref: './parameters/room-x-extra-fields-header.yaml'
+            - $ref: './parameters/room-x-fields-header.yaml'
+            - $ref: './parameters/room-ids.yaml'
+            - $ref: './parameters/room-fields.yaml'
+            - $ref: './parameters/room-extra-fields.yaml'
+            - $ref: './parameters/meeting-deletion-policy.yaml'
+            - $ref: './parameters/recordings-deletion-policy.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/bulk-delete-rooms.yaml'
+            '400':
+                $ref: './responses/errors/bulk-delete-rooms.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+/rooms/{roomId}:
+    get:
+        operationId: getRoom
+        summary: Get a room
+        description: |
+            Retrieves the details of an JMeet room by its room ID.
+
+        tags:
+            - JMeet - Rooms
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+            - roomMemberTokenHeader: []
+        parameters:
+            - $ref: './parameters/room-id-path.yaml'
+            - $ref: './parameters/room-x-fields-header.yaml'
+            - $ref: './parameters/room-x-extra-fields-header.yaml'
+            - $ref: './parameters/room-fields.yaml'
+            - $ref: './parameters/room-extra-fields.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/get-room.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: './responses/errors/room-not-found.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+    delete:
+        operationId: deleteRoom
+        summary: Delete a room
+        description: |
+            Deletes the specified JMeet room by its room ID.
+
+            Deletion behavior depends on the `withMeeting` and `withRecordings` policies:
+              - The room may be deleted or closed immediately
+              - Deletion may be scheduled to occur after the meeting ends
+              - The operation may fail if deletion is not allowed
+        tags:
+            - JMeet - Rooms
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+        parameters:
+            - $ref: './parameters/room-x-fields-header.yaml'
+            - $ref: './parameters/room-x-extra-fields-header.yaml'
+            - $ref: './parameters/room-id-path.yaml'
+            - $ref: './parameters/meeting-deletion-policy.yaml'
+            - $ref: './parameters/recordings-deletion-policy.yaml'
+            - $ref: './parameters/room-fields.yaml'
+            - $ref: './parameters/room-extra-fields.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/delete-room-processed.yaml'
+            '202':
+                $ref: './responses/success/delete-room-scheduled.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: './responses/errors/room-not-found.yaml'
+            '409':
+                $ref: './responses/errors/room-process-deletion.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+/rooms/{roomId}/config:
+    get:
+        operationId: getRoomConfig
+        summary: Get room config
+        description: >
+            Retrieves the config of an JMeet room with the specified room ID.
+        tags:
+            - JMeet - Rooms
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+            - roomMemberTokenHeader: []
+        parameters:
+            - $ref: './parameters/room-id-path.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/get-room-config.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: './responses/errors/room-not-found.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+    put:
+        operationId: updateRoomConfig
+        summary: Update room config
+        description: >
+            Updates the config of an JMeet room with the specified room ID.
+        tags:
+            - JMeet - Rooms
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+        parameters:
+            - $ref: './parameters/room-id-path.yaml'
+        requestBody:
+            $ref: './requests/update-room-config.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/update-room-config.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: './responses/errors/room-not-found.yaml'
+            '409':
+                $ref: './responses/errors/room-active-meeting.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+/rooms/{roomId}/status:
+    put:
+        operationId: updateRoomStatus
+        summary: Update room status
+        description: >
+            Updates the status of an JMeet room with the specified room ID.
+            This can be used to open or close the room for new participants.
+        tags:
+            - JMeet - Rooms
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+        parameters:
+            - $ref: './parameters/room-id-path.yaml'
+            - $ref: './parameters/room-x-fields-header.yaml'
+            - $ref: './parameters/room-x-extra-fields-header.yaml'
+        requestBody:
+            $ref: './requests/update-room-status.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/update-room-status.yaml'
+            '202':
+                $ref: './responses/success/room-schedule-closure.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: './responses/errors/room-not-found.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+/rooms/{roomId}/roles:
+    put:
+        operationId: updateRoomRoles
+        summary: Update roles permissions for a room
+        description: |
+            Updates the permissions by role for the specified room.
+
+            You can customize permissions for moderator and/or speaker roles.
+            Only specify the permissions you want to change from the current configuration.
+        tags:
+            - JMeet - Rooms
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+        parameters:
+            - $ref: './parameters/room-id-path.yaml'
+        requestBody:
+            $ref: './requests/update-room-roles.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/update-room-roles.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: './responses/errors/room-not-found.yaml'
+            '409':
+                $ref: './responses/errors/room-active-meeting.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+/rooms/{roomId}/access:
+    put:
+        operationId: updateRoomAccess
+        summary: Update access config for a room
+        description: |
+            Updates the access configuration for the specified room.
+
+            This allows you to enable or disable access for users and/or
+            for anonymous guests using a predefined role (moderator/speaker/recording).
+        tags:
+            - JMeet - Rooms
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+        parameters:
+            - $ref: './parameters/room-id-path.yaml'
+        requestBody:
+            $ref: './requests/update-room-access.yaml'
+        responses:
+            '200':
+                $ref: './responses/success/update-room-access.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: './responses/errors/room-not-found.yaml'
+            '409':
+                $ref: './responses/errors/room-active-meeting.yaml'
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '429':
+                $ref: '../shared/responses/errors/too-many-requests.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+/rooms/{roomId}/schedule:
+    put:
+        operationId: updateMeetingSchedule
+        summary: Schedule or reschedule a meeting
+        description: Updates the schedule of a room. An active meeting cannot be rescheduled.
+        tags:
+            - JMeet - Rooms
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+        parameters:
+            - $ref: './parameters/room-id-path.yaml'
+        requestBody:
+            required: true
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        additionalProperties: false
+                        required: [startDate, durationMinutes, timezone, recurrence, allowEarlyJoinMinutes]
+                        properties:
+                            startDate:
+                                type: integer
+                                format: int64
+                                description: Meeting start time as Unix epoch milliseconds.
+                                example: 1786586400000
+                            durationMinutes:
+                                type: integer
+                                minimum: 1
+                                maximum: 10080
+                                example: 60
+                            timezone:
+                                type: string
+                                maxLength: 100
+                                example: Asia/Shanghai
+                            recurrence:
+                                type: string
+                                enum: [none, daily, weekly]
+                                example: none
+                            allowEarlyJoinMinutes:
+                                type: integer
+                                minimum: 0
+                                maximum: 1440
+                                example: 10
+        responses:
+            '200':
+                description: Meeting schedule updated successfully.
+                content:
+                    application/json:
+                        schema:
+                            $ref: './schemas/meet-room.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: './responses/errors/room-not-found.yaml'
+            '409':
+                description: The room has an active meeting and cannot be rescheduled.
+            '422':
+                $ref: '../shared/responses/errors/validation.yaml'
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'
+/rooms/{roomId}/cancel:
+    post:
+        operationId: cancelMeeting
+        summary: Cancel a meeting
+        description: Cancels a scheduled meeting, closes the room, and invalidates its anonymous access links.
+        tags:
+            - JMeet - Rooms
+        security:
+            - apiKeyHeader: []
+            - accessTokenHeader: []
+        parameters:
+            - $ref: './parameters/room-id-path.yaml'
+        requestBody:
+            required: false
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        additionalProperties: false
+                        properties:
+                            reason:
+                                type: string
+                                maxLength: 500
+                                description: Optional cancellation reason included in participant notifications.
+                                example: Schedule changed
+        responses:
+            '200':
+                description: Meeting cancelled successfully.
+                content:
+                    application/json:
+                        schema:
+                            $ref: './schemas/meet-room.yaml'
+            '401':
+                $ref: '../shared/responses/errors/unauthorized.yaml'
+            '403':
+                $ref: '../shared/responses/errors/forbidden.yaml'
+            '404':
+                $ref: './responses/errors/room-not-found.yaml'
+            '409':
+                description: The room has an active meeting; end the active meeting instead.
+            '500':
+                $ref: '../shared/responses/errors/internal-server.yaml'

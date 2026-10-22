@@ -1,0 +1,287 @@
+{
+	"ROOM": {
+		"JOINING": "ルームに参加しています...",
+		"LANDSCAPE_WARNING": "より良い体験のために、デバイスを縦向きに回転させてください",
+		"DISCONNECTED": "ルームから退出しました",
+		"DISCONNECTED_SUBTITLE": "セッションが終了しました"
+	},
+	"PREJOIN": {
+		"NICKNAME": "ニックネーム",
+		"NO_VIDEO_DEVICE": "ビデオデバイスが見つかりません",
+		"NO_AUDIO_DEVICE": "オーディオデバイスが見つかりません",
+		"JOIN": "会議に参加する",
+		"PREPARING": "ルームの準備中...",
+		"BACKGROUND": "背景効果"
+	},
+	"TOOLBAR": {
+		"THEME_TOGGLE": "ライト/ダークを切り替え",
+		"MUTE_AUDIO": "オーディオをミュートする",
+		"UNMUTE_AUDIO": "オーディオをミュートしない",
+		"STOP_VIDEO": "あなたのビデオを停止",
+		"SELECT_CAMERA": "カメラを選択",
+		"SELECT_MIC": "マイクを選択",
+		"START_VIDEO": "あなたのビデオを開始",
+		"ENABLE_SCREEN": "スクリーン共有を有効にする",
+		"DISABLE_SCREEN": "スクリーン共有を停止にする",
+		"MORE_OPTIONS": "その他のオプション",
+		"FULLSCREEN": "フルスクリーン",
+		"EXIT_FULLSCREEN": "フルスクリーンを終了する",
+		"BACKGROUND": "背景効果",
+		"START_RECORDING": "録画開始",
+		"STOP_RECORDING": "録画の停止",
+		"SETTINGS": "設定",
+		"LEAVE": "ルームを終了する",
+		"PARTICIPANTS": "参加者",
+		"CHAT": "チャット",
+		"ACTIVITIES": "アクティビティ",
+		"PANELS": "パネル",
+		"NO_TRACKS_PUBLISHED": "録音を開始するには、音声または動画を共有してください。",
+		"VIEW_RECORDINGS": "録画を表示"
+	},
+	"STREAM": {
+		"MUTE_SOUND": "サウンドをミュートする",
+		"UNMUTE_SOUND": "サウンドを有効にする",
+		"ZOOM_IN": "拡大する",
+		"ZOOM_OUT": "縮小する",
+		"RESET_ZOOM": "ズームをリセット",
+		"REPLACE_SCREEN": "スクリーンを入れ替える",
+		"PIN": "ピン",
+		"UNPIN": "ピンの解除",
+		"FLOAT": "フロート",
+		"DOCK": "ドッキング",
+		"SCREEN_LABEL": "画面",
+		"YOUR_SCREEN_LABEL": "あなたの画面"
+	},
+	"PANEL": {
+		"CLOSE": "閉じる",
+		"MEDIA_QUALITY": {
+			"TITLE": "音声・映像の品質"
+		},
+		"CAPTIONS": {
+			"TITLE": "ライブ字幕",
+			"SUBTITLE": "字幕は会議の音声からリアルタイムに生成され、自分にのみ表示されます",
+			"EMPTY": "字幕はまだありません。字幕をオンにすると、発言がここにリアルタイム表示されます。",
+			"INTERIM": "認識中…"
+		},
+		"CHAT": {
+			"TITLE": "チャット",
+			"YOU": "あなた",
+			"SUBTITLE": "メッセージは会議終了時に削除されます",
+			"PLACEHOLDER": "メッセージを送信...",
+			"SEND": "送信する",
+			"EMOJI": "絵文字",
+			"MESSAGE_SENT_NOTIFICATION": "メッセージを送信しました",
+			"OPEN_CHAT": "開く",
+			"ENCRYPTION_KEY_MISMATCH": "異なる暗号化キーで接続している参加者がいます。彼らからのメッセージは受信できません。"
+		},
+		"ACTIVITIES": {
+			"TITLE": "アクティビティ",
+			"COLLABORATION": "コラボレーション",
+			"COLLABORATION_ARIA": "会議コラボレーションツール",
+			"RECORDING": "録画",
+			"WHITEBOARD": "ホワイトボード",
+			"POLL": "投票",
+			"MATERIALS": "資料",
+			"AGENDA": "アジェンダ"
+		},
+		"PARTICIPANTS": {
+			"NO_MATCH": "一致するメンバーがいません",
+			"SEARCH_PLACEHOLDER": "メンバーを検索",
+			"SECTION_HOSTS": "ホスト / 管理者",
+			"SECTION_MEMBERS": "参加者",
+			"INVITE": "メンバーを招待",
+			"EMPTY_HINT": "他のメンバーはまだいません — チームを招待しましょう",
+			"INVITE_NOW": "招待リンクをコピー",
+			"GUEST": "ゲスト",
+			"MUTE_ALL": "全員をミュート",
+			"MANAGEMENT": "メンバー",
+			"TITLE": "参加者",
+			"CAMERA": "カメラ",
+			"MICROPHONE": "マイクロフォン",
+			"SCREEN": "スクリーン",
+			"NO_STREAMS": "ストリームなし",
+			"YOU": "あなた",
+			"MUTE": "ミュート",
+			"UNMUTE": "ミュート解除",
+			"CONNECTION_QUALITY": {
+				"LABEL": "接続品質",
+				"EXCELLENT": "優れた",
+				"GOOD": "良好",
+				"POOR": "不良",
+				"LOST": "失われた"
+			},
+			"SHARING_SCREEN": "画面を共有中",
+			"MIC_OFF": "マイクオフ",
+			"CAM_OFF": "カメラオフ"
+		},
+		"SETTINGS": {
+			"TITLE": "設定",
+			"GENERAL": "全般的",
+			"VIDEO": "ビデオ",
+			"AUDIO": "オーディオ",
+			"LANGUAGE": "言語",
+			"DISABLED_VIDEO": "ビデオを無効にする",
+			"THEME": "テーマ"
+		},
+		"BACKGROUND": {
+			"TITLE": "背景効果",
+			"BLURRED_SECTION": "エフェクトなし、ぼやけた背景",
+			"NO_EFFECTS": "背景エフェクトなし",
+			"BLURRED_EFFECT": "ぼやけた背景",
+			"CATEGORY_PROFESSIONAL": "プロフェッショナル",
+			"CATEGORY_HOME_OFFICE": "ホームオフィス",
+			"CATEGORY_CREATIVE": "クリエイティブ",
+			"NOT_SUPPORTED": "このブラウザでは仮想背景はサポートされていません",
+			"NOT_SUPPORTED_DESCRIPTION": "お使いのブラウザは背景効果をサポートしていません。この機能にはGPUアクセラレーションが必要ですが、無効化されているか利用できません。"
+		},
+		"RECORDING": {
+			"TITLE": "レコーディング",
+			"SUBTITLE": "会議を録画して保存する",
+			"CONTENT_TITLE": "ビデオ通話を録音する",
+			"CONTENT_SUBTITLE": "録画が完了したら、簡単にダウンロードできます",
+			"STATUS_STOPPED": "未開始",
+			"STATUS_STARTING": "開始中",
+			"STATUS_STARTED": "録画中",
+			"STATUS_STOPPING": "停止中",
+			"STATUS_FAILED": "失敗",
+			"STATUS_READY": "完了",
+			"STARTING": "録画開始",
+			"STOPPING": "録音停止",
+			"DELETE": "削除",
+			"CANCEL": "キャンセル",
+			"ACCEPT": "受け入れる",
+			"DELETE_QUESTION": "録画を削除してもよろしいですか",
+			"NO_TRACKS_PUBLISHED": "録音を開始するには、音声または動画を共有してください。",
+			"ERROR_STARTING": "録画開始エラー"
+		}
+	},
+	"ERRORS": {
+		"SESSION": "ルームへの接続にエラーが発生しました",
+		"CONNECTION": "接続が失われました",
+		"RECONNECT": "ルームへの再接続を試みています",
+		"DISCONNECT": "接続が切断されました",
+		"SIGNAL_CLOSE": "サーバーへの接続が予期せず切断されました",
+		"SERVER_SHUTDOWN": "サーバーは現在ダウンしているか、メンテナンス中です",
+		"PARTICIPANT_REMOVED": "このルームから削除されました",
+		"ROOM_DELETED": "このルームは削除されました",
+		"DUPLICATE_IDENTITY": "ニックネームが他の参加者に割り当てられたため、切断されました",
+		"TOGGLE_CAMERA": "カメラの切り替えに失敗しました",
+		"TOGGLE_MICROPHONE": "マイクの切り替えに失敗しました",
+		"LOAD_RECORDING_TITLE": "録音の読み込みエラー",
+		"MEDIA_ERR_GENERIC": "ビデオの読み込み中にエラーが発生しました。",
+		"MEDIA_ERR_NETWORK": "ネットワークエラーにより、ビデオのダウンロードが途中で失敗しました。",
+		"MEDIA_ERR_DECODE": "破損の問題またはビデオがブラウザでサポートされていない機能を使用したために、ビデオの再生が中止されました。",
+		"MEDIA_ERR_SRC_NOT_SUPPORTED": "録画のストリーミングエラー：S3にアクセスできませんでした。",
+		"E2EE_ERROR_TITLE": "ルームパスワードエラー",
+		"E2EE_ERROR_CONTENT": "この参加者は異なるセキュリティキーを使用しています。ビデオを表示できません。",
+		"GENERIC": "予期しないエラーが発生しました。もう一度お試しください。"
+	},
+	"LOBBY": {
+		"E2EE_BADGE_TOOLTIP": "エンドツーエンドで暗号化",
+		"E2EE_BADGE_TEXT": "このルームの会議はエンドツーエンドで暗号化されています",
+		"JOIN_TITLE": "会議に参加",
+		"ROOM_CLOSED_TITLE": "ルームは閉鎖されています",
+		"ACCESS_RESTRICTED_TITLE": "アクセスが制限されています",
+		"JOIN_SUBTITLE": "会議に参加してつながりを始めましょう",
+		"ROOM_CLOSED_SUBTITLE": "このルームでは会議を利用できません",
+		"ACCESS_RESTRICTED_SUBTITLE": "このルームの会議に参加する権限がありません",
+		"NAME_LABEL": "表示名",
+		"NAME_PLACEHOLDER": "名前を入力してください",
+		"NAME_REQUIRED_PREFIX": "名前は",
+		"E2EE_KEY_LABEL": "暗号化キー",
+		"E2EE_KEY_PLACEHOLDER": "ルームの暗号化キーを入力してください",
+		"E2EE_KEY_REQUIRED_PREFIX": "暗号化キーは",
+		"REQUIRED": "必須です",
+		"E2EE_KEY_HINT": "この会議には暗号化キーが必要です",
+		"JOIN_BUTTON": "会議に参加",
+		"ROOM_CLOSED_MESSAGE": "申し訳ございませんが、このルームは閉鎖されています。現在、会議に参加することはできません。詳細についてはルーム管理者にお問い合わせください。",
+		"NO_PERMISSION_MESSAGE": "申し訳ございませんが、このルームにはアクセスできますが、会議に参加する権限がありません。詳細についてはルーム管理者にお問い合わせください。",
+		"RECORDINGS_TITLE": "録画を表示",
+		"RECORDINGS_SUBTITLE": "過去の録画を閲覧・管理する",
+		"RECORDINGS_DESCRIPTION": "このルームで以前に録画された会議にアクセスできます。既存の録画を視聴、ダウンロード、または管理できます。",
+		"RECORDINGS_BUTTON": "録画を閲覧",
+		"BACK": "戻る",
+		"BACK_TO_ROOMS": "ルームに戻る"
+	},
+	"SHARE_ACCESS": {
+		"COPY_TOOLTIP": "ルームアクセスリンクをコピー",
+		"DEFAULT_TITLE": "このルームアクセスリンクで他の人を招待しましょう"
+	},
+	"SHARE_OVERLAY": {
+		"TITLE": "コラボレーションを始めましょう",
+		"SUBTITLE": "このリンクを共有して他の人を会議に招待しましょう"
+	},
+	"WAITING_PANEL": {
+		"TITLE": "他の参加者を待っています",
+		"SUBTITLE": "参加者が会議に参加するとすぐにここに表示されます。",
+		"ALONE_SUBTITLE": "現在、参加しているのはあなただけです。"
+	},
+	"DEVICE": {
+		"DEFAULT": "システムのデフォルト"
+	},
+	"CAPTIONS": {
+		"ARIA_FROM": "字幕：",
+		"DISABLED_BY_ADMIN_TEXT": "ライブ字幕（管理者により無効）",
+		"ENABLE": "ライブ字幕を有効にする",
+		"DISABLE": "ライブ字幕を無効にする",
+		"DISABLED_BY_ADMIN_TOOLTIP": "ライブ字幕は管理者により無効にされています"
+	},
+	"COPY_LINK": {
+		"TOOLTIP": "ルームアクセスリンクをコピー",
+		"TEXT": "ルームアクセスリンクをコピー"
+	},
+	"LEAVE_BUTTON": {
+		"MENU_TOOLTIP": "退出オプション",
+		"LEAVE_OPTION": "会議を退出",
+		"END_OPTION": "全員の会議を終了"
+	},
+	"MORE_OPTIONS": {
+		"DARK_MODE": "ダークモード",
+		"LAYOUT_TOOLTIP": "グリッドレイアウトを設定",
+		"ADJUST_LAYOUT": "レイアウトを調整"
+	},
+	"LAYOUT_SETTINGS": {
+		"TITLE": "レイアウト設定",
+		"MODE_ARIA": "レイアウトモードを選択",
+		"MOSAIC": "モザイク",
+		"MOSAIC_DESC": "すべての参加者を統一されたグリッドに表示します",
+		"SMART_MOSAIC": "スマートモザイク",
+		"SMART_MOSAIC_DESC": "アクティブな参加者を一定数まで表示します",
+		"COUNT_LABEL": "表示する参加者数",
+		"COUNT_HELPER": "グリッドに表示するリモート参加者の人数を選択してください",
+		"COUNT_ARIA": "表示する参加者数"
+	},
+	"PARTICIPANT_ITEM": {
+		"PROMOTE_TOOLTIP": "モデレーターに昇格",
+		"DOWNGRADE_TOOLTIP": "元の権限に戻す",
+		"KICK_TOOLTIP": "参加者を退出させる",
+		"BADGE_OWNER": "オーナー",
+		"BADGE_ADMIN": "管理者",
+		"BADGE_MODERATOR": "モデレーター"
+	},
+	"END_MEETING": {
+		"LEFT_TITLE": "会議を退出しました",
+		"LEFT_MESSAGE": "会議から正常に退出しました",
+		"KICKED_TITLE": "会議から退出させられました",
+		"KICKED_MESSAGE": "モデレーターによって会議から退出させられました",
+		"ENDED_TITLE": "会議が終了しました",
+		"ENDED_MESSAGE": "モデレーターによって会議が終了されました",
+		"ENDED_BY_SELF_MESSAGE": "会議を正常に終了しました",
+		"DISCONNECTED_TITLE": "会議から切断されました",
+		"NETWORK_MESSAGE": "ネットワーク接続の問題により接続が切断されました",
+		"SERVER_SHUTDOWN_MESSAGE": "サーバーのシャットダウンにより接続が切断されました",
+		"DUPLICATE_MESSAGE": "別のタブまたはデバイスから同じ会議に参加したため、このセッションは終了しました",
+		"UNKNOWN_MESSAGE": "予期しないエラーが発生しました。後でもう一度お試しください",
+		"FOOTER": "JMeet をご利用いただきありがとうございます",
+		"BACK": "戻る",
+		"BACK_TO_ROOMS": "ルームに戻る",
+		"ACCEPT": "OK"
+	},
+	"MEETING_PAGE": {
+		"PREPARING": "会議を準備しています...",
+		"PREPARE_ERROR": "会議を準備できませんでした。",
+		"INIT_ERROR_TITLE": "エラー",
+		"INIT_ERROR_MESSAGE": "会議ロビーの初期化中にエラーが発生しました。後でもう一度お試しください。",
+		"INIT_ERROR_CONFIRM": "OK"
+	}
+}

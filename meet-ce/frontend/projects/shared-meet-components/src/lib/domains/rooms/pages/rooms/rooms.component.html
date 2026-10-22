@@ -1,0 +1,204 @@
+@if (isInitializing() && showInitialLoader()) {
+	<jmeet-loading-skeleton variant="card" [rows]="8" />
+}
+
+@if (!isInitializing()) {
+	<div class="jmeet-stack-sections rooms-workspace-page" id="rooms-page-container">
+		<jmeet-page-header>
+			<span page-title>{{ 'ROOMS.WORKSPACE.GREETING_TITLE' | translate }}</span>
+			<div page-actions>
+				<span class="jmeet-text--caption rooms-date-label">{{ todayLabel() }}</span>
+			</div>
+		</jmeet-page-header>
+
+		<section class="jmeet-quick-actions" [attr.aria-label]="'ROOMS.WORKSPACE.QUICK_START' | translate">
+			@if (currentUserRole() !== MeetUserRole.ROOM_MEMBER) {
+				<button
+					type="button"
+					class="jmeet-quick-action rooms-quick-action--primary"
+					(click)="quickMeeting()"
+					[disabled]="creatingQuickMeeting()"
+					id="quick-meeting-btn"
+					>
+					<span class="jmeet-quick-action__icon"><nz-icon nzType="thunderbolt" /></span>
+					<span class="jmeet-quick-action__copy">
+						<strong>{{ 'ROOMS.WORKSPACE.QUICK_TITLE' | translate }}</strong>
+						<small>{{ 'ROOMS.WORKSPACE.QUICK_DESC' | translate }}</small>
+					</span>
+				</button>
+
+				<a class="jmeet-quick-action rooms-quick-action--secondary" routerLink="/app/rooms/new" id="schedule-meeting-link">
+					<span class="jmeet-quick-action__icon"><nz-icon nzType="calendar" /></span>
+					<span class="jmeet-quick-action__copy">
+						<strong>{{ 'ROOMS.WORKSPACE.START_TITLE' | translate }}</strong>
+						<small>{{ 'ROOMS.WORKSPACE.START_DESC' | translate }}</small>
+					</span>
+				</a>
+			}
+
+			<div class="jmeet-quick-action join-meeting-action">
+				<div class="join-control">
+					<span class="join-control__link-icon" aria-hidden="true"><nz-icon nzType="link" /></span>
+					<input
+						#meetingCode
+						nz-input
+						class="join-code-field"
+						[attr.aria-label]="'ROOMS.WORKSPACE.JOIN_INPUT_PLACEHOLDER' | translate"
+						[value]="joinMeetingValue()"
+						[placeholder]="'ROOMS.WORKSPACE.JOIN_INPUT_PLACEHOLDER' | translate"
+						(input)="onJoinValueChange($event)"
+						(keydown.enter)="joinMeeting(meetingCode.value); $event.preventDefault()"
+					/>
+					<button
+						type="button"
+						class="jmeet-button jmeet-button--primary join-submit-btn"
+						(click)="joinMeeting(meetingCode.value)"
+						[disabled]="!joinMeetingValue().trim()"
+						>
+						{{ 'ROOMS.WORKSPACE.JOIN_BUTTON' | translate }}
+					</button>
+				</div>
+			</div>
+		</section>
+
+		<section class="jmeet-card meetings-directory-panel" [attr.aria-label]="'ROOMS.WORKSPACE.LIST_TITLE' | translate">
+			<jmeet-filter-bar>
+				<div class="jmeet-filter-field rooms-search-field">
+					<div class="search-field-row">
+						<nz-icon nzType="search" class="search-prefix-icon" />
+						<input
+							nz-input
+							type="search"
+							[placeholder]="'ROOMS.WORKSPACE.SEARCH_PLACEHOLDER' | translate"
+							[value]="workspaceSearch()"
+							(input)="onWorkspaceSearch($event)"
+						/>
+					</div>
+				</div>
+				<div class="workspace-tabs" role="tablist" [attr.aria-label]="'ROOMS.WORKSPACE.LIST_TITLE' | translate">
+					@for (tab of workspaceTabs; track tab.id) {
+						<button
+							type="button"
+							class="workspace-tab jmeet-button jmeet-button--ghost jmeet-button--sm"
+							role="tab"
+							[class.active]="activeTab() === tab.id"
+							[attr.aria-selected]="activeTab() === tab.id"
+							(click)="onWorkspaceTabChange(tab.id)"
+							>
+							{{ tab.labelKey | translate }}
+						</button>
+					}
+				</div>
+				<div class="workspace-scope-chips">
+						@if (canShowHostedScope()) {
+							<button
+								type="button"
+								class="workspace-scope-chip"
+								[class.active]="scopeChip() === 'owned'"
+								(click)="onScopeChipChange('owned')"
+								>
+								{{ 'ROOMS.WORKSPACE.SCOPE_HOSTED' | translate }}
+							</button>
+						}
+						<button
+							type="button"
+							class="workspace-scope-chip"
+							[class.active]="scopeChip() === 'member'"
+							(click)="onScopeChipChange('member')"
+							>
+							{{ 'ROOMS.WORKSPACE.SCOPE_MEMBER' | translate }}
+						</button>
+				</div>
+			</jmeet-filter-bar>
+
+			@if (isLoading() && rooms().length === 0) {
+				<jmeet-loading-skeleton variant="list" [rows]="6" />
+			} @else if (visibleRooms().length === 0) {
+				<jmeet-empty-state [title]="emptyStateTitleKey() | translate" [description]="emptyStateDescKey() | translate">
+					<nz-icon nzType="calendar" empty-icon />
+				</jmeet-empty-state>
+			} @else {
+				<div class="meetings-list-body" [ovScrollPersist]="scrollToRestore">
+					<div class="meeting-cards" role="list">
+						@for (group of groupedVisibleRooms(); track group.key) {
+							<section class="meeting-group" [attr.aria-label]="groupLabel(group)">
+								<h3 class="meeting-group-label">
+									{{ groupLabel(group) }}
+									<span class="meeting-group-count">{{ group.rooms.length }}</span>
+								</h3>
+								@for (room of group.rooms; track room.roomId) {
+									<article class="meeting-card" role="listitem" (click)="onRoomClick(room.roomId)">
+										<div class="meeting-time" [attr.aria-label]="'ROOMS.LIST.COLUMN_CREATED' | translate">
+												@if (displayTimestamp(room); as timestamp) {
+													<strong>{{ timestamp | date: 'HH:mm' }}</strong>
+												} @else {
+													<strong>--:--</strong>
+													<span>{{ 'ROOMS.WORKSPACE.TIME_TBD' | translate }}</span>
+												}
+											</div>
+										<div class="meeting-mark"><nz-icon nzType="video-camera" /></div>
+										<div class="meeting-main">
+											<div class="meeting-title-line">
+												<h3>{{ room.roomName }}</h3>
+											<jmeet-status-tag
+												[label]="RoomUiUtils.getWorkspaceStatusLabelKey(room) | translate"
+												[variant]="workspaceStatusVariant(room)"
+												nz-tooltip
+												[nzTooltipTitle]="RoomUiUtils.getWorkspaceStatusTooltipKey(room) | translate"
+											/>
+											</div>
+											<div class="meeting-meta">
+												<span
+													><nz-icon nzType="user" />{{ room.owner === currentUserId() ? ('ROOMS.WORKSPACE.HOSTED_BY_ME' | translate) : room.owner }}</span
+												>
+											</div>
+										</div>
+										<div class="meeting-actions">
+											<button
+												type="button"
+												class="jmeet-button jmeet-button--ghost jmeet-button--icon share-action"
+												(click)="$event.stopPropagation(); onRoomAction({ rooms: [room], action: 'shareLink' })"
+												[attr.aria-label]="'ROOMS.WORKSPACE.SHARE_MEETING' | translate"
+												>
+												<nz-icon nzType="share-alt" />
+											</button>
+											<button
+												type="button"
+												class="jmeet-button jmeet-button--primary jmeet-button--sm enter-action"
+												(click)="$event.stopPropagation(); onRoomAction({ rooms: [room], action: 'access' })"
+												[disabled]="RoomUiUtils.isExpired(room) || !RoomUiUtils.canEnterMeeting(room, undefined, room.owner === currentUserId() || currentUserRole() === MeetUserRole.ADMIN)"
+												nz-tooltip
+												[nzTooltipTitle]="
+												RoomUiUtils.isExpired(room)
+												? ('ROOMS.WORKSPACE.STATUS_TOOLTIP.EXPIRED' | translate)
+												: RoomUiUtils.isNotStarted(room)
+												? ('ROOMS.WORKSPACE.ENTER_NOT_STARTED' | translate)
+												: (RoomUiUtils.getAccessRoomTooltip(room) | translate)
+												"
+											>
+												{{ 'ROOMS.WORKSPACE.ENTER_MEETING' | translate }}
+											</button>
+										</div>
+									</article>
+								}
+							</section>
+						}
+					</div>
+				</div>
+			}
+
+			<!-- 全量拉取+客户端分页：页码器接过滤后可见房间总数（游标拉全后=真实总数），每页默认 10 条；
+			     数据量大时回改服务端分页 -->
+			@if (visibleRooms().length > 0) {
+				<div class="rooms-table-footer">
+					<jmeet-pagination
+						[length]="visibleRooms().length"
+						[pageIndex]="pageIndex()"
+						[pageSize]="pageSize()"
+						(pageChange)="onPageChange($event)"
+					/>
+				</div>
+			}
+		</section>
+	</div>
+}

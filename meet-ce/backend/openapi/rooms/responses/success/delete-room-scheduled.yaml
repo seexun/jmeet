@@ -1,0 +1,116 @@
+description: Room was successfully scheduled to be deleted or closed
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                successCode:
+                    type: string
+                    enum:
+                        - room_with_active_meeting_scheduled_to_be_deleted
+                        - room_with_active_meeting_and_recordings_scheduled_to_be_deleted
+                        - room_with_active_meeting_scheduled_to_be_closed
+                    description: A code representing the success scenario
+                message:
+                    type: string
+                    description: A message providing additional context about the success
+                room:
+                    allOf:
+                        - $ref: '../../schemas/meet-room.yaml'
+                        - type: object
+                          properties:
+                              _extraFields:
+                                  type: array
+                                  description: >
+                                      List of extra fields that can be included in the response based on the `X-ExtraFields` header or `extraFields` query parameter.
+                                  items:
+                                      type: string
+                                      example: config
+        examples:
+            room_with_active_meeting_scheduled_to_be_deleted:
+                value:
+                    successCode: room_with_active_meeting_scheduled_to_be_deleted
+                    message: Room 'room-123' with active meeting scheduled to be deleted when the meeting ends
+                    room:
+                        roomId: room-123
+                        roomName: room
+                        owner: 'admin'
+                        creationDate: 1620000000000
+                        access:
+                            anonymous:
+                                moderator:
+                                    enabled: true
+                                    url: 'https://example.com/room/room-123?secret=123456'
+                                speaker:
+                                    enabled: true
+                                    url: 'https://example.com/room/room-123?secret=654321'
+                                recording:
+                                    enabled: true
+                                    url: 'https://example.com/room/room-123/recordings?secret=987654'
+                            user:
+                                enabled: false
+                                url: 'https://example.com/room/room-123'
+                        status: active_meeting
+                        rolesUpdatedAt: 1620000000000
+                        meetingEndAction: delete
+                        _extraFields:
+                            - config
+                            - roles
+            room_with_active_meeting_and_recordings_scheduled_to_be_deleted:
+                value:
+                    successCode: room_with_active_meeting_and_recordings_scheduled_to_be_deleted
+                    message: Room 'room-123' with active meeting and its recordings scheduled to be deleted when the meeting ends
+                    room:
+                        roomId: room-123
+                        roomName: room
+                        owner: 'admin'
+                        creationDate: 1620000000000
+                        access:
+                            anonymous:
+                                moderator:
+                                    enabled: true
+                                    url: 'https://example.com/room/room-123?secret=123456'
+                                speaker:
+                                    enabled: true
+                                    url: 'https://example.com/room/room-123?secret=654321'
+                                recording:
+                                    enabled: true
+                                    url: 'https://example.com/room/room-123/recordings?secret=987654'
+                            user:
+                                enabled: false
+                                url: 'https://example.com/room/room-123'
+                        status: active_meeting
+                        rolesUpdatedAt: 1620000000000
+                        meetingEndAction: delete
+                        _extraFields:
+                            - config
+                            - roles
+            room_with_active_meeting_scheduled_to_be_closed:
+                value:
+                    successCode: room_with_active_meeting_scheduled_to_be_closed
+                    message: Room 'room-123' with active meeting scheduled to be closed when the meeting ends because it has recordings
+                    room:
+                        roomId: room-123
+                        roomName: room
+                        owner: 'admin'
+                        creationDate: 1620000000000
+                        access:
+                            anonymous:
+                                moderator:
+                                    enabled: true
+                                    url: 'https://example.com/room/room-123?secret=123456'
+                                speaker:
+                                    enabled: true
+                                    url: 'https://example.com/room/room-123?secret=654321'
+                                recording:
+                                    enabled: true
+                                    url: 'https://example.com/room/room-123/recordings?secret=987654'
+                            user:
+                                enabled: false
+                                url: 'https://example.com/room/room-123'
+                        status: active_meeting
+                        rolesUpdatedAt: 1620000000000
+                        meetingEndAction: close
+                        _extraFields:
+                            - config
+                            - roles

@@ -1,0 +1,18 @@
+name: roomNameMatchMode
+in: query
+required: false
+description: >
+    Match mode used for roomName filtering.
+    - exact: full match (default)
+    - prefix: roomName starts with the provided value
+    - partial: roomName contains the provided value
+    - regex: roomName matches the provided regular expression pattern
+schema:
+    type: string
+    enum:
+        - exact
+        - prefix
+        - partial
+        - regex
+    default: exact
+example: prefix

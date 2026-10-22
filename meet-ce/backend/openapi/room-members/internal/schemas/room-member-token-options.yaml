@@ -1,0 +1,25 @@
+type: object
+properties:
+    secret:
+        type: string
+        description: |
+            A secret key for room access.
+
+            Supported secret types:
+            - Moderator anonymous access secret
+            - Speaker anonymous access secret
+            - Recording anonymous access secret (generates a token with read-only recording permissions)
+            - Identified guest access secret
+        example: 'abc123456'
+    joinMeeting:
+        type: boolean
+        description: >
+            Whether the token is intended for joining a meeting.
+            When true, participantName may be required for anonymous users and can be inferred for identified users.
+        example: true
+    participantName:
+        type: string
+        description: >
+            The participant display name to use when joining the meeting.
+            Required for anonymous guests when `joinMeeting` is true.
+        example: 'Alice'

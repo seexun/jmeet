@@ -1,0 +1,184 @@
+{
+  "ROOM_MEMBERS": {
+    "COMMON": {
+      "CANCEL": "取消",
+      "SEARCH": "搜索",
+      "ADD_MEMBER": "添加成员",
+      "USER": "用户",
+      "IDENTIFIED_GUEST": "实名访客",
+      "MODERATOR": "主持人",
+      "SPEAKER": "发言者"
+    },
+    "FORM": {
+      "TYPE_LABEL": "成员类型",
+      "TYPE_USER": "用户",
+      "TYPE_IDENTIFIED_GUEST": "实名访客",
+      "USER_ID_LABEL": "选择用户",
+      "USER_ID_PLACEHOLDER": "按名称或 ID 搜索用户...",
+      "USER_ID_HINT": "输入姓名或账号，从列表中选择",
+      "NO_USERS_FOUND": "未找到用户",
+      "GUEST_INFO": "实名访客不是 JMeet 用户。添加后，他们将获得一个用于访问此房间的唯一链接。您可以从成员列表中复制此链接。",
+      "MEMBER_NAME_LABEL": "成员名称",
+      "MEMBER_NAME_PLACEHOLDER": "请输入显示名称...",
+      "MEMBER_NAME_HINT": "访客的显示名称",
+      "BASE_ROLE_LABEL": "基础角色",
+      "BASE_ROLE_HINT": "基础角色决定默认权限",
+      "CUSTOM_PERMISSIONS_TITLE": "自定义权限",
+      "CUSTOM_PERMISSIONS_DESCRIPTION": "覆盖默认角色权限",
+      "CUSTOM_PERMISSIONS_HINT": "这些权限将覆盖所选角色的默认权限。将开关保持在默认位置以继承角色权限。",
+      "CUSTOM_PERMISSIONS_HINT_SHORT": "按分组展开后调整；悬停可查看说明。与角色默认相同的项不会保存。",
+      "CUSTOM_PERMISSIONS_RESET": "恢复角色默认",
+      "CUSTOM_PERMISSIONS_CUSTOMIZED": "已自定义 {{count}} 项",
+      "CUSTOM_PERMISSIONS_GROUP_COUNT": "{{count}} 项",
+      "UPDATE_MEMBER": "更新成员",
+      "ADD_MEMBER": "添加成员",
+      "DISABLED_REASON_ADMIN": "管理员用户无法被添加为成员",
+      "DISABLED_REASON_OWNER": "房间所有者无法被添加为成员"
+    },
+    "FORM_DIALOG": {
+      "TITLE_EDIT": "编辑成员",
+      "TITLE_ADD": "添加成员"
+    },
+    "LIST": {
+      "EMPTY_TITLE": "还没有成员",
+      "EMPTY_SUBTITLE": "添加成员后，他们会出现在这里。",
+      "SEARCH_MEMBERS": "搜索成员",
+      "SEARCH_BY_NAME": "按成员名称搜索",
+      "CLEAR_SEARCH": "清除搜索",
+      "MATCH_CASE_INSENSITIVE": "不区分大小写",
+      "CASE_INSENSITIVE_LABEL": "Aa",
+      "MATCH_MODE_PREFIX": "匹配模式：",
+      "FILTER_MEMBERS": "筛选成员",
+      "REFRESH_MEMBERS": "刷新成员",
+      "REMOVE_SELECTED_MEMBERS": "移除选中的成员",
+      "FILTER_BY_ROLE": "按角色筛选",
+      "FILTER_BY_ROLE_DESCRIPTION": "将结果范围缩小到具有所选基础角色的成员。",
+      "ROLE": "角色",
+      "FILTER_BY_TYPE": "按类型筛选",
+      "FILTER_BY_TYPE_DESCRIPTION": "将结果范围缩小到所选类型的成员。",
+      "TYPE": "类型",
+      "FILTERS_LABEL": "筛选条件：",
+      "CLEAR_ALL": "全部清除",
+      "LOADING_MEMBERS": "正在加载成员...",
+      "EMPTY_FILTER_TITLE": "没有成员符合您的搜索",
+      "EMPTY_FILTER_SUBTITLE": "请尝试调整或清除筛选条件以查看更多成员。",
+      "CLEAR_FILTERS": "清除筛选条件",
+      "COLUMN_MEMBER": "成员",
+      "COLUMN_ROLE": "角色",
+      "COLUMN_TYPE": "类型",
+      "COLUMN_ADDED": "添加时间",
+      "COLUMN_ACTIONS": "操作",
+      "VIEW_USER_PROFILE": "查看用户资料",
+      "COPY_ACCESS_LINK": "复制访问链接",
+      "EDIT_MEMBER": "编辑成员",
+      "REMOVE_MEMBER": "移除成员",
+      "MATCH_MODE_STARTS_WITH": "开头匹配",
+      "MATCH_MODE_CONTAINS": "包含",
+      "MATCH_MODE_EXACT": "精确匹配",
+      "MATCH_MODE_REGEX": "正则表达式",
+      "ROLE_FILTER_ALL": "所有角色",
+      "TYPE_FILTER_ALL": "所有类型",
+      "TYPE_USER": "用户",
+      "TYPE_IDENTIFIED_GUEST": "实名访客",
+      "ROLE_CHIP_PREFIX": "角色：",
+      "TYPE_CHIP_PREFIX": "类型："
+    },
+    "ADD": {
+      "TITLE_EDIT": "编辑房间成员",
+      "TITLE_ADD": "添加房间成员",
+      "SUBTITLE_EDIT": "更新此房间成员的权限。",
+      "SUBTITLE_ADD": "为用户或实名访客授予此房间的访问权限。",
+      "CARD_TITLE": "成员配置",
+      "CARD_SUBTITLE_EDIT_USER": "更新用户在此房间的权限",
+      "CARD_SUBTITLE_EDIT_GUEST": "更新实名访客在此房间的权限",
+      "CARD_SUBTITLE_ADD_USER": "选择用户并配置其权限",
+      "CARD_SUBTITLE_ADD_GUEST": "为访客选择一个名称并配置其权限"
+    },
+    "ERRORS": {
+      "FIELD_REQUIRED": "此字段为必填项",
+      "PATTERN": "仅允许小写字母、数字和下划线",
+      "MAX_LENGTH_PREFIX": "不能超过 ",
+      "MAX_LENGTH_SUFFIX": " 个字符",
+      "ROOM_ID_REQUIRED": "房间 ID 为必填项",
+      "ROOM_DATA_LOAD_FAILED": "加载房间数据失败",
+      "MEMBER_UPDATED_SUCCESS": "成员已成功更新",
+      "MEMBER_ADDED_SUCCESS": "成员已成功添加",
+      "MEMBER_UPDATE_FAILED": "更新成员失败",
+      "MEMBER_ADD_FAILED": "添加成员失败"
+    },
+    "ROLE": {
+      "MODERATOR": "主持人",
+      "SPEAKER": "发言者"
+    },
+    "MEMBER_TYPE": {
+      "USER": "用户",
+      "GUEST": "实名访客"
+    },
+    "PERMISSIONS": {
+      "GROUPS": {
+        "MEETING": "会议",
+        "MEDIA": "媒体",
+        "RECORDINGS": "录像",
+        "CHAT": "聊天"
+      },
+      "ITEMS": {
+        "canJoinMeeting": {
+          "LABEL": "可加入会议",
+          "DESCRIPTION": "允许加入会议"
+        },
+        "canEndMeeting": {
+          "LABEL": "可结束会议",
+          "DESCRIPTION": "允许为所有参与者结束会议"
+        },
+        "canMakeModerator": {
+          "LABEL": "可设为主持人",
+          "DESCRIPTION": "允许将参与者提升为主持人角色"
+        },
+        "canKickParticipants": {
+          "LABEL": "可踢出参与者",
+          "DESCRIPTION": "允许将参与者移出会议"
+        },
+        "canShareAccessLinks": {
+          "LABEL": "可共享访问链接",
+          "DESCRIPTION": "允许与他人共享邀请链接"
+        },
+        "canPublishVideo": {
+          "LABEL": "可发布视频",
+          "DESCRIPTION": "允许共享摄像头视频"
+        },
+        "canPublishAudio": {
+          "LABEL": "可发布音频",
+          "DESCRIPTION": "允许共享麦克风音频"
+        },
+        "canShareScreen": {
+          "LABEL": "可共享屏幕",
+          "DESCRIPTION": "允许共享桌面或浏览器标签页"
+        },
+        "canChangeVirtualBackground": {
+          "LABEL": "可更改虚拟背景",
+          "DESCRIPTION": "允许更改虚拟背景"
+        },
+        "canRecord": {
+          "LABEL": "可录制",
+          "DESCRIPTION": "允许开始和停止录制"
+        },
+        "canRetrieveRecordings": {
+          "LABEL": "可获取录像",
+          "DESCRIPTION": "允许列出和播放录像"
+        },
+        "canDeleteRecordings": {
+          "LABEL": "可删除录像",
+          "DESCRIPTION": "允许删除录像"
+        },
+        "canReadChat": {
+          "LABEL": "可阅读聊天",
+          "DESCRIPTION": "允许阅读聊天消息"
+        },
+        "canWriteChat": {
+          "LABEL": "可发送聊天",
+          "DESCRIPTION": "允许发送聊天消息"
+        }
+      }
+    }
+  }
+}

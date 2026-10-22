@@ -1,0 +1,87 @@
+<nav class="wizard-navigation" [class.loading]="false" [class.compact]="false" id="wizard-navigation">
+	<div class="nav-buttons">
+		@if (config().showCancel) {
+			<button
+				type="button"
+				class="jmeet-button jmeet-button--outline cancel-btn"
+				id="wizard-cancel-btn"
+				(click)="onCancel()"
+				[attr.aria-label]="'ROOMS.WIZARD.CANCEL_ARIA' | translate"
+				>
+				<nz-icon nzType="close" class="leading-icon" />
+				{{ (config().cancelLabel || 'ROOMS.WIZARD.CANCEL') | translate }}
+			</button>
+		}
+
+		@if (config().showBack) {
+			<button
+				type="button"
+				class="jmeet-button jmeet-button--outline back-btn"
+				id="wizard-back-btn"
+				(click)="onBack()"
+				[attr.aria-label]="'ROOMS.WIZARD.GO_BACK_ARIA' | translate"
+				>
+				<nz-icon nzType="arrow-left" class="leading-icon" />
+				{{ backButtonText() }}
+			</button>
+		}
+
+		<div class="spacer"></div>
+
+		<div class="nav-group">
+			@if (config().showPrevious) {
+				<button
+					type="button"
+					class="jmeet-button jmeet-button--outline prev-btn"
+					id="wizard-previous-btn"
+					(click)="onPrevious()"
+					[attr.aria-label]="'ROOMS.WIZARD.PREVIOUS_ARIA' | translate"
+					>
+					<nz-icon nzType="left" class="leading-icon" />
+					{{ (config().previousLabel || 'ROOMS.WIZARD.PREVIOUS') | translate }}
+				</button>
+			}
+
+			@if (config().showSkipAndFinish) {
+				<button
+					type="button"
+					class="jmeet-button jmeet-button--primary finish-btn"
+					id="wizard-quick-create-btn"
+					[disabled]="config().disableFinish ?? false"
+					(click)="skipAndFinish()"
+					[attr.aria-label]="'ROOMS.WIZARD.SKIP_ARIA' | translate"
+					>
+					<nz-icon nzType="thunderbolt" />
+					{{ (config().skipAndFinishLabel || 'ROOMS.WIZARD.SKIP_AND_FINISH') | translate }}
+				</button>
+			}
+
+			@if (config().showNext) {
+				<button
+					type="button"
+					class="jmeet-button jmeet-button--primary next-btn"
+					id="wizard-next-btn"
+					(click)="onNext()"
+					[attr.aria-label]="'ROOMS.WIZARD.NEXT_ARIA' | translate"
+					>
+					{{ (config().nextLabel || 'ROOMS.WIZARD.NEXT') | translate }}
+					<nz-icon nzType="right" class="trailing-icon" />
+				</button>
+			}
+
+			@if (config().showFinish) {
+				<button
+					type="button"
+					class="jmeet-button jmeet-button--primary finish-btn"
+					id="wizard-finish-btn"
+					[disabled]="config().disableFinish ?? false"
+					(click)="onFinish()"
+					[attr.aria-label]="'ROOMS.WIZARD.FINISH_ARIA' | translate"
+					>
+					<nz-icon nzType="check" class="leading-icon" />
+					{{ (config().finishLabel || 'ROOMS.WIZARD.FINISH') | translate }}
+				</button>
+			}
+		</div>
+	</div>
+</nav>

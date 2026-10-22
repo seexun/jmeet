@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"esModuleInterop": true,
+		"target": "es6",
+		"module": "CommonJS",
+		"strict": true,
+		"outDir": "./dist",
+		"rootDir": "./",
+		"lib": ["es6"],
+		"types": ["mocha", "node"],
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"paths": {
+			"@openvidu-meet/typings": ["node_modules/@openvidu-meet/typings/dist/index"]
+		}
+	},
+	"include": ["*.test.ts", "**/*.test.ts", "e2e/**/*.ts"],
+	"exclude": ["node_modules"]
+}

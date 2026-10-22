@@ -1,0 +1,16 @@
+description: Invalid room member token generation request
+content:
+    application/json:
+        schema:
+            $ref: '../../../../shared/schemas/error.yaml'
+        examples:
+            invalid_room_secret:
+                summary: Invalid room secret
+                value:
+                    error: 'Room Error'
+                    message: 'Secret "123456" is not recognized for room "room-123"'
+            participant_name_required:
+                summary: Missing participant name when joining anonymously
+                value:
+                    error: 'Room Member Error'
+                    message: 'participantName is required when joining a meeting and it cannot be inferred from member/user context'

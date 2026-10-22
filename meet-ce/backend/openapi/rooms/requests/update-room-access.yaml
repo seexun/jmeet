@@ -1,0 +1,9 @@
+description: Room access configuration update options
+required: true
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                access:
+                    $ref: '../schemas/meet-room-access-config.yaml'

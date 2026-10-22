@@ -1,0 +1,1518 @@
+// Utility Classes - Helper classes for common styling patterns
+// This file contains reusable utility classes
+
+@use './_mixins-layout.scss' as layout;
+@use './_mixins-components.scss' as components;
+@use './_mixins-responsive.scss' as responsive;
+
+// Universal border-box so paddings and borders never inflate declared sizes.
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+
+// === UTILITY CLASSES ===
+
+.ov-text-center {
+	text-align: center;
+}
+
+.ov-text-truncate {
+	@include layout.ov-text-truncate;
+}
+
+.ov-flex-center {
+	@include layout.ov-flex-center;
+}
+
+.ov-meet-dialog {
+	border-radius: var(--jmeet-layout-space-md);
+	background: var(--jmeet-color-surface-card);
+}
+
+.primary-button {
+	@include components.ov-button-base;
+
+	background-color: var(--jmeet-color-action-primary) !important;
+	color: var(--jmeet-color-text-on-primary) !important;
+
+	.anticon {
+		color: inherit !important;
+	}
+
+	&:not(:disabled):hover {
+		background-color: var(--jmeet-color-action-primary-dark) !important;
+		color: var(--jmeet-color-text-on-primary) !important;
+	}
+
+}
+
+// Spacing classes
+.ov-mt-xs {
+	margin-top: var(--jmeet-layout-space-xs);
+}
+
+.ov-mt-sm {
+	margin-top: var(--jmeet-layout-space-sm);
+}
+
+.ov-mt-md {
+	margin-top: var(--jmeet-layout-space-md);
+}
+
+.ov-mt-lg {
+	margin-top: var(--jmeet-layout-space-lg);
+}
+
+.ov-mt-xl {
+	margin-top: var(--jmeet-layout-space-xl);
+}
+
+.ov-mb-xs {
+	margin-bottom: var(--jmeet-layout-space-xs);
+}
+
+.ov-mb-sm {
+	margin-bottom: var(--jmeet-layout-space-sm);
+}
+
+.ov-mb-md {
+	margin-bottom: var(--jmeet-layout-space-md);
+}
+
+.ov-mb-lg {
+	margin-bottom: var(--jmeet-layout-space-lg);
+}
+
+.ov-mb-xl {
+	margin-bottom: var(--jmeet-layout-space-xl);
+}
+
+.ov-mb-xxl {
+	margin-bottom: var(--jmeet-layout-space-xxl);
+}
+
+.ov-padding-none {
+	padding: 0;
+}
+
+.ov-padding-xs {
+	padding: var(--jmeet-layout-space-xs);
+}
+
+.ov-padding-sm {
+	padding: var(--jmeet-layout-space-sm);
+}
+
+.ov-padding-md {
+	padding: var(--jmeet-layout-space-md);
+}
+
+.ov-padding-lg {
+	padding: var(--jmeet-layout-space-lg);
+}
+
+.ov-padding-xl {
+	padding: var(--jmeet-layout-space-xl);
+}
+
+// === THEME CLASSES ===
+.ov-theme-transition {
+	@include layout.ov-theme-transition;
+}
+
+// === CONCEPTUAL ICON CLASSES ===
+// Apply these classes directly to .anticon elements for consistent conceptual colors
+.ov-room-icon {
+	color: var(--jmeet-color-icon-default) !important;
+
+	@include layout.ov-theme-transition;
+}
+
+.ov-recording-icon {
+	color: var(--jmeet-color-icon-default) !important;
+
+	@include layout.ov-theme-transition;
+}
+
+.ov-users {
+	color: var(--jmeet-color-icon-default) !important;
+	overflow: none;
+
+	@include layout.ov-theme-transition;
+}
+
+.ov-settings-icon {
+	color: var(--jmeet-color-icon-default) !important;
+
+	@include layout.ov-theme-transition;
+}
+
+.ov-developer-icon {
+	color: var(--jmeet-color-icon-default) !important;
+
+	@include layout.ov-theme-transition;
+}
+
+.ov-about-icon {
+	color: var(--jmeet-color-icon-default) !important;
+
+	@include layout.ov-theme-transition;
+}
+
+.ov-surface {
+	background-color: var(--jmeet-color-surface-card);
+	color: var(--jmeet-color-text-on-surface);
+
+	@include layout.ov-theme-transition;
+}
+
+.ov-background {
+	background-color: var(--jmeet-color-surface-page);
+	color: var(--jmeet-color-text-on-page);
+
+	@include layout.ov-theme-transition;
+}
+
+.ov-text-primary {
+	color: var(--jmeet-color-text-primary);
+}
+
+.ov-text-secondary {
+	color: var(--jmeet-color-text-secondary);
+}
+
+.ov-text-hint {
+	color: var(--jmeet-color-text-hint);
+}
+
+// === DATA LIST COMPONENT UTILITIES ===
+// Comprehensive utilities for list-based components (recordings, rooms, etc.)
+
+// Modern Toolbar Base
+.ov-data-toolbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 var(--jmeet-layout-space-md) 0 0;
+	margin-bottom: var(--jmeet-layout-space-md);
+	min-height: 64px;
+	gap: var(--jmeet-layout-space-md);
+
+	.toolbar-left {
+		display: flex;
+		align-items: center;
+		flex: 1;
+		min-width: 0;
+		gap: var(--jmeet-layout-space-sm);
+	}
+
+	.toolbar-center {
+		display: flex;
+		align-items: center;
+		gap: var(--jmeet-layout-space-lg);
+		flex: 0 0 auto;
+	}
+
+	.toolbar-right {
+		display: flex;
+		align-items: center;
+		flex: 0 0 auto;
+	}
+}
+
+// Search Field Styling
+.ov-search-field {
+	width: 100%;
+	max-width: 400px;
+
+}
+
+// Selection Info Badge
+.ov-selection-info {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-layout-space-sm);
+	padding: var(--jmeet-layout-space-sm) var(--jmeet-layout-space-md);
+	background: var(--jmeet-color-action-primary-light);
+	border-radius: var(--jmeet-shape-radius-md);
+	color: var(--jmeet-color-action-primary);
+
+	.selection-icon {
+		@include layout.ov-icon(md);
+	}
+
+	.selection-text {
+		font-size: var(--jmeet-typography-font-size-sm);
+		font-weight: var(--jmeet-typography-font-weight-medium);
+	}
+}
+
+// Batch Actions Container
+.ov-batch-actions {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-layout-space-xs);
+
+	button {
+		@include layout.ov-theme-transition;
+
+		&[color='warn'] {
+			color: var(--jmeet-color-action-danger);
+
+			&:hover {
+				background-color: var(--jmeet-color-action-danger-light);
+			}
+		}
+
+		&:hover {
+			background-color: var(--jmeet-color-surface-hover);
+		}
+	}
+}
+
+// Enhanced Table Container
+.ov-table-container {
+	background-color: var(--jmeet-color-surface-elevated);
+	border-radius: var(--jmeet-shape-radius-md);
+	box-shadow: var(--jmeet-shadow-surface-sm);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	border: 1px solid var(--jmeet-color-border-light);
+	overflow: auto;
+
+	// Subtle glow effect when selections are active
+	:host(.has-selections) & {
+		box-shadow:
+			var(--jmeet-shadow-surface-md),
+			0 0 0 1px var(--jmeet-color-action-primary-light);
+	}
+}
+
+// Toolbar + Table Integration
+.ov-data-toolbar + .ov-table-container {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	border-top: none;
+	box-shadow: var(--jmeet-shadow-surface-sm);
+}
+
+// Info Display Components
+.ov-info-display {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-layout-space-xs);
+
+	.primary-text {
+		font-weight: var(--jmeet-typography-font-weight-medium);
+		color: var(--jmeet-color-text-primary);
+		font-size: var(--jmeet-typography-font-size-sm);
+	}
+
+	.secondary-text {
+		font-size: var(--jmeet-typography-font-size-xs);
+		color: var(--jmeet-color-text-secondary);
+	}
+
+	.monospace-text {
+		font-family: 'Roboto Mono', monospace;
+	}
+}
+
+// Status Badge
+.ov-status-badge {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-layout-space-xs);
+	font-size: var(--jmeet-typography-font-size-sm);
+	font-weight: var(--jmeet-typography-font-weight-medium);
+
+	.anticon {
+		@include layout.ov-icon(sm);
+	}
+
+	.status-label {
+		font-weight: var(--jmeet-typography-font-weight-semibold);
+	}
+}
+
+// Date Information Display
+.ov-date-info {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-layout-space-xs);
+
+	.date {
+		font-size: var(--jmeet-typography-font-size-sm);
+		color: var(--jmeet-color-text-primary);
+	}
+
+	.time {
+		font-size: var(--jmeet-typography-font-size-xs);
+		color: var(--jmeet-color-text-secondary);
+	}
+}
+
+// Action Buttons Container
+.ov-action-buttons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--jmeet-layout-space-xs);
+
+}
+
+// Loading Container
+.ov-loading-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: var(--jmeet-layout-space-xxl);
+	gap: var(--jmeet-layout-space-md);
+	background: var(--jmeet-color-surface-elevated);
+	border-radius: var(--jmeet-shape-radius-md);
+	border: 1px solid var(--jmeet-color-border-light);
+	margin: var(--jmeet-layout-space-md) 0;
+
+	span {
+		color: var(--jmeet-color-text-secondary);
+		font-size: var(--jmeet-typography-font-size-sm);
+	}
+}
+
+// Empty State
+.ov-empty-state {
+	@include components.ov-card;
+
+	text-align: center;
+	margin: var(--jmeet-layout-space-xl) 0;
+
+	.empty-content {
+		max-width: 500px;
+		margin: 0 auto;
+	}
+
+	h3 {
+		font-size: var(--jmeet-typography-font-size-xl);
+		font-weight: var(--jmeet-typography-font-weight-medium);
+		color: var(--jmeet-color-text-primary);
+		margin: 0 0 var(--jmeet-layout-space-md) 0;
+	}
+
+	p {
+		font-size: var(--jmeet-typography-font-size-md);
+		color: var(--jmeet-color-text-secondary);
+		margin: 0 0 var(--jmeet-layout-space-xl) 0;
+		line-height: var(--jmeet-typography-line-height-normal);
+	}
+
+	.action-buttons {
+		.refresh-btn {
+			@include components.ov-button-base;
+
+			.anticon {
+				@include layout.ov-icon(md);
+
+				margin-right: var(--jmeet-layout-space-sm);
+			}
+		}
+	}
+}
+
+// === NAVIGATION UTILITIES ===
+// For console navigation and sidebar components
+.meet-toolbar {
+	@include layout.ov-theme-transition;
+
+	background-color: var(--jmeet-color-surface-card);
+}
+
+.ov-nav-toolbar {
+	position: fixed;
+	top: 0;
+	z-index: var(--jmeet-z-raised);
+
+	@include layout.ov-theme-transition;
+
+	.toolbar-title {
+		font-size: var(--jmeet-typography-font-size-xxl);
+		font-weight: var(--jmeet-typography-font-weight-regular);
+		margin-left: var(--jmeet-layout-space-md);
+	}
+
+	.toolbar-spacer {
+		flex: 1 1 auto;
+	}
+}
+
+.ov-sidenav {
+	@include layout.ov-theme-transition;
+
+	background-color: var(--jmeet-color-surface-card);
+	padding-top: var(--jmeet-layout-toolbar-height);
+	width: var(--jmeet-layout-shell-sidenav-width);
+
+	.nav-entry {
+		display: flex;
+		align-items: center;
+		gap: var(--jmeet-layout-space-md);
+		padding: var(--jmeet-layout-space-lg);
+		justify-content: start;
+
+		&.centered {
+			justify-content: center !important;
+		}
+	}
+
+	.nav-list {
+		height: calc(100% - 3.5rem - var(--jmeet-layout-space-lg));
+	}
+}
+
+.ov-sidenav-content {
+	padding-top: var(--jmeet-layout-toolbar-height);
+
+	.main-container {
+		padding: 0 var(--jmeet-layout-space-xl);
+		height: 100%;
+	}
+
+	.page-content {
+		padding: 0;
+		max-width: none;
+	}
+}
+
+.ov-menu-button {
+	height: 60px !important;
+	text-align: justify;
+	transition: var(--jmeet-motion-normal);
+	border-radius: var(--jmeet-shape-radius-sm);
+
+	@include layout.ov-theme-transition;
+
+	.anticon {
+		color: var(--jmeet-color-text-secondary);
+		font-variation-settings:
+			'FILL' 0,
+			'wght' 400,
+			'GRAD' 0,
+			'opsz' 24;
+	}
+
+	&:hover {
+		background-color: var(--jmeet-color-surface-hover) !important;
+
+		.anticon {
+			color: var(--jmeet-color-text-primary);
+		}
+	}
+
+	&.active {
+		border-left: var(--jmeet-layout-space-xs) solid var(--jmeet-color-action-primary);
+
+		.nav-entry {
+			font-weight: var(--jmeet-typography-font-weight-semibold);
+		}
+
+		.anticon {
+			color: var(--jmeet-color-icon-active, var(--jmeet-color-action-primary)) !important;
+		}
+	}
+}
+
+.ov-nav-version {
+	margin-top: auto;
+	padding: var(--jmeet-layout-space-sm);
+	font-size: var(--jmeet-typography-font-size-xs);
+	color: var(--ov-text-hint);
+	text-align: center;
+
+	@include layout.ov-theme-transition;
+}
+
+.ov-nav-separator {
+	margin: 0;
+	border-top: 1px solid var(--ov-border-color);
+
+	@include layout.ov-theme-transition;
+}
+
+// === MENU AND FILTER UTILITIES ===
+
+.ov-filters-menu {
+	.filter-content {
+		padding: var(--jmeet-layout-space-md);
+
+		h4 {
+			margin: 0 0 var(--jmeet-layout-space-md) 0;
+			font-size: var(--jmeet-typography-font-size-sm);
+			font-weight: var(--jmeet-typography-font-weight-semibold);
+			color: var(--jmeet-color-text-primary);
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+		}
+	}
+}
+
+// Inline search modifiers
+.ov-search-modifier {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	width: 30px !important;
+	height: 30px !important;
+	padding: 0 !important;
+	line-height: 1 !important;
+	color: var(--jmeet-color-text-secondary);
+
+	@include layout.ov-theme-transition;
+
+	.anticon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 18px; // icon/decoration sizing
+		width: 18px;
+		height: 18px;
+		line-height: 18px;
+		margin: 0;
+	}
+
+	.modifier-label {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-size: var(--jmeet-typography-font-size-sm);
+		font-weight: var(--jmeet-typography-font-weight-bold);
+		line-height: 1;
+	}
+
+	&:hover {
+		color: var(--jmeet-color-text-primary);
+		background-color: var(--jmeet-color-surface-hover);
+	}
+
+	&.active {
+		color: var(--jmeet-color-action-primary);
+		background-color: color-mix(in srgb, var(--jmeet-color-action-primary) 16%, transparent);
+	}
+}
+
+// Filters trigger button - active highlight when filters are applied
+.ov-filters-trigger.has-filters {
+	color: var(--jmeet-color-action-primary);
+	background-color: color-mix(in srgb, var(--jmeet-color-action-primary) 12%, transparent);
+}
+
+// Inline filter panel
+.ov-filter-panel {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	gap: var(--jmeet-layout-space-md) var(--jmeet-layout-space-xl);
+	padding: var(--jmeet-layout-space-md) var(--jmeet-layout-space-lg);
+	margin-bottom: var(--jmeet-layout-space-md);
+	background-color: var(--jmeet-color-surface-elevated);
+	border: 1px solid var(--jmeet-color-border-light);
+	border-radius: var(--jmeet-shape-radius-md);
+
+	.filter-group {
+		display: flex;
+		flex-direction: column;
+		gap: var(--jmeet-layout-space-sm);
+		min-width: 220px;
+
+		h4 {
+			margin: 0;
+			font-size: var(--jmeet-typography-font-size-xs);
+			font-weight: var(--jmeet-typography-font-weight-semibold);
+			color: var(--jmeet-color-text-secondary);
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+		}
+
+		.filter-description {
+			margin: 0;
+			font-size: var(--jmeet-typography-font-size-xs);
+			color: var(--jmeet-color-text-secondary);
+			line-height: 1.4;
+			max-width: 320px;
+		}
+
+		.filter-checkboxes {
+			display: flex;
+			flex-direction: column;
+			gap: var(--jmeet-layout-space-xs);
+		}
+	}
+}
+
+// Active filter chips
+.ov-active-filters {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--jmeet-layout-space-sm);
+	margin-bottom: var(--jmeet-layout-space-md);
+
+	.active-filters-label {
+		font-size: var(--jmeet-typography-font-size-xs);
+		font-weight: var(--jmeet-typography-font-weight-medium);
+		color: var(--jmeet-color-text-secondary);
+	}
+
+	.filter-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--jmeet-layout-space-xs);
+		padding: var(--jmeet-layout-space-xs) var(--jmeet-layout-space-sm);
+		border: 1px solid var(--jmeet-color-action-primary);
+		border-radius: 16px;
+		background-color: color-mix(in srgb, var(--jmeet-color-action-primary) 10%, transparent);
+		color: var(--jmeet-color-action-primary);
+		font-size: var(--jmeet-typography-font-size-xs);
+		font-weight: var(--jmeet-typography-font-weight-medium);
+		cursor: pointer;
+
+		@include layout.ov-theme-transition;
+
+		&:hover {
+			background-color: color-mix(in srgb, var(--jmeet-color-action-primary) 18%, transparent);
+		}
+
+		.anticon {
+			font-size: 16px; // icon/decoration sizing
+			width: 16px;
+			height: 16px;
+			line-height: 16px;
+		}
+	}
+
+	.clear-all-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--jmeet-layout-space-xs);
+		padding: var(--jmeet-layout-space-xs) var(--jmeet-layout-space-sm);
+		background: none;
+		border: none;
+		color: var(--jmeet-color-text-secondary);
+		font-size: var(--jmeet-typography-font-size-xs);
+		font-weight: var(--jmeet-typography-font-weight-medium);
+		text-decoration: underline;
+		cursor: pointer;
+
+		.anticon {
+			font-size: 16px; // icon/decoration sizing
+			width: 16px;
+			height: 16px;
+			line-height: 16px;
+		}
+
+		&:hover {
+			color: var(--jmeet-color-action-primary);
+		}
+	}
+}
+
+// === RESPONSIVE UTILITIES ===
+
+// Toolbar Responsive Patterns
+.ov-data-toolbar {
+	background-color: var(--jmeet-color-surface-page) !important;
+
+	@include responsive.ov-tablet-down {
+		padding: var(--jmeet-layout-space-sm) var(--jmeet-layout-space-md);
+		gap: var(--jmeet-layout-space-sm);
+
+		.toolbar-left .ov-search-field {
+			max-width: 300px;
+		}
+
+		.toolbar-center {
+			gap: var(--jmeet-layout-space-md);
+
+			.ov-selection-info {
+				padding: var(--jmeet-layout-space-xs) var(--jmeet-layout-space-sm);
+
+				.selection-text {
+					font-size: var(--jmeet-typography-font-size-xs);
+				}
+			}
+		}
+	}
+
+	@include responsive.ov-mobile-down {
+		flex-direction: column;
+		align-items: stretch;
+		gap: var(--jmeet-layout-space-sm);
+		padding: var(--jmeet-layout-space-sm);
+
+		.toolbar-left,
+		.toolbar-center,
+		.toolbar-right {
+			justify-content: center;
+		}
+
+		.toolbar-left .ov-search-field {
+			max-width: none;
+		}
+
+		.toolbar-center {
+			order: 3;
+			flex-direction: column;
+			gap: var(--jmeet-layout-space-sm);
+
+			.ov-selection-info {
+				align-self: center;
+			}
+
+			.ov-batch-actions {
+				justify-content: center;
+			}
+		}
+
+		.toolbar-right {
+			order: 2;
+		}
+	}
+}
+
+// Table Responsive Patterns
+.ov-table-container {
+	@include responsive.ov-mobile-down {
+		margin: 0 calc(-1 * var(--jmeet-layout-space-sm));
+		border-radius: var(--jmeet-shape-radius-sm);
+		border-left: none;
+		border-right: none;
+	}
+}
+
+.ov-data-table {
+	// （批次4：原 rgba(var(--token), 0.8) 逗号法式接 var 全色值属 invalid at computed-value time，
+	// 实际渲染为透明——改 color-mix 使 80% 白面成立，亦过全局层裸色门禁）
+	background-color: color-mix(in srgb, var(--jmeet-color-surface-card) 80%, transparent);
+
+	@include responsive.ov-tablet-down {
+		.ov-info-display .primary-text,
+		.ov-date-info .date {
+			font-size: var(--jmeet-typography-font-size-xs);
+		}
+
+		.ov-info-display .secondary-text,
+		.ov-date-info .time {
+			font-size: var(--jmeet-typography-font-size-xxs);
+		}
+	}
+
+	@include responsive.ov-mobile-down {
+		font-size: var(--jmeet-typography-font-size-xs);
+	}
+}
+
+.ov-empty-state {
+	@include responsive.ov-mobile-down {
+		padding: var(--jmeet-layout-space-xl) var(--jmeet-layout-space-lg);
+
+		.empty-icon {
+			font-size: var(--jmeet-icon-control-xl);
+			width: var(--jmeet-icon-control-xl);
+			height: var(--jmeet-icon-control-xl);
+		}
+
+		h3 {
+			font-size: var(--jmeet-typography-font-size-lg);
+		}
+
+		p {
+			font-size: var(--jmeet-typography-font-size-sm);
+		}
+	}
+}
+
+// === ACCESSIBILITY UTILITIES ===
+
+.ov-focus-visible {
+	&:focus-visible {
+		outline: 2px solid var(--jmeet-color-action-primary);
+		outline-offset: 2px;
+	}
+}
+
+// === CONTEXTUAL UTILITIES ===
+
+.ov-delete-action {
+	color: var(--jmeet-color-action-danger) !important;
+
+	.anticon {
+		color: var(--jmeet-color-action-danger) !important;
+	}
+}
+
+.ov-no-data {
+	color: var(--jmeet-color-text-hint);
+	font-style: italic;
+}
+
+// === FORM UTILITIES ===
+// Common form patterns for settings and configuration components
+
+.ov-form-section {
+	margin-bottom: var(--jmeet-layout-space-xl);
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	.form-field-header {
+		display: flex;
+		align-items: center;
+		gap: var(--jmeet-layout-space-sm);
+		margin-bottom: var(--jmeet-layout-space-sm);
+
+		h3 {
+			margin: 0;
+			font-size: var(--jmeet-typography-font-size-md);
+			font-weight: var(--jmeet-typography-font-weight-semibold);
+			color: var(--jmeet-color-text-primary);
+		}
+
+		.pro-badge {
+			background: var(--jmeet-color-action-warning);
+			color: white;
+			padding: var(--jmeet-layout-space-xs) var(--jmeet-layout-space-sm);
+			border-radius: var(--jmeet-shape-radius-sm);
+			font-size: var(--jmeet-typography-font-size-xs);
+			font-weight: var(--jmeet-typography-font-weight-semibold);
+			text-transform: uppercase;
+		}
+	}
+
+	.field-description {
+		color: var(--jmeet-color-text-secondary);
+		font-size: var(--jmeet-typography-font-size-sm);
+		margin: 0 0 var(--jmeet-layout-space-md) 0;
+		line-height: var(--jmeet-typography-line-height-normal);
+	}
+}
+
+.ov-logo-upload {
+	display: flex;
+	gap: var(--jmeet-layout-space-lg);
+	align-items: flex-start;
+
+	@include responsive.ov-tablet-down {
+		flex-direction: column;
+		gap: var(--jmeet-layout-space-md);
+	}
+
+	.logo-preview {
+		flex-shrink: 0;
+
+		.logo-placeholder {
+			width: 120px;
+			height: 80px;
+			background: var(--jmeet-color-surface-variant);
+			border: 2px dashed var(--jmeet-color-border);
+			border-radius: var(--jmeet-shape-radius-md);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			.logo-image {
+				max-width: 60px;
+			}
+
+			.anticon {
+				@include layout.ov-icon(xl);
+
+				color: var(--jmeet-color-text-hint);
+			}
+		}
+	}
+
+	.pro-upgrade-message {
+		flex: 1;
+		text-align: center;
+		padding: var(--jmeet-layout-space-xl);
+		background: var(--jmeet-color-surface-variant);
+		border-radius: var(--jmeet-shape-radius-md);
+		border: 1px solid var(--ov-border-color);
+
+		p {
+			margin: 0 0 var(--jmeet-layout-space-md) 0;
+			color: var(--jmeet-color-text-secondary);
+			font-size: var(--jmeet-typography-font-size-sm);
+		}
+
+		button {
+			@include components.ov-button-base;
+
+			.anticon {
+				@include layout.ov-icon(sm);
+			}
+		}
+	}
+
+	.logo-url-field {
+		flex: 1;
+		width: 100%;
+	}
+}
+
+// === PAGE LOADING UTILITIES ===
+// Common loading states for page components
+
+.ov-page-loading {
+	min-height: 60vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	animation: fade-in 0.5s ease-out;
+
+	@include responsive.ov-tablet-down {
+		padding: var(--jmeet-layout-space-md);
+		min-height: 50vh;
+	}
+
+	@include responsive.ov-mobile-down {
+		padding: var(--jmeet-layout-space-lg);
+		min-height: 40vh;
+	}
+
+	.loading-content {
+		text-align: center;
+		max-width: 600px;
+		width: 100%;
+
+		.loading-header {
+			margin-bottom: var(--jmeet-layout-space-xxl);
+
+			.loading-title {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: var(--jmeet-layout-space-md);
+				margin-bottom: var(--jmeet-layout-space-md);
+
+				.loading-icon {
+					@include layout.ov-icon(xl);
+
+					animation: pulse 2s ease-in-out infinite;
+				}
+
+				h1 {
+					margin: 0;
+					color: var(--jmeet-color-text-primary);
+				}
+			}
+
+			.loading-subtitle {
+				font-size: var(--jmeet-typography-font-size-md);
+				color: var(--jmeet-color-text-secondary);
+				margin: 0;
+				animation: fade-in 1s ease-out 0.5s both;
+			}
+		}
+
+		.loading-spinner-container {
+			margin-bottom: var(--jmeet-layout-space-xxl);
+		}
+	}
+}
+
+// === PAGE STRUCTURE UTILITIES ===
+
+.ov-page-container {
+	height: 100%;
+	overflow: auto;
+	box-sizing: border-box;
+
+	// 仅兜底"完全无类"的按钮。此前作用于全部 button（特异性 0,1,1），
+	// 会以 4px 统一内边距/圆角压过 .jmeet-button、.ant-btn、开关等
+	// 各按钮系统的自身规格，导致按钮文字贴边、开关发方。
+	button:not([class]) {
+		@include components.ov-button-base;
+
+		padding: var(--jmeet-layout-space-xs);
+	}
+
+	@include responsive.ov-tablet-down {
+		padding: var(--jmeet-layout-space-lg);
+	}
+
+	@include responsive.ov-mobile-down {
+		padding: var(--jmeet-layout-space-md);
+	}
+
+	.page-header {
+		@include components.ov-page-header;
+	}
+
+	.page-content {
+		@include components.ov-page-content;
+	}
+
+	.get-started-header {
+		@include components.ov-get-started-header;
+	}
+
+	.section-card {
+		@include components.ov-section-card;
+	}
+
+	.section-divider {
+		border-top: 1px solid var(--jmeet-color-border-strong);
+		margin: var(--jmeet-layout-space-sm) 0;
+	}
+}
+
+// === TABLE PAGE UTILITIES ===
+// For pages that contain complex data tables
+
+.ov-table-page-actions {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: var(--jmeet-layout-space-md);
+
+	@include responsive.ov-mobile-down {
+		flex-direction: column;
+		align-items: stretch;
+		gap: var(--jmeet-layout-space-sm);
+	}
+
+	.actions-left,
+	.actions-right {
+		display: flex;
+		align-items: center;
+		gap: var(--jmeet-layout-space-md);
+
+		@include responsive.ov-mobile-down {
+			justify-content: center;
+		}
+	}
+
+	.refresh-btn {
+		@include layout.ov-theme-transition;
+
+		border-radius: var(--jmeet-shape-radius-circle);
+
+		&:hover:not([disabled]) {
+			background-color: var(--jmeet-color-surface-hover);
+		}
+
+		&[disabled] {
+			opacity: var(--jmeet-state-disabled-opacity);
+		}
+
+		.anticon {
+			@include layout.ov-icon(md);
+		}
+	}
+}
+
+.ov-table-page-container {
+	@include components.ov-card;
+
+	padding: 0;
+	overflow: hidden;
+	position: relative;
+
+	.loading-overlay {
+		position: absolute;
+		inset: 0;
+		background: color-mix(in srgb, var(--jmeet-color-surface-card) 88%, transparent);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: var(--jmeet-z-overlay);
+		animation: fade-in 0.3s ease-out;
+	}
+
+	.no-results-message {
+		text-align: center;
+		padding: var(--jmeet-layout-space-xl);
+		color: var(--jmeet-color-text-secondary);
+
+		.no-results-icon {
+			@include layout.ov-icon(lg);
+
+			color: var(--jmeet-color-text-hint);
+			margin-bottom: var(--jmeet-layout-space-md);
+			display: block;
+		}
+
+		h4 {
+			font-size: var(--jmeet-typography-font-size-lg);
+			font-weight: var(--jmeet-typography-font-weight-medium);
+			color: var(--jmeet-color-text-primary);
+			margin: 0 0 var(--jmeet-layout-space-sm) 0;
+		}
+
+		p {
+			font-size: var(--jmeet-typography-font-size-sm);
+			margin: 0 0 var(--jmeet-layout-space-md) 0;
+		}
+
+		button {
+			.anticon {
+				@include layout.ov-icon(sm);
+
+				margin-right: var(--jmeet-layout-space-xs);
+			}
+		}
+	}
+}
+
+// === SECTION CARD UTILITIES ===
+// For settings, developers, and similar pages with section-based content
+
+// Section card color variations
+.ov-section-card-primary .section-icon {
+	color: var(--jmeet-color-action-primary) !important;
+}
+
+.ov-section-card-accent .section-icon {
+	color: var(--jmeet-color-action-primary) !important;
+}
+
+.ov-section-card-success .section-icon {
+	color: var(--jmeet-color-action-success) !important;
+}
+
+.ov-section-card-warning .section-icon {
+	color: var(--jmeet-color-action-warning) !important;
+}
+
+// === API KEY & CREDENTIAL DISPLAY UTILITIES ===
+
+.ov-api-key-display {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-layout-space-md);
+	padding: var(--jmeet-layout-space-md);
+
+	@include responsive.ov-mobile-down {
+		flex-direction: column;
+		gap: var(--jmeet-layout-space-sm);
+	}
+
+	.api-key-field {
+		flex: 1;
+		min-width: 400px;
+		margin-bottom: 0;
+
+		@include responsive.ov-tablet-down {
+			min-width: 100%;
+		}
+	}
+
+	.copy-api-key-btn {
+		@include components.ov-button-base;
+
+		background-color: var(--jmeet-color-action-primary);
+		color: white;
+
+		&:hover {
+			background-color: var(--jmeet-color-action-primary-dark);
+		}
+
+		.anticon {
+			@include layout.ov-icon(md);
+
+			margin-right: var(--jmeet-layout-space-sm);
+		}
+
+		@include responsive.ov-mobile-down {
+			width: 100%;
+			justify-content: center;
+		}
+	}
+}
+
+.ov-credential-section {
+	display: flex;
+	flex-direction: column;
+	gap: var(--jmeet-layout-space-md);
+
+	.credential-row {
+		display: flex;
+		align-items: center;
+		gap: var(--jmeet-layout-space-md);
+
+		@include responsive.ov-mobile-down {
+			flex-direction: column;
+			align-items: stretch;
+			gap: var(--jmeet-layout-space-sm);
+		}
+
+		.credential-field {
+			flex: 1;
+		}
+	}
+
+	.credential-actions {
+		display: flex;
+		gap: var(--jmeet-layout-space-sm);
+		justify-content: flex-end;
+
+		@include responsive.ov-mobile-down {
+			justify-content: center;
+		}
+	}
+}
+
+// === SETTINGS FORM UTILITIES ===
+
+.ov-settings-form-section {
+	margin-bottom: var(--jmeet-layout-space-xl);
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	.form-field-header {
+		display: flex;
+		align-items: center;
+		gap: var(--jmeet-layout-space-sm);
+		margin-bottom: var(--jmeet-layout-space-sm);
+
+		h3 {
+			margin: 0;
+			font-size: var(--jmeet-typography-font-size-md);
+			font-weight: var(--jmeet-typography-font-weight-semibold);
+			color: var(--jmeet-color-text-primary);
+		}
+
+		.field-icon {
+			@include layout.ov-icon(md);
+
+			color: var(--jmeet-color-text-secondary);
+		}
+	}
+
+	.form-field-description {
+		font-size: var(--jmeet-typography-font-size-sm);
+		color: var(--jmeet-color-text-secondary);
+		margin-bottom: var(--jmeet-layout-space-md);
+		line-height: 1.4;
+	}
+
+	.form-controls {
+		display: flex;
+		flex-direction: column;
+		gap: var(--jmeet-layout-space-md);
+
+		.control-group {
+			display: flex;
+			align-items: center;
+			gap: var(--jmeet-layout-space-sm);
+
+			@include responsive.ov-mobile-down {
+				flex-direction: column;
+				align-items: stretch;
+			}
+		}
+	}
+}
+
+// === STATISTICS & METRICS UTILITIES ===
+
+.ov-stats-display {
+	.stats-text {
+		font-size: var(--jmeet-typography-font-size-sm);
+		color: var(--jmeet-color-text-secondary);
+		font-weight: var(--jmeet-typography-font-weight-medium);
+	}
+}
+
+.ov-load-more-section {
+	display: flex;
+	justify-content: center;
+	margin-top: var(--jmeet-layout-space-lg);
+	padding-top: var(--jmeet-layout-space-lg);
+	border-top: 1px solid var(--ov-border-color-light);
+
+	button {
+		@include components.ov-button-base;
+
+		.anticon {
+			@include layout.ov-icon(md);
+
+			margin-right: var(--jmeet-layout-space-sm);
+		}
+	}
+}
+
+// === SNACKBAR UTILITY STYLES ===
+
+.ov-snackbar-success {
+	background-color: var(--jmeet-color-action-success);
+	color: white;
+}
+
+.ov-snackbar-error {
+	background-color: var(--jmeet-color-action-danger);
+	color: white;
+}
+
+.ov-snackbar-warning {
+	background-color: var(--jmeet-color-action-warning);
+	color: white;
+}
+
+.ov-snackbar-info {
+	background-color: var(--jmeet-color-action-primary);
+	color: white;
+}
+
+// === CONTENT LAYOUT UTILITIES ===
+
+.ov-content-with-actions {
+	display: flex;
+	flex-direction: column;
+
+	.content-actions {
+		margin-bottom: var(--jmeet-layout-space-lg);
+	}
+}
+
+// === OVERVIEW & DASHBOARD UTILITIES ===
+
+.ov-welcome-card {
+	max-width: var(--jmeet-layout-container-max-width);
+	margin: 0 auto;
+}
+
+.ov-feature-card {
+	@include components.ov-card;
+	@include layout.ov-hover-lift(-5px);
+
+	text-align: center;
+
+}
+
+.ov-getting-started-grid {
+	@include layout.ov-grid-responsive(280px);
+
+	margin-top: var(--jmeet-layout-space-lg);
+}
+
+.ov-quick-actions {
+	@include layout.ov-flex-center;
+
+	gap: var(--jmeet-layout-space-md);
+	margin-bottom: var(--jmeet-layout-space-xxl);
+
+	button {
+		@include components.ov-button-base;
+
+		.anticon {
+			margin-right: var(--jmeet-layout-space-sm);
+		}
+	}
+}
+
+.ov-stats-grid {
+	@include layout.ov-grid-responsive(300px);
+}
+
+.ov-stats-card {
+	@include components.ov-card;
+
+	text-align: center;
+
+	@include layout.ov-theme-transition;
+
+	&:hover {
+		@include layout.ov-hover-lift(-3px);
+	}
+
+	.stats-content {
+		flex: 1;
+	}
+
+	.stats-icon {
+		@include layout.ov-icon(lg);
+
+		margin-bottom: var(--jmeet-layout-space-sm);
+	}
+
+	.stats-value {
+		font-size: var(--jmeet-typography-font-size-xxl);
+		font-weight: var(--jmeet-typography-font-weight-bold);
+		color: var(--ov-text-primary);
+		margin-bottom: var(--jmeet-layout-space-xs);
+	}
+
+	.stats-label {
+		font-size: var(--jmeet-typography-font-size-sm);
+		color: var(--ov-text-secondary);
+		text-transform: uppercase;
+		font-weight: var(--jmeet-typography-font-weight-medium);
+	}
+
+}
+
+// ── 滚动条：默认隐藏（视觉减负），悬停可滚动区域时浮现 8px 细拇指 ──
+// 滚轮/触摸滚动能力不受影响；页面级（html/body）滚动条常驻隐藏，靠滚轮定位。
+// Chrome 121+ 优先消费标准属性（scrollbar-width/color），Safari/旧 Chromium 走 webkit 伪元素。
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: transparent;
+	border-radius: 999px;
+}
+
+*:hover::-webkit-scrollbar-thumb {
+	background: var(--jmeet-color-border-strong);
+}
+
+*:hover::-webkit-scrollbar-thumb:hover {
+	background: var(--jmeet-color-text-tertiary);
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+	background: transparent;
+}
+
+// scrollbar-width 必须恒定（不能 none→thin 切换）：切换会让滚动条
+// 悬停时新占 8px 布局宽度，面板/弹框内容整体横移晃动。
+// 恒 thin + 透明拇指 = 平时不可见、悬停仅浮现拇指颜色、零位移。
+* {
+	scrollbar-width: thin;
+	scrollbar-color: transparent transparent;
+}
+
+*:hover {
+	scrollbar-color: var(--jmeet-color-border-strong) transparent;
+}
+
+// 页面级滚动条常驻隐藏（滚轮滚动不受影响，不随 hover 浮现）
+html,
+body {
+	scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+	display: none;
+}
+
+// 仅读屏可见：保留无障碍标签的同时移除重复的视觉噪音
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+	border: 0;
+}

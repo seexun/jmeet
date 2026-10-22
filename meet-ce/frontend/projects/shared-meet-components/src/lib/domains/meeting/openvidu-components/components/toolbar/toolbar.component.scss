@@ -1,0 +1,70 @@
+:host {
+	display: block;
+	position: absolute;
+	inset: 0;
+	pointer-events: none; // HUD 载体不吃事件；交互面各自恢复
+}
+
+.toolbar-topbar {
+	pointer-events: auto;
+}
+
+.connection-alert {
+	position: absolute;
+	top: calc(var(--jmeet-meeting-topbar-height) + 8px);
+	left: 50%;
+	transform: translateX(-50%);
+	pointer-events: auto;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 12px;
+	border-radius: 8px;
+	background: var(--jmeet-meeting-danger-soft);
+	color: var(--jmeet-meeting-danger);
+	font-size: 12px;
+}
+
+.toolbar-pill {
+	position: absolute;
+	bottom: 16px;
+	left: 50%;
+	transform: translateX(-50%);
+	pointer-events: auto;
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	padding: 6px;
+	border: 1px solid var(--jmeet-meeting-border);
+	border-radius: var(--jmeet-meeting-toolbar-radius);
+	background: var(--jmeet-meeting-surface);
+	box-shadow: var(--jmeet-meeting-toolbar-shadow);
+	// 窄屏兜底：面板入口（成员/聊天）是唯一常驻入口，任何宽度保持可见；
+	// 胶囊放不下时允许横向滚动，不吞按钮。
+	max-width: calc(100vw - 16px);
+	overflow-x: auto;
+	scrollbar-width: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+// dock 打开时胶囊在舞台剩余区域内居中（session 的 shell 类联动的全局钩子）；
+// settings(big) 打开时 shell 另挂 meeting-sidenav-wide，不参与 dock 避让（修复波 I3）。
+// （原并写的后代分支 `.meeting-sidenav-open .toolbar-pill` 永不命中，一并删除——M11）
+:host-context(.meeting-sidenav-open:not(.meeting-sidenav-wide)) .toolbar-pill {
+	left: calc((100% - var(--jmeet-meeting-dock-width)) / 2);
+}
+
+// jmeet-meeting-toolbar 共享包装器（仅本工具条使用）自带旧底栏白卡 chrome，
+// HUD 形态下若不透明化会随 :host{inset:0} 铺满整个舞台；视觉由
+// .toolbar-topbar 与 .toolbar-pill 各自承载，包装器只做结构容器。
+jmeet-meeting-toolbar ::ng-deep .jmeet-meeting-toolbar {
+	display: block;
+	height: 100%;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+}

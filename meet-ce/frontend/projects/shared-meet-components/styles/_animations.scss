@@ -1,0 +1,164 @@
+// Animations - Keyframes and animation utility classes
+// This file contains all animation-related definitions
+
+// Animation keyframes
+@keyframes fade-in {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes slide-in-from-left {
+	from {
+		opacity: 0;
+		transform: translateX(-30px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+// Animations
+@keyframes slide-down {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+		max-height: 0;
+		margin: 0;
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+		max-height: 150px;
+		margin: var(--jmeet-layout-space-lg) 0 0 0;
+	}
+}
+
+@keyframes slide-in-from-top {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+		max-height: 0;
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+		max-height: 500px;
+	}
+}
+
+@keyframes slide-in {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes slide-out-to-left {
+	from {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	to {
+		opacity: 0;
+		transform: translateX(-30px);
+	}
+}
+
+@keyframes slide-out-to-top {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+		max-height: 500px;
+	}
+
+	to {
+		opacity: 0;
+		transform: translateY(-10px);
+		max-height: 0;
+	}
+}
+
+@keyframes slide-out-to-right {
+	from {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	to {
+		opacity: 0;
+		transform: translateX(30px);
+	}
+}
+
+@keyframes pulse {
+	0%,
+	100% {
+		opacity: 1;
+	}
+
+	50% {
+		opacity: 0.7;
+	}
+}
+
+@keyframes shimmer {
+	0% {
+		background-position: -200px 0;
+	}
+
+	100% {
+		background-position: calc(200px + 100%) 0;
+	}
+}
+
+@keyframes scale-in {
+	from {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+// Transition classes
+.fade-in {
+	animation: fade-in 0.6s ease-out forwards;
+}
+
+.fade-in-delayed {
+	opacity: 0;
+	animation: fade-in 0.8s ease-out 0.2s forwards;
+}
+
+.fade-in-delayed-more {
+	opacity: 0;
+	animation: fade-in 1s ease-out 0.4s forwards;
+}
+
+.slide-in-from-top {
+	animation: slide-in-from-top 0.3s ease-out forwards;
+}
+
+.slide-out-to-top {
+	animation: slide-out-to-top 0.1s ease-in forwards;
+}

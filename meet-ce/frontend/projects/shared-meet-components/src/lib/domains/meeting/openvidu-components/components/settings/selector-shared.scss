@@ -1,0 +1,387 @@
+// Shared styles for device selectors (video and audio)
+// This file contains common styling for both video-devices and audio-devices components
+
+@mixin device-selector-base() {
+	display: flex;
+	align-items: center;
+	width: 100%;
+
+	// Compact Mode - Unified Button
+	&.compact {
+		.unified-device-button {
+			display: flex;
+			background: var(--jmeet-meeting-primary); // EP ov-primary-action 色钩子对号（prejoin 皮由 _prejoin.scss !important 统管）
+			border-radius: var(--jmeet-radius-lg);
+			overflow: hidden;
+			transition: all 0.2s ease;
+
+			.toggle-section {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				min-width: 40px;
+				width: 40px;
+				height: 48px;
+				border: none;
+				background: transparent;
+				border-radius: 0;
+				padding: 0;
+				transition: all 0.2s ease;
+
+				&.device-enabled {
+					color: var(--jmeet-meeting-surface); // 主色实底上的图标走白字（text-on-primary 同款）
+
+					.anticon {
+						color: var(--jmeet-meeting-surface);
+					}
+				}
+
+				&.device-disabled {
+					background: var(--jmeet-meeting-danger);
+					color: var(--jmeet-meeting-surface);
+
+					.anticon {
+						color: var(--jmeet-meeting-surface);
+					}
+				}
+
+				.anticon {
+					font-size: 20px;
+					width: 20px;
+					height: 20px;
+					margin: 0;
+				}
+			}
+
+			.dropdown-section {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				min-width: 30px;
+				width: 30px;
+				height: 48px;
+				border: none;
+				background: transparent;
+				border-radius: 0;
+				padding: 0;
+				color: var(--jmeet-meeting-text-secondary);
+				transition: all 0.2s ease;
+
+				// 下拉箭头小于主图标（20px），作为次级指示器
+				.anticon {
+					font-size: 12px;
+					width: 12px;
+					height: 12px;
+					margin: 0;
+				}
+			}
+		}
+	}
+
+	// Normal Mode - Input Style Selector
+	&:not(.compact) {
+		.normal-device-selector {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			width: 100%;
+
+			.device-input-selector {
+				flex: 1;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+
+				// 启用态：前置设备图标 + nz-select（选择器样式由全局 _nz-theme 的 .ant-select 规则对齐）
+				.device-icon {
+					font-size: 18px;
+					width: 18px;
+					height: 18px;
+					color: var(--jmeet-meeting-text-secondary);
+					flex-shrink: 0;
+				}
+
+				nz-select.device-select {
+					flex: 1;
+					min-width: 0;
+				}
+
+				&:not(.disabled) {
+					.selector-button {
+						display: flex;
+						align-items: center;
+						gap: 12px;
+						width: 100%;
+						height: 48px;
+						padding: 0 16px;
+						background: var(--jmeet-meeting-surface);
+						border: 1px solid var(--jmeet-meeting-border);
+						border-radius: var(--jmeet-radius-md);
+						color: var(--jmeet-meeting-text-primary);
+						font-size: 14px;
+						font-weight: 500;
+						transition: all 0.2s ease;
+						text-align: left;
+						justify-content: flex-start;
+
+						&[disabled] {
+							background: var(--jmeet-meeting-stage-bg); // EP disabled-background（gray-25）无 meeting 等值——对号 stage 软座（#FAFAFA→#F2F3F5 微深）
+							color: var(--jmeet-meeting-text-tertiary);
+							cursor: not-allowed;
+							border-color: var(--jmeet-meeting-border);
+						}
+
+						.device-icon {
+							font-size: 18px;
+							width: 18px;
+							height: 18px;
+							color: var(--jmeet-meeting-text-secondary);
+							flex-shrink: 0;
+						}
+
+						.selected-device-name {
+							flex: 1;
+							text-overflow: ellipsis;
+							overflow: hidden;
+						}
+					}
+				}
+
+				&.disabled {
+					.selector-button.disabled {
+						display: flex;
+						align-items: center;
+						gap: 12px;
+						height: 48px;
+						padding: 0 16px;
+						background: var(--jmeet-meeting-stage-bg);
+						border: 1px solid var(--jmeet-meeting-border);
+						border-radius: var(--jmeet-radius-md);
+						color: var(--jmeet-meeting-text-tertiary);
+						font-size: 14px;
+						cursor: not-allowed;
+
+						.device-icon {
+							font-size: 18px;
+							width: 18px;
+							height: 18px;
+							color: var(--jmeet-meeting-danger);
+						}
+
+						.selected-device-name {
+							flex: 1;
+							font-style: italic;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.no-device-message {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		padding: 8px 12px;
+		// EP ov-primary-action 色钩子退役（渲染本即透明底）：语义为告警条，对号
+		// meeting warning-soft 软座（chat 加密警示条同语言）
+		background: var(--jmeet-meeting-warning-soft);
+		border: 1px solid color-mix(in srgb, var(--jmeet-meeting-warning) 20%, var(--jmeet-meeting-surface));
+		border-radius: var(--jmeet-radius-md);
+		font-size: 12px;
+		color: var(--jmeet-meeting-text-primary);
+
+		.warning-icon {
+			color: var(--jmeet-meeting-warning);
+			font-size: 16px;
+			width: 16px;
+			height: 16px;
+		}
+	}
+}
+
+// Shared device menu styles (aligned with meeting overlay chrome)
+@mixin device-menu-styles() {
+	// 设备下拉与全站紧凑下拉（_nz-theme.scss）同密度：30px 行、13px 次级字、
+	// 纯阴影无描边、选中浅蓝底
+	::ng-deep .device-menu.ant-dropdown {
+		border-radius: var(--jmeet-radius-md);
+		box-shadow: var(--jmeet-shadow-surface-md);
+		overflow: hidden;
+		background-color: var(--jmeet-meeting-surface);
+		padding: var(--jmeet-space-1) 0;
+
+		.ant-dropdown-menu {
+			// The overlay pane provides the panel surface; drop the ul's own chrome.
+			padding: 0;
+			background: transparent;
+			box-shadow: none;
+		}
+
+		.ant-dropdown-menu-item {
+			display: flex;
+			align-items: center;
+			min-height: 30px;
+			padding: var(--jmeet-space-1) var(--jmeet-space-3);
+			border-radius: var(--jmeet-radius-sm);
+			transition: background-color 160ms ease;
+			font-size: var(--jmeet-font-size-secondary);
+			color: var(--jmeet-meeting-text-secondary);
+
+			&:hover {
+				background-color: var(--jmeet-meeting-stage-bg); // EP surface-hover（gray-100）无 meeting 等值——对号 stage 软座
+				color: var(--jmeet-meeting-text-primary);
+			}
+
+			&.selected {
+				background-color: var(--jmeet-meeting-primary-soft);
+				color: var(--jmeet-meeting-primary-active);
+				font-weight: var(--jmeet-font-weight-medium);
+			}
+
+			.ant-dropdown-menu-title-content {
+				display: flex;
+				align-items: center;
+				flex: 1;
+			}
+
+			.anticon.menu-check-icon {
+				width: 14px;
+				height: 14px;
+				font-size: 14px;  // icon/decoration sizing
+				margin-right: var(--jmeet-space-2);
+				opacity: 0;
+				color: var(--jmeet-meeting-primary);
+				flex-shrink: 0;
+			}
+
+			.anticon.menu-check-icon.is-selected,
+			&.selected .anticon.menu-check-icon {
+				opacity: 1;
+			}
+
+			span {
+				flex: 1;
+			}
+		}
+	}
+}
+
+// Selector button mixin
+@mixin selector-button($icon-class, $name-class, $expand-class) {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 16px;
+	background: var(--jmeet-meeting-surface);
+	border: 1px solid var(--jmeet-meeting-border);
+	border-radius: var(--jmeet-radius-md); // EP ov-surface-radius 圆角钩子对号（回退 8px 与 radius-md 同值）
+	transition: all 0.2s ease;
+	color: var(--jmeet-meeting-text-primary);
+	font-weight: 500;
+	min-width: 150px;
+
+	.#{$name-class} {
+		text-transform: capitalize;
+	}
+
+	&:hover {
+		// EP accent-light（blue-400）无 meeting 等值——按 breakout 先例以 primary 50% 混 surface 等值替代
+		border-color: color-mix(in srgb, var(--jmeet-meeting-primary) 50%, var(--jmeet-meeting-surface));
+		background: var(--jmeet-meeting-primary-soft);
+	}
+
+	.#{$icon-class} {
+		font-size: 18px;
+		width: 18px;
+		height: 18px;
+		color: var(--jmeet-meeting-text-secondary);
+	}
+
+	.#{$name-class} {
+		font-size: 14px;
+		font-weight: 500;
+		display: inline-block !important;
+		color: var(--jmeet-meeting-text-primary) !important;
+	}
+
+	.#{$expand-class} {
+		font-size: 16px;
+		width: 16px;
+		min-width: 16px;
+		height: 16px;
+		min-height: 16px;
+		color: var(--jmeet-meeting-text-secondary);
+		transition: transform 0.2s ease;
+		vertical-align: bottom;
+	}
+
+	&[aria-expanded='true'] .#{$expand-class} {
+		transform: rotate(180deg);
+	}
+}
+
+// selector menu mixin
+@mixin selector-menu($option-class, $option-name-class) {
+	.ant-dropdown-menu {
+		padding: 0;
+		background: transparent;
+		box-shadow: none;
+	}
+
+	border-radius: var(--jmeet-radius-lg);
+	box-shadow: 0 14px 32px color-mix(in srgb, var(--jmeet-meeting-text-primary) 14%, transparent);
+	border: 1px solid var(--jmeet-meeting-border);
+	overflow: hidden;
+	background: var(--jmeet-meeting-surface);
+	padding: 6px;
+
+	.#{$option-class} {
+		display: flex;
+		align-items: center;
+		padding: 0 12px;
+		transition: background-color 160ms ease;
+		font-size: 14px;
+		min-height: 32px;
+		border-radius: var(--jmeet-radius-md);
+		color: var(--jmeet-meeting-text-primary);
+
+		&:hover {
+			background-color: var(--jmeet-meeting-primary-soft);
+		}
+
+		&.selected {
+			background-color: var(--jmeet-meeting-primary-soft);
+			color: var(--jmeet-meeting-primary);
+		}
+
+		.ant-dropdown-menu-title-content {
+			display: flex;
+			align-items: center;
+			flex: 1;
+		}
+
+		.menu-check-icon,
+		.check-icon {
+			width: 22px;
+			height: 22px;
+			font-size: 22px;
+			margin-right: 12px;
+			opacity: 0;
+			color: var(--jmeet-meeting-primary);
+			flex-shrink: 0;
+		}
+
+		.menu-check-icon.is-selected,
+		&.selected .menu-check-icon,
+		&.selected .check-icon {
+			opacity: 1;
+		}
+
+		.#{$option-name-class} {
+			text-transform: capitalize;
+			flex: 1;
+			font-weight: 500;
+		}
+	}
+}

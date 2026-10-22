@@ -1,0 +1,46 @@
+type: object
+properties:
+    anonymous:
+        type: object
+        properties:
+            moderator:
+                type: object
+                properties:
+                    enabled:
+                        type: boolean
+                        default: true
+                        example: true
+                        description: |
+                            Enables or disables anonymous access for the moderator role.
+            speaker:
+                type: object
+                properties:
+                    enabled:
+                        type: boolean
+                        default: true
+                        example: true
+                        description: |
+                            Enables or disables anonymous access for the speaker role.
+            recording:
+                type: object
+                properties:
+                    enabled:
+                        type: boolean
+                        default: true
+                        example: true
+                        description: |
+                            Enables or disables anonymous access for recordings in the room. This also controls whether individual anonymous recording URLs can be generated.
+    user:
+        type: object
+        properties:
+            enabled:
+                type: boolean
+                default: true
+                example: true
+                description: |
+                    Enables or disables access for users.
+                    **Note**: admins, owner and members of the room will always have access regardless of this setting.
+description: |
+    Configuration for room access.
+
+    All fields are optional. If not specified, current configuration will be maintained.

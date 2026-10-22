@@ -1,0 +1,55 @@
+<!-- Grid Layout Configuration Section -->
+@if (showLayoutSelector()) {
+	<div class="layout-section">
+		<div class="section-header">
+			<nz-icon nzType="appstore" class="section-icon" />
+			<h4 class="section-title">{{ 'LAYOUT_SETTINGS.TITLE' | translate }}</h4>
+		</div>
+
+		<!-- Layout Mode Selection -->
+		<div class="layout-mode-container">
+			<nz-radio-group
+				class="layout-radio-group"
+				[ngModel]="layoutMode()"
+				(ngModelChange)="onLayoutModeChange($event)"
+				[attr.aria-label]="'LAYOUT_SETTINGS.MODE_ARIA' | translate"
+			>
+				<label nz-radio [nzValue]="LayoutMode.MOSAIC" id="layout-mosaic" class="layout-radio-option">
+					<div class="radio-content">
+						<span class="radio-label">{{ 'LAYOUT_SETTINGS.MOSAIC' | translate }}</span>
+						<span class="radio-description">{{ 'LAYOUT_SETTINGS.MOSAIC_DESC' | translate }}</span>
+					</div>
+				</label>
+
+				<label nz-radio [nzValue]="LayoutMode.SMART_MOSAIC" id="layout-smart-mosaic" class="layout-radio-option">
+					<div class="radio-content">
+						<span class="radio-label">{{ 'LAYOUT_SETTINGS.SMART_MOSAIC' | translate }}</span>
+						<span class="radio-description">{{ 'LAYOUT_SETTINGS.SMART_MOSAIC_DESC' | translate }}</span>
+					</div>
+				</label>
+			</nz-radio-group>
+		</div>
+
+		<!-- Participant Count Selection (only visible in smart layout mode) -->
+		@if (isSmartLayoutEnabled()) {
+			<div class="participant-count-container">
+				<label class="input-label">{{ 'LAYOUT_SETTINGS.COUNT_LABEL' | translate }}</label>
+				<p class="helper-text">{{ 'LAYOUT_SETTINGS.COUNT_HELPER' | translate }}</p>
+				<div class="slider-container">
+					<nz-slider
+						class="participant-slider"
+						[nzMin]="minParticipants"
+						[nzMax]="maxParticipants"
+						[nzStep]="1"
+						[nzTipFormatter]="formatLabel"
+						[ngModel]="participantCount()"
+						(ngModelChange)="onParticipantCountChange($event)"
+						[nzDisabled]="false"
+						[attr.aria-label]="'LAYOUT_SETTINGS.COUNT_ARIA' | translate"
+					/>
+					<span class="participant-count-value">{{ participantCount() }}</span>
+				</div>
+			</div>
+		}
+	</div>
+}

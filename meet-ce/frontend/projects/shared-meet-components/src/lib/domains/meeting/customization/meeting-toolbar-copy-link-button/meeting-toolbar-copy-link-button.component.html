@@ -1,0 +1,20 @@
+<!-- Copy Link Button -->
+@if (isMobile()) {
+	<!-- It will appear inside of a menu on mobile view -->
+	<button id="copy-speaker-link" nz-menu-item (click)="onCopyLinkClick()">
+		<nz-icon nzType="link" />
+		<span class="button-text">{{ 'COPY_LINK.TEXT' | translate }}</span>
+	</button>
+} @else {
+	<!-- It will appear as an icon button on desktop view -->
+	<button
+		id="copy-speaker-link"
+		class="jmeet-button jmeet-button--ghost jmeet-button--icon"
+		(click)="onCopyLinkClick()"
+		nz-tooltip
+		[nzTooltipTitle]="'COPY_LINK.TOOLTIP' | translate"
+	>
+		<nz-icon nzType="link" />
+		<span class="control-label">{{ 'TOOLBAR.SHORT.INVITE' | translate }}</span>
+	</button>
+}

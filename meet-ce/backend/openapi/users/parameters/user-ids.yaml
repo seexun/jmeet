@@ -1,0 +1,9 @@
+name: userIds
+in: query
+required: true
+description: >
+    Comma-separated list of user IDs to delete.
+    Each ID should correspond to an existing user.
+schema:
+    type: string
+example: 'alice_smith,john_doe'

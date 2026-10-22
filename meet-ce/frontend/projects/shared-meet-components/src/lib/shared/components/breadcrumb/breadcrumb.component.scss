@@ -1,0 +1,34 @@
+@use '_design-tokens.scss' as *;
+
+// 规格 §3.2：行内 `/` 分隔符走三级字色，链接二级字色（hover 提示可点），
+// 当前页 primary 文字色——与 console-nav 的 fallback 面包屑同一套字色语言。
+.ov-breadcrumb {
+	display: flex;
+	align-items: center;
+	gap: var(--jmeet-layout-space-xs);
+	color: var(--jmeet-color-text-secondary);
+	font-size: var(--jmeet-typography-font-size-sm);
+
+	.breadcrumb-link {
+		color: var(--jmeet-color-text-secondary);
+		cursor: pointer;
+		text-decoration: none;
+		transition: color var(--jmeet-motion-fast);
+
+		&:hover {
+			color: var(--jmeet-color-action-link);
+		}
+	}
+
+	.breadcrumb-separator {
+		@include ov-icon(xs);
+
+		color: var(--jmeet-color-text-tertiary);
+		user-select: none;
+	}
+
+	.breadcrumb-current {
+		color: var(--jmeet-color-text-primary);
+		font-weight: var(--jmeet-typography-font-weight-medium);
+	}
+}

@@ -1,0 +1,179 @@
+{
+  "ROOM_MEMBERS": {
+    "COMMON": {
+      "CANCEL": "Annuleren",
+      "SEARCH": "Zoeken",
+      "ADD_MEMBER": "Lid toevoegen",
+      "USER": "Gebruiker",
+      "IDENTIFIED_GUEST": "Geïdentificeerde gast",
+      "MODERATOR": "Moderator",
+      "SPEAKER": "Spreker"
+    },
+    "FORM": {
+      "TYPE_USER": "Gebruiker",
+      "TYPE_IDENTIFIED_GUEST": "Geïdentificeerde gast",
+      "USER_ID_LABEL": "Gebruikers-ID",
+      "USER_ID_PLACEHOLDER": "Zoek een gebruiker op naam of ID...",
+      "USER_ID_HINT": "Begin met typen om gebruikers te zoeken",
+      "NO_USERS_FOUND": "Geen gebruikers gevonden",
+      "GUEST_INFO": "Geïdentificeerde gasten zijn geen JMeet-gebruikers. Na te zijn toegevoegd, krijgen zij een unieke link om toegang te krijgen tot deze kamer. U kunt deze link kopiëren uit de ledenlijst.",
+      "MEMBER_NAME_LABEL": "Naam van lid",
+      "MEMBER_NAME_PLACEHOLDER": "Voer een weergavenaam in...",
+      "MEMBER_NAME_HINT": "Een weergavenaam voor de gast",
+      "BASE_ROLE_LABEL": "Basisrol",
+      "BASE_ROLE_HINT": "De basisrol bepaalt de standaardrechten",
+      "CUSTOM_PERMISSIONS_TITLE": "Aangepaste rechten",
+      "CUSTOM_PERMISSIONS_DESCRIPTION": "De standaardrechten van de rol overschrijven",
+      "CUSTOM_PERMISSIONS_HINT": "Deze rechten overschrijven de standaardinstellingen voor de geselecteerde rol. Laat de schakelaars in hun standaardstand staan om de rolrechten over te nemen.",
+      "UPDATE_MEMBER": "Lid bijwerken",
+      "ADD_MEMBER": "Lid toevoegen",
+      "DISABLED_REASON_ADMIN": "Beheerdersgebruikers kunnen niet als lid worden toegevoegd",
+      "DISABLED_REASON_OWNER": "De kamereigenaar kan niet als lid worden toegevoegd"
+    },
+    "FORM_DIALOG": {
+      "TITLE_EDIT": "Lid bewerken",
+      "TITLE_ADD": "Lid toevoegen"
+    },
+    "LIST": {
+      "EMPTY_TITLE": "Nog geen leden",
+      "EMPTY_SUBTITLE": "Leden verschijnen hier nadat u ze hebt toegevoegd.",
+      "SEARCH_MEMBERS": "Leden zoeken",
+      "SEARCH_BY_NAME": "Zoeken op naam van lid",
+      "CLEAR_SEARCH": "Zoekopdracht wissen",
+      "MATCH_CASE_INSENSITIVE": "Niet hoofdlettergevoelig zoeken",
+      "CASE_INSENSITIVE_LABEL": "Aa",
+      "MATCH_MODE_PREFIX": "Zoekmodus: ",
+      "FILTER_MEMBERS": "Leden filteren",
+      "REFRESH_MEMBERS": "Leden vernieuwen",
+      "REMOVE_SELECTED_MEMBERS": "Geselecteerde leden verwijderen",
+      "FILTER_BY_ROLE": "Filteren op rol",
+      "FILTER_BY_ROLE_DESCRIPTION": "Beperkt het resultaat tot leden met de geselecteerde basisrol.",
+      "ROLE": "Rol",
+      "FILTER_BY_TYPE": "Filteren op type",
+      "FILTER_BY_TYPE_DESCRIPTION": "Beperkt het resultaat tot leden van het geselecteerde type.",
+      "TYPE": "Type",
+      "FILTERS_LABEL": "Filters:",
+      "CLEAR_ALL": "Alles wissen",
+      "LOADING_MEMBERS": "Leden laden...",
+      "EMPTY_FILTER_TITLE": "Geen leden komen overeen met uw zoekopdracht",
+      "EMPTY_FILTER_SUBTITLE": "Probeer uw filters aan te passen of te wissen om meer leden te zien.",
+      "CLEAR_FILTERS": "Filters wissen",
+      "COLUMN_MEMBER": "Lid",
+      "COLUMN_ROLE": "Rol",
+      "COLUMN_TYPE": "Type",
+      "COLUMN_ADDED": "Toegevoegd",
+      "COLUMN_ACTIONS": "Acties",
+      "VIEW_USER_PROFILE": "Gebruikersprofiel bekijken",
+      "COPY_ACCESS_LINK": "Toegangslink kopiëren",
+      "EDIT_MEMBER": "Lid bewerken",
+      "REMOVE_MEMBER": "Lid verwijderen",
+      "MATCH_MODE_STARTS_WITH": "Begint met",
+      "MATCH_MODE_CONTAINS": "Bevat",
+      "MATCH_MODE_EXACT": "Exacte overeenkomst",
+      "MATCH_MODE_REGEX": "Regex",
+      "ROLE_FILTER_ALL": "Alle rollen",
+      "TYPE_FILTER_ALL": "Alle typen",
+      "TYPE_USER": "Gebruiker",
+      "TYPE_IDENTIFIED_GUEST": "Geïdentificeerde gast",
+      "ROLE_CHIP_PREFIX": "Rol: ",
+      "TYPE_CHIP_PREFIX": "Type: "
+    },
+    "ADD": {
+      "TITLE_EDIT": "Kamerlid bewerken",
+      "TITLE_ADD": "Kamerlid toevoegen",
+      "SUBTITLE_EDIT": "Werk de rechten voor dit kamerlid bij.",
+      "SUBTITLE_ADD": "Verleen een gebruiker of een geïdentificeerde gast toegang tot deze kamer.",
+      "CARD_TITLE": "Ledenconfiguratie",
+      "CARD_SUBTITLE_EDIT_USER": "Werk de rechten van de gebruiker voor deze kamer bij",
+      "CARD_SUBTITLE_EDIT_GUEST": "Werk de rechten van de geïdentificeerde gast voor deze kamer bij",
+      "CARD_SUBTITLE_ADD_USER": "Selecteer een gebruiker en configureer hun rechten",
+      "CARD_SUBTITLE_ADD_GUEST": "Selecteer een naam voor de gast en configureer hun rechten"
+    },
+    "ERRORS": {
+      "FIELD_REQUIRED": "Dit veld is vereist",
+      "PATTERN": "Alleen kleine letters, cijfers en underscores zijn toegestaan",
+      "MAX_LENGTH_PREFIX": "Mag niet langer zijn dan ",
+      "MAX_LENGTH_SUFFIX": " tekens",
+      "ROOM_ID_REQUIRED": "Kamer-ID is vereist",
+      "ROOM_DATA_LOAD_FAILED": "Kamergegevens laden mislukt",
+      "MEMBER_UPDATED_SUCCESS": "Lid succesvol bijgewerkt",
+      "MEMBER_ADDED_SUCCESS": "Lid succesvol toegevoegd",
+      "MEMBER_UPDATE_FAILED": "Lid bijwerken mislukt",
+      "MEMBER_ADD_FAILED": "Lid toevoegen mislukt"
+    },
+    "ROLE": {
+      "MODERATOR": "Moderator",
+      "SPEAKER": "Spreker"
+    },
+    "MEMBER_TYPE": {
+      "USER": "Gebruiker",
+      "GUEST": "Geïdentificeerde gast"
+    },
+    "PERMISSIONS": {
+      "GROUPS": {
+        "MEETING": "Meeting",
+        "MEDIA": "Media",
+        "RECORDINGS": "Opnames",
+        "CHAT": "Chat"
+      },
+      "ITEMS": {
+        "canJoinMeeting": {
+          "LABEL": "Kan deelnemen aan meeting",
+          "DESCRIPTION": "Deelnemen aan de meeting toestaan"
+        },
+        "canEndMeeting": {
+          "LABEL": "Kan meeting beëindigen",
+          "DESCRIPTION": "De meeting voor alle deelnemers beëindigen toestaan"
+        },
+        "canMakeModerator": {
+          "LABEL": "Kan moderator maken",
+          "DESCRIPTION": "Deelnemers promoveren tot de rol van moderator toestaan"
+        },
+        "canKickParticipants": {
+          "LABEL": "Kan deelnemers verwijderen",
+          "DESCRIPTION": "Deelnemers uit de meeting verwijderen toestaan"
+        },
+        "canShareAccessLinks": {
+          "LABEL": "Kan toegangslinks delen",
+          "DESCRIPTION": "Uitnodigingslinks met anderen delen toestaan"
+        },
+        "canPublishVideo": {
+          "LABEL": "Kan video publiceren",
+          "DESCRIPTION": "Cameravideo delen toestaan"
+        },
+        "canPublishAudio": {
+          "LABEL": "Kan audio publiceren",
+          "DESCRIPTION": "Microfoonaudio delen toestaan"
+        },
+        "canShareScreen": {
+          "LABEL": "Kan scherm delen",
+          "DESCRIPTION": "Bureaublad of browsertabbladen delen toestaan"
+        },
+        "canChangeVirtualBackground": {
+          "LABEL": "Kan virtuele achtergrond wijzigen",
+          "DESCRIPTION": "De virtuele achtergrond wijzigen toestaan"
+        },
+        "canRecord": {
+          "LABEL": "Kan opnemen",
+          "DESCRIPTION": "Opnames starten en stoppen toestaan"
+        },
+        "canRetrieveRecordings": {
+          "LABEL": "Kan opnames ophalen",
+          "DESCRIPTION": "Opnames weergeven en afspelen toestaan"
+        },
+        "canDeleteRecordings": {
+          "LABEL": "Kan opnames verwijderen",
+          "DESCRIPTION": "Opnames verwijderen toestaan"
+        },
+        "canReadChat": {
+          "LABEL": "Kan chat lezen",
+          "DESCRIPTION": "Chatberichten lezen toestaan"
+        },
+        "canWriteChat": {
+          "LABEL": "Kan chat schrijven",
+          "DESCRIPTION": "Chatberichten versturen toestaan"
+        }
+      }
+    }
+  }
+}

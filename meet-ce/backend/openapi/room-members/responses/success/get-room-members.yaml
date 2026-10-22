@@ -1,0 +1,124 @@
+description: Successfully retrieved the list of room members
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                members:
+                    type: array
+                    items:
+                        $ref: '../../schemas/meet-room-member.yaml'
+                _extraFields:
+                    type: array
+                    description: >
+                        List of extra fields that can be included in the response based on the `X-ExtraFields` header or `extraFields` query parameter.
+                    items:
+                        type: string
+                        example: effectivePermissions
+                pagination:
+                    $ref: '../../../shared/schemas/meet-pagination.yaml'
+
+        examples:
+            default_member_details:
+                summary: Member details without extra fields (effectivePermissions excluded by default)
+                value:
+                    members:
+                        - memberId: 'alice_smith'
+                          roomId: 'room-123'
+                          type: 'user'
+                          name: 'Alice Smith'
+                          membershipDate: 1620000000000
+                          accessUrl: 'https://example.com/room/room-123'
+                          baseRole: 'moderator'
+                          customPermissions:
+                              canEndMeeting: false
+                          permissionsUpdatedAt: 1620000000000
+                        - memberId: 'guest-abc123'
+                          roomId: 'room-123'
+                          type: 'identified_guest'
+                          name: 'Bob'
+                          membershipDate: 1620003600000
+                          accessUrl: 'https://example.com/room/room-123?secret=guest-abc123'
+                          baseRole: 'speaker'
+                          customPermissions:
+                              canShareScreen: false
+                              canRecord: true
+                          permissionsUpdatedAt: 1620003600000
+                    _extraFields:
+                        - effectivePermissions
+                    pagination:
+                        isTruncated: false
+                        maxItems: 10
+            extraFields=effectivePermissions:
+                summary: Full room member details including effectivePermissions
+                value:
+                    members:
+                        - memberId: 'alice_smith'
+                          roomId: 'room-123'
+                          type: 'user'
+                          name: 'Alice Smith'
+                          membershipDate: 1620000000000
+                          accessUrl: 'https://example.com/room/room-123'
+                          baseRole: 'moderator'
+                          customPermissions:
+                              canEndMeeting: false
+                          effectivePermissions:
+                              canRecord: true
+                              canRetrieveRecordings: true
+                              canDeleteRecordings: true
+                              canJoinMeeting: true
+                              canShareAccessLinks: true
+                              canMakeModerator: true
+                              canKickParticipants: true
+                              canEndMeeting: false
+                              canPublishVideo: true
+                              canPublishAudio: true
+                              canShareScreen: true
+                              canReadChat: true
+                              canWriteChat: true
+                              canChangeVirtualBackground: true
+                          permissionsUpdatedAt: 1620000000000
+                        - memberId: 'guest-abc123'
+                          roomId: 'room-123'
+                          type: 'identified_guest'
+                          name: 'Bob'
+                          membershipDate: 1620003600000
+                          accessUrl: 'https://example.com/room/room-123?secret=guest-abc123'
+                          baseRole: 'speaker'
+                          customPermissions:
+                              canShareScreen: false
+                              canRecord: true
+                          effectivePermissions:
+                              canRecord: true
+                              canRetrieveRecordings: true
+                              canDeleteRecordings: false
+                              canJoinMeeting: true
+                              canShareAccessLinks: false
+                              canMakeModerator: false
+                              canKickParticipants: false
+                              canEndMeeting: false
+                              canPublishVideo: true
+                              canPublishAudio: true
+                              canShareScreen: false
+                              canReadChat: true
+                              canWriteChat: true
+                              canChangeVirtualBackground: true
+                          permissionsUpdatedAt: 1620003600000
+                    _extraFields:
+                        - effectivePermissions
+                    pagination:
+                        isTruncated: false
+                        maxItems: 10
+            fields=accessUrl,baseRole:
+                summary: Response with only accessUrl and baseRole for each member
+                value:
+                    members:
+                        - accessUrl: 'https://example.com/room/room-123'
+                          baseRole: 'moderator'
+                        - accessUrl: 'https://example.com/room/room-123?secret=guest-abc123'
+                          baseRole: 'speaker'
+                    _extraFields:
+                        - effectivePermissions
+                    pagination:
+                        isTruncated: false
+                        maxItems: 10

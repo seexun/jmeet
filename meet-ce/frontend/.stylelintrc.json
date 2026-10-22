@@ -1,0 +1,7 @@
+{
+	"extends": ["stylelint-config-standard-scss"],
+	"rules": {
+		"selector-class-pattern": null,
+		"selector-pseudo-element-no-unknown": [true, { "ignorePseudoElements": ["ng-deep"] }]
+	}
+}

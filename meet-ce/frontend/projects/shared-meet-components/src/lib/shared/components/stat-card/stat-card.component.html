@@ -1,0 +1,7 @@
+@if (icon()) {
+	<span class="stat-icon" aria-hidden="true"><nz-icon [nzType]="(icon()) | nzIconType" /></span>
+}
+<span class="stat-copy">
+	<small>{{ label() }}</small>
+	<strong>{{ value() }}</strong>
+</span>

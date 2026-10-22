@@ -1,0 +1,99 @@
+<div class="room-config-step fade-in">
+<p class="jmeet-text--body-secondary wizard-step-description">{{ 'ROOMS.WIZARD.FEATURES.DESCRIPTION' | translate }}</p>
+
+	<form [formGroup]="roomConfigForm" class="jmeet-settings-form config-form">
+		<div class="feature-category">
+			<div class="jmeet-settings-section-heading">
+				<nz-icon nzType="safety-certificate" class="section-icon" />
+				<div>
+					<h2 class="jmeet-text--section-title">{{ 'ROOMS.WIZARD.FEATURES.SECURITY' | translate }}</h2>
+				</div>
+			</div>
+			<div class="jmeet-settings-row">
+				<div>
+					<strong>{{ 'ROOMS.WIZARD.FEATURES.E2EE' | translate }}</strong>
+					<span>{{ 'ROOMS.WIZARD.FEATURES.E2EE_DESC' | translate }}</span>
+				</div>
+				<nz-switch
+					[nzId]="'wizard-e2ee-switch'"
+					[ngModel]="e2eeEnabled"
+					[ngModelOptions]="{ standalone: true }"
+					(ngModelChange)="onE2EEToggleChange($event)"
+				/>
+			</div>
+			@if (e2eeEnabled) {
+				<div class="e2ee-info-section fade-in">
+					<div class="warning-card">
+						<nz-icon nzType="warning" class="warning-icon" />
+						<div class="warning-content">
+							<p class="warning-title">{{ 'ROOMS.WIZARD.FEATURES.RESTRICTIONS' | translate }}</p>
+							<ul class="restrictions-list">
+								<li>
+									{{ 'ROOMS.WIZARD.FEATURES.E2EE_RESTRICTION_ALL_PARTICIPANTS' | translate }}
+									<span class="restriction-detail">{{ 'ROOMS.WIZARD.FEATURES.E2EE_RESTRICTION_INCORRECT_KEY' | translate }}</span>
+								</li>
+								<li>
+									{{ 'ROOMS.WIZARD.FEATURES.E2EE_RESTRICTION_RECORDING_PREFIX' | translate }}<b>{{ 'ROOMS.WIZARD.FEATURES.E2EE_RESTRICTION_RECORDING_BOLD' | translate }}</b>{{ 'ROOMS.WIZARD.FEATURES.E2EE_RESTRICTION_RECORDING_SUFFIX' | translate }}
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+
+		<div class="feature-category">
+			<div class="jmeet-settings-section-heading">
+				<nz-icon nzType="comment" class="section-icon" />
+				<div>
+					<h2 class="jmeet-text--section-title">{{ 'ROOMS.WIZARD.FEATURES.COMMUNICATION' | translate }}</h2>
+				</div>
+			</div>
+			<div class="jmeet-settings-row">
+				<div>
+					<strong>{{ 'ROOMS.WIZARD.FEATURES.CAPTIONS' | translate }}</strong>
+					<span>{{ 'ROOMS.WIZARD.FEATURES.CAPTIONS_DESC' | translate }}</span>
+				</div>
+				<nz-switch
+					[nzId]="'wizard-captions-switch'"
+					[ngModel]="captionsEnabled"
+					[ngModelOptions]="{ standalone: true }"
+					(ngModelChange)="onCaptionsToggleChange($event)"
+				/>
+			</div>
+			<div class="jmeet-settings-row">
+				<div>
+					<strong>{{ 'ROOMS.WIZARD.FEATURES.CHAT' | translate }}</strong>
+					<span>{{ 'ROOMS.WIZARD.FEATURES.CHAT_DESC' | translate }}</span>
+				</div>
+				<nz-switch
+					[nzId]="'wizard-chat-switch'"
+					[ngModel]="chatEnabled"
+					[ngModelOptions]="{ standalone: true }"
+					(ngModelChange)="onChatToggleChange($event)"
+				/>
+			</div>
+		</div>
+
+		<div class="feature-category">
+			<div class="jmeet-settings-section-heading">
+				<nz-icon nzType="star" class="section-icon" />
+				<div>
+					<h2 class="jmeet-text--section-title">{{ 'ROOMS.WIZARD.FEATURES.EXPERIENCE' | translate }}</h2>
+				</div>
+			</div>
+			<div class="jmeet-settings-row">
+				<div>
+					<strong>{{ 'ROOMS.WIZARD.FEATURES.VIRTUAL_BACKGROUNDS' | translate }}</strong>
+					<span>{{ 'ROOMS.WIZARD.FEATURES.VIRTUAL_BACKGROUNDS_DESC' | translate }}</span>
+				</div>
+				<nz-switch
+					[nzId]="'wizard-virtual-background-switch'"
+					[ngModel]="virtualBackgroundEnabled"
+					[ngModelOptions]="{ standalone: true }"
+					(ngModelChange)="onVirtualBackgroundToggleChange($event)"
+				/>
+			</div>
+		</div>
+	</form>
+</div>

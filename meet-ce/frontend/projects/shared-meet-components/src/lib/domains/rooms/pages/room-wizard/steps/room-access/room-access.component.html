@@ -1,0 +1,155 @@
+<div class="room-access-step fade-in">
+<p class="jmeet-text--body-secondary wizard-step-description">{{ 'ROOMS.WIZARD.ACCESS.DESCRIPTION' | translate }}</p>
+
+	<form [formGroup]="roomAccessForm" class="jmeet-settings-form access-form">
+		<section>
+			<div class="jmeet-settings-section-heading">
+				<nz-icon nzType="unlock" class="section-icon" />
+				<div>
+					<strong>{{ 'ROOMS.WIZARD.ACCESS.ACCESS_POLICY' | translate }}</strong>
+					<p>{{ 'ROOMS.WIZARD.ACCESS.ACCESS_POLICY_SUBTITLE' | translate }}</p>
+				</div>
+			</div>
+
+			<div class="jmeet-settings-row">
+				<div>
+					<strong>{{ 'ROOMS.WIZARD.ACCESS.ANONYMOUS_MODERATOR' | translate }}</strong>
+					<span>{{ 'ROOMS.WIZARD.ACCESS.ANONYMOUS_MODERATOR_DESC' | translate }}</span>
+				</div>
+				<nz-switch [nzId]="'wizard-anonymous-moderator-switch'" formControlName="anonymousModeratorEnabled" />
+			</div>
+			<div class="jmeet-settings-row">
+				<div>
+					<strong>{{ 'ROOMS.WIZARD.ACCESS.ANONYMOUS_SPEAKER' | translate }}</strong>
+					<span>{{ 'ROOMS.WIZARD.ACCESS.ANONYMOUS_SPEAKER_DESC' | translate }}</span>
+				</div>
+				<nz-switch [nzId]="'wizard-anonymous-speaker-switch'" formControlName="anonymousSpeakerEnabled" />
+			</div>
+			<div class="jmeet-settings-row">
+				<div>
+					<strong>{{ 'ROOMS.WIZARD.ACCESS.ALL_USERS' | translate }}</strong>
+					<span>{{ 'ROOMS.WIZARD.ACCESS.ALL_USERS_DESC' | translate }}</span>
+				</div>
+				<nz-switch [nzId]="'wizard-all-users-switch'" formControlName="userEnabled" />
+			</div>
+		</section>
+
+		<section>
+			<div class="jmeet-settings-section-heading">
+				<nz-icon nzType="safety-certificate" class="section-icon" />
+				<div>
+					<strong>{{ 'ROOMS.WIZARD.ACCESS.ROLE_PERMISSIONS' | translate }}</strong>
+				</div>
+			</div>
+
+			<div class="jmeet-settings-row role-row">
+				<div>
+					<strong>{{ 'ROOMS.WIZARD.ACCESS.MODERATOR' | translate }}</strong>
+					<span>{{ 'ROOMS.WIZARD.ACCESS.MODERATOR_PANEL_DESC' | translate }}</span>
+				</div>
+				<nz-select
+					[nzId]="'wizard-moderator-permissions'"
+					class="permission-select"
+					nzMode="multiple"
+					[nzMaxTagCount]="0"
+					[nzMaxTagPlaceholder]="moderatorPermTagTpl"
+					[ngModel]="moderatorPermissionKeys()"
+					[ngModelOptions]="{ standalone: true }"
+					(ngModelChange)="onPermissionSelectionChange('moderator', $any($event))"
+					[nzPlaceHolder]="'ROOMS.WIZARD.ACCESS.PERMISSIONS_PLACEHOLDER' | translate"
+				>
+					@for (group of permissionGroups; track group.label) {
+						<nz-option-group [nzLabel]="group.label | translate">
+							@for (permission of group.permissions; track permission.key) {
+								<nz-option [nzValue]="permission.key" [nzLabel]="permission.label | translate" />
+							}
+						</nz-option-group>
+					}
+				</nz-select>
+				<!-- 触发器复刻原多选触发文本（nzMaxTagCount=0 隐藏标签，仅显示计数） -->
+				<ng-template #moderatorPermTagTpl>
+					{{ 'ROOMS.WIZARD.ACCESS.PERMISSIONS_COUNT_PREFIX' | translate }}{{ moderatorPermissionKeys().length }}{{ 'ROOMS.WIZARD.ACCESS.PERMISSIONS_COUNT_SUFFIX' | translate }}
+				</ng-template>
+			</div>
+
+			<div class="jmeet-settings-row role-row">
+				<div>
+					<strong>{{ 'ROOMS.WIZARD.ACCESS.SPEAKER' | translate }}</strong>
+					<span>{{ 'ROOMS.WIZARD.ACCESS.SPEAKER_PANEL_DESC' | translate }}</span>
+				</div>
+				<nz-select
+					[nzId]="'wizard-speaker-permissions'"
+					class="permission-select"
+					nzMode="multiple"
+					[nzMaxTagCount]="0"
+					[nzMaxTagPlaceholder]="speakerPermTagTpl"
+					[ngModel]="speakerPermissionKeys()"
+					[ngModelOptions]="{ standalone: true }"
+					(ngModelChange)="onPermissionSelectionChange('speaker', $any($event))"
+					[nzPlaceHolder]="'ROOMS.WIZARD.ACCESS.PERMISSIONS_PLACEHOLDER' | translate"
+				>
+					@for (group of permissionGroups; track group.label) {
+						<nz-option-group [nzLabel]="group.label | translate">
+							@for (permission of group.permissions; track permission.key) {
+								<nz-option [nzValue]="permission.key" [nzLabel]="permission.label | translate" />
+							}
+						</nz-option-group>
+					}
+				</nz-select>
+				<ng-template #speakerPermTagTpl>
+					{{ 'ROOMS.WIZARD.ACCESS.PERMISSIONS_COUNT_PREFIX' | translate }}{{ speakerPermissionKeys().length }}{{ 'ROOMS.WIZARD.ACCESS.PERMISSIONS_COUNT_SUFFIX' | translate }}
+				</ng-template>
+			</div>
+		</section>
+	</form>
+
+	@if (!editMode()) {
+		<section class="members-section">
+			<div class="jmeet-settings-section-heading members-heading">
+				<nz-icon nzType="usergroup-add" class="section-icon" />
+				<div>
+					<strong>{{ 'ROOMS.WIZARD.ACCESS.MEMBERS' | translate }}</strong>
+					<p>{{ 'ROOMS.WIZARD.ACCESS.MEMBERS_SUBTITLE' | translate }}</p>
+				</div>
+				<button type="button" class="jmeet-button jmeet-button--primary" (click)="openAddMemberDialog()">
+					<nz-icon nzType="user-add" />
+					{{ 'ROOMS.WIZARD.ACCESS.ADD_MEMBER' | translate }}
+				</button>
+			</div>
+
+			@if (pendingMembers().length > 0) {
+				<p class="jmeet-text--body-secondary">
+					{{ 'ROOMS.WIZARD.ACCESS.MEMBERS_TO_ADD_PREFIX' | translate }}{{ pendingMembers().length }}{{ 'ROOMS.WIZARD.ACCESS.MEMBERS_TO_ADD_SUFFIX' | translate }}
+				</p>
+				@for (member of pendingMembers(); track member.userId; let i = $index) {
+					<div class="jmeet-settings-row pending-member-row">
+						<div>
+							<strong>{{ member.userId || member.name }}</strong>
+							<span>{{ RoomMemberUiUtils.getRoleLabel(member.baseRole) | translate }}</span>
+						</div>
+						<div class="member-actions">
+							<button
+								type="button"
+								class="jmeet-button jmeet-button--ghost jmeet-button--icon"
+								(click)="openEditMemberDialog(i)"
+								nz-tooltip
+								[nzTooltipTitle]="'ROOMS.WIZARD.ACCESS.EDIT_MEMBER' | translate"
+							>
+								<nz-icon nzType="edit" />
+							</button>
+							<button
+								type="button"
+								class="jmeet-button jmeet-button--ghost jmeet-button--icon"
+								(click)="onRemoveMember(i)"
+								nz-tooltip
+								[nzTooltipTitle]="'ROOMS.WIZARD.ACCESS.REMOVE_MEMBER' | translate"
+							>
+								<nz-icon nzType="close" />
+							</button>
+						</div>
+					</div>
+				}
+			}
+		</section>
+	}
+</div>

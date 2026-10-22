@@ -1,0 +1,8 @@
+name: role
+in: query
+required: false
+description: Filter users by their role.
+schema:
+    type: string
+    enum: [admin, room_manager, room_member]
+example: 'admin'

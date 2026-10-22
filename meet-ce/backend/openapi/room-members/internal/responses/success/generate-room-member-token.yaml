@@ -1,0 +1,10 @@
+description: Successfully generated the room member token
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                token:
+                    type: string
+                    description: >
+                        The token to authenticate the user to access the room and its resources.

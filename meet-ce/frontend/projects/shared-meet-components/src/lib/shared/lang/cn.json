@@ -1,0 +1,120 @@
+{
+  "COMMON": {
+    "ACTIONS": "操作",
+    "MORE_ACTIONS": "更多",
+    "PROMPT": {
+      "CANCEL": "取消",
+      "CONFIRM": "确定"
+    },
+    "PAGINATOR": {
+      "ITEMS_PER_PAGE": "每页条数",
+      "NEXT_PAGE": "下一页",
+      "PREVIOUS_PAGE": "上一页",
+      "FIRST_PAGE": "第一页",
+      "LAST_PAGE": "最后一页",
+      "RANGE": "第 {start}–{end} 条，共 {length} 条",
+      "RANGE_EMPTY": "共 0 条"
+    },
+    "PAGINATION": {
+      "TOTAL_PREFIX": "共",
+      "TOTAL_SUFFIX": " 条",
+      "SIZE_LABEL": "每页条数",
+      "SIZE_SUFFIX": "条/页",
+      "PREV": "上一页",
+      "NEXT": "下一页",
+      "JUMPER_PREFIX": "前往",
+      "JUMPER_SUFFIX": "页"
+    },
+    "CONFIRMATIONS": {
+      "USER_TITLE": "删除用户",
+      "USERS_TITLE": "批量删除用户",
+      "USER_MESSAGE": "确定永久删除用户 <b>{{name}}</b>（{{userId}}）吗？此操作无法撤销。",
+      "USERS_MESSAGE": "确定永久删除选中的 <b>{{count}} 位用户</b>吗？此操作无法撤销。",
+      "USER_WARNING_TITLE": "操作影响",
+      "USER_WARNING": "用户拥有的会议将转交给超级管理员；正在参会的用户会立即被移出会议。",
+      "MEMBER_TITLE": "移除成员",
+      "MEMBERS_TITLE": "批量移除成员",
+      "MEMBER_MESSAGE": "确定将 <b>{{name}}</b> 从此会议中移除吗？",
+      "MEMBERS_MESSAGE": "确定从此会议中移除选中的 <b>{{count}} 位成员</b>吗？",
+      "MEMBER_WARNING_TITLE": "正在进行的会议",
+      "MEMBER_WARNING": "正在参会的成员会立即被移出会议。",
+      "RECORDING_TITLE": "删除录像",
+      "RECORDINGS_TITLE": "批量删除录像",
+      "RECORDING_MESSAGE": "确定永久删除录像 <b>{{recordingId}}</b> 吗？此操作无法撤销。",
+      "RECORDINGS_MESSAGE": "确定永久删除选中的 <b>{{count}} 条录像</b>吗？此操作无法撤销。",
+      "DELETE": "删除",
+      "REMOVE": "移除",
+      "CANCEL": "取消"
+    }
+  },
+  "ERROR": {
+    "DEFAULT_TITLE": "错误",
+    "BACK": "返回",
+    "BACK_TO_CONSOLE": "返回控制台",
+    "ACCEPT": "接受",
+    "OOPS": "哎呀！",
+    "SOMETHING_WRONG": "出了点问题"
+  },
+  "NAVIGATION_ERROR": {
+    "EMBEDDED_ERROR": {
+      "TITLE": "无法加载 JMeet",
+      "MESSAGE": "无法加载 JMeet。请检查嵌入配置。"
+    },
+    "CLOSED_ROOM": {
+      "TITLE": "房间已关闭",
+      "MESSAGE": "此房间已关闭，期间无法在其中进行会议"
+    },
+    "ANONYMOUS_ACCESS_DISABLED": {
+      "TITLE": "匿名访问已禁用",
+      "MESSAGE": "此房间（及其录像）已禁用您所属角色的匿名访问"
+    },
+    "ANONYMOUS_RECORDING_ACCESS_DISABLED": {
+      "TITLE": "匿名访问已禁用",
+      "MESSAGE": "此录像的匿名访问已被禁用"
+    },
+    "INVALID_ROOM_SECRET": {
+      "TITLE": "链接无效",
+      "MESSAGE": "您用于访问此房间（或其录像）的链接无效。请让主持人使用可用的分享按钮分享正确的链接"
+    },
+    "INVALID_RECORDING_SECRET": {
+      "TITLE": "链接无效",
+      "MESSAGE": "您用于访问此录像的链接无效"
+    },
+    "INVALID_ROOM": {
+      "TITLE": "房间无效",
+      "MESSAGE": "您尝试访问的房间（或其录像）不存在或已被删除"
+    },
+    "INVALID_RECORDING": {
+      "TITLE": "录像无效",
+      "MESSAGE": "您尝试访问的录像不存在或已被删除"
+    },
+    "INVALID_MEMBER": {
+      "TITLE": "成员无效",
+      "MESSAGE": "您已不再是此房间的成员，或成员信息有误"
+    },
+    "FORBIDDEN_ROOM_ACCESS": {
+      "TITLE": "禁止访问房间",
+      "MESSAGE": "您无权访问此房间（亦无权访问其录像）"
+    },
+    "FORBIDDEN_ROOM_RECORDINGS_ACCESS": {
+      "TITLE": "禁止访问录像",
+      "MESSAGE": "您无权访问此房间中的录像"
+    },
+    "FORBIDDEN_RECORDING_ACCESS": {
+      "TITLE": "禁止访问录像",
+      "MESSAGE": "您无权访问此录像"
+    },
+    "ROOM_ACCESS_REVOKED": {
+      "TITLE": "房间访问权限已撤销",
+      "MESSAGE": "您在此房间中的权限已变更，您已无权访问（亦无权访问其录像）。如需了解更多信息，请联系主持人"
+    },
+    "TOO_MANY_REQUESTS": {
+      "TITLE": "请求过于频繁",
+      "MESSAGE": "您在短时间内的请求次数过多。请稍候片刻后重试"
+    },
+    "INTERNAL_ERROR": {
+      "TITLE": "内部错误",
+      "MESSAGE": "发生意外错误，请稍后重试"
+    }
+  }
+}

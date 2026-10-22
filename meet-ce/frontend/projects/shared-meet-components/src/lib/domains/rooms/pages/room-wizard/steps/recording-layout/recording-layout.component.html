@@ -1,0 +1,89 @@
+<div class="recording-layout-step fade-in">
+	<p class="jmeet-text--body-secondary wizard-step-description">{{ 'ROOMS.WIZARD.RECORDING_LAYOUT.DESCRIPTION' | translate }}</p>
+
+	<form [formGroup]="layoutForm" class="jmeet-settings-form layout-form">
+		<div
+			class="layout-options"
+			role="radiogroup"
+			[attr.aria-label]="'ROOMS.WIZARD.RECORDING_LAYOUT.TITLE' | translate"
+		>
+			@for (option of layoutOptions; track option.id) {
+				<button
+					type="button"
+					class="layout-option"
+					role="radio"
+					[class.selected]="isSelected(option.id)"
+					[attr.aria-checked]="isSelected(option.id)"
+					(click)="onSelect(option.id)"
+				>
+					<span class="layout-preview-frame" aria-hidden="true">
+						@switch (option.id) {
+							@case (Layout.GRID) {
+								<svg class="layout-preview" viewBox="0 0 200 120" fill="none">
+									<rect class="stage" x="0" y="0" width="200" height="120" rx="8" />
+									<rect class="tile" x="12" y="12" width="84" height="44" rx="6" />
+									<rect class="tile" x="104" y="12" width="84" height="44" rx="6" />
+									<rect class="tile" x="12" y="64" width="84" height="44" rx="6" />
+									<rect class="tile" x="104" y="64" width="84" height="44" rx="6" />
+									<g class="person" transform="translate(54 36) scale(0.72)">
+										<circle cx="0" cy="-6" r="5.5" />
+										<ellipse cx="0" cy="7" rx="11" ry="7" />
+									</g>
+									<g class="person" transform="translate(146 36) scale(0.72)">
+										<circle cx="0" cy="-6" r="5.5" />
+										<ellipse cx="0" cy="7" rx="11" ry="7" />
+									</g>
+									<g class="person" transform="translate(54 88) scale(0.72)">
+										<circle cx="0" cy="-6" r="5.5" />
+										<ellipse cx="0" cy="7" rx="11" ry="7" />
+									</g>
+									<g class="person" transform="translate(146 88) scale(0.72)">
+										<circle cx="0" cy="-6" r="5.5" />
+										<ellipse cx="0" cy="7" rx="11" ry="7" />
+									</g>
+								</svg>
+							}
+							@case (Layout.SPEAKER) {
+								<svg class="layout-preview" viewBox="0 0 200 120" fill="none">
+									<rect class="stage" x="0" y="0" width="200" height="120" rx="8" />
+									<rect class="tile" x="12" y="12" width="176" height="62" rx="6" />
+									<rect class="tile" x="12" y="82" width="56" height="26" rx="5" />
+									<rect class="tile" x="72" y="82" width="56" height="26" rx="5" />
+									<rect class="tile" x="132" y="82" width="56" height="26" rx="5" />
+									<g class="person" transform="translate(100 44) scale(1.15)">
+										<circle cx="0" cy="-6" r="5.5" />
+										<ellipse cx="0" cy="7" rx="11" ry="7" />
+									</g>
+									<g class="person" transform="translate(40 96) scale(0.42)">
+										<circle cx="0" cy="-6" r="5.5" />
+										<ellipse cx="0" cy="7" rx="11" ry="7" />
+									</g>
+									<g class="person" transform="translate(100 96) scale(0.42)">
+										<circle cx="0" cy="-6" r="5.5" />
+										<ellipse cx="0" cy="7" rx="11" ry="7" />
+									</g>
+									<g class="person" transform="translate(160 96) scale(0.42)">
+										<circle cx="0" cy="-6" r="5.5" />
+										<ellipse cx="0" cy="7" rx="11" ry="7" />
+									</g>
+								</svg>
+							}
+							@case (Layout.SINGLE_SPEAKER) {
+								<svg class="layout-preview" viewBox="0 0 200 120" fill="none">
+									<rect class="stage" x="0" y="0" width="200" height="120" rx="8" />
+									<rect class="tile" x="12" y="12" width="176" height="96" rx="6" />
+									<g class="person" transform="translate(100 62) scale(1.45)">
+										<circle cx="0" cy="-6" r="5.5" />
+										<ellipse cx="0" cy="7" rx="11" ry="7" />
+									</g>
+								</svg>
+							}
+						}
+					</span>
+					<strong>{{ option.titleKey | translate }}</strong>
+					<span class="layout-desc">{{ option.descKey | translate }}</span>
+				</button>
+			}
+		</div>
+	</form>
+</div>

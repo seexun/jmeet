@@ -1,0 +1,20 @@
+// Import each token layer so runtime consumers emit the same ordered contract.
+@use './tokens/primitives' as tokens-primitives;
+@use './tokens/semantic' as tokens-semantic;
+@use './tokens/components' as tokens-components;
+
+// Emit the runtime theme for any root selector, allowing the same Sass to target
+// either the regular document root or the webcomponent shadow host.
+@mixin emit-runtime-theme($root-selector, $is-shadow-root: false) {
+	// Emit the theme on the consumer-provided root selector.
+	#{$root-selector} {
+		// Publish primitive, semantic and component tokens in one stable order.
+		@include tokens-primitives.emit-primitive-tokens;
+		@include tokens-semantic.emit-light-semantic-tokens;
+		@include tokens-semantic.emit-brand-semantic-overrides;
+		@include tokens-components.emit-component-tokens;
+
+		// Keep typography inheritance consistent between SPA and shadow host.
+		font-family: var(--jmeet-typography-font-family);
+	}
+}

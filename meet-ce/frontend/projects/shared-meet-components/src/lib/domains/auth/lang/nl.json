@@ -1,0 +1,60 @@
+{
+	"AUTH": {
+		"COMMON": {
+			"SHOW_PASSWORD": "Wachtwoord tonen",
+			"HIDE_PASSWORD": "Wachtwoord verbergen"
+		},
+		"LOGIN": {
+			"TITLE": "Aanmelden",
+			"SUBTITLE": "Voer uw inloggegevens in om toegang te krijgen tot JMeet",
+			"USER_ID": "Gebruikers-ID",
+			"USER_ID_PLACEHOLDER": "Voer uw gebruikers-ID in",
+			"PASSWORD": "Wachtwoord",
+			"PASSWORD_PLACEHOLDER": "Voer uw wachtwoord in",
+			"SUBMIT": "Inloggen",
+			"ERROR_TOO_MANY_ATTEMPTS": "Te veel aanmeldpogingen. Probeer het later opnieuw",
+			"ERROR_INVALID_CREDENTIALS": "Ongeldige gebruikers-ID of wachtwoord",
+			"HERO_TITLE_PREFIX": "Slimme meetingsamenwerking",
+			"HERO_TITLE_EMPHASIS": "Verbindt elk team",
+			"HERO_DESC": "HD audio & video · screen sharing · free & open source · self-hosted",
+			"WELCOME_TITLE": "Welkom terug",
+			"WELCOME_SUBTITLE": "Log in om een meeting te starten of eraan deel te nemen",
+			"LIVE_BADGE": "Meeting gaande",
+			"MINUTES_TOAST": "Smooth collaboration",
+			"FEATURE_BAND_1_TITLE": "Scherp en stabiel",
+			"FEATURE_BAND_1_SUB": "1080p · storingsbestendig",
+			"FEATURE_BAND_2_TITLE": "In-meeting chat",
+			"FEATURE_BAND_2_SUB": "Group chat & interaction",
+			"FEATURE_BAND_3_TITLE": "Open source",
+			"FEATURE_BAND_3_SUB": "Self-hosted deployment",
+			"CAP_2": "Screen sharing & virtual backgrounds",
+			"CAP_3": "Free & open source · self-hosted"
+		},
+		"CHANGE_PASSWORD": {
+			"TITLE": "Uw wachtwoord bijwerken",
+			"SUBTITLE": "U moet uw wachtwoord bijwerken voordat u verdergaat.",
+			"BANNER_TITLE": "Wachtwoord bijwerken vereist",
+			"BANNER_DESC": "Uw wachtwoord is onlangs aangemaakt of opnieuw ingesteld. Stel een nieuw wachtwoord in om verder te gaan.",
+			"CURRENT_PASSWORD": "Huidig wachtwoord",
+			"CURRENT_PASSWORD_PLACEHOLDER": "Voer uw huidige wachtwoord in",
+			"NEW_PASSWORD": "Nieuw wachtwoord",
+			"NEW_PASSWORD_PLACEHOLDER": "Maak een sterk, veilig wachtwoord aan",
+			"PASSWORD_MIN_HINT": "Minimaal 5 tekens",
+			"CONFIRM_PASSWORD": "Nieuw wachtwoord bevestigen",
+			"CONFIRM_PASSWORD_PLACEHOLDER": "Herhaal uw nieuwe wachtwoord",
+			"SUBMIT": "Wachtwoord bijwerken",
+			"ERRORS": {
+				"CURRENT_REQUIRED": "Huidig wachtwoord is vereist",
+				"CURRENT_INCORRECT": "Huidig wachtwoord is onjuist",
+				"NEW_REQUIRED": "Nieuw wachtwoord is vereist",
+				"NEW_MIN_PREFIX": "Wachtwoord moet minstens ",
+				"NEW_MIN_SUFFIX": " tekens lang zijn",
+				"NEW_SAME": "Nieuw wachtwoord moet verschillen van het huidige wachtwoord",
+				"CONFIRM_REQUIRED": "Bevestig uw wachtwoord",
+				"CONFIRM_MISMATCH": "Wachtwoorden komen niet overeen",
+				"UPDATE_SUCCESS": "Wachtwoord succesvol bijgewerkt",
+				"UPDATE_FAILED": "Wachtwoord bijwerken mislukt"
+			}
+		}
+	}
+}

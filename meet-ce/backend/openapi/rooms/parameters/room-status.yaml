@@ -1,0 +1,10 @@
+name: status
+in: query
+required: false
+description: Filter rooms by their status.
+schema:
+    type: string
+    enum:
+        - open
+        - active_meeting
+        - closed

@@ -1,0 +1,64 @@
+type: object
+description: >
+    Access configuration and generated access URLs for the room.
+properties:
+    anonymous:
+        type: object
+        properties:
+            moderator:
+                type: object
+                properties:
+                    enabled:
+                        type: boolean
+                        example: true
+                        description: >
+                            Whether anonymous access for the moderator role is enabled.
+                    url:
+                        type: string
+                        format: uri
+                        example: 'http://localhost:6080/room/room-123?secret=123456'
+                        description: >
+                            The URL for anonymous moderators to access the room.
+            speaker:
+                type: object
+                properties:
+                    enabled:
+                        type: boolean
+                        example: true
+                        description: >
+                            Whether anonymous access for the speaker role is enabled.
+                    url:
+                        type: string
+                        format: uri
+                        example: 'http://localhost:6080/room/room-123?secret=654321'
+                        description: >
+                            The URL for anonymous speakers to access the room.
+            recording:
+                type: object
+                properties:
+                    enabled:
+                        type: boolean
+                        example: true
+                        description: >
+                            Whether anonymous access for recordings in the room is enabled.
+                    url:
+                        type: string
+                        format: uri
+                        example: 'http://localhost:6080/room/room-123?secret=987654'
+                        description: >
+                            The URL for anonymous access to the room's recordings.
+    user:
+        type: object
+        properties:
+            enabled:
+                type: boolean
+                example: true
+                description: >
+                    Whether access for users is enabled.
+                    **Note**: admins, owner and members of the room will always have access regardless of this setting.
+            url:
+                type: string
+                format: uri
+                example: 'http://localhost:6080/room/room-123'
+                description: >
+                    The URL for users to access the room.

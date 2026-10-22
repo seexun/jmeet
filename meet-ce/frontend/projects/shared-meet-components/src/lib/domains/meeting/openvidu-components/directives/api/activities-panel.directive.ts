@@ -1,0 +1,52 @@
+import { AfterViewInit, Directive, ElementRef, Input, OnDestroy, inject } from '@angular/core';
+import { OpenViduComponentsConfigService } from '../../services/config/directive-config.service';
+
+/**
+ * The **recordingActivity** directive allows show/hide the recording activity in {@link ActivitiesPanelComponent}.
+ *
+ * Default: `true`
+ *
+ * It can be used in the parent element {@link VideoconferenceComponent} specifying the name of the `activitiesPanel` component:
+ *
+ * @example
+ * <ov-videoconference [activitiesPanelRecordingActivity]="false"></ov-videoconference>
+ *
+ * \
+ * And it also can be used in the {@link ActivitiesPanelComponent}.
+ * @example
+ * <ov-activities-panel *ovActivitiesPanel [recordingActivity]="false"></ov-activities-panel>
+ */
+@Directive({
+	selector: 'ov-videoconference[activitiesPanelRecordingActivity], ov-activities-panel[recordingActivity]',
+	standalone: true
+})
+export class ActivitiesPanelRecordingActivityDirective implements AfterViewInit, OnDestroy {
+	@Input() set activitiesPanelRecordingActivity(value: boolean) {
+		this.recordingActivityValue = value;
+		this.update(this.recordingActivityValue);
+	}
+	@Input() set recordingActivity(value: boolean) {
+		this.recordingActivityValue = value;
+		this.update(this.recordingActivityValue);
+	}
+
+	recordingActivityValue: boolean = true;
+
+	public elementRef = inject(ElementRef);
+	private readonly libService = inject(OpenViduComponentsConfigService);
+
+	ngAfterViewInit() {
+		this.update(this.recordingActivityValue);
+	}
+	ngOnDestroy(): void {
+		this.clear();
+	}
+	clear() {
+		this.recordingActivityValue = true;
+		this.update(true);
+	}
+
+	update(value: boolean) {
+		this.libService.updateRecordingActivityConfig({ enabled: value });
+	}
+}

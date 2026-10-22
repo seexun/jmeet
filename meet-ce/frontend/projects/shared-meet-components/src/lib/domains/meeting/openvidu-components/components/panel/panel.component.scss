@@ -1,0 +1,12 @@
+// 面板骨架规则（.panel-container/.panel-header-container/.panel-title/
+// .panel-close-button）归属全局层 styles/meeting/（旧覆盖巨石已删，批次1重建）。
+// 原因：本组件是模拟封装，写在组件里的选择器会被追加本组件的作用域
+// 属性，自定义面板（音视频质量等）模板里的同名元素永远匹配不到，
+// 头部会塌成竖排。全局层对所有面板统一生效。
+// 滚动条样式同样移除，统一交给全局 _utilities.scss 的滚动条策略。
+:host {
+	display: block;
+	min-width: 0;
+	min-height: 0;
+	height: 100%;
+}

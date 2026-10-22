@@ -1,0 +1,11 @@
+description: Unprocessable Entity — Invalid request
+content:
+    application/json:
+        schema:
+            $ref: '../../schemas/error.yaml'
+        example:
+            error: 'Unprocessable Entity'
+            message: 'Invalid request'
+            details:
+                - field: '{{field}}'
+                  message: 'Expected {{type}} but got {{value}}'

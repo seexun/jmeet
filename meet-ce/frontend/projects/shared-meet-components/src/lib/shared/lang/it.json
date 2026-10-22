@@ -1,0 +1,72 @@
+{
+  "ERROR": {
+    "DEFAULT_TITLE": "Errore",
+    "BACK": "Indietro",
+    "BACK_TO_CONSOLE": "Torna alla console",
+    "ACCEPT": "Accetta",
+    "OOPS": "Oops!",
+    "SOMETHING_WRONG": "Qualcosa è andato storto"
+  },
+  "NAVIGATION_ERROR": {
+    "EMBEDDED_ERROR": {
+      "TITLE": "Impossibile caricare JMeet",
+      "MESSAGE": "Impossibile caricare JMeet. Controlla la configurazione di incorporamento."
+    },
+    "CLOSED_ROOM": {
+      "TITLE": "Stanza chiusa",
+      "MESSAGE": "Le riunioni in questa stanza non sono disponibili mentre è chiusa"
+    },
+    "ANONYMOUS_ACCESS_DISABLED": {
+      "TITLE": "Accesso anonimo disabilitato",
+      "MESSAGE": "L'accesso anonimo per il tuo ruolo è stato disabilitato in questa stanza (e nelle sue registrazioni)"
+    },
+    "ANONYMOUS_RECORDING_ACCESS_DISABLED": {
+      "TITLE": "Accesso anonimo disabilitato",
+      "MESSAGE": "L'accesso anonimo a questa registrazione è stato disabilitato"
+    },
+    "INVALID_ROOM_SECRET": {
+      "TITLE": "Link non valido",
+      "MESSAGE": "Il link che hai usato per accedere a questa stanza (o alle sue registrazioni) non è valido. Chiedi a un moderatore di condividere il link corretto utilizzando i pulsanti di condivisione disponibili"
+    },
+    "INVALID_RECORDING_SECRET": {
+      "TITLE": "Link non valido",
+      "MESSAGE": "Il link che hai usato per accedere a questa registrazione non è valido"
+    },
+    "INVALID_ROOM": {
+      "TITLE": "Stanza non valida",
+      "MESSAGE": "La stanza (o le sue registrazioni) a cui stai tentando di accedere non esiste o è stata eliminata"
+    },
+    "INVALID_RECORDING": {
+      "TITLE": "Registrazione non valida",
+      "MESSAGE": "La registrazione a cui stai tentando di accedere non esiste o è stata eliminata"
+    },
+    "INVALID_MEMBER": {
+      "TITLE": "Membro non valido",
+      "MESSAGE": "Non sei più un membro di questa stanza oppure le informazioni sul membro non sono corrette"
+    },
+    "FORBIDDEN_ROOM_ACCESS": {
+      "TITLE": "Accesso alla stanza non consentito",
+      "MESSAGE": "Non sei autorizzato ad accedere a questa stanza (né alle sue registrazioni)"
+    },
+    "FORBIDDEN_ROOM_RECORDINGS_ACCESS": {
+      "TITLE": "Accesso alle registrazioni non consentito",
+      "MESSAGE": "Non sei autorizzato ad accedere alle registrazioni di questa stanza"
+    },
+    "FORBIDDEN_RECORDING_ACCESS": {
+      "TITLE": "Accesso alla registrazione non consentito",
+      "MESSAGE": "Non sei autorizzato ad accedere a questa registrazione"
+    },
+    "ROOM_ACCESS_REVOKED": {
+      "TITLE": "Accesso alla stanza revocato",
+      "MESSAGE": "Le tue autorizzazioni in questa stanza sono state modificate e non hai più accesso (né alle sue registrazioni). Contatta un moderatore per maggiori informazioni"
+    },
+    "TOO_MANY_REQUESTS": {
+      "TITLE": "Troppe richieste",
+      "MESSAGE": "Hai effettuato troppe richieste in un breve periodo di tempo. Attendi un momento e riprova"
+    },
+    "INTERNAL_ERROR": {
+      "TITLE": "Errore interno",
+      "MESSAGE": "Si è verificato un errore imprevisto, riprova più tardi"
+    }
+  }
+}

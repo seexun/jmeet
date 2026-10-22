@@ -1,0 +1,7 @@
+name: member
+in: query
+required: false
+description: Filter rooms where the provided user ID is a room member.
+schema:
+    type: string
+example: usr_12345
